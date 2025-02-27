@@ -20,4 +20,11 @@ public class AccountService {
         return accountRepository.findByEmail(email);
     }
 
+    public boolean existsAccountByEmail(String email) {
+        return accountRepository.existsByEmail(email);
+    }
+
+    public Account saveAccount(Account account) {
+        return accountRepository.save(account);
+    }
 }
