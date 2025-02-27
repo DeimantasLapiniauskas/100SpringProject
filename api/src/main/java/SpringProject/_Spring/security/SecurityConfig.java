@@ -42,6 +42,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(c -> c.disable())
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()))
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exceptions) -> exceptions
