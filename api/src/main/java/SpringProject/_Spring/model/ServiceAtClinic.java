@@ -1,22 +1,27 @@
 package SpringProject._Spring.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
-public class Servis {
-
+@Table(name = "services")
+public class ServiceAtClinic {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
   private String name;
   private String description;
   private BigDecimal price;
+
+  public ServiceAtClinic() {
+  }
+
+  public ServiceAtClinic(long id, String name, String description, BigDecimal price) {
+    this.name = name;
+    this.description = description;
+    this.price = price;
+  }
 
   public long getId() {
     return id;
