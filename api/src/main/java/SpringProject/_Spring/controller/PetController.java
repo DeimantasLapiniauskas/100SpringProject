@@ -15,19 +15,21 @@ import java.security.Principal;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api/pets/{id}")
+@RequestMapping("/api/pets")
 public class PetController {
 
     private final PetService petService;
+    private final AccountService accountService;
 
 
     @Autowired
-    public PetController(PetService petService) {
+    public PetController(PetService petService, AccountService accountService) {
         this.petService = petService;
+        this.accountService = accountService;
     }
 
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<?> getAllPets(@PathVariable long id) {
         if (!petService.existsByOwnerId(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
@@ -36,7 +38,7 @@ public class PetController {
         return ResponseEntity.ok(PetMapping.toPetResponseDTO(petService.getAllPetsByOwnerId(id)));
     }
 
-    @PostMapping
+    @PostMapping("/{id}")
     public ResponseEntity<?> addPet(@PathVariable long id,
                                     @Valid @RequestBody PetRequestDTO petRequestDTO,
                                     Principal principal) {
@@ -45,11 +47,11 @@ public class PetController {
         }
 
         //todo: Assign owner via principal
-        Pet createdPet = petService.savePet(PetMapping.toPet(petRequestDTO, userService.getUserByEmail(principal.getName())));
+        Pet createdPet = petService.savePet(PetMapping.toPet(petRequestDTO, accountService.getAccountByEmail(principal.getName())));
         return ResponseEntity.status(HttpStatus.CREATED).body(PetMapping.toPetResponseDTO(createdPet));
     }
 
-    @PutMapping("/{petId}")
+    @PutMapping("/{id}/{petId}")
     public ResponseEntity<?> updatePet(@PathVariable long id,
                                        @PathVariable long petId,
                                        @Valid @RequestBody PetRequestDTO petRequestDTO
@@ -62,7 +64,7 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
         }
 
-        Pet petFromDB = petService.getPetByid(id).get();
+        Pet petFromDB = petService.getPetByid(petId).get();
         petFromDB.setName(petRequestDTO.name());
         petFromDB.setSpecies(petRequestDTO.species());
         petFromDB.setBreed(petRequestDTO.breed());
@@ -81,9 +83,9 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
         }
 
-        final User currentUser = userService.findUserByUsername(principal.getName()).get();
-        if (currentUser.getId() != petService.getPetByid(petId).get().getOwnerId() &&
-                currentUser.getRoles().stream()
+        final Account currentAccount = accountService.findAccountByUsername(principal.getName()).get();
+        if (currentAccount.getId() != petService.getPetByid(petId).get().getOwnerId() &&
+                currentAccount.getRoles().stream()
                         .noneMatch(
                                 role -> Objects.equals(
                                         role.getName(), "ROLE_ADMIN"
@@ -94,6 +96,7 @@ public class PetController {
         }
 
 
-        petService.deletePetById(petId)
+        petService.deletePetById(petId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

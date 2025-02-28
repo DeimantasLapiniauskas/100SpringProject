@@ -39,4 +39,7 @@ public class PetService {
         return petRepository.findById(id);
     }
 
+    public void deletePetById(long petId) {
+        petRepository.deleteById(petId);
+    }
 }
