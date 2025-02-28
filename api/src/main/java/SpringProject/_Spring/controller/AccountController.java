@@ -1,8 +1,6 @@
 package SpringProject._Spring.controller;
 
-import SpringProject._Spring.dto.AccountRequestDTO;
-import SpringProject._Spring.dto.AccountRequestMapper;
-import SpringProject._Spring.dto.AccountResponseMapper;
+import SpringProject._Spring.dto.*;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
 import jakarta.validation.Valid;
@@ -47,5 +45,20 @@ public class AccountController {
                                 .buildAndExpand(savedAccount.getId())
                                 .toUri())
                 .body(AccountResponseMapper.toAccountResponseDTO(savedAccount));
+    }
+
+    @PutMapping("/account/password")
+    public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
+        Account account = (Account) authentication.getPrincipal();
+
+        Account accountFromDB = accountService.findAccountById(account.getId()).get();
+
+        PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
+
+        accountFromDB.setPassword(passwordEncoder.encode(accountFromDB.getPassword()));
+
+        accountService.saveAccount(accountFromDB);
+
+        return ResponseEntity.status(HttpStatus.OK).body("You have successfully updated your password!");
     }
 }
