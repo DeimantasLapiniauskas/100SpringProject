@@ -24,7 +24,6 @@ public class PetController {
     private final PetService petService;
     private final AccountService accountService;
 
-
     @Autowired
     public PetController(PetService petService, AccountService accountService) {
         this.petService = petService;
