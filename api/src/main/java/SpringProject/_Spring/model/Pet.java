@@ -14,11 +14,11 @@ public class Pet {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     private Account account;
 
-    @Column(name = "accout_id")
-    private long accountId;
+    @Column(name = "owner_id")
+    private long ownerId;
 
     private String name;
     private String species;
@@ -32,7 +32,7 @@ public class Pet {
 
     public Pet(Account account, long owner_id, String name, String breed, String species, LocalDate birthdate, Gender gender) {
         this.account = account;
-        this.accountId = owner_id;
+        this.ownerId = owner_id;
         this.name = name;
         this.breed = breed;
         this.species = species;
@@ -44,12 +44,12 @@ public class Pet {
         return id;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public long getOwnerId() {
+        return ownerId;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getName() {

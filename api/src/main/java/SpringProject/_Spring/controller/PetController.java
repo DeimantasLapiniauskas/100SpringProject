@@ -3,7 +3,9 @@ package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.PetMapping;
 import SpringProject._Spring.dto.PetRequestDTO;
+import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.PetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +44,17 @@ public class PetController {
     public ResponseEntity<?> addPet(@PathVariable long id,
                                     @Valid @RequestBody PetRequestDTO petRequestDTO,
                                     Principal principal) {
-        if (!petService.existsByOwnerId(id)) {
+        if (accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
 
         //todo: Assign owner via principal
-        Pet createdPet = petService.savePet(PetMapping.toPet(petRequestDTO, accountService.getAccountByEmail(principal.getName())));
+        Pet createdPet = petService
+                .savePet(
+                        PetMapping.toPet(
+                                petRequestDTO, accountService.findByEmail(principal.getName()).get().getId()
+                        )
+                );
         return ResponseEntity.status(HttpStatus.CREATED).body(PetMapping.toPetResponseDTO(createdPet));
     }
 
@@ -83,7 +90,7 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
         }
 
-        final Account currentAccount = accountService.findAccountByUsername(principal.getName()).get();
+        final Account currentAccount = accountService.findByEmail(principal.getName()).get();
         if (currentAccount.getId() != petService.getPetByid(petId).get().getOwnerId() &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
@@ -92,9 +99,8 @@ public class PetController {
                                 )
                         )
         ) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You don't have permission to do that!");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't delete someone else's pet!");
         }
-
 
         petService.deletePetById(petId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
