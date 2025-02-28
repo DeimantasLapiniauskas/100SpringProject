@@ -73,9 +73,9 @@ public class PetController {
     }
 
     @DeleteMapping("/{petId}")
-    public ResponseEntity<?> deletePet(@PathVariable long id,
-                                       @PathVariable long petId,
-                                       Principal principal) {
+    public ResponseEntity<?> deletePet(
+            @PathVariable long petId,
+            Principal principal) {
 
         if (!petService.existsById(petId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
@@ -89,11 +89,11 @@ public class PetController {
                                         role.getName(), "ROLE_ADMIN"
                                 )
                         )
-        ){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You don't have permission to do that!")
+        ) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You don't have permission to do that!");
         }
 
 
-           // petService.deletePetById
+        petService.deletePetById(petId)
     }
 }
