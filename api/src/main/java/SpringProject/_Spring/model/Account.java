@@ -21,7 +21,7 @@ public class Account implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "accounts_roles",
+            name = "account_roles",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
