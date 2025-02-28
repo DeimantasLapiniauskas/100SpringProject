@@ -4,8 +4,10 @@ package SpringProject._Spring.service;
 import SpringProject._Spring.dto.PetResponseDTO;
 import SpringProject._Spring.model.Pet;
 import SpringProject._Spring.repository.PetRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

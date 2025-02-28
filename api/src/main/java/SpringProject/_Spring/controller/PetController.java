@@ -7,6 +7,7 @@ import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Pet;
 import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.PetService;
+import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class PetController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllPets(@PathVariable long id) {
-        if (!petService.existsByOwnerId(id)) {
+        if (!accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
 
@@ -44,15 +45,18 @@ public class PetController {
     public ResponseEntity<?> addPet(@PathVariable long id,
                                     @Valid @RequestBody PetRequestDTO petRequestDTO,
                                     Principal principal) {
-        if (accountService.existsAccountById(id)) {
+        if (!accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
 
-        //todo: Assign owner via principal
+        if (id != accountService.findByEmail(principal.getName()).get().getId()) {
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("You are not the owner!");
+        }
+
         Pet createdPet = petService
                 .savePet(
                         PetMapping.toPet(
-                                petRequestDTO, accountService.findByEmail(principal.getName()).get().getId()
+                                petRequestDTO, id
                         )
                 );
         return ResponseEntity.status(HttpStatus.CREATED).body(PetMapping.toPetResponseDTO(createdPet));
@@ -63,7 +67,7 @@ public class PetController {
                                        @PathVariable long petId,
                                        @Valid @RequestBody PetRequestDTO petRequestDTO
     ) {
-        if (!petService.existsByOwnerId(id)) {
+        if (!accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
 

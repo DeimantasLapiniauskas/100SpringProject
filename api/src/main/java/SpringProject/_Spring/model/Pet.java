@@ -25,6 +25,7 @@ public class Pet {
     private String breed;
     private LocalDate birthdate;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     public Pet() {
