@@ -52,7 +52,7 @@ public class AccountJunitPOSTTest {
         //given
         AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
 
-        Role role = new Role("ROLE_USER");
+        Role role = new Role("ROLE_CLIENT");
         role.setId(1L);
 
         Account account = new Account("test@example.com", "hashedPassword", List.of(role));
