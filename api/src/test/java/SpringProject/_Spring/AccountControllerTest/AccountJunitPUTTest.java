@@ -47,7 +47,7 @@ public class AccountJunitPUTTest {
 
     //happy path
     @Test
-    void updatePassword_whenValidRequest_thenReturnAnd200() throws Exception {
+    void updateAccountPassword_whenValidRequest_thenReturnAnd200() throws Exception {
         //given
         Account account = new Account("test@example.com", "oldPassword", List.of(new Role("ROLE_CLIENT")));
         account.setId(1L);
@@ -71,5 +71,41 @@ public class AccountJunitPUTTest {
                 .andExpect(content().string("You have successfully updated your password!"));
 
         Mockito.verify(accountService, times(1)).saveAccount(ArgumentMatchers.any(Account.class));
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPassword_whenNotAuthenticated_thenReturnAnd401() throws Exception {
+        //given
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+
+        //when
+        mockMvc.perform(put("/api/account/password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                //then
+                .andExpect(status().isUnauthorized());
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPassword_whenAccountIdNotFound_thenReturn404() throws Exception {
+        //given
+        Account account = new Account("test@example.com", "oldPassword", List.of(new Role("ROLE_CLIENT")));
+        account.setId(1L);
+
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+
+        when(accountService.findAccountById(1L)).thenReturn(Optional.empty());
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        //when
+        mockMvc.perform(put("/api/account/password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                //then
+                .andExpect(status().isNotFound());
     }
 }
