@@ -32,7 +32,7 @@ import java.util.Optional;
 @WebMvcTest(controllers = AccountControllerAuthenticated.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-public class AccountJunitPUTTest {
+public class AccountAuthenticatedJunitPUTTest {
 
     @Autowired
     private MockMvc mockMvc;
