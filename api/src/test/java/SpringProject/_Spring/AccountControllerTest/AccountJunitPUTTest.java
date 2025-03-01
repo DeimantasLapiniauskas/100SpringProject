@@ -25,8 +25,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -107,5 +106,52 @@ public class AccountJunitPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isNotFound());
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPassword_whenPasswordIsEmpty_thenReturnAnd400() throws Exception {
+        //given
+        Account account = new Account("test@example.com", "oldPassword", List.of(new Role("ROLE_CLIENT")));
+        account.setId(1L);
+
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("");
+
+        when(accountService.findAccountById(1L)).thenReturn(Optional.empty());
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        //when
+        mockMvc.perform(put("/api/account/password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("newPassword").value("Your password is either too" +
+                        " short or too long! Min length is 6, max is 255 symbols"));
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPassword_whenPasswordIsNull_thenReturnAnd400() throws Exception {
+        //given
+        Account account = new Account("test@example.com", "oldPassword", List.of(new Role("ROLE_CLIENT")));
+        account.setId(1L);
+
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO(null);
+
+        when(accountService.findAccountById(1L)).thenReturn(Optional.empty());
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        //when
+        mockMvc.perform(put("/api/account/password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("newPassword").value("Password can not be null!"));
     }
 }
