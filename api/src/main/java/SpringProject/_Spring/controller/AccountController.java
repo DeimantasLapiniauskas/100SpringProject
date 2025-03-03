@@ -1,8 +1,7 @@
 package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.AccountRequestDTO;
-import SpringProject._Spring.dto.AccountRequestMapper;
-import SpringProject._Spring.dto.AccountResponseMapper;
+import SpringProject._Spring.dto.AccountMapper;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
 import jakarta.validation.Valid;
@@ -36,7 +35,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account with this email already exists!");
         }
 
-        Account account = AccountRequestMapper.toAccount(accountRequestDTO);
+        Account account = AccountMapper.toAccount(accountRequestDTO);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
 
         Account savedAccount = accountService.saveAccount(account);
@@ -46,6 +45,6 @@ public class AccountController {
                                 .path("/{id}")
                                 .buildAndExpand(savedAccount.getId())
                                 .toUri())
-                .body(AccountResponseMapper.toAccountResponseDTO(savedAccount));
+                .body(AccountMapper.toAccountResponseDTO(savedAccount));
     }
 }

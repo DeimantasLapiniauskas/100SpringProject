@@ -4,7 +4,7 @@ import SpringProject._Spring.model.Account;
 
 import java.util.ArrayList;
 
-public class AccountRequestMapper {
+public class AccountMapper {
 
 
     public static Account toAccount(AccountRequestDTO accountRequestDTO) {
@@ -16,4 +16,8 @@ public class AccountRequestMapper {
 
         return account;
     }
+
+        public static AccountResponseDTO toAccountResponseDTO(Account account) {
+            return new AccountResponseDTO(account.getId(), account.getEmail(), RoleMapper.toRoleDTOList(account));
+        }
 }
