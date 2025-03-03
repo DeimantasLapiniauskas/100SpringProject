@@ -97,6 +97,18 @@ public class ServiceAtClinicTest {
     response.andExpect(status().isNotFound())
             .andDo(MockMvcResultHandlers.print());
   }
+
+  @Test
+  @WithMockUser(roles = {"USER"})
+  void deleteServiceTest_if403() throws Exception{
+    long id = 1;
+    BDDMockito.given(service.existsServiceById(id)).willReturn(false);
+    BDDMockito.willDoNothing().given(service).deleteServiceById(id);
+    ResultActions response = mockMvc.perform(delete("/api/services/{id}", id));
+
+    response.andExpect(status().isForbidden())
+            .andDo(MockMvcResultHandlers.print());
+  }
 }
 
 
