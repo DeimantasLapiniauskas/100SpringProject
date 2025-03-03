@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,7 +27,7 @@ public class ServiceAtClinicTest {
   private MockMvc mockMvc;
 
   @Test
-  //@WithMockUser(authorities = "")
+  @WithMockUser
   void deleteServiceTest_if204() throws Exception{
     long id = 6;
 
@@ -41,7 +42,7 @@ public class ServiceAtClinicTest {
     Mockito.verify(service, times(1)).deleteServisById(id);
   }
   @Test
-    //@WithMockUser(authorities = "")
+    @WithMockUser
   void deleteServiceTest_if404() throws Exception{
     long id = 6;
 
