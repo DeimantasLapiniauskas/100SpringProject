@@ -12,51 +12,40 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class ServiceAtClinicController {
-  private final ServiceAtClinicService serviceAtClinicService;
+    private final ServiceAtClinicService serviceAtClinicService;
 
-  @Autowired
+    @Autowired
 
-  public ServiceAtClinicController(ServiceAtClinicService service) {
-    this.serviceAtClinicService = service;
-  }
-
-  @PostMapping("/services")
-  public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
-    if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
-      Map<String, String> badResponse = new HashMap<>();
-      badResponse.put("service", "already exists");
-      return ResponseEntity.badRequest().body(badResponse);
+    public ServiceAtClinicController(ServiceAtClinicService service) {
+        this.serviceAtClinicService = service;
     }
 
-    ServiceAtClinic service = new ServiceAtClinic();
-    service.setName(serviceDTO.name());
-    service.setDescription(serviceDTO.description());
-    service.setPrice(serviceDTO.price());
+    @PostMapping("/services")
+    public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
+        if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
+            Map<String, String> badResponse = new HashMap<>();
+            badResponse.put("service", "already exists");
+            return ResponseEntity.badRequest().body(badResponse);
+        }
 
-    ServiceAtClinicDTO newService = ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicService.saveService(service));
+        ServiceAtClinic service = new ServiceAtClinic();
+        service.setName(serviceDTO.name());
+        service.setDescription(serviceDTO.description());
+        service.setPrice(serviceDTO.price());
 
-    return ResponseEntity.created(
-                    ServletUriComponentsBuilder.fromCurrentRequest()
-                            .path("/{id}")
-                            .buildAndExpand(newService.id())
-                            .toUri())
-            .body(newService);
+        ServiceAtClinicDTO newService = ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicService.saveService(service));
 
-  }
+        return ResponseEntity.created(
+                        ServletUriComponentsBuilder.fromCurrentRequest()
+                                .path("/{id}")
+                                .buildAndExpand(newService.id())
+                                .toUri())
+                .body(newService);
 
-  @DeleteMapping("/services/{id}")
-  public ResponseEntity<Void> deleteServis(@PathVariable long id){
-    if (!serviceAtClinicService.existsServisById(id)){
-      return ResponseEntity.notFound().build();
     }
-
-    serviceAtClinicService.deleteServisById(id);
-    return ResponseEntity.noContent().build();
-  }
 }
