@@ -2,7 +2,7 @@ package SpringProject._Spring.dto;
 
 import java.math.BigDecimal;
 
-public record ServiceAtClinicDTO(
+public record ServiceAtClinicResponseDTO(
         long id,
         String name,
         String description,

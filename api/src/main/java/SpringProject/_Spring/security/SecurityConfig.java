@@ -43,6 +43,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(c -> c.disable())
+//                sito gali reiketi jei kazkas bus negerai su CorsConfig
+//                .cors(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()))

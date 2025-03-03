@@ -17,7 +17,7 @@ public class ServiceAtClinic {
     public ServiceAtClinic() {
     }
 
-    public ServiceAtClinic(long id, String name, String description, BigDecimal price) {
+    public ServiceAtClinic(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
