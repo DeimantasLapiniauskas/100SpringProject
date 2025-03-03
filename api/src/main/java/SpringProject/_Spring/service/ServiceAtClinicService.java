@@ -22,4 +22,11 @@ public class ServiceAtClinicService {
     public ServiceAtClinic saveService(ServiceAtClinic service) {
         return serviceAtClinicRepository.save(service);
     }
+
+  public boolean existsServiceById(long id){
+    return serviceAtClinicRepository.existsById(id);
+  }
+  public void deleteServiceById(long id){
+    serviceAtClinicRepository.deleteById(id);
+  }
 }

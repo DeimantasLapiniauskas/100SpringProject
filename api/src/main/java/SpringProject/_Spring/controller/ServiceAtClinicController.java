@@ -47,5 +47,15 @@ public class ServiceAtClinicController {
                                 .toUri())
                 .body(newService);
 
+  }
+
+  @DeleteMapping("/services/{id}")
+  public ResponseEntity<Void> deleteService(@PathVariable long id){
+    if (!serviceAtClinicService.existsServiceById(id)){
+      return ResponseEntity.notFound().build();
     }
+
+    serviceAtClinicService.deleteServiceById(id);
+    return ResponseEntity.noContent().build();
+  }
 }
