@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/account").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/services/**").hasAnyRole("VET","ADMIN")
                         .anyRequest().authenticated()
                 );
 
