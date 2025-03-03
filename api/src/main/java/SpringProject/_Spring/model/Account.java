@@ -27,7 +27,8 @@ public class Account implements UserDetails {
     )
     private List<Role> roles = new ArrayList<>();
 
-    public Account(String email, String password, List<Role> roles) {
+    public Account(long id,String email, String password, List<Role> roles) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.roles = roles;

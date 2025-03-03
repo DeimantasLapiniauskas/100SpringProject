@@ -5,6 +5,7 @@ import SpringProject._Spring.dto.PetMapping;
 import SpringProject._Spring.dto.PetRequestDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.Role;
 import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.PetService;
 import jakarta.persistence.EntityManager;
@@ -36,8 +37,9 @@ public class PetController {
         if (!accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
-
-        return ResponseEntity.ok(PetMapping.toPetResponseDTO(petService.getAllPetsByOwnerId(id)));
+            return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
+                    .map(PetMapping::toPetResponseDTO)
+                    .toList());
     }
 
     @PostMapping("/{id}")
@@ -48,8 +50,8 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
 
-        if (id != accountService.findByEmail(principal.getName()).get().getId()) {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("You are not the owner!");
+        if (id != accountService.findIdByEmail(principal.getName())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not the owner!");
         }
 
         Pet createdPet = petService
@@ -61,17 +63,30 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.CREATED).body(PetMapping.toPetResponseDTO(createdPet));
     }
 
-    @PutMapping("/{id}/{petId}")
-    public ResponseEntity<?> updatePet(@PathVariable long id,
+    @PutMapping("/{ownerId}/{petId}")
+    public ResponseEntity<?> updatePet(@PathVariable long ownerId,
                                        @PathVariable long petId,
-                                       @Valid @RequestBody PetRequestDTO petRequestDTO
+                                       @Valid @RequestBody PetRequestDTO petRequestDTO,
+                                       Principal principal
     ) {
-        if (!accountService.existsAccountById(id)) {
+        if (!accountService.existsAccountById(ownerId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
 
         if (!petService.existsById(petId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
+        }
+
+        final Account currentAccount = accountService.findByEmail(principal.getName()).get();
+        if (currentAccount.getId() != petService.getPetByid(petId).get().getOwnerId() &&
+                currentAccount.getRoles().stream()
+                        .noneMatch(
+                                role -> Objects.equals(
+                                        role.getName(), "ADMIN"
+                                )
+                        )
+        ) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't edit someone else's pet!");
         }
 
         Pet petFromDB = petService.getPetByid(petId).get();
@@ -98,7 +113,7 @@ public class PetController {
                 currentAccount.getRoles().stream()
                         .noneMatch(
                                 role -> Objects.equals(
-                                        role.getName(), "ROLE_ADMIN"
+                                        role.getName(), "ADMIN"
                                 )
                         )
         ) {

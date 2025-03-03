@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,11 +22,7 @@ public class PetService {
         this.petRepository = petRepository;
     }
 
-    public boolean existsByOwnerId(long id) {
-        return petRepository.existsByOwnerId(id);
-    }
-
-    public Pet getAllPetsByOwnerId(long id) {
+    public List<Pet> getAllPetsByOwnerId(long id) {
         return petRepository.findAllByOwnerId(id);
     }
 
