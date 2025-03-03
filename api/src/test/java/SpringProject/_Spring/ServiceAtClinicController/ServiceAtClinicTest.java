@@ -1,5 +1,6 @@
-package SpringProject._Spring.controller;
+package SpringProject._Spring.ServiceAtCliniccontroller;
 
+import SpringProject._Spring.controller.ServiceAtClinicController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ServiceAtClinicService;
@@ -40,7 +41,7 @@ public class ServiceAtClinicTest {
   @Test
   @WithMockUser
   void saveServiceTest() throws Exception{
-    ServiceAtClinic serviceAtClinic = new ServiceAtClinic(1,"some", "good service", new BigDecimal("10.5"));
+    ServiceAtClinic serviceAtClinic = new ServiceAtClinic("some", "good service", new BigDecimal("10.5"));
 
     BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
 
@@ -59,7 +60,7 @@ public class ServiceAtClinicTest {
   @Test
   @WithMockUser
   void saveServiceBadTest() throws Exception{
-    ServiceAtClinic serviceAtClinic = new ServiceAtClinic(1,"", "good service", new BigDecimal("10.5"));
+    ServiceAtClinic serviceAtClinic = new ServiceAtClinic("", "good service", new BigDecimal("10.5"));
 
     BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
 

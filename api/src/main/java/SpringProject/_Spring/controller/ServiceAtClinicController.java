@@ -1,6 +1,6 @@
 package SpringProject._Spring.controller;
 
-import SpringProject._Spring.dto.ServiceAtClinicDTO;
+import SpringProject._Spring.dto.ServiceAtClinicResponseDTO;
 import SpringProject._Spring.dto.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.ServiceAtClinicRequestDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
@@ -38,7 +38,7 @@ public class ServiceAtClinicController {
         service.setDescription(serviceDTO.description());
         service.setPrice(serviceDTO.price());
 
-        ServiceAtClinicDTO newService = ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicService.saveService(service));
+        ServiceAtClinicResponseDTO newService = ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicService.saveService(service));
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()
