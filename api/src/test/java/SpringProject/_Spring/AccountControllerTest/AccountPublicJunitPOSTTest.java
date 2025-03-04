@@ -57,7 +57,6 @@ public class AccountPublicJunitPOSTTest {
 
         Account account = new Account("test@example.com", "hashedPassword", List.of(role));
         account.setId(1L);
-
         when(accountService.existsAccountByEmail(anyString())).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
         when(accountService.saveAccount(any())).thenReturn(account);
