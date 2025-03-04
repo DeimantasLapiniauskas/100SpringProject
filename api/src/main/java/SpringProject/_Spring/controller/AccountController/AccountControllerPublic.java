@@ -32,7 +32,7 @@ public class AccountControllerPublic {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are already registered!");
         }
         if (accountService.existsAccountByEmail(accountRequestDTO.email())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account with this email already exists!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already registered. Please try logging in.");
         }
 
         Account account = AccountRequestMapper.toAccount(accountRequestDTO);
