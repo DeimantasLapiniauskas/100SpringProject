@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,8 +28,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = AccountControllerAdmin.class)
 @Import(SecurityConfig.class)
@@ -68,4 +68,85 @@ public class AccountAdminJunitPUTTest {
 
         Mockito.verify(accountService, times(1)).saveAccount(ArgumentMatchers.any(Account.class));
     }
+
+    //unhappy path
+    @Test
+    @WithAnonymousUser
+    void updateAccountPasswordAdmin_whenNotAuthenticated_thenReturnAnd401() throws Exception {
+        // given
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+
+        // when
+        mockMvc.perform(put("/api/account/password/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                // then
+                .andExpect(status().isUnauthorized());
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPasswordAdmin_whenAccountIdNotFound_thenReturnAnd404() throws Exception {
+        // given
+        long accountId = 100L;
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+
+        when(accountService.findAccountById(accountId)).thenReturn(Optional.empty());
+
+        // when
+        mockMvc.perform(put("/api/account/password/{id}", accountId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                // then
+                .andExpect(status().isNotFound());
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPasswordAdmin_whenPasswordIsEmpty_thenReturn400() throws Exception {
+        // given
+        long accountId = 1L;
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("");
+
+        // when
+        mockMvc.perform(put("/api/account/password/{id}", accountId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                // then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("newPassword").value("Your password is either too short or too long! Min length is 6, max is 255 symbols"));
+    }
+
+    //unhappy path
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void updateAccountPasswordAdmin_whenUserHasNoAdminRights_thenReturn403() throws Exception {
+        // given
+        long accountId = 1L;
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+
+        // when
+        mockMvc.perform(put("/api/account/password/{id}", accountId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                // then
+                .andExpect(status().isForbidden());
+    }
+
+    //unhappy path
+    @Test
+    void updateAccountPasswordAdmin_whenPasswordIsNull_thenReturn400() throws Exception {
+        // given
+        long accountId = 1L;
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO(null);
+
+        // when
+        mockMvc.perform(put("/api/account/password/{id}", accountId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                // then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.newPassword").value("Password can not be null!"));
+    }
+
 }
