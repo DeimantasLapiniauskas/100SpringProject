@@ -1,6 +1,6 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController;
+import SpringProject._Spring.controller.AccountController.AccountControllerPublic;
 import SpringProject._Spring.dto.AccountRequestDTO;
 import SpringProject._Spring.dto.RoleDTO;
 import SpringProject._Spring.model.Account;
@@ -32,10 +32,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AccountController.class)
+@WebMvcTest(controllers = AccountControllerPublic.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-public class AccountJunitPOSTTest {
+public class AccountPublicJunitPOSTTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,7 +52,7 @@ public class AccountJunitPOSTTest {
         //given
         AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
 
-        Role role = new Role("ROLE_USER");
+        Role role = new Role("ROLE_CLIENT");
         role.setId(1L);
 
         Account account = new Account(1L, "test@example.com", "hashedPassword", List.of(role));

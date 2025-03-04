@@ -1,8 +1,6 @@
-package SpringProject._Spring.controller;
+package SpringProject._Spring.controller.AccountController;
 
-import SpringProject._Spring.dto.AccountRequestDTO;
-import SpringProject._Spring.dto.AccountRequestMapper;
-import SpringProject._Spring.dto.AccountResponseMapper;
+import SpringProject._Spring.dto.*;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
 import jakarta.validation.Valid;
@@ -12,17 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
-public class AccountController {
+public class AccountControllerPublic {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountController(AccountService accountService, PasswordEncoder passwordEncoder) {
+    public AccountControllerPublic(AccountService accountService, PasswordEncoder passwordEncoder) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
     }

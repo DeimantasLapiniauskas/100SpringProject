@@ -56,6 +56,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/pets/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE,"/api/pets/**").hasAnyRole("USER","ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/pets/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/services/**").hasAnyRole("VET","ADMIN")
                         .anyRequest().authenticated()
                 );
 

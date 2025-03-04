@@ -29,6 +29,10 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    public Optional<Account> findAccountById(long id) {
+        return accountRepository.findById(id);
+    }
+
     public boolean existsAccountById(long id) {
         return accountRepository.existsById(id);
     }
