@@ -114,7 +114,7 @@ public class AccountAdminJunitPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("newPassword").value("Your password is either too short or too long! Min length is 6, max is 255 symbols"));
+                .andExpect(jsonPath("newPassword").value("Your password is either too short or too long! Min length is 8, max is 50 symbols"));
     }
 
     //unhappy path
