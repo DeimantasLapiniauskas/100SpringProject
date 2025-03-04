@@ -31,7 +31,7 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(long owner_id, String name, String breed, String species, LocalDate birthdate, Gender gender) {
+    public Pet(long owner_id, String name, String species, String breed, LocalDate birthdate, Gender gender) {
         this.ownerId = owner_id;
         this.name = name;
         this.breed = breed;

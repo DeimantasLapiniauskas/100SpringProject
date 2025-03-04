@@ -37,9 +37,9 @@ public class PetController {
         if (!accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
         }
-            return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
-                    .map(PetMapping::toPetResponseDTO)
-                    .toList());
+        return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
+                .map(PetMapping::toPetResponseDTO)
+                .toList());
     }
 
     @PostMapping("/{id}")

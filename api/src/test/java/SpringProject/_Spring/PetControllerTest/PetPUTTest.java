@@ -76,12 +76,12 @@ public class PetPUTTest {
                 .thenReturn(true);
         when(petService.getPetByid(0))
                 .thenReturn(Optional.of(originalPet));
+        Account account = new Account(
+                "UserEmail", "SecretPassword", List.of(new Role("ADMIN"))
+        );
+        account.setId(ownerId);
         when(accountService.findByEmail(any()))
-                .thenReturn(Optional.of(
-                                new Account(
-                                        ownerId, "UserEmail", "SecretPassword", List.of(new Role("USER"))
-                                )
-                        )
+                .thenReturn(Optional.of(account)
                 );
 
         mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
@@ -145,18 +145,20 @@ public class PetPUTTest {
                 "Little Bastard", "Catto", "Yes", LocalDate.MIN, Gender.Female
         );
 
+
         when(accountService.existsAccountById(ownerId))
                 .thenReturn(true);
+
         when(petService.existsById(0))
                 .thenReturn(true);
+
         when(petService.getPetByid(0))
                 .thenReturn(Optional.of(originalPet));
+
+        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("ADMIN")));
+        account.setId(5L);
         when(accountService.findByEmail(any()))
-                .thenReturn(Optional.of(
-                                new Account(
-                                        ownerId, "UserEmail", "SecretPassword", List.of(new Role("USER"))
-                                )
-                        )
+                .thenReturn(Optional.of(account)
                 );
 
         mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
@@ -196,12 +198,12 @@ public class PetPUTTest {
                 .thenReturn(true);
         when(petService.getPetByid(0))
                 .thenReturn(Optional.of(originalPet))
-                ;
+        ;
 
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(
                                 new Account(
-                                        userId, "UserEmail", "SecretPassword", List.of(new Role("USER"))
+                                        "UserEmail", "SecretPassword", List.of(new Role("USER"))
                                 )
                         )
                 );

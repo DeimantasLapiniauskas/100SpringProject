@@ -67,17 +67,16 @@ public class PetDELETETest {
         when(petService.existsById(petId))
                 .thenReturn(true);
 
+        Account account = new Account(
+                "UserEmail", "SecretPassword", List.of(new Role("ADMIN"))
+        );
+        account.setId(ownerId);
         when(accountService.findByEmail(any()))
-                .thenReturn(Optional.of(
-                                new Account(
-                                        ownerId, "UserEmail", "SecretPassword", List.of(new Role("USER"))
-                                )
-                        )
+                .thenReturn(Optional.of(account)
                 );
 
         when(petService.getPetByid(petId))
                 .thenReturn(Optional.of(new Pet(ownerId, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
-
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isNoContent())
@@ -92,18 +91,18 @@ public class PetDELETETest {
     void deletePet_whenDifferentPetOwner_thenRespond403() throws Exception {
         long userId = 1;
         long petId = 0;
+
         when(petService.existsById(petId))
                 .thenReturn(true);
 
+        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("USER")));
+        account.setId(userId);
         when(accountService.findByEmail(any()))
-                .thenReturn(Optional.of(
-                                new Account(
-                                        userId, "UserEmail", "SecretPassword", List.of(new Role("USER"))
-                                )
-                        )
-                );
-        when(petService.getPetByid(petId))
-                .thenReturn(Optional.of(new Pet(userId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
+                .thenReturn(Optional.of(account));
+
+        Pet pet = new Pet(userId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male);
+        when(petService.getPetByid(pet.getId()))
+                .thenReturn(Optional.of(pet));
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isForbidden())
@@ -115,10 +114,13 @@ public class PetDELETETest {
 
     @Test
     void deletePet_whenUnauthorized_thenRespond401() throws Exception {
+
         long petId = 0;
+
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
+
         Mockito.verify(petService, times(0)).deletePetById(petId);
     }
 
@@ -126,9 +128,11 @@ public class PetDELETETest {
     @WithMockUser(roles = "VET")
     void deletePet_whenVet_thenRespond404() throws Exception {
         long petId = 0;
+
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$").doesNotExist());
+
         Mockito.verify(petService, times(0)).deletePetById(petId);
     }
 
@@ -141,17 +145,15 @@ public class PetDELETETest {
 
         when(petService.existsById(petId))
                 .thenReturn(true);
+        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("ADMIN")));
+        account.setId(ownerId + 1);
 
         when(accountService.findByEmail(any()))
-                .thenReturn(Optional.of(
-                                new Account(
-                                        ownerId, "UserEmail", "SecretPassword", List.of(new Role("ADMIN"))
-                                )
-                        )
+                .thenReturn(Optional.of(account)
                 );
 
         when(petService.getPetByid(petId))
-                .thenReturn(Optional.of(new Pet(ownerId+1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
+                .thenReturn(Optional.of(new Pet(ownerId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isNoContent())
