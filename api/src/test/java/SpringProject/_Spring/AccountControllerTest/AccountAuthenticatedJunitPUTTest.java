@@ -82,7 +82,10 @@ public class AccountAuthenticatedJunitPUTTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(accountService, times(0)).saveAccount(ArgumentMatchers.any(Account.class));
     }
 
     //unhappy path
@@ -104,7 +107,10 @@ public class AccountAuthenticatedJunitPUTTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(accountService, times(0)).saveAccount(ArgumentMatchers.any(Account.class));
     }
 
     //unhappy path
@@ -128,7 +134,7 @@ public class AccountAuthenticatedJunitPUTTest {
                 //then
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("newPassword").value("Your password is either too" +
-                        " short or too long! Min length is 6, max is 255 symbols"));
+                        " short or too long! Min length is 8, max is 50 symbols"));
     }
 
     //unhappy path
