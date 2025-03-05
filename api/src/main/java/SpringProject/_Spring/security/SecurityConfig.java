@@ -53,10 +53,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/account").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/pets/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET,"/api/pets/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/api/pets/**").hasAnyRole("USER","ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/pets/**").hasAnyRole("USER","ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/services/**").hasAnyRole("VET","ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/pets/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/pets/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/pets/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/services/**").hasAnyRole("VET", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/services/**").hasAnyRole("VET", "ADMIN")
                         .anyRequest().authenticated()
                 );
 
