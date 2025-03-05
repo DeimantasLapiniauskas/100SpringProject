@@ -54,9 +54,9 @@ public class SecurityConfig {
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
 
-                        .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/pets/**").authenticated()
-                        .anyRequest().authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/pets/**").authenticated()
+                                .anyRequest().authenticated()
                 );
 
 

@@ -1,14 +1,18 @@
 package SpringProject._Spring.PetControllerTest;
 
 import SpringProject._Spring.controller.PetController;
+import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Gender;
 import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.Role;
 import SpringProject._Spring.repository.PetRepository;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.PetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.jayway.jsonpath.JsonPath;
+import com.mysql.cj.xdevapi.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,7 +25,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -55,9 +61,21 @@ public class PetGETTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getPets_whenGetUser_thenRespond200() throws Exception {
-        long ownerId = 1;
+    void getPets_whenGetClient_thenRespond200() throws Exception {
+        Account account = new Account("email", "password", List.of(new Role("CLIENT")));
+        getPets(account);
+    }
 
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void getPets_whenGetADMIN_thenRespond200() throws Exception {
+        Account account = new Account("email", "password", List.of(new Role("ADMIN")));
+        getPets(account);
+    }
+
+    private void getPets(Account account) throws Exception {
+        account.setId(1);
+        long ownerId = 1;
 
         Pet petOne = new Pet(
                 ownerId, "Kitty", "Cat", "Bald", LocalDate.now(), Gender.Male
@@ -67,13 +85,16 @@ public class PetGETTest {
                 ownerId, "Doggo", "Dog", "HeckinFloofer", LocalDate.now(), Gender.Female
         );
 
+        when(accountService.findByEmail(any()))
+                .thenReturn(Optional.of(account));
+
         when(accountService.existsAccountById(ownerId))
                 .thenReturn(true);
 
         when(petService.getAllPetsByOwnerId(ownerId))
                 .thenReturn(List.of(petOne, petTwo));
 
-        mockMvc.perform(get("/api/pets/" + ownerId))
+        mockMvc.perform(get("/api/pets"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].id").value(0))
                 .andExpect(jsonPath("[0].name").value("Kitty"))
@@ -96,10 +117,22 @@ public class PetGETTest {
     @Test
     void getPets_whenUnauthorized_thenRespond401() throws Exception {
         long ownerId = 1;
-        mockMvc.perform(get("/api/pets/" + ownerId))
+        mockMvc.perform(get("/api/pets"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
 
         Mockito.verify(petService, times(0)).getAllPetsByOwnerId(ownerId);
     }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void getPets_whenGetVet_thenRespond403() throws Exception {
+
+        mockMvc.perform(get("/api/pets"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").doesNotExist());
+
+    }
+
+
 }

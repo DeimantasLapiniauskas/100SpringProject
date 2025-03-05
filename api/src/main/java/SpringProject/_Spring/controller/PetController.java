@@ -3,6 +3,7 @@ package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.PetMapping;
 import SpringProject._Spring.dto.PetRequestDTO;
+import SpringProject._Spring.dto.PetResponseDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Pet;
 import SpringProject._Spring.model.Role;
@@ -17,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -33,16 +35,16 @@ public class PetController {
     }
 
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> getAllPets(@PathVariable long id) {
-        if (!accountService.existsAccountById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
-        }
+    @GetMapping
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<List<PetResponseDTO>> getAllPets(Principal principal) {
+        long id = accountService.findByEmail(principal.getName()).get().getId();
+
         return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
                 .map(PetMapping::toPetResponseDTO)
                 .toList());
     }
+
 
     @PostMapping("/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
