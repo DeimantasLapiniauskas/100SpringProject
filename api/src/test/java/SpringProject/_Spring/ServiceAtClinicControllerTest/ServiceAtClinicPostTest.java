@@ -1,5 +1,7 @@
-package SpringProject._Spring.controller;
+package SpringProject._Spring.ServiceAtClinicControllerTest;
 
+
+import SpringProject._Spring.controller.ServiceAtClinicController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ServiceAtClinicService;
@@ -27,20 +29,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = ServiceAtClinicController.class)
 @Import(SecurityConfig.class)
-public class ServiceAtClinicTest {
+public class ServiceAtClinicPostTest {
     @MockitoBean
     private ServiceAtClinicService service;
+
     @Autowired
     private MockMvc mockMvc;
 
+
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void saveServiceTest() throws Exception{
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("some", "good service", new BigDecimal("10.5"));
 
         BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
 
         ObjectMapper objectMapper = new ObjectMapper();
+
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/services")
                 .contentType(MediaType.APPLICATION_JSON)

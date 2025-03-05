@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,6 +31,7 @@ public class ServiceAtClinicController {
     }
 
     @PostMapping("/services")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
         if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
             Map<String, String> badResponse = new HashMap<>();
@@ -54,6 +56,7 @@ public class ServiceAtClinicController {
     }
 
     @GetMapping("/services")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> getAllServices() {
 
        List<ServiceAtClinic> allServices = serviceAtClinicService.findAllServiceAtClinic();
@@ -66,6 +69,7 @@ public class ServiceAtClinicController {
     }
 
     @GetMapping("/services/{serviceId}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> getService(@PathVariable long serviceId) {
 
         if(serviceId < 0) {
@@ -84,8 +88,8 @@ public class ServiceAtClinicController {
     }
 
     @PutMapping("/services/{serviceId}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> updateService(@PathVariable long serviceId, @Valid @RequestBody ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
-
         if(serviceId < 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Service ID cannot be negative");
         }
@@ -98,6 +102,7 @@ public class ServiceAtClinicController {
 
         ServiceAtClinic serviceAtClinicFromDB = serviceAtClinicOpt.get();
         ServiceAtClinic updatedService = serviceAtClinicService.updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinicFromDB);
+
         serviceAtClinicService.saveService(updatedService);
 
         return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicDTO(updatedService));

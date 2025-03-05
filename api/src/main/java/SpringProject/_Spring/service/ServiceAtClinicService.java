@@ -43,7 +43,6 @@ public class ServiceAtClinicService {
         serviceAtClinic.setName(serviceAtClinicRequestDTO.name());
         serviceAtClinic.setDescription(serviceAtClinicRequestDTO.description());
         serviceAtClinic.setPrice(serviceAtClinicRequestDTO.price());
-
         return serviceAtClinic;
     }
 }

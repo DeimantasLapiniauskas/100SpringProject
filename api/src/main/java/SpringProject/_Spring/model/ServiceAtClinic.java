@@ -1,5 +1,6 @@
 package SpringProject._Spring.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -21,6 +22,10 @@ public class ServiceAtClinic {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {
