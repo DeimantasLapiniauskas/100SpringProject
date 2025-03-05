@@ -10,6 +10,7 @@ import org.hamcrest.core.AnyOf;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -42,7 +43,16 @@ public class ServiceAtClinicPutTest {
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void updateService_whenVetUpdateServiceSuccess_thenReturnServiceAndOk() throws Exception {
+        performServiceUpdate();
+    }
 
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void updateService_whenAdminUpdateServiceSuccess_thenReturnServiceAndOk() throws Exception {
+        performServiceUpdate();
+    }
+
+    private void performServiceUpdate() throws Exception {
         //given
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
         serviceAtClinic.setId(1);
@@ -79,13 +89,22 @@ public class ServiceAtClinicPutTest {
     //Unhappy path test
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void updateBook_whenVetUpdateBookNotMatchValid_thenReturn400() throws Exception {
+    void updateBook_whenVetUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
+        updateServiceFailValidSize();
+    }
 
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void updateBook_whenAdminUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
+        updateServiceFailValidSize();
+    }
+
+    private void updateServiceFailValidSize() throws Exception {
         //given
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
         serviceAtClinic.setId(1L);
 
-        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("", "", BigDecimal.valueOf(-0.01));
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO(" ", "", BigDecimal.valueOf(-0.01));
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
@@ -97,9 +116,50 @@ public class ServiceAtClinicPutTest {
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("name", anyOf(
-                        containsString("must not be blank"),
-                        containsString("size must be between 3 and 150"))))
+                .andExpect(jsonPath("name").value("Name must be between 3 and 150 characters long!"))
+                .andExpect(jsonPath("description").value("must not be blank"))
+                .andExpect(jsonPath("price").value("must be greater than or equal to 0"));
+
+
+        Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
+
+        Mockito.verify(serviceAtClinicService, times(0)).updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinic);
+
+        Mockito.verify(serviceAtClinicService, times(0)).saveService(serviceAtClinic);
+
+    }
+
+    //Unhappy path test
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void updateBook_whenVetUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
+        updateServiceFailValidRegex();
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void updateBook_whenAdminUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
+        updateServiceFailValidRegex();
+    }
+
+      private void  updateServiceFailValidRegex() throws Exception {
+          //given
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
+        serviceAtClinic.setId(1L);
+
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("$$$$", "", BigDecimal.valueOf(-0.01));
+
+        given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("name").value("Name must contain only letters, spaces, numbers and dashes!"))
                 .andExpect(jsonPath("description").value("must not be blank"))
                 .andExpect(jsonPath("price").value("must be greater than or equal to 0"));
 
