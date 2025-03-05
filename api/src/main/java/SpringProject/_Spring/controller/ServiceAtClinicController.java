@@ -53,7 +53,7 @@ public class ServiceAtClinicController {
                                 .toUri())
                 .body(newService);
 
-    }
+  }
 
     @GetMapping("/services")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
@@ -108,4 +108,13 @@ public class ServiceAtClinicController {
         return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicDTO(updatedService));
     }
 
+@DeleteMapping("/services/{id}")
+public ResponseEntity<Void> deleteService(@PathVariable long id){
+    if (!serviceAtClinicService.existsServiceById(id)){
+        return ResponseEntity.notFound().build();
+    }
+    serviceAtClinicService.deleteServiceById(id);
+    return ResponseEntity.noContent().build();
+  }
 }
+
