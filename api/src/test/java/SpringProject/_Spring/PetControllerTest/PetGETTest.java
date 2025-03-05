@@ -54,7 +54,7 @@ public class PetGETTest {
 
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getPets_whenGetUser_thenRespond200() throws Exception {
         long ownerId = 1;
 

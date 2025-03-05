@@ -32,6 +32,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,7 +61,7 @@ public class PetPOSTTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void addPet_whenAddPetOwner_thenRespond201() throws Exception {
         long id = 1;
         Gender gender = Gender.Female;
@@ -98,10 +99,25 @@ public class PetPOSTTest {
     }
 
     @Test
-    @WithMockUser(roles = "VET")
-    void addPet_whenVet_thenRespond404() throws Exception {
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void addPet_whenVet_thenRespond403() throws Exception {
         long id = 1;
-        mockMvc.perform(post("/api/pets/" + id))
+
+        Gender gender = Gender.Female;
+        PetRequestDTO petRequestDTO = new PetRequestDTO(
+                "Maja", "Egyptian", "cat", LocalDate.now(), gender
+        );
+        mockMvc.perform(post("/api/pets/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                objectMapper.writeValueAsString(
+                                        PetMapping.toPetResponseDTO(
+                                                PetMapping.toPet(
+                                                        petRequestDTO, id)
+                                        )
+                                )
+                        )
+                )
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$").doesNotExist());
         Mockito.verify(petService, times(0)).savePet(any());
@@ -117,7 +133,7 @@ public class PetPOSTTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void addPet_whenDifferentPetOwner_thenRespond403() throws Exception{
         long id = 1;
 

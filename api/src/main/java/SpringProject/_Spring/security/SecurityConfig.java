@@ -55,12 +55,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
 
                         .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/pets/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/pets/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/api/pets/**").hasAnyRole("USER","ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/pets/**").hasAnyRole("USER","ADMIN")
-//
-
                         .anyRequest().authenticated()
                 );
 

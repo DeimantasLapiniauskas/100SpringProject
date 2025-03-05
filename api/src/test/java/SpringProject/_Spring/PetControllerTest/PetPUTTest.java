@@ -59,7 +59,7 @@ public class PetPUTTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putPet_whenPutPetOwner_thenRespond200() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(
@@ -77,7 +77,7 @@ public class PetPUTTest {
         when(petService.getPetByid(0))
                 .thenReturn(Optional.of(originalPet));
         Account account = new Account(
-                "UserEmail", "SecretPassword", List.of(new Role("ADMIN"))
+                "UserEmail", "SecretPassword", List.of(new Role("CLIENT"))
         );
         account.setId(ownerId);
         when(accountService.findByEmail(any()))
@@ -134,7 +134,7 @@ public class PetPUTTest {
 
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void putPet_whenPutAdmin_thenRespond200() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(
@@ -144,7 +144,6 @@ public class PetPUTTest {
         PetRequestDTO changedPet = new PetRequestDTO(
                 "Little Bastard", "Catto", "Yes", LocalDate.MIN, Gender.Female
         );
-
 
         when(accountService.existsAccountById(ownerId))
                 .thenReturn(true);
@@ -180,10 +179,9 @@ public class PetPUTTest {
 
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putPet_whenPutDifferentOwner_thenRespond403() throws Exception {
         long ownerId = 1;
-        long userId = 5;
         Pet originalPet = new Pet(
                 ownerId, "Kitty", "Cat", "Bald", LocalDate.now(), Gender.Male
         );
@@ -203,7 +201,7 @@ public class PetPUTTest {
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(
                                 new Account(
-                                        "UserEmail", "SecretPassword", List.of(new Role("USER"))
+                                        "UserEmail", "SecretPassword", List.of(new Role("CLIENT"))
                                 )
                         )
                 );

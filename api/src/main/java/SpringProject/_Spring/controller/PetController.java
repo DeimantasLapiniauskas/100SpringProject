@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -33,6 +34,7 @@ public class PetController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> getAllPets(@PathVariable long id) {
         if (!accountService.existsAccountById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
@@ -43,6 +45,7 @@ public class PetController {
     }
 
     @PostMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> addPet(@PathVariable long id,
                                     @Valid @RequestBody PetRequestDTO petRequestDTO,
                                     Principal principal) {
@@ -64,6 +67,7 @@ public class PetController {
     }
 
     @PutMapping("/{ownerId}/{petId}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updatePet(@PathVariable long ownerId,
                                        @PathVariable long petId,
                                        @Valid @RequestBody PetRequestDTO petRequestDTO,
@@ -100,6 +104,7 @@ public class PetController {
     }
 
     @DeleteMapping("/{petId}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> deletePet(
             @PathVariable long petId,
             Principal principal) {
