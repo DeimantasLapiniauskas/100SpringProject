@@ -1,14 +1,10 @@
 package SpringProject._Spring.ServiceAtClinicControllerTest;
 
 import SpringProject._Spring.controller.ServiceAtClinicController;
-import SpringProject._Spring.dto.ServiceAtClinicMapper;
-import SpringProject._Spring.dto.ServiceAtClinicResponseDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ServiceAtClinicService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +37,7 @@ public class ServiceAtClinicGetTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getServices_whenClientGetAllServices_thenReturnAllServicesAnd200() throws Exception {
 
-    //given
+        //given
         ServiceAtClinic serviceAtClinic1 = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00));
 
         ServiceAtClinic serviceAtClinic2 = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
@@ -69,7 +64,7 @@ public class ServiceAtClinicGetTest {
 
         Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinic();
 
-}
+    }
 
     //Happy path test
     @Test

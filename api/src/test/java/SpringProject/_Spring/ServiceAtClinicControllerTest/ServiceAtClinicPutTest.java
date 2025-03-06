@@ -82,13 +82,13 @@ public class ServiceAtClinicPutTest {
     //Unhappy path tests
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void updateService_whenVetUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
+    void updateService_whenVetUpdateServiceNotMatchValidSize_thenReturn400() throws Exception {
         updateServiceFailValidSize();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateService_whenAdminUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
+    void updateService_whenAdminUpdateServiceNotMatchValidSize_thenReturn400() throws Exception {
         updateServiceFailValidSize();
     }
 
@@ -118,13 +118,13 @@ public class ServiceAtClinicPutTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void updateService_whenVetUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
+    void updateService_whenVetUpdateServiceNotMatchValidRegex_thenReturn400() throws Exception {
         updateServiceFailValidRegex();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateService_whenAdminUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
+    void updateService_whenAdminUpdateServiceNotMatchValidRegex_thenReturn400() throws Exception {
         updateServiceFailValidRegex();
     }
 
@@ -155,7 +155,7 @@ public class ServiceAtClinicPutTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void updateBook_whenUpdateClient_thenReturn403() throws Exception {
+    void updateService_whenUpdateClient_thenReturn403() throws Exception {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
         serviceAtClinic.setId(1L);
 

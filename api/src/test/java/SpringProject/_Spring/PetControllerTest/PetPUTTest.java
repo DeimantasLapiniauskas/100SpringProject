@@ -1,7 +1,6 @@
 package SpringProject._Spring.PetControllerTest;
 
 import SpringProject._Spring.controller.PetController;
-import SpringProject._Spring.dto.PetMapping;
 import SpringProject._Spring.dto.PetRequestDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Gender;
@@ -27,7 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
