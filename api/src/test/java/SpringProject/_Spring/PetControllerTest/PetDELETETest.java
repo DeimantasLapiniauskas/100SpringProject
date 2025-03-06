@@ -59,7 +59,7 @@ public class PetDELETETest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void deletePet_whenDeletePetOwner_thenRespond204() throws Exception {
         long ownerId = 1L;
         long petId = 0;
@@ -68,7 +68,7 @@ public class PetDELETETest {
                 .thenReturn(true);
 
         Account account = new Account(
-                "UserEmail", "SecretPassword", List.of(new Role("ADMIN"))
+                "UserEmail", "SecretPassword", List.of(new Role("CLIENT"))
         );
         account.setId(ownerId);
         when(accountService.findByEmail(any()))
@@ -87,7 +87,7 @@ public class PetDELETETest {
 
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void deletePet_whenDifferentPetOwner_thenRespond403() throws Exception {
         long userId = 1;
         long petId = 0;
@@ -95,7 +95,7 @@ public class PetDELETETest {
         when(petService.existsById(petId))
                 .thenReturn(true);
 
-        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("USER")));
+        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("CLIENT")));
         account.setId(userId);
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account));
@@ -125,7 +125,7 @@ public class PetDELETETest {
     }
 
     @Test
-    @WithMockUser(roles = "VET")
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void deletePet_whenVet_thenRespond404() throws Exception {
         long petId = 0;
 
@@ -138,7 +138,7 @@ public class PetDELETETest {
 
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void deletePet_whenAdmin_thenRespond204() throws Exception {
         long ownerId = 1L;
         long petId = 0;

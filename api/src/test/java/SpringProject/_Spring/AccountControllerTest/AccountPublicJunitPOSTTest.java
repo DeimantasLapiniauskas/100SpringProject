@@ -62,7 +62,7 @@ public class AccountPublicJunitPOSTTest {
         when(accountService.saveAccount(any())).thenReturn(account);
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequestDTO)))
                 //then
@@ -84,7 +84,7 @@ public class AccountPublicJunitPOSTTest {
         AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .with(user("existingUser").password("password").roles("USER"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequestDTO)))
@@ -101,7 +101,7 @@ public class AccountPublicJunitPOSTTest {
         when(accountService.existsAccountByEmail("test@example.com")).thenReturn(true);
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequestDTO)))
                 //then
@@ -115,7 +115,7 @@ public class AccountPublicJunitPOSTTest {
         AccountRequestDTO invalidRequest = new AccountRequestDTO("", "", List.of());
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidRequest)))
                 //then

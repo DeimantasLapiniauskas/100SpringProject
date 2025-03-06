@@ -1,6 +1,6 @@
 package SpringProject._Spring.controller.AccountController;
-
-import SpringProject._Spring.dto.*;
+import SpringProject._Spring.dto.AccountRequestDTO;
+import SpringProject._Spring.dto.AccountMapper;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ public class AccountControllerPublic {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/account")
+    @PostMapping("/register")
     public ResponseEntity<?> addAccount(@Valid @RequestBody AccountRequestDTO accountRequestDTO, Authentication authentication) {
         System.out.println("helloandhi");
         if (authentication != null && authentication.isAuthenticated()) {
@@ -36,7 +36,7 @@ public class AccountControllerPublic {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already registered. Please try logging in.");
         }
 
-        Account account = AccountRequestMapper.toAccount(accountRequestDTO);
+        Account account = AccountMapper.toAccount(accountRequestDTO);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
 
         Account savedAccount = accountService.saveAccount(account);
@@ -46,6 +46,6 @@ public class AccountControllerPublic {
                                 .path("/{id}")
                                 .buildAndExpand(savedAccount.getId())
                                 .toUri())
-                .body(AccountResponseMapper.toAccountResponseDTO(savedAccount));
+                .body(AccountMapper.toAccountResponseDTO(savedAccount));
     }
 }
