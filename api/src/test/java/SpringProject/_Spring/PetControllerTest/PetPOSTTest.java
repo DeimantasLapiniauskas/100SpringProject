@@ -100,31 +100,30 @@ public class PetPOSTTest {
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void addPet_whenVet_thenRespond403() throws Exception {
-        long id = 1;
 
-        Gender gender = Gender.Female;
         PetRequestDTO petRequestDTO = new PetRequestDTO(
-                "Maja", "Egyptian", "cat", LocalDate.now(), gender
+                "Maja", "Egyptian", "cat", LocalDate.now(), Gender.Female
         );
+
         mockMvc.perform(post("/api/pets")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(
                                         PetMapping.toPetResponseDTO(
                                                 PetMapping.toPet(
-                                                        petRequestDTO, id)
+                                                        petRequestDTO, 1)
                                         )
                                 )
                         )
                 )
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$").doesNotExist());
+
         Mockito.verify(petService, times(0)).savePet(any());
     }
 
     @Test
     void addPet_whenUnauthenticated_thenRespond401() throws Exception {
-        long id = 1;
         mockMvc.perform(post("/api/pets"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
