@@ -9,6 +9,7 @@ import {BrowserRouter, Route, Routes} from "react-router";
 //import {Register} from "./pages/auth/Register.jsx";
 //import {AuthProvider} from "./context/AuthContext.jsx";
 //import {ViewPet} from "./pages/pets/ViewPet.jsx";
+import {HomePage} from "./pages/home/HomePage.jsx";
 
 
 
@@ -33,8 +34,8 @@ const App = () => {
                       </AuthProvider>
                   </AuthGuard>
               }>
-                  <Route path="pets" element={<PetList/>} />
                   <Route path="pets/view/:id" element={<ViewPet />} />
+                  <Route path="pets" element={<PetList />} />
               </Route>
           </Routes>
       </BrowserRouter>
