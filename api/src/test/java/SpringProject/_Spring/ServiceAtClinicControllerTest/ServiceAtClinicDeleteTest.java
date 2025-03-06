@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = ServiceAtClinicController.class)
 @Import(SecurityConfig.class)
 public class ServiceAtClinicDeleteTest {
+    
     @MockitoBean
     private ServiceAtClinicService service;
     @Autowired
