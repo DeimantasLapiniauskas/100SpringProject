@@ -8,4 +8,5 @@ public record ServiceAtClinicResponseDTO(
         String description,
         BigDecimal price
 ) {
+
 }

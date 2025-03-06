@@ -17,7 +17,7 @@ public record ServiceAtClinicRequestDTO(
         String description,
 
         @NotNull
-        @Min(1)
+        @Min(0)
         BigDecimal price
 ) {
 }
