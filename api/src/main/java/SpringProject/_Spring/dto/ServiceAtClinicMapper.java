@@ -2,6 +2,7 @@ package SpringProject._Spring.dto;
 
 import SpringProject._Spring.model.ServiceAtClinic;
 
+import java.math.RoundingMode;
 import java.util.List;
 
 public class ServiceAtClinicMapper {
@@ -9,7 +10,12 @@ public class ServiceAtClinicMapper {
         return new ServiceAtClinicResponseDTO(service.getId(), service.getName(), service.getDescription(), service.getPrice());
     }
 
-    public static List<ServiceAtClinicResponseDTO> toServiceAtClinicDTO(List<ServiceAtClinic> services){
+
+    public static List<ServiceAtClinicResponseDTO> toServiceAtClinicListDTO(List<ServiceAtClinic> services){
         return services.stream().map( s ->  new ServiceAtClinicResponseDTO(s.getId(), s.getName(), s.getDescription(), s.getPrice())).toList();
+    }
+
+    public static ServiceAtClinic toServiceAtClinic(ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
+        return new ServiceAtClinic();
     }
 }

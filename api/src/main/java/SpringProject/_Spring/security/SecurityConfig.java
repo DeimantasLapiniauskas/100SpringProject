@@ -43,6 +43,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(c -> c.disable())
+//                sito gali reiketi jei kazkas bus negerai su CorsConfig
+//                .cors(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()))
@@ -51,14 +53,12 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/account").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/pets/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET,"/api/pets/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/api/pets/**").hasAnyRole("USER","ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/pets/**").hasAnyRole("USER","ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/services/**").hasAnyRole("VET","ADMIN")
-                        .anyRequest().authenticated()
+
+                                .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/pets/**").authenticated()
+                                .anyRequest().authenticated()
                 );
+
 
         return http.build();
     }
