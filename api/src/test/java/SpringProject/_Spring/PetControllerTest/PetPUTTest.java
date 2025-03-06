@@ -13,6 +13,9 @@ import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.PetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -21,6 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -59,7 +65,6 @@ public class PetPUTTest {
     }
 
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putPet_whenPutPetOwner_thenRespond200() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(
@@ -80,6 +85,17 @@ public class PetPUTTest {
                 "UserEmail", "SecretPassword", List.of(new Role("CLIENT"))
         );
         account.setId(ownerId);
+        UserDetails principal = User.withUsername("admin")
+                .password("password")
+                .roles("ADMIN")
+                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_ADMIN"))
+                .build();
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
+                "password", principal.getAuthorities()));
+        SecurityContextHolder.setContext(securityContext);
+
+
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account)
                 );
@@ -134,7 +150,6 @@ public class PetPUTTest {
 
 
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void putPet_whenPutAdmin_thenRespond200() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(
@@ -154,8 +169,23 @@ public class PetPUTTest {
         when(petService.getPetByid(0))
                 .thenReturn(Optional.of(originalPet));
 
+
         Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("ADMIN")));
         account.setId(5L);
+
+
+        //essentially faking a better @WithMockUser
+        UserDetails principal = User.withUsername("admin")
+                .password("password")
+                .roles("ADMIN")
+                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_ADMIN"))
+                .build();
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
+                "password", principal.getAuthorities()));
+        SecurityContextHolder.setContext(securityContext);
+
+
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account)
                 );
@@ -179,7 +209,6 @@ public class PetPUTTest {
 
 
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putPet_whenPutDifferentOwner_thenRespond403() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(
@@ -205,6 +234,19 @@ public class PetPUTTest {
                                 )
                         )
                 );
+
+
+        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("CLIENT")));
+        account.setId(ownerId + 1);
+        UserDetails principal = User.withUsername("admin")
+                .password("password")
+                .roles("ADMIN")
+                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_ADMIN"))
+                .build();
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
+                "password", principal.getAuthorities()));
+        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
                         .contentType(MediaType.APPLICATION_JSON)

@@ -1,4 +1,5 @@
 package SpringProject._Spring.controller.AccountController;
+
 import SpringProject._Spring.dto.AccountRequestDTO;
 import SpringProject._Spring.dto.AccountMapper;
 import SpringProject._Spring.model.Account;
@@ -28,7 +29,6 @@ public class AccountControllerPublic {
 
     @PostMapping("/register")
     public ResponseEntity<?> addAccount(@Valid @RequestBody AccountRequestDTO accountRequestDTO, Authentication authentication) {
-        System.out.println("helloandhi");
         if (authentication != null && authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are already registered!");
         }

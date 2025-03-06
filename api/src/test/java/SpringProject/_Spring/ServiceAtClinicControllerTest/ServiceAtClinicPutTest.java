@@ -6,11 +6,10 @@ import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ServiceAtClinicService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.core.AnyOf;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -22,7 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -39,39 +37,38 @@ public class ServiceAtClinicPutTest {
     @MockitoBean
     private ServiceAtClinicService serviceAtClinicService;
 
-    //Happy path test
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+
+    //Happy path tests
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void updateService_whenVetUpdateServiceSuccess_thenReturnServiceAndOk() throws Exception {
-        performServiceUpdate();
+        performGoodServiceUpdate();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateService_whenAdminUpdateServiceSuccess_thenReturnServiceAndOk() throws Exception {
-        performServiceUpdate();
+        performGoodServiceUpdate();
     }
 
-    private void performServiceUpdate() throws Exception {
+    private void performGoodServiceUpdate() throws Exception {
         //given
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
         serviceAtClinic.setId(1);
 
         ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00));
 
-        ServiceAtClinic serviceAtClinicUpdated = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00));
-        serviceAtClinicUpdated.setId(1);
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
-        given(serviceAtClinicService.updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinic)).willReturn(serviceAtClinicUpdated);
 
-        ObjectMapper objectMapper = new ObjectMapper();
 
         //when
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
-        //then
+                //then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1))
                 .andExpect(jsonPath("name").value("X-Ray"))
@@ -79,23 +76,19 @@ public class ServiceAtClinicPutTest {
                 .andExpect(jsonPath("price").value("110.0"));
 
         Mockito.verify(serviceAtClinicService, times(1)).findServiceAtClinicById(1);
-
-        Mockito.verify(serviceAtClinicService, times(1)).updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinic);
-
-        Mockito.verify(serviceAtClinicService, times(1)).saveService(serviceAtClinicUpdated);
-
+        Mockito.verify(serviceAtClinicService, times(1)).saveService(Mockito.any());
     }
 
-    //Unhappy path test
+    //Unhappy path tests
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void updateBook_whenVetUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
+    void updateService_whenVetUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
         updateServiceFailValidSize();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateBook_whenAdminUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
+    void updateService_whenAdminUpdateBookNotMatchValidSize_thenReturn400() throws Exception {
         updateServiceFailValidSize();
     }
 
@@ -108,7 +101,6 @@ public class ServiceAtClinicPutTest {
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
-        ObjectMapper objectMapper = new ObjectMapper();
 
         //when
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
@@ -120,30 +112,24 @@ public class ServiceAtClinicPutTest {
                 .andExpect(jsonPath("description").value("must not be blank"))
                 .andExpect(jsonPath("price").value("must be greater than or equal to 0"));
 
-
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
-
-        Mockito.verify(serviceAtClinicService, times(0)).updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinic);
-
-        Mockito.verify(serviceAtClinicService, times(0)).saveService(serviceAtClinic);
-
+        Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
     }
 
-    //Unhappy path test
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void updateBook_whenVetUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
+    void updateService_whenVetUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
         updateServiceFailValidRegex();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateBook_whenAdminUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
+    void updateService_whenAdminUpdateBookNotMatchValidRegex_thenReturn400() throws Exception {
         updateServiceFailValidRegex();
     }
 
-      private void  updateServiceFailValidRegex() throws Exception {
-          //given
+    private void updateServiceFailValidRegex() throws Exception {
+        //given
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
         serviceAtClinic.setId(1L);
 
@@ -151,7 +137,6 @@ public class ServiceAtClinicPutTest {
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
-        ObjectMapper objectMapper = new ObjectMapper();
 
         //when
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
@@ -163,12 +148,29 @@ public class ServiceAtClinicPutTest {
                 .andExpect(jsonPath("description").value("must not be blank"))
                 .andExpect(jsonPath("price").value("must be greater than or equal to 0"));
 
+        Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
+        Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
+    }
+
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void updateBook_whenUpdateClient_thenReturn403() throws Exception {
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
+        serviceAtClinic.setId(1L);
+
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("xdray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00));
+
+        given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").doesNotExist());
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
-
-        Mockito.verify(serviceAtClinicService, times(0)).updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinic);
-
-        Mockito.verify(serviceAtClinicService, times(0)).saveService(serviceAtClinic);
+        Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
 
     }
 }

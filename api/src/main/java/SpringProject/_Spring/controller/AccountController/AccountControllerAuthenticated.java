@@ -31,9 +31,8 @@ public class AccountControllerAuthenticated {
 
     @PutMapping("/account/password")
     public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
-        Account account = (Account) authentication.getPrincipal();
 
-        Account accountFromDB = accountService.findAccountById(account.getId())
+        Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
 
         PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
