@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -115,8 +116,15 @@ public class AccountAuthenticatedJunitPUTTest {
 
         when(accountService.findAccountById(1L)).thenReturn(Optional.empty());
 
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        UserDetails principal = User.withUsername("admin")
+                .password("password")
+                .roles("ADMIN")
+                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_ADMIN"))
+                .build();
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
+                "password", principal.getAuthorities()));
+        SecurityContextHolder.setContext(securityContext);
 
         //when
         mockMvc.perform(put("/api/account/password")

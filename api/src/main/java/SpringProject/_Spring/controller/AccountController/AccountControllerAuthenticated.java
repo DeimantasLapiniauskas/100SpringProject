@@ -8,12 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -42,5 +40,20 @@ public class AccountControllerAuthenticated {
         accountService.saveAccount(accountFromDB);
 
         return ResponseEntity.status(HttpStatus.OK).body("You have successfully updated your password!");
+    }
+
+    @PutMapping("/account/password/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<?> updateAccountPasswordAdmin(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, @PathVariable long id) {
+        Account accountFromDB = accountService.findAccountById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
+
+        PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
+
+        accountFromDB.setPassword(passwordEncoder.encode(accountFromDB.getPassword()));
+
+        accountService.saveAccount(accountFromDB);
+
+        return ResponseEntity.status(HttpStatus.OK).body("You have successfully updated password for account " + id);
     }
 }

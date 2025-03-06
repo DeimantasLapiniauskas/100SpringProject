@@ -1,6 +1,5 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController.AccountControllerAdmin;
 import SpringProject._Spring.controller.AccountController.AccountControllerAuthenticated;
 import SpringProject._Spring.dto.PasswordUpdateDTO;
 import SpringProject._Spring.model.Account;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = AccountControllerAdmin.class)
+@WebMvcTest(controllers = AccountControllerAuthenticated.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
@@ -59,7 +58,7 @@ public class AccountAdminJunitPUTTest {
         when(passwordEncoder.encode("newPassword")).thenReturn("hashedNewPassword");
 
         //when
-        mockMvc.perform(put("/api/account/password/{id}", accountId)
+        mockMvc.perform(put("/api/account/password/" + accountId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(passwordUpdateDTO)))
                 //then
@@ -94,7 +93,7 @@ public class AccountAdminJunitPUTTest {
         when(accountService.findAccountById(accountId)).thenReturn(Optional.empty());
 
         // when
-        mockMvc.perform(put("/api/account/password/{id}", accountId)
+        mockMvc.perform(put("/api/account/password/" + accountId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
@@ -109,7 +108,7 @@ public class AccountAdminJunitPUTTest {
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("");
 
         // when
-        mockMvc.perform(put("/api/account/password/{id}", accountId)
+        mockMvc.perform(put("/api/account/password/" + accountId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
@@ -124,9 +123,8 @@ public class AccountAdminJunitPUTTest {
         // given
         long accountId = 1L;
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
-
         // when
-        mockMvc.perform(put("/api/account/password/{id}", accountId)
+        mockMvc.perform(put("/api/account/password/" + accountId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
@@ -141,7 +139,7 @@ public class AccountAdminJunitPUTTest {
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO(null);
 
         // when
-        mockMvc.perform(put("/api/account/password/{id}", accountId)
+        mockMvc.perform(put("/api/account/password/" + accountId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then

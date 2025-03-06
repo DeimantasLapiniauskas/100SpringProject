@@ -1,4 +1,4 @@
-package SpringProject._Spring.controller;
+package SpringProject._Spring.controller.AccountController;
 
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.repository.AccountRepository;
