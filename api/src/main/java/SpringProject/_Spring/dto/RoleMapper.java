@@ -2,6 +2,7 @@ package SpringProject._Spring.dto;
 
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
+import SpringProject._Spring.model.ServiceAtClinic;
 
 import java.util.List;
 
@@ -28,4 +29,10 @@ public class RoleMapper {
         return role;
     }
 
+    public ServiceAtClinic updateServiceAtClinic(ServiceAtClinicRequestDTO serviceAtClinicRequestDTO, ServiceAtClinic serviceAtClinic) {
+        serviceAtClinic.setName(serviceAtClinicRequestDTO.name());
+        serviceAtClinic.setDescription(serviceAtClinicRequestDTO.description());
+        serviceAtClinic.setPrice(serviceAtClinicRequestDTO.price());
+        return serviceAtClinic;
+    }
 }
