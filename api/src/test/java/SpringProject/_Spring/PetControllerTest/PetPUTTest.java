@@ -1,7 +1,7 @@
 package SpringProject._Spring.PetControllerTest;
 
 import SpringProject._Spring.controller.PetController;
-import SpringProject._Spring.dto.PetRequestDTO;
+import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Gender;
 import SpringProject._Spring.model.Pet;

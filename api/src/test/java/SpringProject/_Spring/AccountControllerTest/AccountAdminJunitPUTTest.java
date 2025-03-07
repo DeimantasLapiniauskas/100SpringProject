@@ -1,7 +1,7 @@
 package SpringProject._Spring.AccountControllerTest;
 
 import SpringProject._Spring.controller.AccountController.AccountControllerAuthenticated;
-import SpringProject._Spring.dto.PasswordUpdateDTO;
+import SpringProject._Spring.dto.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
 import SpringProject._Spring.security.SecurityConfig;

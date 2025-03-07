@@ -1,7 +1,7 @@
 package SpringProject._Spring.controller.AccountController;
 
-import SpringProject._Spring.dto.PasswordUpdateDTO;
-import SpringProject._Spring.dto.PasswordUpdateMapper;
+import SpringProject._Spring.dto.password.PasswordUpdateDTO;
+import SpringProject._Spring.dto.password.PasswordUpdateMapper;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
 import jakarta.validation.Valid;

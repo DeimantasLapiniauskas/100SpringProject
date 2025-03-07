@@ -1,4 +1,6 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.account;
+
+import SpringProject._Spring.dto.role.RoleDTO;
 
 import java.util.List;
 
