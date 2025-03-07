@@ -1,6 +1,6 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController;
+import SpringProject._Spring.controller.AccountController.AccountControllerPublic;
 import SpringProject._Spring.dto.AccountRequestDTO;
 import SpringProject._Spring.dto.RoleDTO;
 import SpringProject._Spring.model.Account;
@@ -32,10 +32,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AccountController.class)
+@WebMvcTest(controllers = AccountControllerPublic.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-public class AccountJunitPOSTTest {
+public class AccountPublicJunitPOSTTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,18 +52,17 @@ public class AccountJunitPOSTTest {
         //given
         AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
 
-        Role role = new Role("ROLE_USER");
+        Role role = new Role("ROLE_CLIENT");
         role.setId(1L);
 
         Account account = new Account("test@example.com", "hashedPassword", List.of(role));
         account.setId(1L);
-
         when(accountService.existsAccountByEmail(anyString())).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
         when(accountService.saveAccount(any())).thenReturn(account);
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequestDTO)))
                 //then
@@ -85,7 +84,7 @@ public class AccountJunitPOSTTest {
         AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .with(user("existingUser").password("password").roles("USER"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequestDTO)))
@@ -102,7 +101,7 @@ public class AccountJunitPOSTTest {
         when(accountService.existsAccountByEmail("test@example.com")).thenReturn(true);
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequestDTO)))
                 //then
@@ -116,7 +115,7 @@ public class AccountJunitPOSTTest {
         AccountRequestDTO invalidRequest = new AccountRequestDTO("", "", List.of());
 
         //when
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidRequest)))
                 //then
