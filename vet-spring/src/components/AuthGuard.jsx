@@ -4,9 +4,9 @@ export const AuthGuard = (props) => {
     const { children } = props;
     const navigate = useNavigate()
 
-    if (!localStorage.getItem("user")) {
-        navigate("/login")
-    }
+    // if (!localStorage.getItem("account")) {
+    //     navigate("/login")
+    // }
 
     return <>{children}</>;
 }

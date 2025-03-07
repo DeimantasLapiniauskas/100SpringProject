@@ -27,7 +27,7 @@ public class AccountController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/account")
+    @PostMapping("/register")
     public ResponseEntity<?> addAccount(@Valid @RequestBody AccountRequestDTO accountRequestDTO, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are already registered!");
