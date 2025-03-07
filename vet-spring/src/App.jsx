@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+//import { useState } from 'react'
 import './App.css'
+import {BrowserRouter, Navigate, Route, Routes} from "react-router";
+import {MainLayout} from "./layouts/MainLayout.jsx";
+import {PetList} from "./pages/pets/PetList.jsx";
+import {AuthGuard} from "./components/AuthGuard.jsx";
+import {Login} from "./pages/auth/Login.jsx";
+import {Register} from "./pages/auth/Register.jsx";
+import {AuthProvider} from "./context/AuthContext.jsx";
+import {ViewPet} from "./pages/pets/ViewPet.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
 
+
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <BrowserRouter>
+          <Routes>
+              <Route path={"/login"} element={
+                  <AuthProvider>
+                      <Login/>
+                  </AuthProvider>
+              }/>
+              <Route path={"/register"} element={
+                  <AuthProvider>
+                      <Register/>
+                  </AuthProvider>
+              }/>
+              <Route path={"/"} element={
+                  <AuthGuard>
+                      <AuthProvider>
+                          <MainLayout/>
+                      </AuthProvider>
+                  </AuthGuard>
+              }>
+                  <Route index element={<Navigate to="pets" replace />} />
+                  <Route path="pets" element={<PetList/>} />
+                  <Route path="pets/view/:id" element={<ViewPet />} />
+              </Route>
+          </Routes>
+      </BrowserRouter>
   )
 }
 
