@@ -4,8 +4,8 @@ package SpringProject._Spring.PetControllerTest;
 import SpringProject._Spring.controller.PetController;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
-import SpringProject._Spring.model.Gender;
-import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.*;
+import SpringProject._Spring.service.ClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SpringProject._Spring.repository.PetRepository;
@@ -26,7 +26,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -50,6 +52,9 @@ public class PetPOSTTest {
     private PetRepository petRepository;
 
     @MockitoBean
+    private ClientService clientService;
+
+    @MockitoBean
     private AccountService accountService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -68,12 +73,18 @@ public class PetPOSTTest {
                 "Maja", "Egyptian", "cat", LocalDate.now(), gender
         );
 
-        when(accountService.existsAccountById(id))
+        when(clientService.existsClientById(id))
                 .thenReturn(true);
-        when(accountService.findIdByEmail(any())).thenReturn(id);
+        when(clientService.findAccountIdByEmail(any())).thenReturn(id);
         when(petService.savePet(any(Pet.class)))
                 .thenReturn(PetMapping.toPet(petRequestDTO, id));
 
+        Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("ADMIN")));
+        account.setId(id);
+        Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
+        client.setAccount(account);
+        when(clientService.findAccountIdByEmail(any()))
+                .thenReturn(id);
 
         mockMvc.perform(post("/api/pets")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -1,13 +1,11 @@
 package SpringProject._Spring.PetControllerTest;
 
 import SpringProject._Spring.controller.PetController;
-import SpringProject._Spring.model.Account;
-import SpringProject._Spring.model.Gender;
-import SpringProject._Spring.model.Pet;
-import SpringProject._Spring.model.Role;
+import SpringProject._Spring.model.*;
 import SpringProject._Spring.repository.PetRepository;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.service.ClientService;
 import SpringProject._Spring.service.PetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,6 +19,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +46,8 @@ public class PetDELETETest {
 
     @MockitoBean
     private AccountService accountService;
+    @MockitoBean
+    private ClientService clientService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -71,6 +72,10 @@ public class PetDELETETest {
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account)
                 );
+
+        Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
+        client.setAccount(account);
+        when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
 
         when(petService.getPetByid(petId))
                 .thenReturn(Optional.of(new Pet(ownerId, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
@@ -97,6 +102,10 @@ public class PetDELETETest {
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account));
 
+        Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
+        client.setAccount(account);
+        when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
+        
         Pet pet = new Pet(userId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male);
         when(petService.getPetByid(pet.getId()))
                 .thenReturn(Optional.of(pet));
@@ -142,12 +151,16 @@ public class PetDELETETest {
 
         when(petService.existsById(petId))
                 .thenReturn(true);
+
         Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("ADMIN")));
         account.setId(ownerId + 1);
 
         when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account)
                 );
+        Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
+        client.setAccount(new Account("email", "password", List.of(new Role("ADMIN", 1))));
+        when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
 
         when(petService.getPetByid(petId))
                 .thenReturn(Optional.of(new Pet(ownerId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));

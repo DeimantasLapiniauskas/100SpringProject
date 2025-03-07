@@ -11,8 +11,7 @@ public class ClientMapping {
                 clientRequestDTO.firstName(),
                 clientRequestDTO.lastName(),
                 clientRequestDTO.phoneNumber(),
-                new Timestamp(System.currentTimeMillis()
-                )
+                new Timestamp(System.currentTimeMillis())
         );
     }
 
