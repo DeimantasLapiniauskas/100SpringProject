@@ -1,5 +1,6 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.account;
 
+import SpringProject._Spring.dto.role.RoleMapper;
 import SpringProject._Spring.model.Account;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class AccountMapper {
         return account;
     }
 
-        public static AccountResponseDTO toAccountResponseDTO(Account account) {
-            return new AccountResponseDTO(account.getId(), account.getEmail(), RoleMapper.toRoleDTOList(account));
-        }
+    public static AccountResponseDTO toAccountResponseDTO(Account account) {
+        return new AccountResponseDTO(account.getId(), account.getEmail(), RoleMapper.toRoleDTOList(account));
+    }
 }

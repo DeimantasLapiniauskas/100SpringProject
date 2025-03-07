@@ -1,4 +1,4 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.service;
 
 import java.math.BigDecimal;
 

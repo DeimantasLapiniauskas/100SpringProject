@@ -1,5 +1,6 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.role;
 
+import SpringProject._Spring.dto.service.ServiceAtClinicRequestDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
 import SpringProject._Spring.model.ServiceAtClinic;

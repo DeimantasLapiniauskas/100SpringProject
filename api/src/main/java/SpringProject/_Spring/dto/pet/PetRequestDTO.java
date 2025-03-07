@@ -1,4 +1,4 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.pet;
 
 
 import SpringProject._Spring.model.Gender;
