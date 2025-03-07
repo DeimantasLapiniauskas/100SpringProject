@@ -8,6 +8,7 @@ import SpringProject._Spring.model.Role;
 import SpringProject._Spring.repository.PetRepository;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.service.ClientService;
 import SpringProject._Spring.service.PetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -45,6 +46,9 @@ public class PetGETTest {
     private PetService petService;
 
     @MockitoBean
+    private ClientService clientService;
+
+    @MockitoBean
     private PetRepository petRepository;
 
     @MockitoBean
@@ -74,7 +78,7 @@ public class PetGETTest {
 
         when(accountService.existsAccountById(ownerId))
                 .thenReturn(true);
-        when(accountService.findIdByEmail(any()))
+        when(clientService.findAccountIdByEmail(any()))
                 .thenReturn(ownerId);
         when(petService.getAllPetsByOwnerId(ownerId))
                 .thenReturn(List.of(petOne, petTwo));

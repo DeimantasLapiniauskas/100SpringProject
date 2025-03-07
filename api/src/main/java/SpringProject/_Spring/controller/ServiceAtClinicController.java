@@ -1,8 +1,8 @@
 package SpringProject._Spring.controller;
 
-import SpringProject._Spring.dto.ServiceAtClinicResponseDTO;
-import SpringProject._Spring.dto.ServiceAtClinicMapper;
-import SpringProject._Spring.dto.ServiceAtClinicRequestDTO;
+import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
+import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
+import SpringProject._Spring.dto.service.ServiceAtClinicRequestDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.service.ServiceAtClinicService;
 import jakarta.validation.Valid;

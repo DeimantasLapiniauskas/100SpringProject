@@ -1,7 +1,7 @@
 package SpringProject._Spring.controller.AccountController;
 
-import SpringProject._Spring.dto.PasswordUpdateDTO;
-import SpringProject._Spring.dto.PasswordUpdateMapper;
+import SpringProject._Spring.dto.password.PasswordUpdateDTO;
+import SpringProject._Spring.dto.password.PasswordUpdateMapper;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
 import jakarta.validation.Valid;
@@ -16,13 +16,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api")
-public class AccountControllerAuthenticated {
+public class AccountControllerPutPassword {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountControllerAuthenticated(AccountService accountService, PasswordEncoder passwordEncoder) {
+    public AccountControllerPutPassword(AccountService accountService, PasswordEncoder passwordEncoder) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
     }

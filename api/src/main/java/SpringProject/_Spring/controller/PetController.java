@@ -1,12 +1,13 @@
 package SpringProject._Spring.controller;
 
 
-import SpringProject._Spring.dto.PetMapping;
-import SpringProject._Spring.dto.PetRequestDTO;
-import SpringProject._Spring.dto.PetResponseDTO;
+import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.pet.PetRequestDTO;
+import SpringProject._Spring.dto.pet.PetResponseDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Pet;
 import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.service.ClientService;
 import SpringProject._Spring.service.PetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +25,27 @@ import java.util.Objects;
 public class PetController {
 
     private final PetService petService;
+    private final ClientService clientService;
     private final AccountService accountService;
 
     @Autowired
-    public PetController(PetService petService, AccountService accountService) {
+    public PetController(PetService petService, AccountService accountService, ClientService clientService) {
         this.petService = petService;
+        this.clientService = clientService;
         this.accountService = accountService;
     }
 
 
     @GetMapping
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<List<PetResponseDTO>> getAllPets(Authentication authentication) {
+    public ResponseEntity<?> getAllPets(Authentication authentication) {
         //temporary: later will need to be able to get client id from authentication.
-        long id = accountService.findIdByEmail(authentication.getName());
+        long id = clientService.findAccountIdByEmail(authentication.getName());
+
+        if (id == -1) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User not found!");
+        }
 
         return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
                 .map(PetMapping::toPetResponseDTO)
@@ -59,21 +67,19 @@ public class PetController {
     public ResponseEntity<?> addPet(
             @Valid @RequestBody PetRequestDTO petRequestDTO,
             Authentication authentication) {
-        long id = accountService.findIdByEmail((authentication.getName()));
-        if (!accountService.existsAccountById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
+
+        long id = clientService.findAccountIdByEmail(authentication.getName());
+
+        if (!clientService.existsClientById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Owner does not exist!");
         }
 
-        if (id != accountService.findIdByEmail(authentication.getName())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not the owner!");
-        }
-
-        Pet createdPet = petService.savePet(
-                PetMapping.toPet(
-                        petRequestDTO, id
-                )
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(PetMapping.toPetResponseDTO(createdPet));
+        Pet pet = PetMapping.toPet(petRequestDTO, id);
+        pet.setOwnerId(id);
+        Pet createdPet = petService.savePet(pet);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(PetMapping.toPetResponseDTO(createdPet));
     }
 
 
@@ -84,16 +90,21 @@ public class PetController {
                                        @Valid @RequestBody PetRequestDTO petRequestDTO,
                                        Authentication authentication
     ) {
-        if (!accountService.existsAccountById(ownerId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner does not exist!");
+        if (!clientService.existsClientById(ownerId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Owner does not exist!");
         }
 
         if (!petService.existsById(petId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Pet does not exist!");
         }
 
         final Account currentAccount = (Account) authentication.getPrincipal();
-        if (currentAccount.getId() != petService.getPetByid(petId).get().getOwnerId() &&
+        if (clientService.findClientByAccountId(currentAccount.getId()).getAccountId()
+                !=
+                petService.getPetByid(petId).get().getOwnerId()
+                &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
                                 role -> Objects.equals(
@@ -101,7 +112,8 @@ public class PetController {
                                 )
                         )
         ) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't edit someone else's pet!");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("You can't edit someone else's pet!");
         }
 
         Pet petFromDB = petService.getPetByid(petId).get();
@@ -126,7 +138,10 @@ public class PetController {
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
-        if (currentAccount.getId() != petService.getPetByid(petId).get().getOwnerId() &&
+        if (clientService.findClientByAccountId(currentAccount.getId()).getAccountId()
+                !=
+                petService.getPetByid(petId).get().getOwnerId()
+                &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
                                 role -> Objects.equals(

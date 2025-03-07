@@ -1,7 +1,7 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController.AccountControllerAuthenticated;
-import SpringProject._Spring.dto.PasswordUpdateDTO;
+import SpringProject._Spring.controller.AccountController.AccountControllerPutPassword;
+import SpringProject._Spring.dto.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
 import SpringProject._Spring.security.SecurityConfig;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = AccountControllerAuthenticated.class)
+@WebMvcTest(controllers = AccountControllerPutPassword.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")

@@ -1,4 +1,4 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.pet;
 
 import SpringProject._Spring.model.Pet;
 
@@ -33,7 +33,7 @@ public class PetMapping {
     }
 
 
-    public static Pet toPet(PetRequestDTO petRequestDTO,long ownerId){
+    public static Pet toPet(PetRequestDTO petRequestDTO, long ownerId) {
         Pet pet = new Pet();
         pet.setOwnerId(ownerId);
         pet.setName(petRequestDTO.name());

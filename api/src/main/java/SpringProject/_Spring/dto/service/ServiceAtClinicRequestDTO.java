@@ -1,7 +1,6 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.service;
 
 import jakarta.validation.constraints.*;
-import org.hibernate.annotations.NotFound;
 
 import java.math.BigDecimal;
 
