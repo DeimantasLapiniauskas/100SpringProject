@@ -12,7 +12,7 @@ export const Register = () => {
     const onSubmit = async (data) => {
         try {
             await registerUser(data.email, data.password);
-        } catch (error) {
+        } catch (error) {console.log(error)
             setError(error.response?.data?.message ?? error.message)
         }
     };

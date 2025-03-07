@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
-  f
-
   const login = async (email, password) => {
     // Paduodas email ir password axios
 
