@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = ServiceAtClinicController.class)
 @Import(SecurityConfig.class)
 public class ServiceAtClinicDeleteTest {
+    
     @MockitoBean
     private ServiceAtClinicService service;
     @Autowired
@@ -29,13 +30,13 @@ public class ServiceAtClinicDeleteTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void deleteServiceWhenVet_204() throws Exception {
+    void deleteService_whenDeleteVet_ThenRespond204() throws Exception {
         deleteServiceById();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void deleteServiceWhenAdmin_204() throws Exception {
+    void deleteService_whenDeleteAdmin_ThenRespond204() throws Exception {
         deleteServiceById();
     }
 
@@ -51,17 +52,17 @@ public class ServiceAtClinicDeleteTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void deleteServiceTestVet_if404() throws Exception {
+    void deleteService_whenDeleteVetNotFound_ThenRespond404() throws Exception {
         performDeleteWhenNotFound();
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void deleteServiceTestAdmin_if404() throws Exception {
+    void deleteService_whenDeleteAdminNotFound_ThenRespond404() throws Exception {
         performDeleteWhenNotFound();
     }
 
-    private void performDeleteWhenNotFound() throws Exception{
+    private void performDeleteWhenNotFound() throws Exception {
         long id = 1;
         BDDMockito.given(service.existsServiceById(id)).willReturn(false);
         BDDMockito.willDoNothing().given(service).deleteServiceById(id);
@@ -72,8 +73,8 @@ public class ServiceAtClinicDeleteTest {
     }
 
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_USER")
-    void deleteServiceTest_if403() throws Exception {
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void deleteService_whenDeleteClient_ThenRespond403() throws Exception {
         long id = 1;
         BDDMockito.given(service.existsServiceById(id)).willReturn(false);
         BDDMockito.willDoNothing().given(service).deleteServiceById(id);

@@ -52,30 +52,30 @@ public class ServiceAtClinicController {
                                 .toUri())
                 .body(newService);
 
-  }
+    }
 
     @GetMapping("/services")
     public ResponseEntity<?> getAllServices() {
 
-       List<ServiceAtClinic> allServices = serviceAtClinicService.findAllServiceAtClinic();
+        List<ServiceAtClinic> allServices = serviceAtClinicService.findAllServiceAtClinic();
 
-       if(allServices.isEmpty()) {
-           return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Service list is empty");
-       }
+        if (allServices.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Service list is empty");
+        }
 
-       return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicListDTO(allServices));
+        return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicListDTO(allServices));
     }
 
     @GetMapping("/services/{serviceId}")
     public ResponseEntity<?> getService(@PathVariable long serviceId) {
 
-        if(serviceId < 0) {
+        if (serviceId < 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Service ID cannot be negative");
         }
 
         Optional<ServiceAtClinic> serviceAtClinicOpt = serviceAtClinicService.findServiceAtClinicById(serviceId);
 
-        if(serviceAtClinicOpt.isEmpty()) {
+        if (serviceAtClinicOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
         }
 
@@ -86,33 +86,34 @@ public class ServiceAtClinicController {
 
     @PutMapping("/services/{serviceId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> updateService(@PathVariable long serviceId, @Valid @RequestBody ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
-        if(serviceId < 0) {
+    public ResponseEntity<?> updateService(@PathVariable long serviceId,
+                                           @Valid @RequestBody ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
+        if (serviceId < 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Service ID cannot be negative");
         }
 
         Optional<ServiceAtClinic> serviceAtClinicOpt = serviceAtClinicService.findServiceAtClinicById(serviceId);
 
-        if(serviceAtClinicOpt.isEmpty()) {
+        if (serviceAtClinicOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
         }
 
         ServiceAtClinic serviceAtClinicFromDB = serviceAtClinicOpt.get();
-        ServiceAtClinic updatedService = serviceAtClinicService.updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinicFromDB);
+        ServiceAtClinic updatedService = ServiceAtClinicMapper.updateServiceAtClinic(serviceAtClinicRequestDTO, serviceAtClinicFromDB);
 
         serviceAtClinicService.saveService(updatedService);
 
         return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicDTO(updatedService));
     }
 
-@DeleteMapping("/services/{id}")
-@PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-public ResponseEntity<Void> deleteService(@PathVariable long id){
-    if (!serviceAtClinicService.existsServiceById(id)){
-        return ResponseEntity.notFound().build();
+    @DeleteMapping("/services/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<String> deleteService(@PathVariable long id) {
+        if (!serviceAtClinicService.existsServiceById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
+        }
+        serviceAtClinicService.deleteServiceById(id);
+        return ResponseEntity.noContent().build();
     }
-    serviceAtClinicService.deleteServiceById(id);
-    return ResponseEntity.noContent().build();
-  }
 }
 

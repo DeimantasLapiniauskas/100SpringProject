@@ -39,27 +39,8 @@ public class ServiceAtClinicPostTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void saveServiceTest() throws Exception{
+    void postService_whenPostVet_thenReturn201() throws Exception {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("some", "good service", new BigDecimal("10.5"));
-
-        BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/services")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(serviceAtClinic)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").exists())
-                .andExpect(jsonPath("name").value("some"));
-
-        Mockito.verify(service, Mockito.times(1)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
-    }
-
-    @Test
-    @WithMockUser
-    void saveServiceBadTest() throws Exception{
-        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("", "good service", new BigDecimal("10.5"));
 
         BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
 
@@ -68,14 +49,34 @@ public class ServiceAtClinicPostTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/services")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinic)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("id").exists())
+                .andExpect(jsonPath("name").value("some"));
+
+        Mockito.verify(service, Mockito.times(1)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void postService_whenSaveClient_thenReturn403() throws Exception {
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("named service", "good service", new BigDecimal("10.5"));
+
+        BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/services")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(serviceAtClinic)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").doesNotExist());
 
         Mockito.verify(service, Mockito.times(0)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
     }
 
     @Test
     @WithMockUser
-    void saveServiceShortNameTest() throws Exception {
+    void postService_whenPostShortName_thenReturn400() throws Exception {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("a", "good service", new BigDecimal("10.5"));
 
         BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
@@ -93,7 +94,7 @@ public class ServiceAtClinicPostTest {
 
     @Test
     @WithMockUser
-    void saveServiceInvalidNameTest() throws Exception {
+    void postService_whenPostInvalidName_thenReturn400() throws Exception {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("][98432!@#$%^()_\\", "good service", new BigDecimal("10.5"));
 
         BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
@@ -111,7 +112,7 @@ public class ServiceAtClinicPostTest {
 
     @Test
     @WithMockUser
-    void saveServiceBadDescriptionTest() throws Exception {
+    void postService_whenPostLongDescription_thenReturn400() throws Exception {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("validName", """
                 According to all known laws of aviation, there is no way a bee should be able to fly.
                 Its wings are too small to get its fat little body off the ground.

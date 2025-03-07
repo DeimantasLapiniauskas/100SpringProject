@@ -32,25 +32,20 @@ public class ServiceAtClinicService {
     }
 
     public Optional<ServiceAtClinic> findServiceAtClinicById(long id) {
-       return serviceAtClinicRepository.findById(id);
+        return serviceAtClinicRepository.findById(id);
     }
 
     public Optional<ServiceAtClinic> findServiceAtClinicByName(String name) {
         return serviceAtClinicRepository.findByName(name);
     }
 
-    public ServiceAtClinic updateServiceAtClinic(ServiceAtClinicRequestDTO serviceAtClinicRequestDTO, ServiceAtClinic serviceAtClinic) {
-        serviceAtClinic.setName(serviceAtClinicRequestDTO.name());
-        serviceAtClinic.setDescription(serviceAtClinicRequestDTO.description());
-        serviceAtClinic.setPrice(serviceAtClinicRequestDTO.price());
-        return serviceAtClinic;
+
+    public boolean existsServiceById(long id) {
+        return serviceAtClinicRepository.existsById(id);
     }
 
-  public boolean existsServiceById(long id){
-    return serviceAtClinicRepository.existsById(id);
-  }
-  public void deleteServiceById(long id){
-    serviceAtClinicRepository.deleteById(id);
-  }
+    public void deleteServiceById(long id) {
+        serviceAtClinicRepository.deleteById(id);
+    }
 
 }
