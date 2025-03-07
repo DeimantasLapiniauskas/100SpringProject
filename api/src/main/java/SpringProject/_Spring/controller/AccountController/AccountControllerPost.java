@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AccountControllerPublic {
+public class AccountControllerPost {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
@@ -33,7 +33,7 @@ public class AccountControllerPublic {
     private final VetService vetService;
 
     @Autowired
-    public AccountControllerPublic(AccountService accountService, PasswordEncoder passwordEncoder, ClientService clientService, VetService vetService) {
+    public AccountControllerPost(AccountService accountService, PasswordEncoder passwordEncoder, ClientService clientService, VetService vetService) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
         this.clientService = clientService;
@@ -66,14 +66,18 @@ public class AccountControllerPublic {
     public ResponseEntity<?> addVet(
             Authentication authentication,
             @Valid @RequestBody VetRequestDTO vetRequestDTO) {
+
         if (accountService.existsAccountByEmail(vetRequestDTO.email())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already registered. Please try logging in.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("This email is already registered. Please try logging in.");
         }
 
         Vet vet = VetMapping.toVet(vetRequestDTO);
-        vet.setPassword(passwordEncoder.encode(vet.getPassword()));
 
-        Vet savedVet = vetService.saveVet(vet);
+
+        Vet savedVet = vetService.saveVet(new Account(vetRequestDTO.email(),
+                passwordEncoder.encode(vetRequestDTO.password()),
+                List.of(new Role("CLIENT", 3))), vet);
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()

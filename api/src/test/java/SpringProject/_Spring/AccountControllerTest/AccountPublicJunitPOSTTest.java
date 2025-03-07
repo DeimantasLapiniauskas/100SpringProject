@@ -1,6 +1,6 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController.AccountControllerPublic;
+import SpringProject._Spring.controller.AccountController.AccountControllerPost;
 import SpringProject._Spring.dto.account.AccountRequestDTO;
 import SpringProject._Spring.dto.role.RoleDTO;
 import SpringProject._Spring.model.Account;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AccountControllerPublic.class)
+@WebMvcTest(controllers = AccountControllerPost.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 public class AccountPublicJunitPOSTTest {

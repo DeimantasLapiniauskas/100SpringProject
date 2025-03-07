@@ -14,15 +14,13 @@ public class VetMapping {
                 vetRequestDTO.phoneNumber(),
                 vetRequestDTO.specialty(),
                 vetRequestDTO.licenseNumber(),
-                LocalDate.now(),
-                vetRequestDTO.email(),
-                vetRequestDTO.password()
+                LocalDate.now()
         );
     }
 
     public static VetResponseDTO toVetResponseDTO(Vet vet) {
         return new VetResponseDTO(
-                vet.getEmail(),
+                vet.getAccount().getEmail(),
                 vet.getFirstName(),
                 vet.getLastName(),
                 vet.getSpecialty()
