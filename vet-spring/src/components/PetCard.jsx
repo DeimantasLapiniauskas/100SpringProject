@@ -3,7 +3,6 @@ import {NavLink} from "react-router";
 import api from "../utils/api.js";
 import {Error} from "./Error.jsx";
 import {useState} from "react";
-import PropTypes from 'prop-types';
 
 export const PetCard = (props) => {
     const { pet, getPetPage, currentPage, pageSize } = props
@@ -37,12 +36,4 @@ export const PetCard = (props) => {
             </div>
         </div>
     )
-};
-
-//PropTypes validation
-PetCard.propTypes = {
-    pet: PropTypes.node.isRequired,
-    getPetPage: PropTypes.node.isRequired,
-    currentPage: PropTypes.node.isRequired,
-    pageSize: PropTypes.node.isRequired
-};
+}

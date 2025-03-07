@@ -1,4 +1,4 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.password;
 
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;

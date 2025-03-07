@@ -1,7 +1,6 @@
-import { useState } from 'react'
+//import { useState } from 'react'
 import './App.css'
-import {BrowserRouter, Route, Routes} from "react-router";
-import {Navigate} from "react-router";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import {MainLayout} from "./layouts/MainLayout.jsx";
 import {PetList} from "./pages/pets/PetList.jsx";
 import {AuthGuard} from "./components/AuthGuard.jsx";
@@ -33,8 +32,9 @@ const App = () => {
                       </AuthProvider>
                   </AuthGuard>
               }>
+                  <Route index element={<Navigate to="pets" replace />} />
+                  <Route path="pets" element={<PetList/>} />
                   <Route path="pets/view/:id" element={<ViewPet />} />
-                  <Route path="pets" element={<PetList />} />
               </Route>
           </Routes>
       </BrowserRouter>

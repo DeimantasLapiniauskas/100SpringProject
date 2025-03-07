@@ -1,7 +1,7 @@
 package SpringProject._Spring.ServiceAtClinicControllerTest;
 
 import SpringProject._Spring.controller.ServiceAtClinicController;
-import SpringProject._Spring.dto.ServiceAtClinicRequestDTO;
+import SpringProject._Spring.dto.service.ServiceAtClinicRequestDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ServiceAtClinicService;

@@ -1,7 +1,7 @@
-package SpringProject._Spring.dto;
+package SpringProject._Spring.dto.account;
 
+import SpringProject._Spring.dto.role.RoleDTO;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;

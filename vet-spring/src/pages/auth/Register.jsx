@@ -12,7 +12,7 @@ export const Register = () => {
     const onSubmit = async (data) => {
         try {
             await registerUser(data.email, data.password);
-        } catch (error) {
+        } catch (error) {console.log(error)
             setError(error.response?.data?.message ?? error.message)
         }
     };
@@ -25,7 +25,7 @@ export const Register = () => {
                         <legend className="fieldset-legend">Register</legend>
 
                         <label className="fieldset-label">Email</label>
-                        <input {...register("email")} type="text" className="input" placeholder="Enter email" />
+                        <input {...register("username")} type="text" className="input" placeholder="Enter email" />
 
                         <label className="fieldset-label">Password</label>
                         <input {...register("password")} type="password" className="input" placeholder="Enter password" />

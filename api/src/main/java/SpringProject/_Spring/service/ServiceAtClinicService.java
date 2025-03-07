@@ -1,6 +1,5 @@
 package SpringProject._Spring.service;
 
-import SpringProject._Spring.dto.ServiceAtClinicRequestDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.repository.ServiceAtClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;

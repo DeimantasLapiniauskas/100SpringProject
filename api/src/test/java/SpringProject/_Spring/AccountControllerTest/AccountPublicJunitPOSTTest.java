@@ -1,8 +1,8 @@
 package SpringProject._Spring.AccountControllerTest;
 
 import SpringProject._Spring.controller.AccountController.AccountControllerPublic;
-import SpringProject._Spring.dto.AccountRequestDTO;
-import SpringProject._Spring.dto.RoleDTO;
+import SpringProject._Spring.dto.account.AccountRequestDTO;
+import SpringProject._Spring.dto.role.RoleDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
 import SpringProject._Spring.security.SecurityConfig;

@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 export const Error = (props) => {
     const { isHidden, error } = props
 
@@ -13,10 +11,4 @@ export const Error = (props) => {
             <span>{error}</span>
         </div>
     )
-};
-
-//PropTypes validation
-Error.propTypes = {
-    isHidden: PropTypes.node.isRequired,
-    error: PropTypes.node.isRequired,
-};
+}

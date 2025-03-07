@@ -2,8 +2,8 @@ package SpringProject._Spring.PetControllerTest;
 
 
 import SpringProject._Spring.controller.PetController;
-import SpringProject._Spring.dto.PetMapping;
-import SpringProject._Spring.dto.PetRequestDTO;
+import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.model.Gender;
 import SpringProject._Spring.model.Pet;
 import com.fasterxml.jackson.databind.ObjectMapper;
