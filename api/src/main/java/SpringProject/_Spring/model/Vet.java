@@ -21,7 +21,7 @@ public class Vet {
     private String licenseNumber;
     private LocalDate hireDate;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", insertable = false, updatable = false)
     private Account account;
 
@@ -33,17 +33,14 @@ public class Vet {
                String phoneNumber,
                String specialty,
                String licenseNumber,
-               LocalDate hireDate,
-               String email,
-               String password) {
+               LocalDate hireDate
+    ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.specialty = specialty;
         this.licenseNumber = licenseNumber;
         this.hireDate = hireDate;
-        this.account = new Account(email, password, List.of(new Role("VET", 2)));
-        this.accountId = account.getId();
     }
 
     public Vet() {
@@ -112,6 +109,7 @@ public class Vet {
 
     public void setAccount(Account account) {
         this.account = account;
+        this.accountId = account.getId();
     }
 
     public long getAccountId() {
@@ -121,22 +119,6 @@ public class Vet {
     public void setAccountId(long accountId) {
         this.account.setId(accountId);
         this.accountId = accountId;
-    }
-
-    public String getEmail() {
-        return account.getEmail();
-    }
-
-    public String getPassword() {
-        return account.getPassword();
-    }
-
-    public void setEmail(String email) {
-        account.setEmail(email);
-    }
-
-    public void setPassword(String password) {
-        account.setPassword(password);
     }
 }
 

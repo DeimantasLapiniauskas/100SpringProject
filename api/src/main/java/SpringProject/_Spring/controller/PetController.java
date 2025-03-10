@@ -75,11 +75,9 @@ public class PetController {
                     .body("Owner does not exist!");
         }
 
-        Pet createdPet = petService.savePet(
-                PetMapping.toPet(
-                        petRequestDTO, id
-                )
-        );
+        Pet pet = PetMapping.toPet(petRequestDTO, id);
+        pet.setOwnerId(id);
+        Pet createdPet = petService.savePet(pet);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(PetMapping.toPetResponseDTO(createdPet));
     }

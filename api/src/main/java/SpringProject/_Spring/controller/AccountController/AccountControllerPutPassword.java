@@ -16,13 +16,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api")
-public class AccountControllerAuthenticated {
+public class AccountControllerPutPassword {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountControllerAuthenticated(AccountService accountService, PasswordEncoder passwordEncoder) {
+    public AccountControllerPutPassword(AccountService accountService, PasswordEncoder passwordEncoder) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
     }
