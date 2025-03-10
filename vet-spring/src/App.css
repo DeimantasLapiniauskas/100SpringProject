@@ -15,6 +15,8 @@
   }
 
 .google-removebg-preview-1 {
+  /* FIGMA Log In Page, google logo */
+  /* google removebg preview 1 in FIGMA description */
     position: absolute;
     width: 40px;
     height: 30.92px;
@@ -22,4 +24,28 @@
     top: 471px;
     background: url(google-removebg-preview);
 
+}
+
+.pet-1 {
+  /* FIGMA Log In Page, dog image */
+  /* pet 1 in FIGMA description */
+  position: absolute;
+  width: 593px;
+  height: 821px;
+  left: 758px;
+  top: 170px;
+  background: url(pet.jpg);
+  border-radius: 0px 30px 30px 0px;
+}
+
+.paws-1 {
+  /* FIGMA Log In Page, paw logo on Navigation Bar */
+  /* paws 1 in FIGMA description */
+
+  position: absolute;
+  width: 117px;
+  height: 52px;
+  left: 63px;
+  top: 16px;
+  background: url(paws.jpg);
 }
