@@ -81,4 +81,16 @@
   border-radius: 50px;
 }
 
+/* //////////////////////////////////////////////////////////////////////// */
+
+.home-page {
+  /* FIGMA Home Page, frame outline */
+  /* Main Page in FIGMA description */
+  position: relative;
+  width: 1440px;
+  height: 1024px;
+
+  background: #FFFFFF;
+}
+
 

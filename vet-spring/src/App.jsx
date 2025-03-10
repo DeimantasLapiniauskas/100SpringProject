@@ -9,12 +9,19 @@ import {Register} from "./pages/auth/Register.jsx";
 import {AuthProvider} from "./context/AuthContext.jsx";
 import {ViewPet} from "./pages/pets/ViewPet.jsx";
 
+import {HomePage} from "./pages/home/HomePage.jsx";
+
 
 
 const App = () => {
   return (
       <BrowserRouter>
           <Routes>
+              <Route path={"/home"} element={
+                  <AuthProvider>
+                      <HomePage/>
+                  </AuthProvider>
+              }/>
               <Route path={"/login"} element={
                   <AuthProvider>
                       <Login/>
