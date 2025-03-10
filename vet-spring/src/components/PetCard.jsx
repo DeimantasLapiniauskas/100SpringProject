@@ -17,6 +17,7 @@ export const PetCard = (props) => {
         } catch (error) {
             setError(error.response?.message || error.message);
         }
+    
     }
 
     return (
