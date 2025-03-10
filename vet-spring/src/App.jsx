@@ -8,6 +8,7 @@ import {Login} from "./pages/auth/Login.jsx";
 import {Register} from "./pages/auth/Register.jsx";
 import {AuthProvider} from "./context/AuthContext.jsx";
 import {ViewPet} from "./pages/pets/ViewPet.jsx";
+import { NotFound } from './components/NotFound.jsx';
 
 
 
@@ -36,6 +37,11 @@ const App = () => {
                   <Route path="pets" element={<PetList/>} />
                   <Route path="pets/view/:id" element={<ViewPet />} />
               </Route>
+              <Route path={"*"} element={
+                <AuthGuard>
+                    <NotFound/>
+                </AuthGuard>
+            }/>
           </Routes>
       </BrowserRouter>
   )
