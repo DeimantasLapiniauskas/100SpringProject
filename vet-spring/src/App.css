@@ -1,1 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
+.black-login-button {
+    /* FIGMA Log In Page, black Log In button */
+    /* Rectangle 4219 in FIGMA description */
+    box-sizing: border-box;
+    position: absolute;
+    width: 372px;
+    height: 50px;
+    left: 248px;
+    top: 771px;
+    background: #000000;
+    border: 3px solid #000000;
+    border-radius: 30px;
+  }
+
+.google-removebg-preview-1 {
+    position: absolute;
+    width: 40px;
+    height: 30.92px;
+    left: 350px;
+    top: 471px;
+    background: url(google-removebg-preview);
+
+}
