@@ -1,12 +1,16 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController.AccountControllerPublic;
-import SpringProject._Spring.dto.account.AccountRequestDTO;
+import SpringProject._Spring.controller.AccountController.AccountControllerPost;
+import SpringProject._Spring.dto.client.ClientMapping;
+import SpringProject._Spring.dto.client.ClientRequestDTO;
 import SpringProject._Spring.dto.role.RoleDTO;
 import SpringProject._Spring.model.Account;
+import SpringProject._Spring.model.Client;
 import SpringProject._Spring.model.Role;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.service.ClientService;
+import SpringProject._Spring.service.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -18,9 +22,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +38,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AccountControllerPublic.class)
+@WebMvcTest(controllers = AccountControllerPost.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 public class AccountPublicJunitPOSTTest {
@@ -42,6 +48,10 @@ public class AccountPublicJunitPOSTTest {
     @MockitoBean
     private AccountService accountService;
     @MockitoBean
+    private ClientService clientService;
+    @MockitoBean
+    private VetService vetService;
+    @MockitoBean
     private PasswordEncoder passwordEncoder;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -50,44 +60,42 @@ public class AccountPublicJunitPOSTTest {
     @Test
     void addAccount_whenValidRequest_thenReturnAnd201() throws Exception {
         //given
-        AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
+        ClientRequestDTO clientRequestDTO = new ClientRequestDTO("test@example.com", "password123", "firstName", "lastName", "123-456-789");
 
-        Role role = new Role("ROLE_CLIENT");
-        role.setId(1L);
 
-        Account account = new Account("test@example.com", "hashedPassword", List.of(role));
-        account.setId(1L);
+        Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
+        client.setAccount(new Account(
+                clientRequestDTO.email(),
+                clientRequestDTO.password(),
+                List.of(new Role("CLIENT", 3))));
         when(accountService.existsAccountByEmail(anyString())).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
-        when(accountService.saveAccount(any())).thenReturn(account);
+        when(clientService.saveClient(any(), any())).thenReturn(client);
 
         //when
         mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(accountRequestDTO)))
+                        .content(objectMapper.writeValueAsString(clientRequestDTO)))
                 //then
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").value(1L))
                 .andExpect(jsonPath("email").value("test@example.com"))
-                .andExpect(jsonPath("roles").isArray())
-                .andExpect(jsonPath("roles", Matchers.hasSize(1)))
-                .andExpect(jsonPath("roles[0]").exists())
-                .andExpect(jsonPath("roles[0].id").value(1));
+                .andExpect(jsonPath("firstName").value("firstName"))
+                .andExpect(jsonPath("lastName").value("lastName"));
 
-        Mockito.verify(accountService, times(1)).saveAccount(ArgumentMatchers.any(Account.class));
+        Mockito.verify(clientService, times(1)).saveClient(ArgumentMatchers.any(Account.class), ArgumentMatchers.any(Client.class));
     }
 
     //unhappy path
     @Test
+    @WithMockUser
     void addAccount_whenAccountAuthenticated_thenReturn403() throws Exception {
         //given
-        AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
+        ClientRequestDTO clientRequestDTO = new ClientRequestDTO("test@example.com", "password123", "firstName", "lastName", "123-456-789");
 
         //when
         mockMvc.perform(post("/api/register")
-                        .with(user("existingUser").password("password").roles("USER"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(accountRequestDTO)))
+                        .content(objectMapper.writeValueAsString(clientRequestDTO)))
                 //then
                 .andExpect(status().isForbidden());
     }
@@ -96,29 +104,37 @@ public class AccountPublicJunitPOSTTest {
     @Test
     void addAccount_whenEmailAlreadyExists_thenReturn400() throws Exception {
         //given
-        AccountRequestDTO accountRequestDTO = new AccountRequestDTO("test@example.com", "password123", List.of(new RoleDTO(1)));
+        ClientRequestDTO clientRequestDTO = new ClientRequestDTO("test@example.com", "password123", "firstName", "lastName", "123-456-789");
 
         when(accountService.existsAccountByEmail("test@example.com")).thenReturn(true);
 
         //when
         mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(accountRequestDTO)))
+                        .content(objectMapper.writeValueAsString(clientRequestDTO)))
                 //then
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").value("This email is already registered. Please try logging in."));
+        Mockito.verify(clientService, times(0))
+                .saveClient(ArgumentMatchers.any(Account.class), ArgumentMatchers.any(Client.class));
+
     }
 
     //unhappy path
     @Test
     void addAccount_whenInvalidRequest_thenReturn400() throws Exception {
         //given
-        AccountRequestDTO invalidRequest = new AccountRequestDTO("", "", List.of());
+        ClientRequestDTO invalidRequest = new ClientRequestDTO("", "", "", "", "");
 
         //when
         mockMvc.perform(post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidRequest)))
                 //then
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").exists());
+
+        Mockito.verify(clientService, times(0))
+                .saveClient(ArgumentMatchers.any(Account.class), ArgumentMatchers.any(Client.class));
     }
 }

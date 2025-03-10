@@ -1,6 +1,8 @@
 package SpringProject._Spring.service;
 
+import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Vet;
+import SpringProject._Spring.repository.AccountRepository;
 import SpringProject._Spring.repository.VetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,13 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class VetService {
     private final VetRepository vetRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public VetService(VetRepository vetRepository) {
+    public VetService(VetRepository vetRepository, AccountRepository accountRepository) {
         this.vetRepository = vetRepository;
+        this.accountRepository = accountRepository;
     }
 
-    public Vet saveVet(Vet vet) {
+    public Vet saveVet(Account account, Vet vet) {
+        accountRepository.save(account);
+        vet.setAccount(account);
         return vetRepository.save(vet);
     }
 }

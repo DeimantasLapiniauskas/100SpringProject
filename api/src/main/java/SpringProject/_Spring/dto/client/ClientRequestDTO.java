@@ -28,7 +28,7 @@ public record ClientRequestDTO(
 
         @NotNull(message = "Phone number can not be null!")
         @Length(min = 3, max = 17, message = "Your phone number must be between 3 and 17 characters long!")
-        @Pattern(regexp = "^[0-9-]*$", message = "Your phone number must only be numbers and dashes!")
+        @Pattern(regexp = "^[0-9\\-+]+$", message = "Your phone number must only be numbers and dashes!")
         String phoneNumber) {
 
 }
