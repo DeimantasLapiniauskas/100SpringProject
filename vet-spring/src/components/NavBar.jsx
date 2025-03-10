@@ -7,6 +7,7 @@ export function Navbar() {
         <div>
             <nav className="h-[56px] bg-amber-600 px-[5rem] flex justify-between items-center">
                 <NavLink to={"/pets"}><p className="">Pet list</p></NavLink>
+                <NavLink to={"/services"}><p className="">Service list</p></NavLink>
                 <NavLink to={"/login"}><p>Login</p></NavLink>
             </nav>
         </div>

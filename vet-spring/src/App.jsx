@@ -8,7 +8,7 @@ import {Login} from "./pages/auth/Login.jsx";
 import {Register} from "./pages/auth/Register.jsx";
 import {AuthProvider} from "./context/AuthContext.jsx";
 import {ViewPet} from "./pages/pets/ViewPet.jsx";
-
+import { ServiceList } from './pages/services/ServiceList.jsx';
 
 
 const App = () => {
@@ -34,7 +34,10 @@ const App = () => {
               }>
                   <Route index element={<Navigate to="pets" replace />} />
                   <Route path="pets" element={<PetList/>} />
+                  <Route path="services" element={<ServiceList/>}/>
                   <Route path="pets/view/:id" element={<ViewPet />} />
+                  
+                  
               </Route>
           </Routes>
       </BrowserRouter>
