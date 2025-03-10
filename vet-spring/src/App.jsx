@@ -9,7 +9,7 @@ import {Register} from "./pages/auth/Register.jsx";
 import {AuthProvider} from "./context/AuthContext.jsx";
 import {ViewPet} from "./pages/pets/ViewPet.jsx";
 import { ServiceList } from './pages/services/ServiceList.jsx';
-
+import {ServiceAdd} from './pages/services/ServiceAdd.jsx';
 
 const App = () => {
   return (
@@ -35,6 +35,7 @@ const App = () => {
                   <Route index element={<Navigate to="pets" replace />} />
                   <Route path="pets" element={<PetList/>} />
                   <Route path="services" element={<ServiceList/>}/>
+                  <Route path="services/add" element={<ServiceAdd/>}/>
                   <Route path="pets/view/:id" element={<ViewPet />} />
                   
                   

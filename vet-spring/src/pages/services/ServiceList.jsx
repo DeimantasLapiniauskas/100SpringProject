@@ -2,9 +2,10 @@ import {useEffect, useState} from "react";
 import api from "../../utils/api";
 import {ServiceCard} from "../../components/ServiceCard.jsx";
 import {Error} from "../../components/Error.jsx";
+import {NavLink} from "react-router";
 
 export const ServiceList = () => {
-    const [services, setServices] = useState([])
+    const [services, setServices] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [pageSize, setPageSize] = useState(12)
     const [error, setError] = useState()
@@ -12,9 +13,11 @@ export const ServiceList = () => {
     const getServicePage = async (size, page) => {
         try {
             const response = await api.get(`/services?size=${size}&page=${page}`)
+            
             setServices(response.data)
         } catch (error) {
             setError(error.response?.data?.mesage || error.mesage)
+
         }
     }
 
@@ -24,6 +27,7 @@ export const ServiceList = () => {
         setCurrentPage(1)
         setPageSize(pageSize)
     }
+
 
     const onPaginate = async (page) => {
         if (page < 1) return
@@ -38,8 +42,10 @@ export const ServiceList = () => {
 
     return (
         <div className="flex flex-col items-center gap-8 p-8 ">
+            <NavLink to={`/services/add`} className="btn btn-primary">Add</NavLink>
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {services?.map(service => (
+            
+                {services && services?.map(service => (
                     <ServiceCard key={service.id} service={service} getServicePage={getServicePage} currentPage={currentPage} pageSize={pageSize}/>
                 ))}
             </ul>
