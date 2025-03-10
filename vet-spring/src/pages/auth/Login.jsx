@@ -29,7 +29,7 @@ export const Login = () => {
                         <legend className="fieldset-legend">Login</legend>
 
                         <label className="fieldset-label">Email</label>
-                        <input {...register("username")} type="text" className="input" placeholder="Enter email" />
+                        <input {...register("email")} type="text" className="input" placeholder="Enter email" />
 
                         <label className="fieldset-label">Password</label>
                         <input {...register("password")} type="password" className="input" placeholder="Enter password" />
