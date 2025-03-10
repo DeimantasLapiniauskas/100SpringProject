@@ -38,8 +38,11 @@
   border-radius: 0px 30px 30px 0px;
 }
 
+
+/* //////////////////////////////////////////////////////// */
+
 .paws-1 {
-  /* FIGMA Log In Page, paw logo on Navigation Bar */
+  /* FIGMA paw logo on Navigation Bar */
   /* paws 1 in FIGMA description */
 
   position: absolute;
@@ -49,3 +52,33 @@
   top: 16px;
   background: url(paws.jpg);
 }
+
+.middle-color-light-orange-login-button {
+  /* FIGMA Middle Color light Orange Log In button on Navigation Bar  */
+  /* Rectangle 76 in FIGMA description */
+  position: absolute;
+  width: 132px;
+  height: 47px;
+  left: 885px;
+  top: 22px;
+
+  /* Middle Color light Orange */
+  background: #FFBD89;
+  border-radius: 50px;
+}
+
+.main-color-orange-book-now-button {
+  /* FIGMA Main Color Orange Book Now button on Navigation Bar  */
+  /* Rectangle 77 in FIGMA description */
+  position: absolute;
+  width: 132px;
+  height: 47px;
+  right: 94px;
+  top: 22px;
+
+  /* Main Color Orange */
+  background: #F19A56;
+  border-radius: 50px;
+}
+
+
