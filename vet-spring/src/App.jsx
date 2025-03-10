@@ -12,6 +12,8 @@ import {ViewPet} from "./pages/pets/ViewPet.jsx";
 import {HomePage} from "./pages/home/HomePage.jsx";
 
 
+import { ServiceList } from './pages/services/ServiceList.jsx';
+import {ServiceAdd} from './pages/services/ServiceAdd.jsx';
 
 const App = () => {
   return (
