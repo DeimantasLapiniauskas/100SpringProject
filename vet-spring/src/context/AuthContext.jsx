@@ -44,11 +44,12 @@ console.log(jwt)
   };
 
   const logout = () => {
+    setTimeout(() => {
     setAccount({});
-    
     clearAuth();
     localStorage.removeItem("jwt");
     navigate("/login");
+    }, 1000)
   };
 
   return (
