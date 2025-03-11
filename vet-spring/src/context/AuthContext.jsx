@@ -22,9 +22,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = async (email, password) => {
-   
-console.log(email)
-    
+  
     const response = await api.post("/token", {}, {
       auth: { username: email, password }
     });
@@ -44,11 +42,12 @@ console.log(jwt)
   };
 
   const logout = () => {
+    setTimeout(() => {
     setAccount({});
-    
     clearAuth();
     localStorage.removeItem("jwt");
     navigate("/login");
+    }, 1000)
   };
 
   return (
