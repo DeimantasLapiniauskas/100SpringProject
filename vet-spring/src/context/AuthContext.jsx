@@ -22,9 +22,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = async (email, password) => {
-   
-console.log(email)
-    
+  
     const response = await api.post("/token", {}, {
       auth: { username: email, password }
     });
