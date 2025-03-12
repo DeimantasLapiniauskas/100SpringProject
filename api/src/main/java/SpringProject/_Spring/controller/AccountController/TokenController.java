@@ -31,7 +31,7 @@ public class TokenController {
     @PostMapping("/token")
     public String token(Authentication authentication) {
         Instant now = Instant.now();
-        long expiry = 36L;
+        long expiry = 10L;
 
         String email = authentication.getName();
 

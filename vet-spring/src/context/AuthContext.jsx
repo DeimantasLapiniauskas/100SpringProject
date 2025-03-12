@@ -20,14 +20,15 @@ export const AuthProvider = ({ children }) => {
       const decodedJwt = jwtDecode(maybeJwt);
       if(decodedJwt.exp * 1000 < Date.now()) {
         localStorage.removeItem("jwt")
-        return {}
+        // return {}
       }
       return decodedJwt
     }
-    return {}
+    // return {}
   });
 
   useEffect(() => {
+    const checkJwtExpiration = () => {
     const maybeJwt = localStorage.getItem("jwt");
     if (maybeJwt) {
       const decodedJwt = jwtDecode(maybeJwt);
@@ -37,6 +38,8 @@ export const AuthProvider = ({ children }) => {
         navigate("/login")
       }
     }
+  };
+  checkJwtExpiration();
   }, [navigate]);
 
   const login = async (email, password) => {
@@ -59,12 +62,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setTimeout(() => {
     setAccount({});
     clearAuth();
     localStorage.removeItem("jwt");
     navigate("/login");
-    }, 1000)
   };
 
   return (
