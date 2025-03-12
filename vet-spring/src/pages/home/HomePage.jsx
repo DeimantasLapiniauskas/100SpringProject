@@ -8,10 +8,27 @@
 
 //import {VetClinicRoutes} from "../../components/VetClinicRoutes.jsx";
 
+import HomePageDog from "../../assets/dog.png";
+
 export const HomePage = () => {
     return (
         <div className="home-page">
-            <p>Not implemented :c</p>
+            <nav className="trialnavbarvladimir-container">
+                <div className="trialnavbarvladimir"></div>
+            </nav>
+
+            <main className="company-meet">
+
+                <figure>
+                <img className="dog1" src={HomePageDog} alt="Dog; light brown and white fur; bent ears" />
+                </figure>
+
+                <article className="rustaveli-avenue">
+                    <p>Rustaveli Avenue 10, Tbilisi +995 511 233 789 Twenty-four hours a day</p>
+                </article>
+            </main>
+
+            
         </div>
     )
 }
