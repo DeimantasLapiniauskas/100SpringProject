@@ -176,7 +176,7 @@
 }
 
 .rustaveli-avenue {
-  /* FIGMA Main Page, Dog picture on the left */
+  /* FIGMA Main Page, Text on the right with address, phone and working hours */
   /* Rustaveli Avenue 10, Tbilisi +995 511 233 789 Twenty-four hours a day; This is what it is called in FIGMA description; */
 
   position: absolute;
@@ -192,6 +192,26 @@
   line-height: 23px;
   display: flex;
   align-items: center;
+  text-align: right;
+
+  color: #000000;
+}
+
+.veterinary-company-in-georgia {
+  /* FIGMA Main Page, Text on the right with a header describing name of veterinary practice */
+  /* Veterinary Company in Georgia; This is what it is called in FIGMA description; */
+
+  position: absolute;
+  width: 982px;
+  height: 214px;
+  left: 368px;
+  top: 278px;
+
+  font-family: 'Kiwi Maru';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 93px;
   text-align: right;
 
   color: #000000;

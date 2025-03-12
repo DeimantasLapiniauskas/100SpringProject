@@ -24,8 +24,10 @@ export const HomePage = () => {
                 </figure>
 
                 <article className="rustaveli-avenue">
-                    <p>Rustaveli Avenue 10, Tbilisi +995 511 233 789 Twenty-four hours a day</p>
+                    Rustaveli Avenue 10, Tbilisi +995 511 233 789 Twenty-four hours a day
                 </article>
+
+                <h1 className="veterinary-company-in-georgia">Veterinary Company <br></br> in Georgia</h1>
             </main>
 
             
