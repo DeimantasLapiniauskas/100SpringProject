@@ -5,6 +5,9 @@ import SpringProject._Spring.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
@@ -21,5 +24,13 @@ public class AppointmentService {
 
     public Appointment saveAppointment(Appointment appointment) {
         return appointmentRepository.save(appointment);
+    }
+
+    public Optional<Appointment> getAppointmentById(long id) {
+        return appointmentRepository.findById(id);
+    }
+
+    public boolean existsAppointmentById(long id) {
+        return appointmentRepository.existsById(id);
     }
 }

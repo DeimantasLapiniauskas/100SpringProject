@@ -42,7 +42,7 @@ public class Appointment {
     private String clinicAddress;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.Scheduled;
     private String notes;
     private BigDecimal totalServicesSum;
     private Timestamp createdAt;
