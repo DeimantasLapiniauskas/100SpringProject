@@ -28,6 +28,12 @@ export const HomePage = () => {
                 </article>
 
                 <h1 className="veterinary-company-in-georgia">Veterinary Company <br></br> in Georgia</h1>
+
+                <p className="as-georgia-leading">
+                As Georgia’s leading animal health company, SmartCare is<br></br>
+                 driven by a singular purpose: to nurture Georgia and<br></br>
+                  humankind by advancing care for animals.
+                </p>
             </main>
 
             
