@@ -6,6 +6,8 @@
 
 //import { Navbar } from "../components/NavBar.jsx";
 
+//import {VetClinicRoutes} from "../../components/VetClinicRoutes.jsx";
+
 export const HomePage = () => {
     return (
         <div className="home-page">
