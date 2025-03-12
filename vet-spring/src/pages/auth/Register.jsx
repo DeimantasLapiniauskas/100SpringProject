@@ -13,7 +13,7 @@ export const Register = () => {
         try {
             await registerUser(data.email, data.password, data.firstName, data.lastName, data.phoneNumber);
             await login(data.email, data.password)
-        } catch (error) {console.log(error)
+        } catch (error) {
             setError(JSON.stringify(error.response.data) ?? error.message)
         }
     };
