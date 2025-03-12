@@ -24,14 +24,14 @@ export const HomePage = () => {
                 </figure>
 
                 <article className="rustaveli-avenue">
-                    Rustaveli Avenue 10, Tbilisi +995 511 233 789 Twenty-four hours a day
+                    Pavasario Avenue 100, Vilnius +370 511 233 78 Twenty-four hours a day
                 </article>
 
-                <h1 className="veterinary-company-in-georgia">Veterinary Company <br></br> in Georgia</h1>
+                <h1 className="veterinary-company-in-georgia">Happy Hearts <br></br> Veterinary clinic</h1>
 
                 <p className="as-georgia-leading">
-                As Georgia’s leading animal health company, SmartCare is<br></br>
-                 driven by a singular purpose: to nurture Georgia and<br></br>
+                As Lithuania’s leading animal health company, Happy Hearts is<br></br>
+                 driven by a singular purpose: to nurture Lithuania and<br></br>
                   humankind by advancing care for animals.
                 </p>
             </main>

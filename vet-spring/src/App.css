@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
+/*FOR LOG IN PAGE//////////////////////////////////////////////////////// */
+
 .black-login-button {
     /* FIGMA Log In Page, black Log In button */
     /* Rectangle 4219 in FIGMA description */
@@ -79,6 +81,29 @@
 
 /* //////////////////////////////////////////////////////// */
 
+/*FOR NAVIGATION BAR //////////////////////////////////////////////////////// */
+
+.trialnavbarvladimir {
+  /* FIGMA Main Page, trial Navigation Bar from Vladimir */
+  /* Rectangle 2 in FIGMA description */
+
+  width: 80%; /* Make the navbar width responsive */
+  max-width: 1260px; /* Optional: Set a max width for the navbar */
+  height: 84px; /* Fixed height */
+  top: 54px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+}
+
+.trialnavbarvladimir-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the navbar */
+  align-items: center; /* Vertically center the navbar */
+  height: 150px; /* Or adjust as needed */
+}
+
 .paws-1 {
   /* FIGMA paw logo on Navigation Bar */
   /* paws 1 in FIGMA description */
@@ -121,6 +146,8 @@
 
 /* //////////////////////////////////////////////////////////////////////// */
 
+/*FOR HOME PAGE //////////////////////////////////////////////////////// */
+
 .home-page {
   /* FIGMA Home Page, frame outline */
   /* Main Page in FIGMA description */
@@ -129,27 +156,6 @@
   /* height: 1024px; */
 
   background: #FFFFFF;
-}
-
-.trialnavbarvladimir {
-  /* FIGMA Main Page, trial Navigation Bar from Vladimir */
-  /* Rectangle 2 in FIGMA description */
-
-  width: 80%;
-  max-width: 1260px;
-  height: 84px;
-  top: 54px;
-
-  background: #FFFFFF;
-  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 50px;
-}
-
-.trialnavbarvladimir-container {
-  display: flex;
-  justify-content: center; /* Horizontally center the navbar */
-  align-items: center; /* Vertically center the navbar */
-  height: 150px; /* Or adjust as needed */
 }
 
 .company-meet {
