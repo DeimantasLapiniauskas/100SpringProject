@@ -20,11 +20,11 @@ export const AuthProvider = ({ children }) => {
       const decodedJwt = jwtDecode(maybeJwt);
       if(decodedJwt.exp * 1000 < Date.now()) {
         localStorage.removeItem("jwt")
-        // return {}
+        return null
       }
       return decodedJwt
     }
-    // return {}
+    return null;
   });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
       const decodedJwt = jwtDecode(maybeJwt);
       if(decodedJwt.exp * 1000 < Date.now()) {
         localStorage.removeItem("jwt");
-        setAccount({})
+        setAccount(null)
         navigate("/login")
       }
     }
@@ -57,12 +57,10 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password, firstName, lastName, phoneNumber) => {
     await api.post("/register", { email, password, firstName, lastName, phoneNumber });
-    console.log()
-    navigate("/login");
   };
 
   const logout = () => {
-    setAccount({});
+    setAccount(null);
     clearAuth();
     localStorage.removeItem("jwt");
     navigate("/login");
