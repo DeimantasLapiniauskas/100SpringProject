@@ -8,7 +8,6 @@ import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.vet.VetMapping;
 import SpringProject._Spring.model.Appointment;
-import SpringProject._Spring.model.Status;
 import SpringProject._Spring.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api")
 public class AppointmentController {
@@ -28,13 +24,15 @@ public class AppointmentController {
     private final PetService petService;
     private final ServiceAtClinicService serviceService;
     private final VetService vetService;
+    private final AccountService accountService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService) {
+    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService, AccountService accountService) {
         this.appointmentService = appointmentService;
         this.petService = petService;
         this.serviceService = serviceService;
         this.vetService = vetService;
+        this.accountService = accountService;
     }
 
     @PostMapping("/appointments")
@@ -63,7 +61,8 @@ public class AppointmentController {
                         VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
                         savedAppointment.getServices(),
                         savedAppointment.getAppointmentDate(),
-                        savedAppointment.getNotes())
+                        savedAppointment.getNotes(),
+                        savedAppointment.getTotalServicesSum())
         );
     }
 
@@ -83,7 +82,22 @@ public class AppointmentController {
         updateDTO.newDate().ifPresent(appointmentFromDB::setAppointmentDate);
         appointmentService.saveAppointment(appointmentFromDB);
         return ResponseEntity.ok("Appointment updated successfully!");
+    }
 
+
+    @GetMapping("/appointments")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<?> getOwnAppointments(Authentication authentication) {
+        return ResponseEntity.ok(
+                appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
+                        .stream().map(appointment -> new AppointmentResponseDTO(
+                                PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
+                                VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
+                                appointment.getServices(),
+                                appointment.getAppointmentDate(),
+                                appointment.getNotes(),
+                                appointment.getTotalServicesSum()))
+                        .toList());
     }
 
 }
