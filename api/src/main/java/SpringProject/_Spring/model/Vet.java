@@ -21,7 +21,7 @@ public class Vet {
     private String licenseNumber;
     private LocalDate hireDate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", insertable = false, updatable = false)
     private Account account;
 
