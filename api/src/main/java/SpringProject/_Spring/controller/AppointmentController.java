@@ -100,4 +100,18 @@ public class AppointmentController {
                         .toList());
     }
 
+    @GetMapping("/appointments/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<?> getAdminAppointments(@PathVariable long id) {
+        return ResponseEntity.ok(
+                appointmentService.getAllAppointmentsByClientId(id)
+                        .stream().map(appointment -> new AppointmentResponseDTO(
+                                PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
+                                VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
+                                appointment.getServices(),
+                                appointment.getAppointmentDate(),
+                                appointment.getNotes(),
+                                appointment.getTotalServicesSum()))
+                        .toList());
+    }
 }
