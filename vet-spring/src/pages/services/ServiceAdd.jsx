@@ -8,15 +8,19 @@ export  const ServiceAdd = () => {
 
     const [error, setError] = useState("")
 
+    const handleChange = (event) => {
+        let name = (event.target.value);
+      }
+
     const onSubmit = async () => {
 
 
         
         try {
-
+            handleChange(name)
 
             const {data} = await api.post(`/services`, {
-                name: "Name",
+                name: {name},
                 description: "description",
                 price:5
             });
@@ -37,7 +41,8 @@ export  const ServiceAdd = () => {
                         <label className="fieldset-label"> Name </label>
                         
                         <input {...register("name")} type="text" 
-                        className="input focus:outline-[0px] focus:border-base-300" 
+                        className="input focus:outline-[0px] focus:border-base-300"
+                        onChange={handleChange}
                         placeholder="Enter name of service" />
                         
                         <label className="fieldset-label ">Description</label>

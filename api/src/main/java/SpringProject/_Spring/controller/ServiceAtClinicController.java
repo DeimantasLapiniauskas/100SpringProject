@@ -29,7 +29,7 @@ public class ServiceAtClinicController {
     }
 
     @PostMapping("/services")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
         if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
             Map<String, String> badResponse = new HashMap<>();
