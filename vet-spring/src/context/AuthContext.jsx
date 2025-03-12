@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import api, { setAuth, clearAuth } from "../utils/api.js";
 import { jwtDecode } from "jwt-decode";
@@ -17,9 +17,30 @@ export const AuthProvider = ({ children }) => {
     const maybeJwt = localStorage.getItem("jwt");
 
     if (maybeJwt) {
-      return jwtDecode(maybeJwt);
+      const decodedJwt = jwtDecode(maybeJwt);
+      if(decodedJwt.exp * 1000 < Date.now()) {
+        localStorage.removeItem("jwt")
+        return null
+      }
+      return decodedJwt
     }
+    return null;
   });
+
+  useEffect(() => {
+    const checkJwtExpiration = () => {
+    const maybeJwt = localStorage.getItem("jwt");
+    if (maybeJwt) {
+      const decodedJwt = jwtDecode(maybeJwt);
+      if(decodedJwt.exp * 1000 < Date.now()) {
+        localStorage.removeItem("jwt");
+        setAccount(null)
+        navigate("/login")
+      }
+    }
+  };
+  checkJwtExpiration();
+  }, [navigate]);
 
   const login = async (email, password) => {
   
@@ -28,7 +49,6 @@ export const AuthProvider = ({ children }) => {
     });
     const jwt = response.data;
     localStorage.setItem("jwt", jwt)
-console.log(jwt)
     setAccount(jwtDecode(jwt))
     setAuth(jwt)
     navigate("/pets")
@@ -37,17 +57,13 @@ console.log(jwt)
 
   const register = async (email, password, firstName, lastName, phoneNumber) => {
     await api.post("/register", { email, password, firstName, lastName, phoneNumber });
-    console.log()
-    navigate("/login");
   };
 
   const logout = () => {
-    setTimeout(() => {
-    setAccount({});
+    setAccount(null);
     clearAuth();
     localStorage.removeItem("jwt");
     navigate("/login");
-    }, 1000)
   };
 
   return (

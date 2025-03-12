@@ -7,13 +7,14 @@ import {Error} from "../../components/Error.jsx";
 export const Register = () => {
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("")
-    const { register: registerUser } = useAuth()
+    const {login, register: registerUser } = useAuth()
 
     const onSubmit = async (data) => {
         try {
             await registerUser(data.email, data.password, data.firstName, data.lastName, data.phoneNumber);
-        } catch (error) {console.log(error)
-            setError(error.response?.data?.message ?? error.message)
+            await login(data.email, data.password)
+        } catch (error) {
+            setError(JSON.stringify(error.response.data) ?? error.message)
         }
     };
 
