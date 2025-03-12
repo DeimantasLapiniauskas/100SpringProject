@@ -17,6 +17,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class AppointmentController {
@@ -87,7 +89,7 @@ public class AppointmentController {
 
     @GetMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> getOwnAppointments(Authentication authentication) {
+    public ResponseEntity<List<AppointmentResponseDTO>> getOwnAppointments(Authentication authentication) {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
                         .stream().map(appointment -> new AppointmentResponseDTO(
@@ -102,7 +104,7 @@ public class AppointmentController {
 
     @GetMapping("/appointments/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> getAdminAppointments(@PathVariable long id) {
+    public ResponseEntity<List<AppointmentResponseDTO>> getAdminAppointments(@PathVariable long id) {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(id)
                         .stream().map(appointment -> new AppointmentResponseDTO(
