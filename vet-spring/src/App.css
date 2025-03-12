@@ -15,6 +15,8 @@
   }
 
 .google-removebg-preview-1 {
+  /* FIGMA Log In Page, google logo */
+  /* google removebg preview 1 in FIGMA description */
     position: absolute;
     width: 40px;
     height: 30.92px;
@@ -23,3 +25,110 @@
     background: url(google-removebg-preview);
 
 }
+
+.pet-1 {
+  /* FIGMA Log In Page, dog image */
+  /* pet 1 in FIGMA description */
+  position: absolute;
+  width: 593px;
+  height: 821px;
+  left: 758px;
+  top: 170px;
+  background: url(pet.jpg);
+  border-radius: 0px 30px 30px 0px;
+}
+
+.login-input-fieleds {
+  /* FIGMA Log In Page, Log In with Google input box; Your Email input box; Password input box */
+  /* Rectangle 4216; 4217; 4218 in FIGMA description */
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 372px;
+  height: 50px;
+  left: 248px;
+  top: 463px;
+
+  /* Middle Color light Orange */
+  background: #FFBD89;
+  border: 3px solid #FFFDFD;
+  border-radius: 10px;
+
+}
+
+.forgot-password-input-field {
+  /* FIGMA Log In Page, Forgot password input box */
+  /* Forgot password ? in FIGMA description */
+
+  position: absolute;
+  width: 210px;
+  height: 36px;
+  left: 433px;
+  top: 719px;
+
+  font-family: 'Kiwi Maru';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  text-align: center;
+
+  /* Service Background Color */
+  color: #6A7AFF;
+}
+
+/* //////////////////////////////////////////////////////// */
+
+.paws-1 {
+  /* FIGMA paw logo on Navigation Bar */
+  /* paws 1 in FIGMA description */
+
+  position: absolute;
+  width: 117px;
+  height: 52px;
+  left: 63px;
+  top: 16px;
+  background: url(paws.jpg);
+}
+
+.middle-color-light-orange-login-button {
+  /* FIGMA Middle Color light Orange Log In button on Navigation Bar  */
+  /* Rectangle 76 in FIGMA description */
+  position: absolute;
+  width: 132px;
+  height: 47px;
+  left: 885px;
+  top: 22px;
+
+  /* Middle Color light Orange */
+  background: #FFBD89;
+  border-radius: 50px;
+}
+
+.main-color-orange-book-now-button {
+  /* FIGMA Main Color Orange Book Now button on Navigation Bar  */
+  /* Rectangle 77 in FIGMA description */
+  position: absolute;
+  width: 132px;
+  height: 47px;
+  right: 94px;
+  top: 22px;
+
+  /* Main Color Orange */
+  background: #F19A56;
+  border-radius: 50px;
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+.home-page {
+  /* FIGMA Home Page, frame outline */
+  /* Main Page in FIGMA description */
+  position: relative;
+  width: 1440px;
+  height: 1024px;
+
+  background: #FFFFFF;
+}
+
+
