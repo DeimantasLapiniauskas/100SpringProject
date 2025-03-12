@@ -46,8 +46,8 @@ public class ServiceAtClinicService {
         serviceAtClinicRepository.deleteById(id);
     }
 
-    public List<ServiceAtClinic> findAllServicesById(List<Long> ids) {
-        return ids.stream().map(id -> serviceAtClinicRepository.findById(id).orElseThrow()).toList();
-
+    public Optional<ServiceAtClinic> findAllServiceAtClinicById(long id) {
+        return serviceAtClinicRepository.findById(id);
     }
+
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    boolean existsByPetIdAndAppointmentId(long petId, long appointmentId);
+    boolean existsByPetIdAndServices_Id(long petId, long appointmentId);
 }

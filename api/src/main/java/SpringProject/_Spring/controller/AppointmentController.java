@@ -4,8 +4,9 @@ package SpringProject._Spring.controller;
 import SpringProject._Spring.dto.appointment.AppointmentMapping;
 import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.dto.appointment.AppointmentResponseDTO;
+import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.vet.VetMapping;
 import SpringProject._Spring.model.Appointment;
-import SpringProject._Spring.repository.AppointmentRepository;
 import SpringProject._Spring.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,35 +19,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 @RestController
 @RequestMapping("/api")
 public class AppointmentController {
     private final AppointmentService appointmentService;
-    private final ClientService clientService;
     private final PetService petService;
     private final ServiceAtClinicService serviceService;
     private final VetService vetService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, ClientService clientService, PetService petService, ServiceAtClinicService serviceService, VetService vetService) {
+    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService) {
         this.appointmentService = appointmentService;
-        this.clientService = clientService;
         this.petService = petService;
         this.serviceService = serviceService;
         this.vetService = vetService;
     }
 
-    @PostMapping("/services")
+    @PostMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO,
                                             Authentication authentication) {
-        if (appointmentDTO.appointmentIds().stream()
-                .anyMatch(appointmentId -> appointmentService.existsByPetIdAndAppointmentId(
+        if (appointmentDTO.serviceIds().stream()
+                .anyMatch(appointmentId -> appointmentService.existsByPetIdAndServiceId(
                                 appointmentDTO.petId(), appointmentId
                         )
                 )
@@ -56,15 +50,15 @@ public class AppointmentController {
 
         Appointment savedAppointment = appointmentService.saveAppointment(
                 AppointmentMapping.toAppointment(appointmentDTO,
-                        serviceService.findAllServicesById(appointmentDTO.appointmentIds()
-                        )
+                        appointmentDTO.serviceIds().stream().map(id -> serviceService.findServiceAtClinicById(id).get()).toList()
                 )
         );
 
+
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new AppointmentResponseDTO(
-                        petService.getPetByid(savedAppointment.getId()).get(),
-                        vetService.getVetById(savedAppointment.getVetId()).get(),
+                        PetMapping.toPetResponseDTO(petService.getPetByid(savedAppointment.getPetId()).get()),
+                        VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
                         savedAppointment.getServices(),
                         savedAppointment.getAppointmentDate(),
                         savedAppointment.getNotes())

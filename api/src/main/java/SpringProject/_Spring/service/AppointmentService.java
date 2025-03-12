@@ -14,8 +14,8 @@ public class AppointmentService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public boolean existsByPetIdAndAppointmentId(long petId, long appointmentId) {
-        return appointmentRepository.existsByPetIdAndAppointmentId(petId, appointmentId);
+    public boolean existsByPetIdAndServiceId(long petId, long appointmentId) {
+        return appointmentRepository.existsByPetIdAndServices_Id(petId, appointmentId);
     }
 
 

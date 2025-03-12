@@ -7,7 +7,7 @@ import java.util.List;
 public record AppointmentRequestDTO(
         long petId,
         long vetId,
-        List<Long> appointmentIds,
+        List<Long> serviceIds,
         LocalDateTime appointmentDate,
         String notes
 ) {

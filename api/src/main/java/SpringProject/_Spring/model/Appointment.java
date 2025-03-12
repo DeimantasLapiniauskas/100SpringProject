@@ -44,7 +44,7 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     private Status status;
     private String notes;
-    private BigDecimal totalServiceSum;
+    private BigDecimal totalServicesSum;
     private Timestamp createdAt;
 
     public Appointment(long petId,
@@ -59,7 +59,7 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
         clinicAddress = "Here.";
         this.notes = notes;
-        totalServiceSum = services.stream().map(ServiceAtClinic::getPrice).reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        totalServicesSum = services.stream().map(ServiceAtClinic::getPrice).reduce(BigDecimal.valueOf(0), BigDecimal::add);
         this.createdAt = createdAt;
     }
 
@@ -130,12 +130,12 @@ public class Appointment {
         this.notes = notes;
     }
 
-    public BigDecimal getTotalServiceSum() {
-        return totalServiceSum;
+    public BigDecimal getTotalServicesSum() {
+        return totalServicesSum;
     }
 
-    public void setTotalServiceSum(BigDecimal totalServiceSum) {
-        this.totalServiceSum = totalServiceSum;
+    public void setTotalServicesSum(BigDecimal totalServicesSum) {
+        this.totalServicesSum = totalServicesSum;
     }
 
     public Timestamp getCreatedAt() {
