@@ -101,7 +101,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointments/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> getAdminAppointments(@PathVariable long id) {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(id)
