@@ -62,7 +62,7 @@ public class PetController {
     }
 
 
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> addPet(
             @Valid @RequestBody PetRequestDTO petRequestDTO,

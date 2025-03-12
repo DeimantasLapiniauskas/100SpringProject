@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import { addPet, updatePet } from "../utils/postPet";
+import { Error } from "./Error";
 
-const AddPetForm = ({ pet, ownerId, onPetUpdate, onClose }) => {
+const AddPetForm = ({ pet, onPetUpdate, onClose }) => {
+
+const {account} = useAuth();
+const {account_id} = account;
+console.log(account);
+
+
   const {
     register,
     handleSubmit,
@@ -10,33 +18,46 @@ const AddPetForm = ({ pet, ownerId, onPetUpdate, onClose }) => {
     setValue,
     formState: { errors },
   } = useForm();
+
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [error, setError] = useState("")
 
   useEffect(() => {
     if (pet) {
-      setValue("name", pet.name);
-      setValue("species", pet.species);
-      setValue("breed", pet.breed);
-      setValue("birthdate", pet.birthdate ? pet.birthdate.split("T")[0] : "");
-      setValue("gender", pet.gender);
+      const {name, species, breed, birthdate, gender} = pet;
+
+      setValue("name", name);
+      setValue("species", species);
+      setValue("breed", breed);
+      setValue("birthdate", birthdate ? birthdate.split("T")[0] : "");
+      setValue("gender", gender);
     }
   }, [pet, setValue]);
 
   const formSubmitHandler = async (data) => {
     setIsLoading(true);
     setSubmitError(null);
-    const payload = { ...data, ownerId };
-    const endpoint = pet && pet.id ? `/pets/${ownerId}/${pet.id}` : `/pets`;
-    const method = pet ? axios.put : axios.post;
+
+    const payload = { ...data, account_id };
 
     try {
-      const response = await method(endpoint, payload);
-      onPetUpdate(response.data);
+      let response1;
+      if (pet && pet.id) {
+        response1 = await updatePet(account_id, pet.id, payload);
+      } else {
+        response1 = await addPet(payload);
+      }
+      
+      
+
+      onPetUpdate(response1.data);
       reset();
       onClose();
     } catch (error) {
-      console.error(error);
+
+      //console.error(error);
+      setError(JSON.stringify(error.response.data) ?? error.message)
       setSubmitError("Failed to submit the form. Please try again.");
     } finally {
       setIsLoading(false);
@@ -45,7 +66,7 @@ const AddPetForm = ({ pet, ownerId, onPetUpdate, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)}>
-      {submitError && <p style={{ color: "red" }}>{submitError}</p>}
+      {submitError && <p className="bg-red-700">{submitError}</p>}
 
       <div>
         <label htmlFor="petName">Name</label>
@@ -110,8 +131,8 @@ const AddPetForm = ({ pet, ownerId, onPetUpdate, onClose }) => {
           {...register("gender", { required: "Gender is required" })}
         >
           <option value="">Select gender</option>
-          <option value="MALE">Male</option>
-          <option value="FEMALE">Female</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
         </select>
         {errors.gender && <p>{errors.gender.message}</p>}
       </div>
@@ -119,6 +140,7 @@ const AddPetForm = ({ pet, ownerId, onPetUpdate, onClose }) => {
       <button type="submit" disabled={isLoading}>
         {isLoading ? "Submitting..." : "Submit"}
       </button>
+      <Error error={error} isHidden={!error} />
     </form>
   );
 };

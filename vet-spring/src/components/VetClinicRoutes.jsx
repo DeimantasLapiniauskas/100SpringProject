@@ -6,6 +6,7 @@ import {Login} from "../pages/auth/Login.jsx";
 import {Register} from "../pages/auth/Register.jsx";
 import {AuthProvider} from "../context/AuthContext.jsx";
 import {ViewPet} from "../pages/pets/ViewPet.jsx";
+import AddPetForm from "./AddPetForm.jsx";
 
 const VetClinicRoutes = () => {
 
@@ -32,6 +33,7 @@ const VetClinicRoutes = () => {
                   <Route index element={<Navigate to="pets" replace />} />
                   <Route path="pets" element={<PetList/>} />
                   <Route path="pets/view/:id" element={<ViewPet />} />
+                  <Route path="pets/add" element={<AddPetForm />} />
               </Route>
           </Routes>
       </BrowserRouter>
