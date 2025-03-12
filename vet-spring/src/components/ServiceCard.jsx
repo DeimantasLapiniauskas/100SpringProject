@@ -19,14 +19,14 @@ export const ServiceCard = (props) => {
         }
         
     }
-    const editService = async () => {
-        try {
-            await api.put(`/services/${id}`);
-            await getPetPage(pageSize, currentPage)
-        } catch (error) {
-            setError(error.response?.message || error.message);
-        }
-    }
+    // const editService = async () => {
+    //     try {
+    //         await api.put(`/services/${id}`);
+    //         await getPetPage(pageSize, currentPage)
+    //     } catch (error) {
+    //         setError(error.response?.message || error.message);
+    //     }
+    // }
 
 
     return(
@@ -37,7 +37,7 @@ export const ServiceCard = (props) => {
             <p>{price}</p>
             <div className="card-actions">
              <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>
-             <button onClick={editService} className="btn btn-error bg-[#FFFFFF] border-0">Edit</button>
+             {/* <button onClick={editService} className="btn btn-error bg-[#FFFFFF] border-0">Edit</button> */}
                 </div>
                 <Error error={error} isHidden={!error} />
             </div>

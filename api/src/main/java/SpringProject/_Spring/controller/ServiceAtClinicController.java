@@ -30,13 +30,13 @@ public class ServiceAtClinicController {
     }
 
     @PostMapping("/services")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
-        if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
-            Map<String, String> badResponse = new HashMap<>();
-            badResponse.put("service", "already exists");
-            return ResponseEntity.badRequest().body(badResponse);
-        }
+//        if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
+//            Map<String, String> badResponse = new HashMap<>();
+//            badResponse.put("service", "already exists");
+//            return ResponseEntity.badRequest().body(badResponse);
+//        }
 
         ServiceAtClinic service = new ServiceAtClinic();
         service.setName(serviceDTO.name());
@@ -108,7 +108,7 @@ public class ServiceAtClinicController {
     }
 
     @DeleteMapping("/services/{id}")
-    
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
