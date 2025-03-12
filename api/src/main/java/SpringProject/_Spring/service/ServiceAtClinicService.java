@@ -38,7 +38,6 @@ public class ServiceAtClinicService {
         return serviceAtClinicRepository.findByName(name);
     }
 
-
     public boolean existsServiceById(long id) {
         return serviceAtClinicRepository.existsById(id);
     }
@@ -47,4 +46,8 @@ public class ServiceAtClinicService {
         serviceAtClinicRepository.deleteById(id);
     }
 
+    public List<ServiceAtClinic> findAllServicesById(List<Long> ids) {
+        return ids.stream().map(id -> serviceAtClinicRepository.findById(id).orElseThrow()).toList();
+
+    }
 }
