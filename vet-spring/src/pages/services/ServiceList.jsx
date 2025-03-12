@@ -10,6 +10,7 @@ export const ServiceList = () => {
     const [pageSize, setPageSize] = useState(12)
     const [error, setError] = useState()
 
+
     const getServicePage = async (size, page) => {
         try {
             const response = await api.get(`/services?size=${size}&page=${page}`)
