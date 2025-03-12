@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { addPet, updatePet } from "../utils/postPet";
-import { Error } from "./Error";
+import { addPet, updatePet } from "../utils/petService";
 
 const AddPetForm = ({ pet, onPetUpdate, onClose }) => {
 
-const {account} = useAuth();
-const {account_id} = account;
-console.log(account);
-
+  const { account } = useAuth();
+  const { account_id } = account;
 
   const {
     register,
@@ -21,11 +18,10 @@ console.log(account);
 
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-  const [error, setError] = useState("")
 
   useEffect(() => {
     if (pet) {
-      const {name, species, breed, birthdate, gender} = pet;
+      const { name, species, breed, birthdate, gender } = pet;
 
       setValue("name", name);
       setValue("species", species);
@@ -39,7 +35,12 @@ console.log(account);
     setIsLoading(true);
     setSubmitError(null);
 
-    const payload = { ...data, account_id };
+    const trimmedData = {
+      ...data,
+      name: data.name.trim(),
+    }
+
+    const payload = { ...trimmedData, account_id };
 
     try {
       let response1;
@@ -48,17 +49,20 @@ console.log(account);
       } else {
         response1 = await addPet(payload);
       }
-      
-      
-
-      onPetUpdate(response1.data);
-      reset();
-      onClose();
+      //onPetUpdate(response1.data);
+      console.log("Resetting form...");
+      reset({
+        name: "",
+        species: "",
+        breed: "",
+        birthdate: "",
+        gender: "",
+      });
+      console.log("Form reset complete");
+      //onClose();
     } catch (error) {
-
-      //console.error(error);
-      setError(JSON.stringify(error.response.data) ?? error.message)
-      setSubmitError("Failed to submit the form. Please try again.");
+      console.error(error);
+      //setSubmitError("Failed to submit the form. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +79,8 @@ console.log(account);
           id="petName"
           {...register("name", {
             required: "Pet name is required",
-            maxLength: { value: 50, message: "Name cannot exceed 50 characters" },
+            maxLength: { value: 30, message: "Name cannot exceed 30 characters" },
+            minLength: { value: 2, message: "Name cannot be shorter than 2 characters" },
             pattern: { value: /^[A-Za-z\s]+$/, message: "Name must contain only letters and spaces" },
           })}
           placeholder="Name"
@@ -103,7 +108,6 @@ console.log(account);
           type="text"
           id="petBreed"
           {...register("breed", {
-            required: "Breed is required",
             maxLength: { value: 50, message: "Breed cannot exceed 50 characters" },
           })}
           placeholder="Breed"
@@ -117,7 +121,6 @@ console.log(account);
           type="date"
           id="petBirthdate"
           {...register("birthdate", {
-            required: "Birthdate is required",
             validate: (value) => new Date(value) <= new Date() || "Birthdate cannot be in the future",
           })}
         />
@@ -140,7 +143,6 @@ console.log(account);
       <button type="submit" disabled={isLoading}>
         {isLoading ? "Submitting..." : "Submit"}
       </button>
-      <Error error={error} isHidden={!error} />
     </form>
   );
 };
