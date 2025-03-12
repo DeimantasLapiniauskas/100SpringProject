@@ -38,6 +38,44 @@
   border-radius: 0px 30px 30px 0px;
 }
 
+.login-input-fieleds {
+  /* FIGMA Log In Page, Log In with Google input box; Your Email input box; Password input box */
+  /* Rectangle 4216; 4217; 4218 in FIGMA description */
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 372px;
+  height: 50px;
+  left: 248px;
+  top: 463px;
+
+  /* Middle Color light Orange */
+  background: #FFBD89;
+  border: 3px solid #FFFDFD;
+  border-radius: 10px;
+
+}
+
+.forgot-password-input-field {
+  /* FIGMA Log In Page, Forgot password input box */
+  /* Forgot password ? in FIGMA description */
+
+  position: absolute;
+  width: 210px;
+  height: 36px;
+  left: 433px;
+  top: 719px;
+
+  font-family: 'Kiwi Maru';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  text-align: center;
+
+  /* Service Background Color */
+  color: #6A7AFF;
+}
 
 /* //////////////////////////////////////////////////////// */
 
