@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import api from "../../utils/api";
-import {ServiceCard} from "../../components/ServiceCard.jsx";
+import {ServiceCard} from "./ServiceCard.jsx";
 import {Error} from "../../components/Error.jsx";
 import {NavLink} from "react-router";
 

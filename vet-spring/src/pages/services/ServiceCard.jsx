@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
-import {useAuth} from "../context/AuthContext.jsx";
-import api from "../utils/api.js";
-import {Error} from "./Error.jsx";
+import {useAuth} from "../../context/AuthContext.jsx";
+import api from "../../utils/api.js";
+import {Error} from "../../components/Error.jsx";
 import {useState} from "react";
 
 export const ServiceCard = (props) => {
@@ -29,7 +29,7 @@ export const ServiceCard = (props) => {
             <p>{price}</p>
             <div className="card-actions">
              <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>
-             <NavLink to="/services/edit" className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>
+             {/* <NavLink to="/services/edit" className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink> */}
                 </div>
                 <Error error={error} isHidden={!error} />
             </div>
