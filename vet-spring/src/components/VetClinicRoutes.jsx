@@ -8,6 +8,7 @@ import { AuthProvider } from "../context/AuthContext.jsx";
 import { ViewPet } from "../pages/pets/ViewPet.jsx";
 
 import { HomePage } from "../pages/home/HomePage.jsx";
+import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -42,6 +43,7 @@ const VetClinicRoutes = () => {
           <Route path="pets" element={<PetList />} />
           <Route path="pets/view/:id" element={<ViewPet />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} />
         </Route>
       </Routes>
     </BrowserRouter>
