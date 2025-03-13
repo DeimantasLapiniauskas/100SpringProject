@@ -2,9 +2,6 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-body {
-  font-family: 'Kiwi Maru', sans-serif;
-}
 
 .custom-black-btn {
   background-color: #000000;
@@ -33,18 +30,6 @@ body {
     top: 471px;
     background: url(google-removebg-preview);
 
-}
-
-.pet-1 {
-  /* FIGMA Log In Page, dog image */
-  /* pet 1 in FIGMA description */
-  position: absolute;
-  width: 593px;
-  height: 821px;
-  left: 758px;
-  top: 170px;
-  background: url(pet.jpg);
-  border-radius: 0px 30px 30px 0px;
 }
 
 .login-input-fieleds {
@@ -155,102 +140,112 @@ body {
 
 /*FOR HOME PAGE //////////////////////////////////////////////////////// */
 
-.home-page {
-  /* FIGMA Home Page, frame outline */
-  /* Main Page in FIGMA description */
-  position: relative;
-  /* width: 1440px; */
-  /* height: 1024px; */
+html, body {
+  height: 100%;
+  font-family: 'Kiwi Maru', sans-serif;
+  background-color: #F5F4F4;
+  margin: 0;
+  box-sizing: border-box;
+}
 
-  background: #FFFFFF;
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
 }
 
 .company-meet {
-  /* FIGMA Main Page, container for main part (i.e. Picture of Dog and "Veterinary Company...) */
-  /* Company Meet in FIGMA description */
-
-  position: absolute;
-  width: 1314px;
-  height: 735px;
-  left: 36px;
-  top: 137px;
+  display: flex;
+  justify-content: space-between; /* Space between image and text */
+  align-items: flex-start; /* Align items at the top */
+  width: 100%;
+  max-width: 1300px;
+  gap: 30px; /* Adds space between the image and text */
 }
 
 .dog1 {
-  /* FIGMA Main Page, Dog picture on the left */
-  /* dog 1 in FIGMA description; dog.png is the name of the image file */
+  width: 35vw; /* Image takes up 35% of the viewport width */
+  max-width: 700px; /* Max width to prevent image from becoming too large */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image fits within the container */
+}
 
-  position: absolute;
-  width: 630px;
-  height: 630px;
-  left: 36px;
-  top: 166px;
+.text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Align text to the left */
+  width: 60%; /* Occupy 60% of the available space */
+  padding-left: 20px; /* Add some padding on the left for spacing */
+}
 
-  background: url(dog.png);
+.rustaveli-avenue, .veterinary-company-in-georgia, .as-georgia-leading {
+  color: #000;
+  margin: 10px 0; /* Add some margin for spacing between the sections */
+  line-height: 1.5; /* Ensure readability */
 }
 
 .rustaveli-avenue {
-  /* FIGMA Main Page, Text on the right with address, phone and working hours */
-  /* Rustaveli Avenue 10, Tbilisi +995 511 233 789 Twenty-four hours a day; This is what it is called in FIGMA description; */
-
-  position: absolute;
-  width: 425px;
-  height: 192px;
-  left: 925px;
-  top: 137px;
-
-  font-family: 'Kiwi Maru';
-  font-style: normal;
-  font-weight: 400;
   font-size: 16px;
-  line-height: 23px;
-  display: flex;
-  align-items: center;
-  text-align: right;
-
-  color: #000000;
 }
 
 .veterinary-company-in-georgia {
-  /* FIGMA Main Page, Text on the right with a header describing name of veterinary practice */
-  /* Veterinary Company in Georgia; This is what it is called in FIGMA description; */
-
-  position: absolute;
-  width: 982px;
-  height: 214px;
-  left: 368px;
-  top: 278px;
-
-  font-family: 'Kiwi Maru';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 93px;
-  text-align: right;
-
-  color: #000000;
-
+  font-size: 4rem;
+  margin-top: 20px; /* Add some space before the company name */
 }
 
 .as-georgia-leading {
-  /* FIGMA Main Page, Text on the right describing the goal of the veterinary practice: to cure animals */
-  /* As Georgia’s leading animal health company,; This is what it is called in FIGMA description; */
+  font-size: 1.2rem; /* Slightly larger font for description */
+  margin-top: 20px; /* Add space before the company description */
+  line-height: 1.6; /* Improve readability */
+}
 
-  position: absolute;
-  width: 529px;
-  height: 130px;
-  left: 821px;
-  top: 471px;
+/* Media Queries for responsiveness */
+@media (max-width: 1024px) {
+  .company-meet {
+    flex-direction: column; /* Stack image and text vertically */
+    text-align: center; /* Center the text */
+  }
 
-  font-family: 'Kiwi Maru';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 23px;
-  text-align: right;
+  .veterinary-company-in-georgia {
+    font-size: 3rem;
+  }
 
-  color: #000000;
+  .dog1 {
+    width: 50%; /* Image takes up 50% of the screen on medium screens */
+  }
+}
 
+@media (max-width: 768px) {
+  .company-meet {
+    flex-direction: column; /* Stack image and text vertically */
+    gap: 20px; /* Reduce the gap between image and text */
+  }
+
+  .veterinary-company-in-georgia {
+    font-size: 2.5rem;
+  }
+
+  .dog1 {
+    width: 60%; /* Image takes up 60% of the screen on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .company-meet {
+    flex-direction: column; /* Stack image and text vertically */
+    gap: 10px; /* Reduce the gap between image and text */
+  }
+
+  .veterinary-company-in-georgia {
+    font-size: 2rem;
+  }
+
+  .dog1 {
+    width: 70%; /* Image takes up 70% of the screen on small screens */
+  }
 }
 
 
