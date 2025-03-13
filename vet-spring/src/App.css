@@ -2,6 +2,11 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
+html, body {
+  font-family: 'Kiwi Maru', sans-serif;
+  background-color: #F5F4F4;
+}
+
 
 .custom-black-btn {
   background-color: #000000;
@@ -140,37 +145,6 @@
 
 /*FOR HOME PAGE //////////////////////////////////////////////////////// */
 
-html, body {
-  height: 100%;
-  font-family: 'Kiwi Maru', sans-serif;
-  background-color: #F5F4F4;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.home-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 20px;
-}
-
-.company-meet {
-  display: flex;
-  justify-content: space-between; /* Space between image and text */
-  align-items: flex-start; /* Align items at the top */
-  width: 100%;
-  max-width: 1300px;
-  gap: 30px; /* Adds space between the image and text */
-}
-
-.dog1 {
-  width: 35vw; /* Image takes up 35% of the viewport width */
-  max-width: 700px; /* Max width to prevent image from becoming too large */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensure the image fits within the container */
-}
 
 .text-content {
   display: flex;
@@ -179,27 +153,6 @@ html, body {
   align-items: flex-start; /* Align text to the left */
   width: 60%; /* Occupy 60% of the available space */
   padding-left: 20px; /* Add some padding on the left for spacing */
-}
-
-.rustaveli-avenue, .veterinary-company-in-georgia, .as-georgia-leading {
-  color: #000;
-  margin: 10px 0; /* Add some margin for spacing between the sections */
-  line-height: 1.5; /* Ensure readability */
-}
-
-.rustaveli-avenue {
-  font-size: 16px;
-}
-
-.veterinary-company-in-georgia {
-  font-size: 4rem;
-  margin-top: 20px; /* Add some space before the company name */
-}
-
-.as-georgia-leading {
-  font-size: 1.2rem; /* Slightly larger font for description */
-  margin-top: 20px; /* Add space before the company description */
-  line-height: 1.6; /* Improve readability */
 }
 
 /* Media Queries for responsiveness */
