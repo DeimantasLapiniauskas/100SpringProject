@@ -3,7 +3,7 @@ import { addService, updateService } from "../../utils/serviceService.js";
 import { useAuth } from "../../context/AuthContext";
 import {useState, useEffect} from "react";
 import {Error} from "../../components/Error.jsx";
-export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
+export const ServiceEdit = ({ service, onServiceUpdate, onClose }) => {
 
     const { account } = useAuth();
   const { account_id } = account;
@@ -18,54 +18,40 @@ export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
 
         const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-        
-  useEffect(() => {
-    if (service) {
-      const { name, description, price } = service;
 
-      setValue("name", name);
-      setValue("description", description);
-      setValue("price", price);
-      
-    }
-  }, [service, setValue]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            
+            const response = await api.get(`/services/${id}`);
+            const data = await response.json();
+    
+            setData(data);
+            setLoading(false);
+          } catch (error) {
+            setError(error.message);
+            setLoading(false);
+          }
+        };
+      }, []);
 
-  const formSubmitHandler = async (data) => {
-    setIsLoading(true);
-    setSubmitError(null);
-
-    const trimmedData = {
-      ...data,
-      name: data.name.trim(),
-    }
-
-    const payload = { ...trimmedData, account_id};
-
-    try {
-        let response1;
-        if (service && service.id) {
-          response1 = await updateService( service.id, payload);
-        } 
-        else {
-          response1 = await addService(payload);
+      const formSubmitHandler = async (data) => {
+        try {
+          const response = await api.put(`/services/${id}`)
+          if (!response.ok) {
+            throw new Error(`Respose ststus: ${response.status}`);
+          }
+          navigate("/");
+        } catch (error) {
+          console.error(error);
         }
-        //onPetUpdate(response1.data);
-        console.log("Resetting form...");
-        reset({
-          name: "",
-          description: "",
-          price: "",
-        });
-
-        console.log("Form reset complete");
-        //onClose();
-      } catch (error) {
-        setError(error.response?.data?.message || error.message)
-      } finally {
-        setIsLoading(false);
+      };
+      if (loading) {
+        return <p>Loding ...</p>;
       }
-    };
-
+      if (error) {
+        return <p>Error: {error}</p>;
+      }
 
 
     
@@ -82,8 +68,7 @@ export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
                         <input {...register("name", {
                           required:"Name is required",
                           minLength:3,
-                          maxLength:150,
-                          pattern:"^[A-Za-z0-9\s-]+$"
+                          maxLength:150
                         })} 
                           type="text" 
                         className="input focus:outline-[0px] focus:border-base-300"

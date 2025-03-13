@@ -10,7 +10,7 @@ import {AuthProvider} from "./context/AuthContext.jsx";
 import {ViewPet} from "./pages/pets/ViewPet.jsx";
 import { ServiceList } from './pages/services/ServiceList.jsx';
 import {ServiceAdd} from './pages/services/ServiceAdd.jsx';
-
+import { ServiceUpdate } from './pages/services/ServiceUpdate.jsx';
 const App = () => {
   return (
       <BrowserRouter>
@@ -36,6 +36,7 @@ const App = () => {
                   <Route path="pets" element={<PetList/>} />
                   <Route path="services" element={<ServiceList/>}/>
                   <Route path="services/add" element={<ServiceAdd/>}/>
+                  <Route path="services/edit" element={<ServiceAdd/>}/>
                   <Route path="pets/view/:id" element={<ViewPet />} />
                   
                   
