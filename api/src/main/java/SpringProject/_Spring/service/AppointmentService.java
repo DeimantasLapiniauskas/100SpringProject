@@ -33,4 +33,12 @@ public class AppointmentService {
     public boolean existsAppointmentById(long id) {
         return appointmentRepository.existsById(id);
     }
+
+    public List<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
+    }
+
+    public List<Appointment> getAllAppointmentsByClientId(Long id) {
+        return appointmentRepository.findAllByPet_ownerId(id);
+    }
 }
