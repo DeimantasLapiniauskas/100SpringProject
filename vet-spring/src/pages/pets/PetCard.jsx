@@ -1,7 +1,7 @@
-import {useAuth} from "../context/AuthContext.jsx";
+import {useAuth} from "../../context/AuthContext.jsx";
 import {NavLink} from "react-router";
-import api from "../utils/api.js";
-import {Error} from "./Error.jsx";
+import api from "../../utils/api.js";
+import {Error} from "../../components/Error.jsx";
 import {useState} from "react";
 
 export const PetCard = (props) => {
