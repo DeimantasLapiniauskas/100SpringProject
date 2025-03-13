@@ -1,8 +1,13 @@
 import { NavLink } from "react-router";
 import vetClinicNotFound from "../assets/images/vet-clinic-not-found.jpg";
 import handHeart from "../assets/icons/handHeart.svg"
+import { useAuth } from "../context/AuthContext";
 
 export const NotFound = () => {
+
+const {account} = useAuth();
+console.log(account)
+
   return (
     <div
       className="bg-cover bg-center h-screen"
@@ -22,7 +27,7 @@ export const NotFound = () => {
             type="button"
             className="bg-transparent rounded-[5px] p-1 border-2 border-amber-900 hover:bg-amber-900 hover:text-white transition duration-500 shadow-amber-900 shadow-md lg:text-lg md:text-sm text-xs"
           >
-            <b>Click to Homepage!</b>
+            <b>{ account ? "Click to Homepage!" : ">>Login<<"}</b>
           </p>
         </NavLink>
       </div>
