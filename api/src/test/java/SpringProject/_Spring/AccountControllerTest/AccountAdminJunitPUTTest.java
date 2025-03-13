@@ -49,13 +49,13 @@ public class AccountAdminJunitPUTTest {
     void updateAccountPasswordAdmin_whenValidRequest_thenReturnAnd200() throws Exception {
         //given
         long accountId = 1L;
-        Account account = new Account("test@example.com", "oldPassword", List.of(new Role("ROLE_CLIENT")));
+        Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_CLIENT")));
         account.setId(accountId);
 
-        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
         when(accountService.findAccountById(accountId)).thenReturn(Optional.of(account));
-        when(passwordEncoder.encode("newPassword")).thenReturn("hashedNewPassword");
+        when(passwordEncoder.encode("newPassword")).thenReturn("hashedNewPassword1");
 
         //when
         mockMvc.perform(put("/api/account/password/" + accountId)
@@ -73,7 +73,7 @@ public class AccountAdminJunitPUTTest {
     @WithAnonymousUser
     void updateAccountPasswordAdmin_whenNotAuthenticated_thenReturnAnd401() throws Exception {
         // given
-        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
         // when
         mockMvc.perform(put("/api/account/password/1")
@@ -88,7 +88,7 @@ public class AccountAdminJunitPUTTest {
     void updateAccountPasswordAdmin_whenAccountIdNotFound_thenReturnAnd404() throws Exception {
         // given
         long accountId = 100L;
-        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
         when(accountService.findAccountById(accountId)).thenReturn(Optional.empty());
 
@@ -102,10 +102,10 @@ public class AccountAdminJunitPUTTest {
 
     //unhappy path
     @Test
-    void updateAccountPasswordAdmin_whenPasswordIsEmpty_thenReturn400() throws Exception {
+    void updateAccountPasswordAdmin_whenPasswordIsInvalid_thenReturn400() throws Exception {
         // given
         long accountId = 1L;
-        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("");
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("a1");
 
         // when
         mockMvc.perform(put("/api/account/password/" + accountId)
@@ -114,6 +114,15 @@ public class AccountAdminJunitPUTTest {
                 // then
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("newPassword").value("Your password is either too short or too long! Min length is 8, max is 50 symbols"));
+
+        passwordUpdateDTO = new PasswordUpdateDTO("aaaaaaaaa");
+
+        mockMvc.perform(put("/api/account/password/" + accountId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                // then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("newPassword").value("Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!"));
     }
 
     //unhappy path
@@ -122,7 +131,7 @@ public class AccountAdminJunitPUTTest {
     void updateAccountPasswordAdmin_whenUserHasNoAdminRights_thenReturn403() throws Exception {
         // given
         long accountId = 1L;
-        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword");
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
         // when
         mockMvc.perform(put("/api/account/password/" + accountId)
                         .contentType(MediaType.APPLICATION_JSON)
