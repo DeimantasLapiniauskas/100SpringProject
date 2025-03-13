@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
+/*FOR ALL PAGES//////////////////////////////////////////////////////// */
+
+body {
+  font-family: 'Kiwi Maru', sans-serif;
+}
+
 /*FOR LOG IN PAGE//////////////////////////////////////////////////////// */
 
 .black-login-button {
