@@ -49,7 +49,7 @@ export const Login = () => {
                             placeholder="Enter password"
                         />
 
-                        <button type="submit" className="btn btn-primary mt-4 text-lg p-4 w-full">
+                        <button type="submit" className="custom-black-btn mt-4">
                             Login
                         </button>
                     </div>

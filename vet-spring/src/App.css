@@ -6,21 +6,22 @@ body {
   font-family: 'Kiwi Maru', sans-serif;
 }
 
-/*FOR LOG IN PAGE//////////////////////////////////////////////////////// */
+.custom-black-btn {
+  background-color: #000000;
+  color: white;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
 
-.black-login-button {
-    /* FIGMA Log In Page, black Log In button */
-    /* Rectangle 4219 in FIGMA description */
-    box-sizing: border-box;
-    position: absolute;
-    width: 372px;
-    height: 50px;
-    left: 248px;
-    top: 771px;
-    background: #000000;
-    border: 3px solid #000000;
-    border-radius: 30px;
-  }
+.custom-black-btn:hover {
+  background-color: #333;
+}
+
+/*FOR LOG IN PAGE//////////////////////////////////////////////////////// */
 
 .google-removebg-preview-1 {
   /* FIGMA Log In Page, google logo */
