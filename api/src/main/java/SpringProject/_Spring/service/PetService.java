@@ -44,29 +44,30 @@ public class PetService {
         petRepository.deleteById(petId);
     }
 
-    public Page<Pet> findAllPetsPageByOwnerId(int page, int size, String sort, int ownerId) {
+    public Page<Pet> findAllPetsPageByOwnerId(int page, int size, String sort, long ownerAccountId) {
         if (sort == null) {
             Pageable pageable = PageRequest.of(page, size);
-            return petRepository.findAllPageByOwnerId(ownerId, pageable);
+            return petRepository.findAllByOwnerId(ownerAccountId, pageable);
 
-        }
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        return petRepository.findAllPageByOwnerId(ownerId, pageable);
-    }
-
-    public Page<Pet> findAllOwnerPetsPage(String email, int page, int size, String sort) {
-        if(sort == null) {
-            Pageable pageable = PageRequest.of(page, size);
-            return petRepository.findAllOwnerPage(email,pageable);
         }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        return petRepository.findAllOwnerPage(email, pageable);
+        return petRepository.findAllByOwnerId(ownerAccountId, pageable);
     }
 
-    public boolean isValidSortField(String sort) {
+//    public Page<Pet> findAllOwnerPetsPage(String email, int page, int size, String sort) {
+//        if(sort == null) {
+//            Pageable pageable = PageRequest.of(page, size);
+//            return petRepository.findAllOwnerPage(email,pageable);
+//        }
+//
+//        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+//        return petRepository.findAllOwnerPage(email, pageable);
+//    }
+
+    public boolean isNotValidSortField(String sort) {
         List<String> validSortFields = List.of(
                 "ownerId", "name", "species", "breed", "birthday", "gender" );
-        return validSortFields.contains(sort);
+        return !validSortFields.contains(sort);
     }
 }
