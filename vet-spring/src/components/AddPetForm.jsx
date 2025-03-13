@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { addPet, updatePet } from "../utils/petService";
+import { addPet, updatePet } from "../utils/helpers/petService";
 
 const AddPetForm = ({ pet, onPetUpdate, onClose }) => {
 
