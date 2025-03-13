@@ -6,11 +6,13 @@ import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.dto.pet.PetResponseDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.repository.PetRepository;
 import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.ClientService;
 import SpringProject._Spring.service.PetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -154,5 +156,42 @@ public class PetController {
 
         petService.deletePetById(petId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("{ownerId}/pagination")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<Page<PetResponseDTO>> getPetsPageByOwnerId(@RequestParam int ownerId,
+                                                            @RequestParam int page,
+                                                            @RequestParam int size,
+                                                            @RequestParam(required = false) String sort) {
+
+
+        if (page < 0 || size <= 0) {
+            throw new IllegalArgumentException("Invalid page or size parameters");
+        }
+
+        if (petService.isValidSortField(sort)) {
+            throw new IllegalArgumentException("Invalid sort field");
+        }
+
+        return ResponseEntity.ok(PetMapping.toDTOListPage(petService.findAllPetsPageByOwnerId(page, size, sort, ownerId)));
+    }
+
+    @GetMapping("/pagination")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<Page<PetResponseDTO>> getOwnerPetsPage(Authentication authentication,
+                                                                 @RequestParam int page,
+                                                                 @RequestParam int size,
+                                                                 @RequestParam(required = false) String sort) {
+
+        if (page < 0 || size <= 0) {
+            throw new IllegalArgumentException("Invalid page or size parameters");
+        }
+
+        if (petService.isValidSortField(sort)) {
+            throw new IllegalArgumentException("Invalid sort field");
+        }
+
+        return ResponseEntity.ok(PetMapping.toDTOListPage(petService.findAllOwnerPetsPage(authentication.getName(), page, size, sort)));
     }
 }
