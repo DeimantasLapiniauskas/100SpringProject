@@ -4,8 +4,10 @@
 // import {Error} from "./Error.jsx";
 // import {useState} from "react";
 
+import { useContext } from "react";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
+import { ThemeContext } from "../utils/helpers/themeContext";
 
 // export const PetCard = (props) => {
 //     const { pet, getPetPage, currentPage, pageSize } = props
@@ -41,27 +43,23 @@ import EditButton from "./EditButton";
 //     )
 // }
 
-function PetCard({ pet }) {
+export const PetCard = ({ pet }) => {
     const { id, name, species, breed, birthdate, gender } = pet;
 
     return (
-        <>
+        <div className="flex bg-blue-500 w-5/6">
             <div className="flex">
-                <div className="flex">
-                    <p>{id}</p>
-                    <p>{name}</p>
-                    <p>{species}</p>
-                    <p>{breed}</p>
-                    <p>{birthdate}</p>
-                    <p>{gender}</p>
-                </div>
-                <div className="card-actions">
-                    <EditButton pet={pet}/>
-                    <DeleteButton pet={pet}/>
-                </div>
+                <p className="p-2">{id}</p>
+                <p className="p-2">{name}</p>
+                <p className="p-2">{species}</p>
+                <p className="p-2">{breed}</p>
+                <p className="p-2">{birthdate}</p>
+                <p className="p-2">{gender}</p>
             </div>
-        </>
-    )
-}
-
-export default PetCard;
+            <div className="card-actions">
+                <EditButton pet={pet} />
+                <DeleteButton pet={pet} />
+            </div>
+        </div>
+    );
+};

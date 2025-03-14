@@ -7,6 +7,7 @@ import {Register} from "../pages/auth/Register.jsx";
 import {AuthProvider} from "../context/AuthContext.jsx";
 import {ViewPet} from "../pages/pets/ViewPet.jsx";
 import AddPetForm from "./AddPetForm.jsx";
+import { TempPetList } from "./TempPetList.jsx";
 
 const VetClinicRoutes = () => {
 
@@ -34,6 +35,7 @@ const VetClinicRoutes = () => {
                   <Route path="pets" element={<PetList/>} />
                   <Route path="pets/view/:id" element={<ViewPet />} />
                   <Route path="pets/add" element={<AddPetForm />} />
+                  <Route path="pets/temp" element={<TempPetList />} />
               </Route>
           </Routes>
       </BrowserRouter>

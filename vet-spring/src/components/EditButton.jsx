@@ -5,6 +5,15 @@ import AddPetForm from "./AddPetForm";
 function EditButton({ pet }) {
     const { editModalID, setEditModalID } = useContext(ThemeContext);
 
+    console.log("works? " + editModalID);
+    
+
+    console.log("line after: ");
+    console.log(editModalID);
+
+    // console.log("ThemeContext:", ThemeContext);
+    // console.log("context value:", context);
+
     return (
         <>
             <div>

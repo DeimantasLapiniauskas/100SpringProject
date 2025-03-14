@@ -54,7 +54,7 @@ public class PetController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<List<PetResponseDTO>> getAllPetsByOwnerId(@PathVariable long id) {
         return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
                 .map(PetMapping::toPetResponseDTO)

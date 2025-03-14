@@ -5,7 +5,7 @@ import { deletePet } from "../utils/helpers/deletePet";
 function DeleteButton({ pet }) {
     const { deleteModalID, setDeleteModalID } = useContext(ThemeContext);
     const { id } = pet;
-
+    
     const handleDelete = async () => {
         if (deleteModalID !== id) {
             return;
