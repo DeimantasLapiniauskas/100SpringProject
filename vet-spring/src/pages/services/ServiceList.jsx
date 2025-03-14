@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import api from "../../utils/api";
+import {useAuth} from "../../context/AuthContext.jsx";
 import {ServiceCard} from "./ServiceCard.jsx";
 import {Error} from "../../components/Error.jsx";
 import {NavLink} from "react-router";
@@ -9,7 +10,7 @@ export const ServiceList = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [pageSize, setPageSize] = useState(12)
     const [error, setError] = useState()
-
+    const{ account } = useAuth()
 
     const getServicePage = async (size, page) => {
         try {
@@ -43,7 +44,7 @@ export const ServiceList = () => {
 
     return (
         <div className="flex flex-col items-center gap-8 p-8 ">
-           <NavLink to={`/services/add`} className="btn btn-primary">Add</NavLink>
+         { account.roles?.includes("SCOPE_ROLE_VET") && <NavLink to={`/services/add`} className="btn btn-primary">Add</NavLink>}
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             
                 {services && services?.map(service => (

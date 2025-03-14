@@ -42,8 +42,8 @@ export const ServiceCard = (props) => {
             <div className="text-warp w-[20rem]">{description}</div>
             <p>{price} €</p>
             <div className="card-actions">
-            <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>
-             <NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>
+            { account.roles?.includes("SCOPE_ROLE_VET") && <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>}
+            { account.roles?.includes("SCOPE_ROLE_VET") && <NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>}
              {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
                 </div>
                 <Error error={error} isHidden={!error} />
