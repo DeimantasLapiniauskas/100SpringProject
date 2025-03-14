@@ -26,7 +26,6 @@ public class AccountService {
     }
 
     public Account saveAccount(Account account) {
-        System.out.println("hello");
         return accountRepository.save(account);
     }
 
