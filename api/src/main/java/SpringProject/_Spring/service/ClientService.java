@@ -19,7 +19,7 @@ public class ClientService {
         this.accountRepository = accountRepository;
     }
 
-    public long findAccountIdByEmail(String email) {
+    public long findClientIdByEmail(String email) {
         if (!clientRepository.existsByAccount_Email(email)) {
             return -1;
         }
