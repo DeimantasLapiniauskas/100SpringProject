@@ -34,6 +34,9 @@ const VetClinicRoutes = () => {
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/home" element={<HomePage />} />
             {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
+            <Route path="services" element={<ServiceList />} />
+            <Route path="services/add" element={<ServiceAdd />} />
+            <Route path="/services/edit/:id" element={<ServiceUpdate />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>
