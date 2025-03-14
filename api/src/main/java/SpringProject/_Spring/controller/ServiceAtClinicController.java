@@ -108,6 +108,7 @@ public class ServiceAtClinicController {
     }
 
     @DeleteMapping("/services/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
