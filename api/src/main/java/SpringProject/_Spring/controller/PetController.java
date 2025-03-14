@@ -36,7 +36,7 @@ public class PetController {
         this.accountService = accountService;
     }
 
-
+//Mes naudojame Pagination, tai sis GetMapping nenaudojamas
 //    @GetMapping
 //    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
 //    public ResponseEntity<?> getAllPets(Authentication authentication) {
@@ -69,7 +69,7 @@ public class PetController {
             @Valid @RequestBody PetRequestDTO petRequestDTO,
             Authentication authentication) {
 
-        long id = clientService.findAccountIdByEmail(authentication.getName());
+        long id = clientService.findClientIdByEmail(authentication.getName());
 
         if (!clientService.existsClientById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -165,9 +165,8 @@ public class PetController {
                                                             @RequestParam(required = false) String sort) {
 
 
-        long ownerAccountId = clientService.findAccountIdByEmail(authentication.getName());
+        long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
 
-//        long ownerId = clientService.findClientByAccountId(ownerAccountId).getId();
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");

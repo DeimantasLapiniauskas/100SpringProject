@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import api, { setAuth, clearAuth } from "../utils/api.js";
 import { jwtDecode } from "jwt-decode";
 
-
 const AuthContext = createContext({
   account: {},
   login: () => {},
