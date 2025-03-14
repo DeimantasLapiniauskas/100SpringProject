@@ -26,7 +26,6 @@ export const Login = () => {
     return (
         <main className="h-screen flex justify-center items-center">
             <div className="flex items-center gap-8">
-                {/* Gray Box - Form Section */}
                 <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12">
                     <div className="text-2xl text-center mb-4 px-4">
                         Hi there! Welcome to Happy Hearts Community Dashboard
@@ -58,10 +57,9 @@ export const Login = () => {
                 </form>
                 <Error error={error} isHidden={!error} />
 
-                {/* Image Section using <img> */}
                 <figure className="w-[400px] h-[500px] rounded-box overflow-hidden">
                     <img
-                        src={LoginPageDog} // Your imported image
+                        src={LoginPageDog}
                         alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
                         className="w-full h-full object-cover"
                     />

@@ -1,9 +1,2 @@
 @import "tailwindcss";
 @plugin "daisyui";
-
-/* @layer base {
-    body {
-        @apply bg-amber-700
-    }
-
-} */
