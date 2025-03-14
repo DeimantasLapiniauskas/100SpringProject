@@ -5,13 +5,13 @@ import { AuthGuard } from "../components/AuthGuard.jsx";
 import { Login } from "../pages/auth/Login.jsx";
 import { Register } from "../pages/auth/Register.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
-import { ViewPet } from "../pages/pets/ViewPet.jsx";
+// import { ViewPet } from "../pages/pets/ViewPet.jsx";
 import { NotFound } from "../components/NotFound.jsx";
 
 import { HomePage } from "../pages/home/HomePage.jsx";
-import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 import AddPetForm from "./AddPetForm.jsx";
 import { TempPetList } from "./TempPetList.jsx";
+// import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -28,11 +28,11 @@ const VetClinicRoutes = () => {
               </AuthGuard>
             }
           >
-            <Route index element={<Navigate to="pets" replace />} />
+            <Route index element={<Navigate to="home" replace />} />
             <Route path="pets" element={<PetList />} />
-            <Route path="pets/view/:id" element={<ViewPet />} />
+            {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/home" element={<HomePage />} />
-            <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} />
+            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
             <Route path="pets/add" element={<AddPetForm />} />
             <Route path="pets/temp" element={<TempPetList />} />
           </Route>
@@ -42,5 +42,5 @@ const VetClinicRoutes = () => {
     </BrowserRouter>
   );
 };
-        
+
 export default VetClinicRoutes;
