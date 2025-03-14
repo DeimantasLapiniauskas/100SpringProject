@@ -1,50 +1,100 @@
 import { useForm } from "react-hook-form";
-import {NavLink} from "react-router";
-import {useState} from "react";
-import {useAuth} from "../../context/AuthContext.jsx";
-import {Error} from "../../components/Error.jsx";
+import { NavLink } from "react-router";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { Error } from "../../components/Error.jsx";
+
+import RegisterPageDog from "../../assets/pet.png"; // Assuming you want the same image for Register page
 
 export const Register = () => {
     const { register, handleSubmit } = useForm();
-    const [error, setError] = useState("")
-    const { register: registerUser } = useAuth()
+    const [error, setError] = useState("");
+    const { login, register: registerUser } = useAuth();
 
     const onSubmit = async (data) => {
         try {
             await registerUser(data.email, data.password, data.firstName, data.lastName, data.phoneNumber);
-        } catch (error) {console.log(error)
-            setError(JSON.stringify(error.response.data) ?? error.message)
+            await login(data.email, data.password);
+        } catch (error) {
+            setError(JSON.stringify(error.response.data) ?? error.message);
         }
     };
 
     return (
-        <main className="grid place-items-center h-screen">
-            <div className="flex flex-col gap-2 items-center">
-                <form onSubmit={handleSubmit(onSubmit)} onClick={() => setError("")}>
-                    <fieldset className="fieldset w-xs bg-base-300 border border-base-300 p-4 rounded-box">
-                        <legend className="fieldset-legend">Register</legend>
-
-                        <label className="fieldset-label">Email</label>
-                        <input {...register("email")} type="text" className="input" placeholder="Enter email" />
-
-                        <label className="fieldset-label">Password</label>
-                        <input {...register("password")} type="password" className="input" placeholder="Enter password" />
-
-                        <label className="fieldset-label">Firstname</label>
-                        <input {...register("firstName")} type="text" className="input" placeholder="Enter first name"/>
-
-                        <label className="fieldset-label">Lastname</label>
-                        <input {...register("lastName")} type="text" className="input" placeholder="Enter last name"/>
-
-                        <label className="fieldset-label">Phone number</label>
-                        <input {...register("phoneNumber")} type="text" className="input" placeholder="Enter phone number"/>
-
-                        <button type="submit" className="btn btn-primary mt-4">Register</button>
-                        <NavLink to="/login" className="underline text-center mt-2">Login</NavLink>
-                    </fieldset>
-                </form>
-                <Error error={error} isHidden={!error} />
+      <main className="h-screen flex justify-center items-center">
+        <div className="flex items-center gap-8">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-[400px] bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12"
+          >
+            <div className="text-2xl text-center mb-4 px-4">
+              Join Happy Hearts Community! Register below
             </div>
-        </main>
+
+            <div className="flex flex-col gap-4 w-full">
+              <label className="fieldset-label text-lg">Email</label>
+              <input
+                {...register("email")}
+                type="text"
+                className="input text-lg p-3 w-full"
+                placeholder="Enter email"
+              />
+
+              <label className="fieldset-label text-lg">Password</label>
+              <input
+                {...register("password")}
+                type="password"
+                className="input text-lg p-3 w-full"
+                placeholder="Enter password"
+              />
+
+              <label className="fieldset-label text-lg">First Name</label>
+              <input
+                {...register("firstName")}
+                type="text"
+                className="input text-lg p-3 w-full"
+                placeholder="Enter first name"
+              />
+
+              <label className="fieldset-label text-lg">Last Name</label>
+              <input
+                {...register("lastName")}
+                type="text"
+                className="input text-lg p-3 w-full"
+                placeholder="Enter last name"
+              />
+
+              <label className="fieldset-label text-lg">Phone Number</label>
+              <input
+                {...register("phoneNumber")}
+                type="text"
+                className="input text-lg p-3 w-full"
+                placeholder="Enter phone number"
+              />
+
+              <button type="submit" className="custom-black-btn mt-4">
+                Register
+              </button>
+            </div>
+
+            <div className="text-center mt-2">
+              Already have an account?
+              <NavLink to="/login" className="underline ml-1">
+                Login
+              </NavLink>
+            </div>
+
+          </form>
+          <Error error={error} isHidden={!error} />
+
+          <figure className="w-[400px] h-[500px] rounded-box overflow-hidden">
+            <img
+              src={RegisterPageDog} // This should be the same image used in Login
+              alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
+              className="w-full h-full object-cover"
+            />
+          </figure>
+        </div>
+      </main>
     );
 };

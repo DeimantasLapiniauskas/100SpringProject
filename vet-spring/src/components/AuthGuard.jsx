@@ -1,12 +1,18 @@
 import {useNavigate} from "react-router";
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export const AuthGuard = (props) => {
     const { children } = props;
     const navigate = useNavigate()
+    const {account} = useAuth();
 
-    // if (!localStorage.getItem("account")) {
-    //     navigate("/login")
-    // }
+    useEffect(() => {
+        if (!account) {
+            navigate("/login"); 
+        }
+    }, [account, navigate]);
 
-    return <>{children}</>;
+    return <>{children}
+    </>;
 }

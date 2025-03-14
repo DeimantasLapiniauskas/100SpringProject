@@ -1,43 +1,61 @@
 import {useEffect, useState} from "react";
-import api from "../../utils/api";
-import {PetCard} from "../../components/PetCard.jsx";
-import {Error} from "../../components/Error.jsx";
+// import api from "../../utils/api";
+// import {PetCard} from "../../components/PetCard.jsx";
+// import {Error} from "../../components/Error.jsx";
+import { useAuth } from "../../context/AuthContext"
 
 export const PetList = () => {
-    const [pets, setPets] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
-    const [pageSize, setPageSize] = useState(12)
-    const [error, setError] = useState()
+    const {account} = useAuth()
+    const {iat} = account || ""
+    const [welcome, setWelcome] = useState(true)
+    // const [pets, setPets] = useState([])
+    // const [currentPage, setCurrentPage] = useState(1)
+    // const [pageSize, setPageSize] = useState(12)
+    // const [error, setError] = useState()
 
-    const getPetPage = async (size, page) => {
-        try {
-            const response = await api.get(`/pets?size=${size}&page=${page}`)
-            setPets(response.data)
-        } catch (error) {
-            setError(error.response?.data?.message || error.message)
-        }
-    }
+//TODO fadeout effect
+const welcomeClosure = () => {
+    setTimeout(() => {
+        setWelcome(false)
+    }, 2000)
+}
 
-    const onPageSizeChange = async (e) => {
-        const pageSize = e.target.value;
-        await getPetPage(pageSize, 1)
-        setCurrentPage(1)
-        setPageSize(pageSize)
-    }
+useEffect(() => {
+    welcomeClosure()
+},[])
 
-    const onPaginate = async (page) => {
-        if (page < 1) return
+    // const getPetPage = async (size, page) => {
+    //     try {
+    //         const response = await api.get(`/pets?size=${size}&page=${page}`)
+    //         setPets(response.data)
+    //     } catch (error) {
+    //         setError(error.response?.data?.message || error.message)
+    //     }
+    // }
 
-        await getPetPage(pageSize, page)
-        setCurrentPage(page)
-    }
+    // const onPageSizeChange = async (e) => {
+    //     const pageSize = e.target.value;
+    //     await getPetPage(pageSize, 1)
+    //     setCurrentPage(1)
+    //     setPageSize(pageSize)
+    // }
 
-    useEffect(() => {
-        getPetPage(pageSize, currentPage)
-    }, []);
+    // const onPaginate = async (page) => {
+    //     if (page < 1) return
+
+    //     await getPetPage(pageSize, page)
+    //     setCurrentPage(page)
+    // }
+
+    // useEffect(() => {
+    //     getPetPage(pageSize, currentPage)
+    // }, []);
 
     return (
-        <div className="flex flex-col items-center gap-8 p-8">
+        <>
+        {(iat * 1000) + 2000 > Date.now() && welcome ? <div className="rounded-[10px] border-2 border-amber-900 text-white bg-amber-400 flex w-[5rem]">Welcome!</div> : ""}
+        
+        {/* <div className="flex flex-col items-center gap-8 p-8">
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {pets?.map(pet => (
                     <PetCard key={pet.id} pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
@@ -58,6 +76,7 @@ export const PetList = () => {
                 </select>
             </div>
             <Error error={error} isHidden={!error} />
-        </div>
+        </div> */}
+        </>
     )
 }
