@@ -28,7 +28,6 @@ export const PetList = () => {
     const getPetPage = async (size, page, sort) => {
         try {
             const response = await api.get(`/pets/pagination?page=${page}&size=${size}${sort ? `&sort=${sort}` : ""}`)
-            console.log('Response data:', response.data);
             const { content, totalPages } = response.data
             setPets(content);
             setTotalPages(totalPages);
@@ -68,7 +67,7 @@ export const PetList = () => {
             <div className="join">
                 <button className="join-item btn" onClick={async () => await onPaginate(currentPage - 1)}
                     disabled={currentPage === 0}>«</button>
-                <button className="join-item btn">Page {currentPage}</button>
+                <button className="join-item btn">Page {currentPage +1}</button>
                 <button className="join-item btn" onClick={async () => await onPaginate(currentPage + 1)}
                     disabled={currentPage === totalPages - 1}
                     >»</button>
