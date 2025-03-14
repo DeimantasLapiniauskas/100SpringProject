@@ -1,8 +1,11 @@
 package SpringProject._Spring.dto.pet;
 
 import SpringProject._Spring.model.Pet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PetMapping {
 
@@ -40,5 +43,13 @@ public class PetMapping {
         pet.setBirthdate(petRequestDTO.birthdate());
         pet.setGender(petRequestDTO.gender());
         return pet;
+    }
+
+    public static Page<PetResponseDTO> toPageListDTO(Page<Pet> petsPage) {
+        List<PetResponseDTO> petListResponseDTO = petsPage.getContent().stream()
+                .map(PetMapping::toPetResponseDTO)
+                .toList();
+
+        return new PageImpl<>(petListResponseDTO, petsPage.getPageable(), petsPage.getTotalElements());
     }
 }
