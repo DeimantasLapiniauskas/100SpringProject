@@ -48,7 +48,7 @@ const AddPetForm = ({ pet, getPetPage, currentPage, pageSize }) => {
       await updatePet( pet.id, payload);
       await getPetPage(pageSize, currentPage);
     } else {
-      const newPayload = { ...trimmedData, account_id };
+      const newPayload = { ...trimmedData };
       await addPet(newPayload);
       await getPetPage(pageSize, currentPage);
     }

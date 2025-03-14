@@ -9,7 +9,7 @@ import { AuthProvider } from "../context/AuthContext.jsx";
 import { NotFound } from "../components/NotFound.jsx";
 
 import { HomePage } from "../pages/home/HomePage.jsx";
-import AddPetForm from "./AddPetForm.jsx";
+import AddPetForm from "./PetForm.jsx";
 //import { TempPetList } from "./TempPetList.jsx";
 // import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 

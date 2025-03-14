@@ -4,6 +4,7 @@ import { PetCard } from "./PetCard.jsx";
 import { Error } from "../../components/Error.jsx";
 import { useAuth } from "../../context/AuthContext"
 import ThemeContext from "../../utils/helpers/themeContext.js";
+import AddPetButton from "../../components/AddPetButton.jsx"
 
 export const PetList = () => {
     const { account } = useAuth()
@@ -18,6 +19,7 @@ export const PetList = () => {
     //!!!!!!!!!!
     const [deleteModalID, setDeleteModalID] = useState("");
     const [editModalID, setEditModalID] = useState("");
+    const [addModalID, setAddModalID] = useState("");
 
     //TODO fadeout effect
     const welcomeClosure = () => {
@@ -64,8 +66,11 @@ export const PetList = () => {
             {(iat * 1000) + 2000 > Date.now() && welcome ? <div className="rounded-[10px] border-2 border-amber-900 text-white bg-amber-400 flex w-[5rem]">Welcome!</div> : ""}
 
             <ThemeContext.Provider
-                value={{ deleteModalID, setDeleteModalID, editModalID, setEditModalID }}
+                value={{ deleteModalID, setDeleteModalID, editModalID, setEditModalID, addModalID, setAddModalID }}
             >
+                <div>
+                    <AddPetButton getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
+                </div>
                 <div className="flex flex-col items-center gap-8 p-8">
                     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {pets?.map(pet => (

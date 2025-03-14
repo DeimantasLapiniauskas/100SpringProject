@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import ThemeContext from "../utils/helpers/themeContext";
-import AddPetForm from "./AddPetForm";
+import AddPetForm from "./PetForm";
 
 function EditButton({ pet, getPetPage, currentPage, pageSize }) {
     const { editModalID, setEditModalID } = useContext(ThemeContext);
