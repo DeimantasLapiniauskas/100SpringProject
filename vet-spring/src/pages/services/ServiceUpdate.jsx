@@ -1,75 +1,89 @@
 import { useForm } from "react-hook-form";
-import { addService, updateService } from "../../utils/serviceService.js";
-import { useAuth } from "../../context/AuthContext";
+import { useNavigate , useParams } from "react-router";
+import { updateService } from "../../utils/serviceService.js";
+import api from "../../utils/api";
 import {useState, useEffect} from "react";
 import {Error} from "../../components/Error.jsx";
-export const ServiceEdit = ({ service, onServiceUpdate, onClose }) => {
+export const ServiceUpdate = () => {
 
-    const { account } = useAuth();
-  const { account_id } = account;
-  const [error, setError] = useState()
-        const {
-          register,
-          handleSubmit,
-          reset,
-          setValue,
-          formState: { errors },
-        } = useForm();
+  const { id } = useParams();
 
-        const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const { register, handleSubmit, reset,
+    setValue, formState: { errors } } = useForm();
+    const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+      
+  
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            
-            const response = await api.get(`/services/${id}`);
-            const data = await response.json();
-    
-            setData(data);
-            setLoading(false);
-          } catch (error) {
-            setError(error.message);
-            setLoading(false);
-          }
-        };
-      }, []);
 
-      const formSubmitHandler = async (data) => {
-        try {
-          const response = await api.put(`/services/${id}`)
-          if (!response.ok) {
-            throw new Error(`Respose ststus: ${response.status}`);
-          }
-          navigate("/");
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      if (loading) {
-        return <p>Loding ...</p>;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+    const response = await api.get(`/services/${id}`)
+    const data = response.data
+    setData(data);     
+  } catch (error) {
+    setError(error.message);
+  }  
+  }
+    fetchData();
+  }, [data, setData]);
+
+
+  const formSubmitHandler = async (data) => {
+    setIsLoading(true);
+    setSubmitError(null);
+
+    const trimmedData = {
+      ...data,
+      name: data.name.trim(),
+    }
+
+    const payload = { ...trimmedData};
+
+    try {
+      
+
+      const {data} = await updateService( id, payload);
+
+        console.log("Resetting form...");
+        reset({
+          name: "",
+          description: "",
+          price: "",
+        });
+
+        console.log("Form reset complete");
+        navigate("/services"); 
+      } 
+      catch (error) {
+        setError(error.response?.data?.message || error.message)
+      
       }
-      if (error) {
-        return <p>Error: {error}</p>;
-      }
-
-
+    }
     
     return(
+      
         <main className="grid place-items-center h-screen">
+          
             <div className="flex flex-col gap-2 items-center">
                 <form onSubmit={handleSubmit(formSubmitHandler)}>
-                {submitError && <p className="bg-red-700">{submitError}</p>}
+                
 
                     <fieldset className=" bg-orange-300 fieldset w-xs border border-base-300 p-4 rounded-box">
-                        <legend className="fieldset-legend pt-8">ServiceAdd</legend>
+                        <legend className="fieldset-legend pt-8">ServiceEdit</legend>
 
                         <label className="fieldset-label"> Name </label>
                         <input {...register("name", {
                           required:"Name is required",
                           minLength:3,
-                          maxLength:150
+                          maxLength:150,
+                          pattern:"^[A-Za-z0-9\s-]+$"
                         })} 
+                        
                           type="text" 
                         className="input focus:outline-[0px] focus:border-base-300"
                          
@@ -79,25 +93,29 @@ export const ServiceEdit = ({ service, onServiceUpdate, onClose }) => {
                         <input {...register("description", {
                           required:"Description is required",
                           maxLength:255
-                        })} 
+                        })}
+                         
                         type="text" 
                         className="input focus:outline-[0px] focus:border-base-300" 
                         placeholder="Enter description" />
                        
-                        <label className="fieldset-label">Price</label>
+                        <label className="fieldset-label text-black">Price</label>
                         <input {...register("price", {
                           required:"Price is required",
                           min:0
-                        })} 
+                        })}
+                        // defaultValue={data.price}
                         type="mydouble" 
                         className="input focus:outline-[0px] focus:border-base-300" 
                         placeholder="Enter price"/>
                         
                         
-                        <button type="submit" className="btn bg-black border-neutral-950 text-white mt-4">ServiceAdd</button>
-
+                        
+                        <button type="submit" className="btn bg-black border-neutral-950 text-white mt-4">ServiceEdit</button>
+                        
                         
                     </fieldset>
+                    
                     <Error error={error} isHidden={!error} />
                 </form>
             </div>

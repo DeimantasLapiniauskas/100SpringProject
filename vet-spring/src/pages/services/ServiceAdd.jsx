@@ -1,12 +1,10 @@
 import { useForm } from "react-hook-form";
 import { addService, updateService } from "../../utils/serviceService.js";
-import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router";
 import {useState, useEffect} from "react";
 import {Error} from "../../components/Error.jsx";
-export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
-
-    const { account } = useAuth();
-  const { account_id } = account;
+export const ServiceAdd = ({ service}) => {
+  const navigate = useNavigate();
   const [error, setError] = useState()
         const {
           register,
@@ -39,17 +37,11 @@ export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
       name: data.name.trim(),
     }
 
-    const payload = { ...trimmedData, account_id};
+    const payload = { ...trimmedData};
 
     try {
         let response1;
-        if (service && service.id) {
-          response1 = await updateService( service.id, payload);
-        } 
-        else {
           response1 = await addService(payload);
-        }
-        //onPetUpdate(response1.data);
         console.log("Resetting form...");
         reset({
           name: "",
@@ -58,7 +50,7 @@ export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
         });
 
         console.log("Form reset complete");
-        //onClose();
+        navigate("/services");  
       } catch (error) {
         setError(error.response?.data?.message || error.message)
       } finally {
@@ -86,8 +78,7 @@ export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
                           pattern:"^[A-Za-z0-9\s-]+$"
                         })} 
                           type="text" 
-                        className="input focus:outline-[0px] focus:border-base-300"
-                         
+                        className="input focus:outline-[0px] focus:border-base-300" 
                         placeholder="Enter name of service" />
                         
                         <label className="fieldset-label ">Description</label>
@@ -107,11 +98,9 @@ export const ServiceAdd = ({ service, onServiceUpdate, onClose }) => {
                         type="mydouble" 
                         className="input focus:outline-[0px] focus:border-base-300" 
                         placeholder="Enter price"/>
-                        
-                        
+ 
                         <button type="submit" className="btn bg-black border-neutral-950 text-white mt-4">ServiceAdd</button>
-
-                        
+  
                     </fieldset>
                     <Error error={error} isHidden={!error} />
                 </form>

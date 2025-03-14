@@ -3,13 +3,12 @@ import {useAuth} from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
 import {Error} from "../../components/Error.jsx";
 import {useState} from "react";
-
 export const ServiceCard = (props) => {
     const{service, getServicePage, currentPage, pageSize} = props
     const{id, name, description, price} = service
     const [error, setError] = useState("")
     const{ account } = useAuth()
-
+    
     const deleteService = async () => {
 
         try {
@@ -18,7 +17,6 @@ export const ServiceCard = (props) => {
         } catch (error) {
             setError(error.response?.message || error.message);
         }
-        
     }
 
     return(
@@ -28,8 +26,8 @@ export const ServiceCard = (props) => {
             <div className="text-warp w-[20rem]">{description}</div>
             <p>{price}</p>
             <div className="card-actions">
-             <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>
-             {/* <NavLink to="/services/edit" className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink> */}
+            <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>
+             <NavLink to={`/services/edit/${service.id}`} name={name} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>
                 </div>
                 <Error error={error} isHidden={!error} />
             </div>

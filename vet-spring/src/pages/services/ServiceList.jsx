@@ -43,7 +43,7 @@ export const ServiceList = () => {
 
     return (
         <div className="flex flex-col items-center gap-8 p-8 ">
-            <NavLink to={`/services/add`} className="btn btn-primary">Add</NavLink>
+           <NavLink to={`/services/add`} className="btn btn-primary">Add</NavLink>
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             
                 {services && services?.map(service => (
