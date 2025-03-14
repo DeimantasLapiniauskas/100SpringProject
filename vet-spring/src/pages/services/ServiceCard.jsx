@@ -34,6 +34,17 @@ export const ServiceCard = (props) => {
     //         setError(error.response?.message || error.message);
     //     }
     //}
+    const checkRoles = () => {
+        
+                if(
+                account.scope?.includes("ROLE_VET")) {
+                    return true
+                }
+                else if (account.scope?.includes("ROLE_ADMIN")) {
+                    return true
+                }
+                    else return false
+            }
 
     return(
         <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
@@ -42,8 +53,8 @@ export const ServiceCard = (props) => {
             <div className="text-warp w-[20rem]">{description}</div>
             <p>{price} €</p>
             <div className="card-actions">
-            { account.roles?.includes("SCOPE_ROLE_VET") && <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>}
-            { account.roles?.includes("SCOPE_ROLE_VET") && <NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>}
+            {  checkRoles() && <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>}
+            {  checkRoles() && <NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>}
              {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
                 </div>
                 <Error error={error} isHidden={!error} />
