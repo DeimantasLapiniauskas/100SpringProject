@@ -24,13 +24,17 @@ export const ServiceUpdate = () => {
       try {
     const response = await api.get(`/services/${id}`)
     const data = response.data
-    setData(data);     
+    const { name, description, price } = data
+    
+    setValue("name", name);
+    setValue("description", description);
+    setValue("price", price);
   } catch (error) {
     setError(error.message);
   }  
   }
     fetchData();
-  }, [data, setData]);
+  }, [data, setValue]);
 
 
   const formSubmitHandler = async (data) => {

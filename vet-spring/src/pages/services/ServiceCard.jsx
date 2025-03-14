@@ -27,7 +27,7 @@ export const ServiceCard = (props) => {
             <p>{price}</p>
             <div className="card-actions">
             <button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>
-             <NavLink to={`/services/edit/${service.id}`} name={name} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>
+             <NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>
                 </div>
                 <Error error={error} isHidden={!error} />
             </div>
