@@ -8,7 +8,7 @@ export const PetCard = (props) => {
     const { pet, getPetPage, currentPage, pageSize } = props
     const { id, ownerId, name, species, breed, birthDate, gender } = pet
     const [error, setError] = useState("")
-    const { user } = useAuth()
+    // const { user } = useAuth()
 
     const deletePet = async () => {
         try {
@@ -17,7 +17,6 @@ export const PetCard = (props) => {
         } catch (error) {
             setError(error.response?.message || error.message);
         }
-    
     }
 
     return (
@@ -29,10 +28,10 @@ export const PetCard = (props) => {
                 <p>{breed}</p>
                 <p>{birthDate}</p>
                 <p>{gender}</p>
-                <div className="card-actions">
+                {/* <div className="card-actions">
                     <NavLink to={`/pets/view/${id}`} className="btn btn-primary">View</NavLink>
                     { user.roles?.includes("ROLE_ADMIN") && <button onClick={deletePet} className="btn btn-error">Delete</button> }
-                </div>
+                </div> */}
                 <Error error={error} isHidden={!error} />
             </div>
         </div>
