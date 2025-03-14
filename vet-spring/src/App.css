@@ -1,1 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
+
+/*FOR ALL PAGES//////////////////////////////////////////////////////// */
+
+html, body {
+  font-family: 'Kiwi Maru', sans-serif;
+  background-color: #F5F4F4;
+}
+
+.custom-black-btn {
+  background-color: #000000;
+  color: white;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.custom-black-btn:hover {
+  background-color: #333;
+}
+
+/*FOR NAVIGATION BAR TO USE IN FUTURE JUST IN CASE //////////////////////////////////////////////////////// */
+
+.paws-1 {
+  /* FIGMA paw logo on Navigation Bar */
+  /* paws 1 in FIGMA description */
+
+  position: absolute;
+  width: 117px;
+  height: 52px;
+  left: 63px;
+  top: 16px;
+  background: url(paws.jpg);
+}
+
+.middle-color-light-orange-login-button {
+  /* FIGMA Middle Color light Orange Log In button on Navigation Bar  */
+  /* Rectangle 76 in FIGMA description */
+  position: absolute;
+  width: 132px;
+  height: 47px;
+  left: 885px;
+  top: 22px;
+
+  /* Middle Color light Orange */
+  background: #FFBD89;
+  border-radius: 50px;
+}
+
+.main-color-orange-book-now-button {
+  /* FIGMA Main Color Orange Book Now button on Navigation Bar  */
+  /* Rectangle 77 in FIGMA description */
+  position: absolute;
+  width: 132px;
+  height: 47px;
+  right: 94px;
+  top: 22px;
+
+  /* Main Color Orange */
+  background: #F19A56;
+  border-radius: 50px;
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+/*FOR HOME PAGE //////////////////////////////////////////////////////// */
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Align text to the left */
+  width: 60%; /* Occupy 60% of the available space */
+  padding-left: 20px; /* Add some padding on the left for spacing */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 1024px) {
+  .company-meet {
+    flex-direction: column; /* Stack image and text vertically */
+    text-align: center; /* Center the text */
+  }
+
+  .veterinary-company-in-georgia {
+    font-size: 3rem;
+  }
+
+  .dog1 {
+    width: 50%; /* Image takes up 50% of the screen on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .company-meet {
+    flex-direction: column; /* Stack image and text vertically */
+    gap: 20px; /* Reduce the gap between image and text */
+  }
+
+  .veterinary-company-in-georgia {
+    font-size: 2.5rem;
+  }
+
+  .dog1 {
+    width: 60%; /* Image takes up 60% of the screen on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .company-meet {
+    flex-direction: column; /* Stack image and text vertically */
+    gap: 10px; /* Reduce the gap between image and text */
+  }
+
+  .veterinary-company-in-georgia {
+    font-size: 2rem;
+  }
+
+  .dog1 {
+    width: 70%; /* Image takes up 70% of the screen on small screens */
+  }
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* /////////////////////////////////////////////////////////////////////// */
+
 
