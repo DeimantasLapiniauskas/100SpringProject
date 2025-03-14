@@ -13,7 +13,6 @@ import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 
 import { HomePage } from "../pages/home/HomePage.jsx";
 import AddPetForm from "./PetForm.jsx";
-//import { TempPetList } from "./TempPetList.jsx";
 // import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
@@ -33,7 +32,7 @@ const VetClinicRoutes = () => {
           >
             <Route index element={<Navigate to="home" replace />} />
             <Route path="pets" element={<PetList />} />
-            <Route path="pets/view/:id" element={<ViewPet />} />
+            {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="services" element={<ServiceList />} />
             <Route path="services/add" element={<ServiceAdd />} />
             <Route path="/services/edit/:id" element={<ServiceUpdate />} />
@@ -41,7 +40,6 @@ const VetClinicRoutes = () => {
             <Route path="/home" element={<HomePage />} />
             {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
             <Route path="pets/add" element={<AddPetForm />} />
-            {/* <Route path="pets/temp" element={<TempPetList />} /> */}
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

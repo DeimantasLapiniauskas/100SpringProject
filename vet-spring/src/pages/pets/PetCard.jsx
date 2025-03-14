@@ -5,19 +5,20 @@ export const PetCard = ({ pet, getPetPage, currentPage, pageSize }) => {
     const { id, name, species, breed, birthdate, gender } = pet;
 
     return (
-        <div className="flex bg-blue-500 w-5/6">
-            <div className="flex">
-                <p className="p-2">{id}</p>
-                <p className="p-2">{name}</p>
-                <p className="p-2">{species}</p>
-                <p className="p-2">{breed}</p>
-                <p className="p-2">{birthdate}</p>
-                <p className="p-2">{gender}</p>
+        <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF] w-80">
+        <div className="p-6">
+            <div className="card-body w-80">
+                <h2 className="card-title">{name}</h2>
+                <p className="py-2">{species}</p>
+                <p className="py-2">{breed}</p>
+                <p className="py-2">{birthdate}</p>
+                <p className="py-2">{gender}</p>
             </div>
             <div className="card-actions">
                 <EditButton pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
                 <DeleteButton pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
             </div>
+        </div>
         </div>
     );
 };
