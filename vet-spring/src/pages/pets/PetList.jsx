@@ -38,21 +38,18 @@ export const PetList = () => {
 
     const onPageSizeChange = async (e) => {
         const pageSize = e.target.value;
-        await getPetPage(pageSize, 0)
         setCurrentPage(0)
         setPageSize(pageSize)
     }
 
     const onPaginate = async (page) => {
         if (page < 0 || page >= totalPages) return;
-
-        await getPetPage(pageSize, page)
         setCurrentPage(page)
     }
 
     useEffect(() => {
         getPetPage(pageSize, currentPage)
-    }, []);
+    }, [pageSize, currentPage]);
 
     return (
         <>
