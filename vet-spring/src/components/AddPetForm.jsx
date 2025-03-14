@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { addPet, updatePet } from "../utils/helpers/petService";
 
-const AddPetForm = ({ pet, onPetUpdate, onClose }) => {
+const AddPetForm = ({ pet, getPetPage, currentPage, pageSize }) => {
 
   const { account } = useAuth();
   const { account_id } = account;
@@ -38,34 +38,27 @@ const AddPetForm = ({ pet, onPetUpdate, onClose }) => {
     const trimmedData = {
       ...data,
       name: data.name.trim(),
+      birthdate: data.birthdate || null,
     }
 
-    const payload = { ...trimmedData, account_id };
+    const payload = { ...trimmedData };
 
     try {
-      let response1;
-      if (pet && pet.id) {
-        response1 = await updatePet(account_id, pet.id, payload);
-      } else {
-        response1 = await addPet(payload);
-      }
-      //onPetUpdate(response1.data);
-      console.log("Resetting form...");
-      reset({
-        name: "",
-        species: "",
-        breed: "",
-        birthdate: "",
-        gender: "",
-      });
-      console.log("Form reset complete");
-      //onClose();
-    } catch (error) {
-      console.error(error);
-      //setSubmitError("Failed to submit the form. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (pet && pet.id) {
+      await updatePet( pet.id, payload);
+      await getPetPage(pageSize, currentPage);
+    } else {
+      const newPayload = { ...trimmedData, account_id };
+      await addPet(newPayload);
+      await getPetPage(pageSize, currentPage);
     }
+    reset({ name: "", species: "", breed: "", birthdate: "", gender: "" });
+  } catch (error) {
+    console.error("Error details:", error.response?.data || error.message);
+    setSubmitError(error.response?.data?.message || "Failed to submit the form.");
+  } finally {
+    setIsLoading(false);
+  }
   };
 
   return (

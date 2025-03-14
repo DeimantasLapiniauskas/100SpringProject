@@ -75,7 +75,7 @@ public class PetPOSTTest {
 
         when(clientService.existsClientById(id))
                 .thenReturn(true);
-        when(clientService.findAccountIdByEmail(any())).thenReturn(id);
+        when(clientService.findClientIdByEmail(any())).thenReturn(id);
         when(petService.savePet(any(Pet.class)))
                 .thenReturn(PetMapping.toPet(petRequestDTO, id));
 
@@ -83,7 +83,7 @@ public class PetPOSTTest {
         account.setId(id);
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
-        when(clientService.findAccountIdByEmail(any()))
+        when(clientService.findClientIdByEmail(any()))
                 .thenReturn(id);
 
         mockMvc.perform(post("/api/pets")

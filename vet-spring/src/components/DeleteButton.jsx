@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { ThemeContext } from "../utils/helpers/themeContext";
+import ThemeContext from "../utils/helpers/themeContext";
 import { deletePet } from "../utils/helpers/deletePet";
 
-function DeleteButton({ pet }) {
+function DeleteButton({ pet, getPetPage, currentPage, pageSize }) {
     const { deleteModalID, setDeleteModalID } = useContext(ThemeContext);
     const { id } = pet;
     
@@ -10,12 +10,12 @@ function DeleteButton({ pet }) {
         if (deleteModalID !== id) {
             return;
         }
-
         try {
             await deletePet(id);
+            await getPetPage(pageSize, currentPage)
             setDeleteModalID("");
         } catch (error) {
-            console.error("Error while deleting a pet", error);
+            console.error("Error while deleting a pet:", error.response?.data || error.message);
         }
     }
 
@@ -41,7 +41,7 @@ function DeleteButton({ pet }) {
                             <button
                                 className="btn bg-red-500 w-16"
                                 onClick={handleDelete}>
-                                Delte
+                                Delete
                             </button>
                             <button
                                 className="btn bg-gray-500 w-16"

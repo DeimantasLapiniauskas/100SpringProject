@@ -1,18 +1,9 @@
 import { useContext } from "react";
-import { ThemeContext } from "../utils/helpers/themeContext";
+import ThemeContext from "../utils/helpers/themeContext";
 import AddPetForm from "./AddPetForm";
 
-function EditButton({ pet }) {
+function EditButton({ pet, getPetPage, currentPage, pageSize }) {
     const { editModalID, setEditModalID } = useContext(ThemeContext);
-
-    console.log("works? " + editModalID);
-    
-
-    console.log("line after: ");
-    console.log(editModalID);
-
-    // console.log("ThemeContext:", ThemeContext);
-    // console.log("context value:", context);
 
     return (
         <>
@@ -30,7 +21,7 @@ function EditButton({ pet }) {
             {editModalID == pet.id && (
                 <dialog open className="modal">
                     <div className="modal-box bg-gray-600 text-center">
-                        <AddPetForm pet={pet} />
+                        <AddPetForm pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
                         <form method="dialog">
                             <button
                                 className="btn bg-red-500 w-16"

@@ -78,7 +78,7 @@ public class PetGETTest {
 
         when(accountService.existsAccountById(ownerId))
                 .thenReturn(true);
-        when(clientService.findAccountIdByEmail(any()))
+        when(clientService.findClientIdByEmail(any()))
                 .thenReturn(ownerId);
         when(petService.getAllPetsByOwnerId(ownerId))
                 .thenReturn(List.of(petOne, petTwo));

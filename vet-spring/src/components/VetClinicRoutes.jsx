@@ -10,7 +10,7 @@ import { NotFound } from "../components/NotFound.jsx";
 
 import { HomePage } from "../pages/home/HomePage.jsx";
 import AddPetForm from "./AddPetForm.jsx";
-import { TempPetList } from "./TempPetList.jsx";
+//import { TempPetList } from "./TempPetList.jsx";
 // import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
@@ -34,7 +34,7 @@ const VetClinicRoutes = () => {
             <Route path="/home" element={<HomePage />} />
             {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
             <Route path="pets/add" element={<AddPetForm />} />
-            <Route path="pets/temp" element={<TempPetList />} />
+            {/* <Route path="pets/temp" element={<TempPetList />} /> */}
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

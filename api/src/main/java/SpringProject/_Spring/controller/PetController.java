@@ -84,25 +84,19 @@ public class PetController {
     }
 
 
-    @PutMapping("/{ownerId}/{petId}")
+    @PutMapping("/{petId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> updatePet(@PathVariable long ownerId,
-                                       @PathVariable long petId,
+    public ResponseEntity<?> updatePet(@PathVariable long petId,
                                        @Valid @RequestBody PetRequestDTO petRequestDTO,
                                        Authentication authentication
     ) {
-        if (!clientService.existsClientById(ownerId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Owner does not exist!");
-        }
-
         if (!petService.existsById(petId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Pet does not exist!");
         }
 
-        final Account currentAccount = (Account) authentication.getPrincipal();
-        if (clientService.findClientByAccountId(currentAccount.getId()).getAccountId()
+        final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
+        if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
                 petService.getPetByid(petId).get().getOwnerId()
                 &&
@@ -139,7 +133,7 @@ public class PetController {
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
-        if (clientService.findClientByAccountId(currentAccount.getId()).getAccountId()
+        if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
                 petService.getPetByid(petId).get().getOwnerId()
                 &&
@@ -158,11 +152,11 @@ public class PetController {
     }
 
     @GetMapping("/pagination")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')" )
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<Page<PetResponseDTO>> getPetsPageByOwnerId(Authentication authentication,
-                                                            @RequestParam int page,
-                                                            @RequestParam int size,
-                                                            @RequestParam(required = false) String sort) {
+                                                                     @RequestParam int page,
+                                                                     @RequestParam int size,
+                                                                     @RequestParam(required = false) String sort) {
 
 
         long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
