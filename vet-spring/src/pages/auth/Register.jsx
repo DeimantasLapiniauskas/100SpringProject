@@ -7,7 +7,7 @@ import { Error } from "../../components/Error.jsx";
 import RegisterPageDog from "../../assets/pet.png"; // Assuming you want the same image for Register page
 
 export const Register = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, watch, setValue, clearErrors, formState : { errors } } = useForm({ reValidateMode: "onSubmit "});
     const [error, setError] = useState("");
     const { login, register: registerUser } = useAuth();
 

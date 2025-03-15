@@ -29,8 +29,8 @@ const VetClinicRoutes = () => {
             <Route index element={<Navigate to="home" replace />} />
             <Route path="pets" element={<PetList />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-            <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
+            <Route path="home" element={<HomePage />} />
+            {/* <Route path="bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

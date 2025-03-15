@@ -1,6 +1,6 @@
-import {useAuth} from "../context/AuthContext.jsx";
-import api from "../utils/api.js";
-import {Error} from "./Error.jsx";
+import {useAuth} from "../../context/AuthContext.jsx";
+import api from "../../utils/api.js";
+import {Error} from "../../components/Error.jsx";
 import {useState} from "react";
 
 export const ServiceCard = (props) => {
