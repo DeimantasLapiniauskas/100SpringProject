@@ -9,7 +9,11 @@ import LoginPageDog from "../../assets/pet.png";
 export const Login = () => {
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("")
-    const { login } = useAuth()
+    const { login, account } = useAuth()
+
+    // useEffect(() => {
+    //     if (account)
+    // })
 
     const onSubmit = async (data) => {
         try {

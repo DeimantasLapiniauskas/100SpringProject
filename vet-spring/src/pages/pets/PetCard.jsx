@@ -8,6 +8,7 @@ export const PetCard = (props) => {
     const { pet, getPetPage, currentPage, pageSize } = props
     const { id, ownerId, name, species, breed, birthDate, gender } = pet
     const [error, setError] = useState("")
+    // console.log(id)
     // const { user } = useAuth()
 
     const deletePet = async () => {
