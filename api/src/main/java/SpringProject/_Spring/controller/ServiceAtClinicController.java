@@ -24,7 +24,6 @@ public class ServiceAtClinicController {
     private final ServiceAtClinicService serviceAtClinicService;
 
     @Autowired
-
     public ServiceAtClinicController(ServiceAtClinicService service) {
         this.serviceAtClinicService = service;
     }
@@ -55,7 +54,6 @@ public class ServiceAtClinicController {
     }
 
     @GetMapping("/services")
-
     public ResponseEntity<?> getAllServices() {
 
         List<ServiceAtClinic> allServices = serviceAtClinicService.findAllServiceAtClinic();
@@ -108,7 +106,7 @@ public class ServiceAtClinicController {
     }
 
     @DeleteMapping("/services/{id}")
-    
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");

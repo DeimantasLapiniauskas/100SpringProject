@@ -7,6 +7,8 @@ import SpringProject._Spring.repository.VetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VetService {
     private final VetRepository vetRepository;
@@ -22,5 +24,9 @@ public class VetService {
         accountRepository.save(account);
         vet.setAccount(account);
         return vetRepository.save(vet);
+    }
+
+    public Optional<Vet> getVetById(long vetId) {
+        return vetRepository.findById(vetId);
     }
 }
