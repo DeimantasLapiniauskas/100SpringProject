@@ -17,9 +17,6 @@ export const clearAuth = () => {
 }
 
     const maybeJwt = localStorage.getItem("jwt");
-    
-    console.log(maybeJwt)
-
     if (maybeJwt) {
       setAuth(maybeJwt);
     }

@@ -10,13 +10,11 @@ export const PetList = () => {
     const { account } = useAuth()
     const { iat } = account || ""
     const [welcome, setWelcome] = useState(true)
-
-    const { getPage, onPageSizeChange, onPaginate, error, content, currentPage, totalPages, pageSize } = usePagination();
-    
     //!!!!!!!!!!
     const [deleteModalID, setDeleteModalID] = useState("");
     const [editModalID, setEditModalID] = useState("");
     const [addModalID, setAddModalID] = useState("");
+    const { getPage, onPageSizeChange, onPaginate, error, content, currentPage, totalPages, pageSize } = usePagination();
 
     //TODO fadeout effect
     const welcomeClosure = () => {
