@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+* {
+  box-sizing: border-box;
+}
+
 @layer components {
     .form-text-select {
       @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;

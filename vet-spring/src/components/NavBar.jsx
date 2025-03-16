@@ -7,7 +7,7 @@ export const Navbar = () => {
 
     return (
         <div>
-            <nav className="h-[56px] bg-amber-900 px-[5rem] flex justify-between items-center rounded-[10px]">
+            <nav className="h-[56px] bg-[#6A7AFF] px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]">
                 <NavLink to={"/pets"}><p className="">Your Pets</p></NavLink>
                 <NavLink to={"/services"}><p className="">Service list</p></NavLink>
                 {account ?
