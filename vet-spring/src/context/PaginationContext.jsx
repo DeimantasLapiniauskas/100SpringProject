@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router";
 import api from "../utils/api";
 
@@ -17,10 +17,10 @@ export const PaginationProvider = ({ children }) => {
   const [currentPath, setCurrentPath] = useState()
   const location = useLocation();
 
-  const getPage = async (size, page, sort) => {
+  const getPage = useCallback(async (size, page, sort) => {
     const path = location.pathname;
-    const pathSegments = path.split("/");
-    const currentPath = pathSegments[pathSegments.length - 1];
+    const currentPath = path.split("/").pop();
+    console.log(currentPath)
     setCurrentPath(currentPath);
 
     try {
@@ -29,17 +29,16 @@ export const PaginationProvider = ({ children }) => {
           sort ? `&sort=${sort}` : ""
         }`
       );
-      console.log(response)
       const { content, totalPages } = response.data;
       setContent(content);
       setTotalPages(totalPages);
     } catch (error) {
-      setError(error.response.data || error.message);
+      setError(error.response?.data ?? error.message);
     }
-  };
+  }, [location.pathname]);
 
   const onPageSizeChange = (e) => {
-    const pageSize = e.target.value;
+    const pageSize = Math.max(1, parseInt(e.target.value, 10));
     setCurrentPage(0);
     setPageSize(pageSize);
   };
@@ -51,7 +50,7 @@ export const PaginationProvider = ({ children }) => {
 
   useEffect(() => {
     getPage(pageSize, currentPage);
-  }, [pageSize, currentPage, currentPath]);
+  }, [pageSize, currentPage, currentPath, getPage]);
 
   return (
   <PaginationContext.Provider
