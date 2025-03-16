@@ -83,7 +83,7 @@ export const Register = () => {
                 Login
               </NavLink>
             </div>
-            
+
           </form>
           <Error error={error} isHidden={!error} />
 

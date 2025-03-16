@@ -12,6 +12,7 @@ import { ServiceAdd } from "../pages/services/ServiceAdd.jsx";
 import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
 import { PaginationProvider } from "../context/PaginationContext.jsx";
+import AddPetForm from "./PetForm.jsx";
 // import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
@@ -47,6 +48,11 @@ const VetClinicRoutes = () => {
             />
             <Route path="services/add" element={<ServiceAdd />} />
             <Route path="services/edit/:id" element={<ServiceUpdate />} />
+            <Route path="pets" element={<PetList />} />
+            {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+            <Route path="/home" element={<HomePage />} />
+            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
+            <Route path="pets/add" element={<AddPetForm />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>
