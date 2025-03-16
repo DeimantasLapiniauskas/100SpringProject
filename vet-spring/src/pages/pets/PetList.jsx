@@ -22,32 +22,10 @@ export const PetList = () => {
     useEffect(() => {
         welcomeClosure()
     },[])
-    
-    // const getPetPage = async (size, page, sort) => {
-    //     try {
-    //         const response = await api.get(`/pets/pagination?page=${page}&size=${size}${sort ? `&sort=${sort}` : ""}`)
-    //         const { content, totalPages } = response.data
-    //         setPets(content);
-    //         setTotalPages(totalPages);
-    //     } catch (error) {
-    //         setError(error.response.data|| error.message)
-    //     }
-    // }
 
-    // const onPageSizeChange = async (e) => {
-    //     const pageSize = e.target.value;
-    //     setCurrentPage(0)
-    //     setPageSize(pageSize)
-    // }
-
-    // const onPaginate = async (page) => {
-    //     if (page < 0 || page >= totalPages) return;
-    //     setCurrentPage(page)
-    // }
-
-    // useEffect(() => {
-    //     getPetPage(pageSize, currentPage)
-    // }, [pageSize, currentPage]);
+    const roleCheck = () => {
+        return account.scope?.includes("ROLE_CLIENT") || account.scope?.icludes("ROLE_ADMIN")
+    }
 
     return (
         <>
@@ -56,14 +34,14 @@ export const PetList = () => {
         <div className="flex flex-col items-center gap-8 p-8">
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {content?.map(pet => (
-                    <PetCard key={pet.id} pet={pet} getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
+                    <PetCard key={pet.id} pet={pet} getPage={getPage} currentPage={currentPage} pageSize={pageSize} roleCheck={roleCheck}/>
                 ))}
             </ul>
             <div className="join">
-                <button className="join-item btn" onClick={async () => await onPaginate(currentPage - 1)}
+                <button className="join-item btn" onClick={async () => onPaginate(currentPage - 1)}
                     disabled={currentPage === 0}>«</button>
                 <button className="join-item btn">Page {currentPage + 1}</button>
-                <button className="join-item btn" onClick={async () => await onPaginate(currentPage + 1)}
+                <button className="join-item btn" onClick={async () => onPaginate(currentPage + 1)}
                     disabled={currentPage === totalPages - 1}
                     >»</button>
                 <select
