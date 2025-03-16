@@ -3,17 +3,20 @@ import {useAuth} from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
 import {Error} from "../../components/Error.jsx";
 import {useState} from "react";
+import { usePagination } from "../../context/PaginationContext.jsx";
+
 export const ServiceCard = (props) => {
-    const{service, getServicePage, currentPage, pageSize} = props
+    const{service} = props
     const{id, name, description, price} = service
     const [error, setError] = useState("")
     const{ account } = useAuth()
+    const {getPage, currentPage, pageSize} = usePagination();
     
     const deleteService = async () => {
         
         try {
             await api.delete(`/services/${id}`);
-            await getServicePage(pageSize, currentPage)
+            getPage(pageSize, currentPage)
         } catch (error) {
             setError(error.response?.message || error.message);
         }
@@ -22,7 +25,7 @@ export const ServiceCard = (props) => {
     const editService = async () => {
         try {
             await api.put(`/services/${id}`);
-            await getPetPage(pageSize, currentPage)
+            await getPage(pageSize, currentPage)
         } catch (error) {
             setError(error.response?.message || error.message);
         }
