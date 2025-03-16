@@ -99,7 +99,7 @@ export const Register = () => {
                   return value === watch("password") || "Passwords must match";
                 },
               })}
-              type="repeatPassword"
+              type="password"
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
