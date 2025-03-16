@@ -17,10 +17,10 @@ export const NotFound = () => {
         <p className="font-bold lg:text-3xl md:text-2xl text-lg pb-2 text-amber-900">
           Opps.. Page Not Found!
         </p>
-        <NavLink to={"/pets"}>
+        <NavLink to={"/home"}>
           <p
             type="button"
-            className="bg-transparent rounded-[5px] p-1 border-2 border-amber-900 hover:bg-amber-900 hover:text-white transition duration-500 shadow-amber-900 shadow-md lg:text-lg md:text-sm text-xs"
+            className="bg-transparent rounded-[5px] p-1 border-2 border-amber-900 hover:bg-amber-900 hover:text-white transition duration-500 shadow-amber-900 shadow-md lg:text-base md:text-sm text-xs"
           >
             <b>Click to Homepage!</b>
           </p>
