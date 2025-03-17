@@ -108,7 +108,6 @@ export const ServiceUpdate = () => {
                           required:"Price is required",
                           min:0
                         })}
-                        // defaultValue={data.price}
                         type="mydouble" 
                         className="input focus:outline-[0px] focus:border-base-300" 
                         placeholder="Enter price"/>

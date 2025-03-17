@@ -17,16 +17,16 @@ export const ServiceAdd = ({ service}) => {
         const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
         
-  useEffect(() => {
-    if (service) {
-      const { name, description, price } = service;
+  // useEffect(() => {
+  //   if (service) {
+  //     const { name, description, price } = service;
 
-      setValue("name", name);
-      setValue("description", description);
-      setValue("price", price);
+  //     setValue("name", name);
+  //     setValue("description", description);
+  //     setValue("price", price);
       
-    }
-  }, [service, setValue]);
+  //   }
+  // }, [service, setValue]);
 
   const formSubmitHandler = async (data) => {
     setIsLoading(true);

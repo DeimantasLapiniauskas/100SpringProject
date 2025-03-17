@@ -29,7 +29,7 @@ public class ServiceAtClinicController {
     }
 
     @PostMapping("/services")
-//    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
         if (serviceAtClinicService.existsServiceByName(serviceDTO.name())) {
             Map<String, String> badResponse = new HashMap<>();
@@ -84,7 +84,7 @@ public class ServiceAtClinicController {
     }
 
     @PutMapping("/services/{serviceId}")
-//    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateService(@PathVariable long serviceId,
                                            @Valid @RequestBody ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
         if (serviceId < 0) {
@@ -106,7 +106,11 @@ public class ServiceAtClinicController {
     }
 
     @DeleteMapping("/services/{id}")
+<<<<<<< HEAD
 //    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+=======
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+>>>>>>> main
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");

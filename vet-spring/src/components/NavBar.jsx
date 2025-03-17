@@ -11,7 +11,7 @@ export const Navbar = () => {
                 <NavLink to={"/pets"}><p className="">Pet list</p></NavLink>
                 <NavLink to={"/services"}><p className="">Service list</p></NavLink>
                 <NavLink to={"/login"}><p>Login</p></NavLink>
-                {account ? 
+                {account ?
                 <button type="button" value="logout" onClick={logout} className="cursor-pointer">Logout</button> :
                 <NavLink to={"/login"}><p>Login</p></NavLink>}
             </nav>
