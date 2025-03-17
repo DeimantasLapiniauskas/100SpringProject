@@ -35,7 +35,7 @@ export const ServiceCard = (props) => {
     //     }
     //}
     const checkRoles = () => {
-        return account.scope?.includes("ROLE_VET") || account.scope?.includes("ROLE_ADMIN");
+        return account?.scope.includes("ROLE_VET") || account?.scope.includes("ROLE_ADMIN") || false;
             }
 
     return(
