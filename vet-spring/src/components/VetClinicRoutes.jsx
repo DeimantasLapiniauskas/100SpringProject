@@ -25,7 +25,7 @@ const VetClinicRoutes = () => {
           <Route path={"/"} element={<MainLayout />}>
             <Route index element={<Navigate to="home" replace />} />
             <Route
-              path="pets"
+              path="/pets"
               element={
                 <AuthGuard>
                   <PaginationProvider>
@@ -35,11 +35,11 @@ const VetClinicRoutes = () => {
               }
             />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-            <Route path="home" element={<HomePage />} />
+            <Route path="/home" element={<HomePage />} />
             {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route
-              path="services"
+              path="/services"
               element={
                 <PaginationProvider>
                   <ServiceList />

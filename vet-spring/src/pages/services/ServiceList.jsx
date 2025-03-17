@@ -21,13 +21,26 @@ export const ServiceList = () => {
     pageSize,
   } = usePagination();
 
+   const checkRoles = () => {
+    //todo: make this better
+    return (
+      (account !== null &&
+        account.scope !== null &&
+        account.scope.includes("ROLE_VET")) ||
+      (account !== null &&
+        account.scope !== null &&
+        account?.scope.includes("ROLE_ADMIN"))
+    );
+  };
+
   return (
+    <>
     <div className="flex flex-col items-center gap-8 p-8 ">
-      {
+      {checkRoles() && (
         <NavLink to={`/services/add`} className="btn btn-primary">
           Add
         </NavLink>
-      }
+      )}
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {content?.map((service) => (
           <ServiceCard
@@ -100,5 +113,6 @@ export const ServiceList = () => {
 </div>
       <Error error={error} isHidden={!error} />
     </div>
+
   );
 };

@@ -49,9 +49,6 @@ export const ServiceCard = (props) => {
     //         setError(error.response?.message || error.message);
     //     }
     //}
-    // const checkRoles = () => {
-    //     return account.scope?.includes("ROLE_VET") || account.scope?.includes("ROLE_ADMIN");
-    //         }
 
     return (
         <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">

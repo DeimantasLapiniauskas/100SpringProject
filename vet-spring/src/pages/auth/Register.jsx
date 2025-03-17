@@ -28,7 +28,7 @@ export const Register = () => {
       );
       await login(data.email, data.password);
     } catch (error) {
-      setError(JSON.stringify(error.response.data) ?? error.message);
+            setError(JSON.stringify(error.response.data) ?? error.message ?? "Something went wrong!");
     }
   };
 

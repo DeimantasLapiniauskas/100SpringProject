@@ -54,8 +54,8 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/services/pagination").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/register").anonymous()
                         .requestMatchers("/error/**").permitAll()
                         .anyRequest().authenticated()
                 );
