@@ -2,7 +2,7 @@ import { useContext } from "react";
 import ThemeContext from "../utils/helpers/themeContext";
 import AddPetForm from "./PetForm";
 
-function EditButton({ pet, getPetPage, currentPage, pageSize }) {
+function EditButton({ pet }) {
     const { editModalID, setEditModalID } = useContext(ThemeContext);
 
     return (
@@ -21,7 +21,7 @@ function EditButton({ pet, getPetPage, currentPage, pageSize }) {
             {editModalID == pet.id && (
                 <dialog open className="modal">
                     <div className="modal-box bg-gray-600 text-center">
-                        <AddPetForm pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
+                        <AddPetForm pet={pet} getPetPage={getPage} currentPage={currentPage} pageSize={pageSize} />
                         <form method="dialog">
                             <button
                                 className="btn bg-red-500 w-16"

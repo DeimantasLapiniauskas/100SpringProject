@@ -1,7 +1,7 @@
 import DeleteButton from "../../components/DeleteButton"
 import EditButton from "../../components/EditButton"
 
-export const PetCard = ({ pet, getPetPage, currentPage, pageSize }) => {
+export const PetCard = ({ pet, getPage, currentPage, pageSize }) => {
     const { name, species, breed, birthdate, gender } = pet;
 
     return (
@@ -15,8 +15,8 @@ export const PetCard = ({ pet, getPetPage, currentPage, pageSize }) => {
                 <p className="py-2">{gender}</p>
             </div>
             <div className="card-actions">
-                <EditButton pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
-                <DeleteButton pet={pet} getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
+                <EditButton pet={pet} />
+                <DeleteButton pet={pet} getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
             </div>
         </div>
         </div>
