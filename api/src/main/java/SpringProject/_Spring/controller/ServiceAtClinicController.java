@@ -106,11 +106,11 @@ public class ServiceAtClinicController {
     }
 
     @DeleteMapping("/services/{id}")
-<<<<<<< HEAD
+
 //    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-=======
+
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
->>>>>>> main
+
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
