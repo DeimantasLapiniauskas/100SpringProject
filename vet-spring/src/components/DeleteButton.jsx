@@ -12,7 +12,7 @@ function DeleteButton({ pet, getPetPage, currentPage, pageSize }) {
         }
         try {
             await deletePet(id);
-            await getPetPage(pageSize, currentPage)
+            //await getPetPage(pageSize, currentPage)
             setDeleteModalID("");
         } catch (error) {
             console.error("Error while deleting a pet:", error.response?.data || error.message);

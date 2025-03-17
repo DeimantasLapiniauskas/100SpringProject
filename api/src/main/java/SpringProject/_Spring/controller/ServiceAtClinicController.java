@@ -108,6 +108,7 @@ public class ServiceAtClinicController {
 
     @DeleteMapping("/services/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
@@ -117,7 +118,6 @@ public class ServiceAtClinicController {
     }
 
     @GetMapping("/services/pagination")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<Page<ServiceAtClinicResponseDTO>> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort) {
 
         if (page < 0 || size <= 0) {
