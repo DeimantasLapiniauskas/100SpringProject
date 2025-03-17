@@ -16,7 +16,7 @@ export const Register = () => {
             await registerUser(data.email, data.password, data.firstName, data.lastName, data.phoneNumber);
             await login(data.email, data.password);
         } catch (error) {
-            setError(JSON.stringify(error.response.data) ?? error.message);
+            setError(JSON.stringify(error.response.data) ?? error.message ?? "Something went wrong!");
         }
     };
 

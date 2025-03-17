@@ -41,6 +41,7 @@ export const ServiceList = () => {
   }, []);
 
   const checkRoles = () => {
+    //todo: make this better
     return (
       (account !== null &&
         account.scope !== null &&

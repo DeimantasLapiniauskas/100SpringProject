@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext"
 export const Navbar = () => {
 
     const {account, logout} = useAuth()
-
     return (
         <div>
             <nav className="h-[56px] bg-amber-900 px-[5rem] flex justify-between items-center rounded-[10px]">
