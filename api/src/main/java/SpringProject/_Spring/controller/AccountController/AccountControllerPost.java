@@ -41,7 +41,7 @@ public class AccountControllerPost {
     }
 
     @PostMapping("/register")
-//    @PreAuthorize("isAnonymous()")
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity<?> addClient(@Valid @RequestBody ClientRequestDTO clientRequestDTO) {
         if (accountService.existsAccountByEmail(clientRequestDTO.email())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
