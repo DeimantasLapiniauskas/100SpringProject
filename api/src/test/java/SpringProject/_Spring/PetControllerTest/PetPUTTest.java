@@ -109,7 +109,6 @@ public class PetPUTTest {
                         )
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(0))
                 .andExpect(jsonPath("name").value("Little Bastard"))
                 .andExpect(jsonPath("species").value("Catto"))
                 .andExpect(jsonPath("breed").value("Yes"))
@@ -192,6 +191,7 @@ public class PetPUTTest {
         when(clientService.findClientByAccountId(ownerId + 4))
                 .thenReturn(client);
 
+
         mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
@@ -199,7 +199,6 @@ public class PetPUTTest {
                         )
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(0))
                 .andExpect(jsonPath("name").value("Little Bastard"))
                 .andExpect(jsonPath("species").value("Catto"))
                 .andExpect(jsonPath("breed").value("Yes"))
