@@ -5,6 +5,12 @@ import { ServiceCard } from "./ServiceCard.jsx";
 import { Error } from "../../components/Error.jsx";
 import { NavLink } from "react-router";
 
+import ServiceListPageVetHoldingCat from "../../assets/cart.png";
+import ServiceListPageVetHoldingDog from "../../assets/vet.png";
+import ServiceListPageCatPawBandage from "../../assets/peti.png";
+import ServiceListPageCatSurgery from "../../assets/sur.png";
+import ServiceListPageVetListeningDog from "../../assets/cons.png";
+
 export const ServiceList = () => {
   const [services, setServices] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,6 +102,57 @@ export const ServiceList = () => {
           <option value="15">15</option>
         </select>
       </div>
+
+      {/* Centered Text and Horizontal Image Section */}
+      <div className="flex flex-col items-center text-center space-y-4">
+        <h1 className="text-4xl text-black">
+          Find What Your Pet Needs
+          <br /> Here To Make Your
+          <br /> Pet Happy
+        </h1>
+
+        {/* Horizontal Image Section */}
+        <div className="flex space-x-4 overflow-x-auto">
+          {" "}
+          {/* Ensures horizontal scroll if needed */}
+          <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <img
+              src={ServiceListPageVetHoldingCat}
+              alt="Vet holding gray cat"
+              className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+            />
+          </figure>
+          <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <img
+              src={ServiceListPageVetHoldingDog}
+              alt="Vet holding black and white puppy"
+              className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+            />
+          </figure>
+          <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <img
+              src={ServiceListPageCatPawBandage}
+              alt="Vet holding brown cat"
+              className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+            />
+          </figure>
+          <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <img
+              src={ServiceListPageCatSurgery}
+              alt="Vet performing surgery on cat"
+              className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+            />
+          </figure>
+          <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <img
+              src={ServiceListPageVetListeningDog}
+              alt="Vet listening to dog heartbeat"
+              className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+            />
+          </figure>
+        </div>
+      </div>
+
       <Error error={error} isHidden={!error} />
     </div></>
   );
