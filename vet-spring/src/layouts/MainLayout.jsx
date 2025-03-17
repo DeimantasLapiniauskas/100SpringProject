@@ -3,6 +3,7 @@ import {useAuth} from "../context/AuthContext.jsx";
 import { Navbar } from "../components/NavBar.jsx";
 
 export const MainLayout = () => {
+    const { logout } = useAuth();
 
     return (
         <div >

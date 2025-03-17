@@ -53,6 +53,7 @@ export const ServiceList = () => {
   };
 
   return (
+    <>
     <div className="flex flex-col items-center gap-8 p-8 ">
       {checkRoles() && (
         <NavLink to={`/services/add`} className="btn btn-primary">
@@ -96,6 +97,6 @@ export const ServiceList = () => {
         </select>
       </div>
       <Error error={error} isHidden={!error} />
-    </div>
+    </div></>
   );
 };

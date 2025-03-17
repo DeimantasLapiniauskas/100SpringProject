@@ -21,8 +21,6 @@ const VetClinicRoutes = () => {
         <Routes>
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
-          <Route path={"/home"} element={<HomePage />} />
-          <Route path={"services"} element={<ServiceList />} />
           <Route
             path={"/"}
             element={
@@ -32,6 +30,8 @@ const VetClinicRoutes = () => {
             }
           >
             <Route index element={<Navigate to="home" replace />} />
+            <Route path={"/home"} element={<HomePage />} />
+            <Route path={"/services"} element={<ServiceList />} />
             <Route path="pets" element={<PetList />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
