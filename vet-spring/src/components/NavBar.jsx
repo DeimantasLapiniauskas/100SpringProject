@@ -6,10 +6,9 @@ export const Navbar = () => {
     const {account, logout} = useAuth()
     return (
         <div>
-            <nav className="h-[56px] bg-amber-900 px-[5rem] flex justify-between items-center rounded-[10px]">
-                <NavLink to={"/pets"}><p className="">Pet list</p></NavLink>
+            <nav className="h-[56px] bg-[#6A7AFF] px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]">
+                <NavLink to={"/pets"}><p className="">Your Pets</p></NavLink>
                 <NavLink to={"/services"}><p className="">Service list</p></NavLink>
-                {/* <NavLink to={"/login"}><p>Login</p></NavLink> */}
                 {account ?
                 <button type="button" value="logout" onClick={logout} className="cursor-pointer">Logout</button> :
                 <NavLink to={"/login"}><p>Login</p></NavLink>}

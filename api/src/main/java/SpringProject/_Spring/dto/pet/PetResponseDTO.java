@@ -5,7 +5,7 @@ import SpringProject._Spring.model.Gender;
 
 import java.time.LocalDate;
 
-public record PetResponseDTO(
+public record PetResponseDTO(long id,
         String name,
         String species,
         String breed,

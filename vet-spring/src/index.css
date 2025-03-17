@@ -1,2 +1,24 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+* {
+  box-sizing: border-box;
+}
+
+@layer components {
+    .form-text-select {
+      @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
+    }
+  
+    .form-text-select:focus {
+      @apply border-b border-white bg-transparent text-white;
+    }
+  
+    .form-text-select option {
+      @apply text-black;
+    }
+
+    .form-text-select option[value=""] {
+        @apply text-white;
+      }
+  }

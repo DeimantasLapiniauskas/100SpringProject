@@ -55,16 +55,6 @@ public class PetService {
         return petRepository.findAllByOwnerId(ownerAccountId, pageable);
     }
 
-//    public Page<Pet> findAllOwnerPetsPage(String email, int page, int size, String sort) {
-//        if(sort == null) {
-//            Pageable pageable = PageRequest.of(page, size);
-//            return petRepository.findAllOwnerPage(email,pageable);
-//        }
-//
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-//        return petRepository.findAllOwnerPage(email, pageable);
-//    }
-
     public boolean isNotValidSortField(String sort) {
         List<String> validSortFields = List.of(
                 "ownerId", "name", "species", "breed", "birthday", "gender" );

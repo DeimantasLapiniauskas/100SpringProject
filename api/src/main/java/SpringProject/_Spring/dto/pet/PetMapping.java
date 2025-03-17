@@ -11,6 +11,7 @@ public class PetMapping {
 
     public static PetResponseDTO toPetResponseDTO(Pet pet) {
         return new PetResponseDTO(
+                pet.getId(),
                 pet.getName(),
                 pet.getSpecies(),
                 pet.getBreed(),
@@ -23,6 +24,7 @@ public class PetMapping {
         return pets.stream()
                 .map(
                         pet -> new PetResponseDTO(
+                                pet.getId(),
                                 pet.getName(),
                                 pet.getSpecies(),
                                 pet.getBreed(),

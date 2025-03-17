@@ -7,6 +7,7 @@ import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.service.ServiceAtClinicService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -107,12 +108,27 @@ public class ServiceAtClinicController {
 
     @DeleteMapping("/services/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+
     public ResponseEntity<String> deleteService(@PathVariable long id) {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
         }
         serviceAtClinicService.deleteServiceById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/services/pagination")
+    public ResponseEntity<Page<ServiceAtClinicResponseDTO>> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort) {
+
+        if (page < 0 || size <= 0) {
+            throw new IllegalArgumentException("Invalid page or size parameters");
+        }
+
+        if (sort != null && serviceAtClinicService.isNotValidSortField(sort)) {
+            throw new IllegalArgumentException("Invalid sort field");
+        }
+
+        return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicListPageDTO(serviceAtClinicService.findAllServiceAtClinicPages(page, size, sort)));
     }
 }
 
