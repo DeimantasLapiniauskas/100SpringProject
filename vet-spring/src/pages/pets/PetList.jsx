@@ -3,7 +3,7 @@ import { PetCard } from "./PetCard.jsx";
 import { Error } from "../../components/Error.jsx";
 import { useAuth } from "../../context/AuthContext"
 import ThemeContext from "../../utils/helpers/themeContext.js";
-import AddPetButton from "../../components/AddPetButton.jsx"
+import AddPetButton from "./AddPetButton.jsx"
 import { usePagination } from "../../context/PaginationContext.jsx";
 
 export const PetList = () => {

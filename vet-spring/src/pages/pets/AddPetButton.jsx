@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import ThemeContext from "../utils/helpers/themeContext";
-import AddPetForm from "./PetForm";
+import ThemeContext from "../../utils/helpers/themeContext";
+import PetForm from "./PetForm";
 
-function AddPetButton({ getPetPage, currentPage, pageSize }) {
+function AddPetButton({ getPage, currentPage, pageSize }) {
   const { addModalID, setAddModalID } = useContext(ThemeContext);
 
   return (
@@ -21,7 +21,7 @@ function AddPetButton({ getPetPage, currentPage, pageSize }) {
       {addModalID === "new" && (
         <dialog open className="modal">
           <div className="modal-box bg-gray-600 text-center">
-            <AddPetForm getPetPage={getPetPage} currentPage={currentPage} pageSize={pageSize} />
+            <PetForm getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
             <form method="dialog">
               <button
                 className="btn bg-red-500 w-16"

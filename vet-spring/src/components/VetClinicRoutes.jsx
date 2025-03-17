@@ -12,7 +12,7 @@ import { ServiceAdd } from "../pages/services/ServiceAdd.jsx";
 import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
 import { PaginationProvider } from "../context/PaginationContext.jsx";
-import AddPetForm from "./PetForm.jsx";
+import PetForm from "../pages/pets/PetForm.jsx";
 // import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
@@ -52,7 +52,7 @@ const VetClinicRoutes = () => {
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/home" element={<HomePage />} />
             {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
-            <Route path="pets/add" element={<AddPetForm />} />
+            <Route path="pets/add" element={<PetForm />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>
