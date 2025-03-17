@@ -2,7 +2,7 @@ import HomePageDog from "../../assets/dog.png";
 
 export const HomePage = () => {
     return (
-        <div className="min-h-screen bg-[#F5F4F4] flex justify-center items-center p-5">
+        <div className="min-h-screen flex justify-center items-center p-5">
             <main className="flex flex-wrap justify-between items-start w-full max-w-screen-xl gap-8">
                 <figure className="flex-shrink-0 w-full sm:w-1/3">
                     <img

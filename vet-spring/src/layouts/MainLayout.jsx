@@ -5,7 +5,7 @@ export const MainLayout = () => {
     
 
     return (
-        <div className="p-1 bg-[#5e6ce4]">
+        <div className="p-1 bg-[#a7acd9]">
             <header className="pb-1">
                 <Navbar/>
             </header>

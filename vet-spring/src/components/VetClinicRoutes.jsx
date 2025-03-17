@@ -24,6 +24,7 @@ const VetClinicRoutes = () => {
           <Route path={"/register"} element={<Register />} />
           <Route path={"/"} element={<MainLayout />}>
             <Route index element={<Navigate to="home" replace />} />
+            <Route path="home" element={<HomePage />} />
             <Route
               path="pets"
               element={
@@ -34,9 +35,7 @@ const VetClinicRoutes = () => {
                 </AuthGuard>
               }
             />
-            {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-            <Route path="home" element={<HomePage />} />
-            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
+             <Route path="pets/add" element={<AddPetForm />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route
               path="services"
@@ -48,11 +47,6 @@ const VetClinicRoutes = () => {
             />
             <Route path="services/add" element={<ServiceAdd />} />
             <Route path="services/edit/:id" element={<ServiceUpdate />} />
-            <Route path="pets" element={<PetList />} />
-            {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-            <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
-            <Route path="pets/add" element={<AddPetForm />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

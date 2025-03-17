@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { addPet, updatePet } from "../utils/helpers/petService";
 
-const AddPetForm = ({ pet, getPetPage, currentPage, pageSize }) => {
+const AddPetForm = ({ pet, getPage, currentPage, pageSize }) => {
   const {
     register,
     handleSubmit,
@@ -41,11 +41,11 @@ const AddPetForm = ({ pet, getPetPage, currentPage, pageSize }) => {
     try {
       if (pet && pet.id) {
         await updatePet(pet.id, payload);
-        await getPetPage(pageSize, currentPage);
+        await getPage(pageSize, currentPage);
       } else {
         const newPayload = { ...trimmedData };
         await addPet(newPayload);
-        await getPetPage(pageSize, currentPage);
+        await getPage(pageSize, currentPage);
       }
       reset({ name: "", species: "", breed: "", birthdate: "", gender: "" });
     } catch (error) {
