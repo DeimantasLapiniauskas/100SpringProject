@@ -60,7 +60,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
         const newPayload = { ...trimmedData };
         await addPet(newPayload);
         await getPage(pageSize, currentPage);
-        setEditModalID(""); 
+        setAddModalID(""); 
       }
       reset();
     } catch (error) {
