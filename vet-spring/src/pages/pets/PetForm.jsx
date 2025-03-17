@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { addPet, updatePet } from "../utils/helpers/petService";
+import { addPet, updatePet } from "../../utils/helpers/petService";
 
-const AddPetForm = ({ pet, getPage, currentPage, pageSize }) => {
+const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
   const {
     register,
     handleSubmit,
@@ -33,6 +33,8 @@ const AddPetForm = ({ pet, getPage, currentPage, pageSize }) => {
     const trimmedData = {
       ...data,
       name: data.name.trim(),
+      species: data.species.trim(),
+      breed: data.breed.trim(),
       birthdate: data.birthdate || null,
     }
 
@@ -45,7 +47,7 @@ const AddPetForm = ({ pet, getPage, currentPage, pageSize }) => {
       } else {
         const newPayload = { ...trimmedData };
         await addPet(newPayload);
-        await getPage(pageSize, currentPage);
+        await getPage(pageSize, currentPage); 
       }
       reset({ name: "", species: "", breed: "", birthdate: "", gender: "" });
     } catch (error) {
@@ -163,4 +165,4 @@ const AddPetForm = ({ pet, getPage, currentPage, pageSize }) => {
   );
 };
 
-export default AddPetForm;
+export default PetForm;

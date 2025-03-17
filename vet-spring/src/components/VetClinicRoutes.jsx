@@ -12,7 +12,7 @@ import { ServiceAdd } from "../pages/services/ServiceAdd.jsx";
 import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
 import { PaginationProvider } from "../context/PaginationContext.jsx";
-import AddPetForm from "./PetForm.jsx";
+import PetForm from "../pages/pets/PetForm.jsx";
 // import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
@@ -26,7 +26,7 @@ const VetClinicRoutes = () => {
             <Route index element={<Navigate to="home" replace />} />
             <Route path="home" element={<HomePage />} />
             <Route
-              path="pets"
+              path="/pets"
               element={
                 <AuthGuard>
                   <PaginationProvider>
@@ -35,10 +35,10 @@ const VetClinicRoutes = () => {
                 </AuthGuard>
               }
             />
-             <Route path="pets/add" element={<AddPetForm />} />
+             <Route path="pets/add" element={<PetForm />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route
-              path="services"
+              path="/services"
               element={
                 <PaginationProvider>
                   <ServiceList />

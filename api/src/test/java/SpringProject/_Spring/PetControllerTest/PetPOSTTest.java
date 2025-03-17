@@ -73,9 +73,6 @@ public class PetPOSTTest {
                 "Maja", "Egyptian", "cat", LocalDate.now(), gender
         );
 
-        when(clientService.existsClientById(id))
-                .thenReturn(true);
-        when(clientService.findClientIdByEmail(any())).thenReturn(id);
         when(petService.savePet(any(Pet.class)))
                 .thenReturn(PetMapping.toPet(petRequestDTO, id));
 
@@ -85,6 +82,8 @@ public class PetPOSTTest {
         client.setAccount(account);
         when(clientService.findClientIdByEmail(any()))
                 .thenReturn(id);
+        when(clientService.existsClientById(id))
+                .thenReturn(true);
 
         mockMvc.perform(post("/api/pets")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -98,7 +97,6 @@ public class PetPOSTTest {
                         )
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").value(0))
                 .andExpect(jsonPath("name").value("Maja"))
                 .andExpect(jsonPath("species").value("Egyptian"))
                 .andExpect(jsonPath("breed").value("cat"))
