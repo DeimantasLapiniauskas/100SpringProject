@@ -4,9 +4,10 @@
 
 html, body {
   font-family: 'Kiwi Maru', sans-serif;
-  background-color: #CBC5C5;
+  background-color: #DCDEFE;
 }
 
+/* Black button located in Login Page and Register Page */
 .custom-black-btn {
   background-color: #000000;
   color: white;
@@ -16,10 +17,35 @@ html, body {
   font-size: 1.125rem;
   font-weight: bold;
   transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-black-btn:hover {
   background-color: #333;
+}
+
+/* Light pink button to be used in Navigation bar in the future */
+.custom-pink-btn {
+  background-color: #F5D1DD;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem; /* Adjusted width */
+  height: 2.9375rem; /* Adjusted height */
+  border-radius: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-pink-btn:hover {
+  background-color: #C7A4D6;
 }
 
 /*FOR NAVIGATION BAR TO USE IN FUTURE JUST IN CASE //////////////////////////////////////////////////////// */
