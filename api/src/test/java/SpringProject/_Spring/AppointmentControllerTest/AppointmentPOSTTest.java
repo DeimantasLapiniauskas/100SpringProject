@@ -11,6 +11,7 @@ import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -176,5 +177,207 @@ public class AppointmentPOSTTest {
                 .andExpect(jsonPath("price").value(serviceOne.getPrice().add(serviceTwo.getPrice())));
 
         Mockito.verify(appointmentService, times(1)).saveAppointment(ArgumentMatchers.any());
+    }
+
+    @Test
+    void addAppointment_whenAddUnauthenticated_thenRespond401() throws Exception {
+        long petId = 1;
+        long vetId = 13;
+        long serviceIdOne = 5;
+        long serviceIdTwo = 8;
+        String note = "Notes";
+
+        mockMvc.perform(post("/api/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                petId,
+                                                vetId,
+                                                List.of(serviceIdOne, serviceIdTwo),
+                                                LocalDateTime.now(),
+                                                note)
+                                )
+                        )
+                )
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(appointmentService, times(0)).saveAppointment(ArgumentMatchers.any());
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void addAppointment_whenBadRequest_thenRespond400() throws Exception {
+
+        long petId = 1;
+        long ownerId = 3;
+        long vetId = 13;
+        long serviceIdOne = 5;
+        long serviceIdTwo = 8;
+        String note = "";
+
+
+        Pet pet = new Pet(
+                ownerId,
+                "Maya",
+                "Cat",
+                "Bald",
+                LocalDate.now(),
+                Gender.Female);
+
+        Vet vet = new Vet(
+                "vetName",
+                "vetLastName",
+                "666-666-666",
+                "Specialty",
+                "LicenseNumber",
+                LocalDate.now()
+        );
+
+        vet.setAccount(new Account("VetEmail", "VetPassword", List.of(new Role("Vet", 2))));
+
+        ServiceAtClinic serviceOne = new ServiceAtClinic(
+                "Service one",
+                "Service Description One",
+                BigDecimal.valueOf(10.1)
+        );
+        serviceOne.setId(serviceIdOne);
+
+        ServiceAtClinic serviceTwo = new ServiceAtClinic(
+                "Service two",
+                "Service Description Two",
+                BigDecimal.valueOf(20.2)
+        );
+        serviceTwo.setId(serviceIdTwo);
+
+        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
+                .thenReturn(false);
+
+        when(serviceService.findServiceAtClinicById(serviceIdOne))
+                .thenReturn(Optional.of(serviceOne));
+
+        when(serviceService.findServiceAtClinicById(serviceIdTwo))
+                .thenReturn(Optional.of(serviceTwo));
+
+        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdTwo))
+                .thenReturn(false);
+
+        when(appointmentService.saveAppointment(any()))
+                .thenReturn(
+                        new Appointment(
+                                petId,
+                                vetId,
+                                List.of(serviceOne, serviceTwo),
+                                LocalDateTime.now(),
+                                note,
+                                Timestamp.valueOf(LocalDateTime.now())
+                        )
+                );
+
+        when(petService.getPetByid(petId))
+                .thenReturn(Optional.of(pet));
+
+        when(vetService.getVetById(vetId))
+                .thenReturn(Optional.of(vet));
+
+//        AppointmentRequestDTO goodAppointmentRequestDTO = new AppointmentRequestDTO(
+//                petId,
+//                vetId,
+//                List.of(serviceIdOne, serviceIdTwo),
+//                LocalDateTime.now(),
+//                note);
+
+
+        mockMvc.perform(post("/api/appointments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(
+                                new AppointmentRequestDTO(
+                                        null,
+                                        vetId,
+                                        List.of(serviceIdOne, serviceIdTwo),
+                                        LocalDateTime.now(),
+                                        note)
+                        )
+                )
+        )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("petId").value("You have to actually register a pet!"));
+
+        mockMvc.perform(post("/api/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                petId,
+                                                null,
+                                                List.of(serviceIdOne, serviceIdTwo),
+                                                LocalDateTime.now(),
+                                                note)
+                                )
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("vetId").value("You have to actually register to a vet!"));
+
+        mockMvc.perform(post("/api/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                petId,
+                                                vetId,
+                                                null,
+                                                LocalDateTime.now(),
+                                                note)
+                                )
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("serviceIds").value("You have to actually register to a service!"));
+
+        mockMvc.perform(post("/api/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                petId,
+                                                vetId,
+                                                List.of(serviceIdOne, serviceIdTwo),
+                                                null,
+                                                note)
+                                )
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("appointmentDate").value("You have to actually register at a predetermined time!"));
+
+
+        mockMvc.perform(post("/api/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                petId,
+                                                vetId,
+                                                List.of(serviceIdOne, serviceIdTwo),
+                                                LocalDateTime.of(2000,11,11,11,11),
+                                                note)
+                                )
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("appointmentDate").value("You can't make an appointment in the past!"));
+
+
+        mockMvc.perform(post("/api/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                petId,
+                                                vetId,
+                                                List.of(serviceIdOne, serviceIdTwo),
+                                                LocalDateTime.now(),
+                                                "Did you ever hear the tragedy of Darth Plagueis the wise? No. I thought not, It's No story the jedi would tell you. It's a sith legend. Darth Plagueis was a Dark Lord of the sith. He was so powerful, Yet so wise. He could use the force to influence the medi chlorians to create, Life. He had such a knowledge of the Dark side, He could even keep the ones he cared about, From dying. He could actually, Save the ones he cared about from death? The dark side of the force is a pathway to many abilities some consider to be unnatural. Well what happened to him? Darth Plagueis became so powerful that the only thing he feared was losing his power, Which eventually of course he did. Unfortunately, He taught his apprentice everything he knew. Then his apprentice killed him in his sleep. Ironic, He could save others from death, But not himself. Is it possible to learn this power? Not from a jedi.")
+                                )
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("notes").value("Your note is too long! Please keep it to 255 or less characters."));
     }
 }
