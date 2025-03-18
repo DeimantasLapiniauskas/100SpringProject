@@ -14,10 +14,11 @@ export const Register = () => {
     clearErrors,
     formState: { errors },
   } = useForm({ reValidateMode: "onSubmit " });
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
   const { login, register: registerUser } = useAuth();
 
   const onSubmit = async (data) => {
+    setError([]);
     try {
       await registerUser(
         data.email,
@@ -28,7 +29,9 @@ export const Register = () => {
       );
       await login(data.email, data.password);
     } catch (error) {
-            setError(JSON.stringify(error.response.data) ?? error.message ?? "Something went wrong!");
+      setError(
+        error.response.data ?? error.message ?? "Something went wrong!"
+      );
     }
   };
 
@@ -37,7 +40,7 @@ export const Register = () => {
       <div className="flex items-center gap-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-[400px] bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12"
+          className="mt-4 w-[400px] bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12"
         >
           <div className="text-2xl text-center mb-4 px-4">
             Join Happy Hearts Community! Register below
@@ -51,6 +54,7 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter first name"
             />
+            <div className="alert alert-error mt-4" hidden={error.firstName == null}>{error.firstName} </div>
 
             <label className="fieldset-label text-lg">Last Name</label>
             <input
@@ -60,6 +64,8 @@ export const Register = () => {
               placeholder="Enter last name"
             />
 
+            <div className="alert alert-error mt-4" hidden={error.lastName == null}>{error.lastName}</div>
+
             <label className="fieldset-label text-lg">Phone Number</label>
             <input
               {...register("phoneNumber")}
@@ -67,28 +73,37 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter phone number"
             />
+
+            <div className="alert alert-error mt-4" hidden={error.phoneNumber == null}>{error.phoneNumber}</div>
+
             <label className="fieldset-label text-lg">Email</label>
             <input
               {...register("email", {
                 required: {
-                  message: "This field is required"
-                }
+                  message: "This field is required",
+                },
               })}
               type="text"
               className="input text-lg p-3 w-full"
               placeholder="Enter email"
             />
+
+            <div className="alert alert-error mt-4" hidden={error.email == null}>{error.email}</div>
+
             <label className="fieldset-label text-lg">Password</label>
             <input
               {...register("password", {
                 required: {
-                  message: "This field is required"
-                }
+                  message: "This field is required",
+                },
               })}
               type="password"
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
+
+            <div className="alert alert-error mt-4" hidden={error.password == null}>{error.password}</div>
+            
             <label className="fieldset-label text-lg">Repeat Password</label>
             <input
               {...register("repeatPassword", {
@@ -103,6 +118,11 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
+            <div className="alert alert-error mt-4" hidden={errors.repeatPassword==null}> {errors.repeatPassword?.message}</div>
+              {console.log(errors)}
+
+            <Error error={error} isHidden={typeof error !== "string"} />
+
             <button type="submit" className="custom-black-btn mt-4">
               Register
             </button>
@@ -115,7 +135,6 @@ export const Register = () => {
             </NavLink>
           </div>
         </form>
-        <Error error={error} isHidden={!error} />
 
         <figure className="w-[400px] h-[500px] rounded-box overflow-hidden">
           <img
