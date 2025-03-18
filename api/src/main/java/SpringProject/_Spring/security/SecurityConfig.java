@@ -57,6 +57,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/services/pagination").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/register").anonymous()
                         .requestMatchers("/error/**").permitAll()
+                        .requestMatchers(
+                                "/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui-custom.html",
+                                "/api-docs/swagger-config",
+                                "/api-docs.yaml"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 );
 
