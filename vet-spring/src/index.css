@@ -17,8 +17,4 @@
     .form-text-select option {
       @apply text-black;
     }
-
-    .form-text-select option[value=""] {
-        @apply text-white;
-      }
   }
