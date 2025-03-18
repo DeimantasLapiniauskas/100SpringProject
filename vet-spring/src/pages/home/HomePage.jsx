@@ -23,11 +23,6 @@ export const HomePage = () => {
                         driven by a singular purpose: to nurture Lithuania and <br />
                         humankind by advancing care for animals.
                     </p>
-
-                    {/* Reviews Box */}
-                    <div className="flex items-center bg-[#6A7AFF] text-black px-6 py-3 rounded-lg shadow-md w-fit mt-4">
-                        <span className="text-lg font-semibold">100+ Reviews</span>
-                    </div>
                 </div>
 
                 {/* Image Section - Dog on Left */}
