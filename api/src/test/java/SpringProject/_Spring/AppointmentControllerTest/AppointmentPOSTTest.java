@@ -175,8 +175,6 @@ public class AppointmentPOSTTest {
                 .andExpect(jsonPath("notes").value(note))
                 .andExpect(jsonPath("price").value(serviceOne.getPrice().add(serviceTwo.getPrice())));
 
-Mockito.verify(appointmentService,times(1)).saveAppointment(ArgumentMatchers.any());
-
-
+        Mockito.verify(appointmentService, times(1)).saveAppointment(ArgumentMatchers.any());
     }
 }
