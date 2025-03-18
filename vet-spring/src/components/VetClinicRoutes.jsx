@@ -5,7 +5,6 @@ import { AuthGuard } from "../components/AuthGuard.jsx";
 import { Login } from "../pages/auth/Login.jsx";
 import { Register } from "../pages/auth/Register.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
-// import { ViewPet } from "../pages/pets/ViewPet.jsx";
 import { NotFound } from "../components/NotFound.jsx";
 import { ServiceList } from "../pages/services/ServiceList.jsx";
 import { ServiceAdd } from "../pages/services/ServiceAdd.jsx";
@@ -13,7 +12,6 @@ import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
 import { PaginationProvider } from "../context/PaginationContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
-// import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -36,7 +34,7 @@ const VetClinicRoutes = () => {
             />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
+
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route
               path="/services"
@@ -51,7 +49,7 @@ const VetClinicRoutes = () => {
             <Route path="pets" element={<PetList />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/bandymasRegisterPet" element={<BandymasRegisterPet />} /> */}
+
             <Route path="pets/add" element={<PetForm />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
