@@ -11,6 +11,7 @@ import SpringProject._Spring.model.Vet;
 import SpringProject._Spring.service.AccountService;
 import SpringProject._Spring.service.ClientService;
 import SpringProject._Spring.service.VetService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,7 @@ public class AccountControllerPost {
         this.vetService = vetService;
     }
 
+    @Operation(summary = "Register new client", description = "Registers a new client")
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
     public ResponseEntity<?> addClient(@Valid @RequestBody ClientRequestDTO clientRequestDTO) {
@@ -62,6 +64,7 @@ public class AccountControllerPost {
                 .body(ClientMapping.toClientResponseDTO(savedClient));
     }
 
+    @Operation(summary = "Register new veterinarian (Admin)", description = "Admin registers a new veterinarian")
     @PostMapping("/registerVet")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> addVet(
