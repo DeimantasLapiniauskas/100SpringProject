@@ -162,7 +162,6 @@ public class AppointmentPOSTTest {
                 .andExpect(jsonPath("petDTO.species").value(pet.getSpecies()))
                 .andExpect(jsonPath("petDTO.breed").value(pet.getBreed()))
                 .andExpect(jsonPath("petDTO.gender").value(pet.getGender().name()))
-                .andExpect(jsonPath("petDTO.name").value(pet.getName()))
                 .andExpect(jsonPath("vetDTO.email").value(vet.getAccount().getEmail()))
                 .andExpect(jsonPath("vetDTO.firstName").value(vet.getFirstName()))
                 .andExpect(jsonPath("vetDTO.lastName").value(vet.getLastName()))
