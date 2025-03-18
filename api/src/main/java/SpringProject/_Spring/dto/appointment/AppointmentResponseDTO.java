@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record AppointmentResponseDTO(
+        long id,
         PetResponseDTO petDTO,
         VetResponseDTO vetDTO,
         List<ServiceAtClinic> services,

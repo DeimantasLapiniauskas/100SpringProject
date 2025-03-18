@@ -59,6 +59,7 @@ public class AppointmentController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new AppointmentResponseDTO(
+                        savedAppointment.getId(),
                         PetMapping.toPetResponseDTO(petService.getPetByid(savedAppointment.getPetId()).get()),
                         VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
                         savedAppointment.getServices(),
@@ -93,6 +94,7 @@ public class AppointmentController {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
                         .stream().map(appointment -> new AppointmentResponseDTO(
+                                appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
                                 appointment.getServices(),
@@ -108,6 +110,7 @@ public class AppointmentController {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(id)
                         .stream().map(appointment -> new AppointmentResponseDTO(
+                                appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
                                 appointment.getServices(),
