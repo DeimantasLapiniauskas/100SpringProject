@@ -6,6 +6,7 @@ import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.dto.appointment.AppointmentResponseDTO;
 import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.vet.VetMapping;
 import SpringProject._Spring.model.Appointment;
 import SpringProject._Spring.service.*;
@@ -39,8 +40,7 @@ public class AppointmentController {
 
     @PostMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO,
-                                            Authentication authentication) {
+    public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO) {
         if (appointmentDTO.serviceIds().stream()
                 .anyMatch(appointmentId -> appointmentService.existsByPetIdAndServiceId(
                                 appointmentDTO.petId(), appointmentId
@@ -62,7 +62,7 @@ public class AppointmentController {
                         savedAppointment.getId(),
                         PetMapping.toPetResponseDTO(petService.getPetByid(savedAppointment.getPetId()).get()),
                         VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
-                        savedAppointment.getServices(),
+                        savedAppointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                         savedAppointment.getAppointmentDate(),
                         savedAppointment.getNotes(),
                         savedAppointment.getTotalServicesSum())
@@ -97,7 +97,7 @@ public class AppointmentController {
                                 appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
-                                appointment.getServices(),
+                                appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
                                 appointment.getTotalServicesSum()))
@@ -113,7 +113,7 @@ public class AppointmentController {
                                 appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
-                                appointment.getServices(),
+                                appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
                                 appointment.getTotalServicesSum()))
