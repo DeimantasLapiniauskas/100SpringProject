@@ -40,7 +40,7 @@ export const PetList = () => {
                 value={{ deleteModalID, setDeleteModalID, editModalID, setEditModalID, addModalID, setAddModalID }}
             >
                 <div>
-                    <AddPetButton getPetPage={getPage} currentPage={currentPage} pageSize={pageSize} />
+                    <AddPetButton getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
                 </div>
                 <div className="flex flex-col items-center gap-8 p-8">
                     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

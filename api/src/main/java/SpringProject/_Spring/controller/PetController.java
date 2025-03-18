@@ -170,7 +170,7 @@ public class PetController {
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        return ResponseEntity.ok(PetMapping.toPageListDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
+        return ResponseEntity.ok(PetMapping.toPageListPageDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
     }
 
 //    @GetMapping("/pagination")
