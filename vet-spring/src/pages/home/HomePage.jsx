@@ -1,35 +1,50 @@
-import HomePageDog from "../../assets/dog.png";
+import HomePageDog from "../../assets/dog.png"; 
+// import TestCarousel from "../designtest/TestCarousel";
 
 export const HomePage = () => {
     return (
-        <div className="min-h-screen bg-[#CBC5C5] flex justify-center items-center p-5">
-            <main className="flex flex-wrap justify-between items-start w-full max-w-screen-xl gap-8">
-                <figure className="flex-shrink-0 w-full sm:w-1/3">
-                    <img
-                        className="w-full max-w-[35vw] sm:max-w-[700px] h-auto object-cover"
-                        src={HomePageDog}
-                        alt="Dog; light brown and white fur; bent ears"
-                    />
-                </figure>
-
-                <div className="text-content flex flex-col w-full sm:w-2/3 text-left pl-5 space-y-4">
-                    <article className="text-base text-black">
+        <div className="min-h-screen bg-[#DCDEFE] flex flex-col items-center p-5">
+            {/* Top Section - Dog Image & Text */}
+            <main className="relative flex flex-col sm:flex-row-reverse items-center w-full max-w-screen-xl gap-12">
+                {/* Text Section */}
+                <div className="text-content flex flex-col sm:basis-1/2 text-left space-y-4 px-5">
+                    <article className="text-lg text-black">
                         Pavasario Avenue 100, Vilnius<br />
                         +370 511 233 78<br />
                         Twenty-four hours a day
                     </article>
 
-                    <h1 className="text-4xl text-black">
-                        Happy Hearts <br /> Veterinary clinic
+                    <h1 className="text-5xl sm:text-7xl text-black font-bold leading-tight">
+                        Happy Hearts <br /> Veterinary Clinic
                     </h1>
 
-                    <p className="text-base text-black leading-relaxed">
-                        As Lithuania’s leading animal health company, Happy Hearts is<br />
-                        driven by a singular purpose: to nurture Lithuania and<br />
+                    <p className="text-lg sm:text-xl text-black leading-relaxed">
+                        As Lithuania’s leading animal health company, Happy Hearts is <br />
+                        driven by a singular purpose: to nurture Lithuania and <br />
                         humankind by advancing care for animals.
                     </p>
+
+                    {/* Reviews Box */}
+                    <div className="flex items-center bg-[#6A7AFF] text-black px-6 py-3 rounded-lg shadow-md w-fit mt-4">
+                        <span className="text-lg font-semibold">100+ Reviews</span>
+                    </div>
                 </div>
+
+                {/* Image Section - Dog on Left */}
+                <figure className="relative sm:basis-1/2 flex justify-center">
+                    <img
+                        className="w-full max-w-[50vw] sm:max-w-[550px] h-auto object-cover drop-shadow-lg -mb-6"
+                        src={HomePageDog}
+                        alt="Dog; light brown and white fur; bent ears"
+                    />
+                </figure>
             </main>
+
+            {/* <div className="w-full bg-[#6A7AFF] py-12 mt-12 rounded-t-[50px] shadow-lg">
+                <TestCarousel />
+                
+            </div> */}
+
         </div>
     );
 };
