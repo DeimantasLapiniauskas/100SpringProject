@@ -303,6 +303,7 @@ public class AppointmentPOSTTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("petId").value("You have to actually register a pet!"));
 
+
         mockMvc.perform(post("/api/appointments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
@@ -318,6 +319,7 @@ public class AppointmentPOSTTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("vetId").value("You have to actually register to a vet!"));
 
+
         mockMvc.perform(post("/api/appointments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
@@ -332,6 +334,7 @@ public class AppointmentPOSTTest {
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("serviceIds").value("You have to actually register to a service!"));
+
 
         mockMvc.perform(post("/api/appointments")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -379,5 +382,7 @@ public class AppointmentPOSTTest {
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("notes").value("Your note is too long! Please keep it to 255 or less characters."));
+
+        Mockito.verify(appointmentService, times(0)).saveAppointment(ArgumentMatchers.any());
     }
 }
