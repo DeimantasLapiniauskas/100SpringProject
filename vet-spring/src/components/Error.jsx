@@ -8,12 +8,12 @@ export const Error = (props) => {
   return (
     <div role="alert" className="alert alert-error mt-4">
       {typeof error === "string" ? (
-        <li>{error}</li>
+        <div>{error}</div>
       ) : (
         <div>
-          {/* {errorMessages.map((e, i) => {
+          {errorMessages.map((e, i) => {
             return <li key={i}>{e}</li>;
-          })} */}
+          })}
         </div>
       )}
 

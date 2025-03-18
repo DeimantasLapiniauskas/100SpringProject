@@ -18,7 +18,6 @@ export const Register = () => {
   const { login, register: registerUser } = useAuth();
 
   const onSubmit = async (data) => {
-    setError([]);
     try {
       await registerUser(
         data.email,
@@ -29,9 +28,7 @@ export const Register = () => {
       );
       await login(data.email, data.password);
     } catch (error) {
-      setError(
-        error.response.data ?? error.message ?? "Something went wrong!"
-      );
+      setError(error.response.data ?? error.message ?? "Something went wrong!");
     }
   };
 
@@ -54,7 +51,7 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter first name"
             />
-            <div className="alert alert-error mt-4" hidden={error.firstName == null}>{error.firstName} </div>
+            <Error error={error.firstName} isHidden={error.firstName == null} />
 
             <label className="fieldset-label text-lg">Last Name</label>
             <input
@@ -64,7 +61,7 @@ export const Register = () => {
               placeholder="Enter last name"
             />
 
-            <div className="alert alert-error mt-4" hidden={error.lastName == null}>{error.lastName}</div>
+            <Error error={error.lastName} isHidden={error.lastName == null} />
 
             <label className="fieldset-label text-lg">Phone Number</label>
             <input
@@ -74,7 +71,10 @@ export const Register = () => {
               placeholder="Enter phone number"
             />
 
-            <div className="alert alert-error mt-4" hidden={error.phoneNumber == null}>{error.phoneNumber}</div>
+            <Error
+              error={error.phoneNumber}
+              isHidden={error.phoneNumber == null}
+            />
 
             <label className="fieldset-label text-lg">Email</label>
             <input
@@ -88,7 +88,7 @@ export const Register = () => {
               placeholder="Enter email"
             />
 
-            <div className="alert alert-error mt-4" hidden={error.email == null}>{error.email}</div>
+            <Error error={error.email} isHidden={error.email == null} />
 
             <label className="fieldset-label text-lg">Password</label>
             <input
@@ -102,8 +102,8 @@ export const Register = () => {
               placeholder="Enter password"
             />
 
-            <div className="alert alert-error mt-4" hidden={error.password == null}>{error.password}</div>
-            
+            <Error error={error.password} isHidden={error.password == null} />
+
             <label className="fieldset-label text-lg">Repeat Password</label>
             <input
               {...register("repeatPassword", {
@@ -118,8 +118,11 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
-            <div className="alert alert-error mt-4" hidden={errors.repeatPassword==null}> {errors.repeatPassword?.message}</div>
-              {console.log(errors)}
+            {/* this error comes from form validatation. other error comes from server */}
+            <Error
+              error={errors.repeatPassword?.message}
+              isHidden={errors.repeatPassword == null}
+            />
 
             <Error error={error} isHidden={typeof error !== "string"} />
 
