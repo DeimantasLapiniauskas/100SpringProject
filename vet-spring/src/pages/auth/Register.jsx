@@ -16,10 +16,16 @@ export const Register = () => {
   } = useForm({ reValidateMode: "onSubmit " });
   const [responseError, setresponseError] = useState([]);
   const { login, register: registerUser } = useAuth();
-  const [visible, setVisible] = useState(false);
+
+  const [visibleError, setVisibleError] = useState(false);
+  const [visibleFirstNameError, setVisibleFirstNameError] = useState(false);
+  const [visibleLastNameError, setVisibleLastNameError] = useState(false);
+  const [visiblePhoneNumberError, setVisiblePhoneNumberError] = useState(false);
+  const [visibleEmailError, setVisibleEmailError] = useState(false);
+  const [visiblePasswordError, setVisiblePasswordError] = useState(false);
 
   const onSubmit = async (data) => {
-    setVisible(false);
+    setVisibleError(false);
     try {
       await registerUser(
         data.email,
@@ -31,9 +37,14 @@ export const Register = () => {
       await login(data.email, data.password);
     } catch (error) {
       setresponseError(
-        error.response.data ?? error.message ?? "Something went wrong!"
+        error.response?.data ?? error.message ?? "Something went wrong!"
       );
-      setVisible(true);
+      setVisibleError(true);
+      setVisibleFirstNameError(true);
+      setVisibleLastNameError(true);
+      setVisiblePhoneNumberError(true);
+      setVisibleEmailError(true);
+      setVisiblePasswordError(true);
     }
   };
 
@@ -56,8 +67,8 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter first name"
             />
-            {visible && (
-              <Error error={responseError.firstName} setVisible={setVisible} />
+            {visibleFirstNameError && (
+              <Error error={responseError.firstName} setVisible={setVisibleFirstNameError} />
             )}
           </div>
           <div>
@@ -68,8 +79,8 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter last name"
             />
-            {visible && (
-              <Error error={responseError.lastName} setVisible={setVisible} />
+            {visibleLastNameError && (
+              <Error error={responseError.lastName} setVisible={setVisibleLastNameError} />
             )}
           </div>
 
@@ -81,10 +92,10 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter phone number"
             />
-            {visible && (
+            {visiblePhoneNumberError && (
               <Error
                 error={responseError.phoneNumber}
-                setVisible={setVisible}
+                setVisible={setVisiblePhoneNumberError}
               />
             )}
           </div>
@@ -101,8 +112,8 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter email"
             />
-            {visible && (
-              <Error error={responseError.email} setVisible={setVisible} />
+            {visibleEmailError && (
+              <Error error={responseError.email} setVisible={setVisibleEmailError} />
             )}
           </div>
 
@@ -118,8 +129,8 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
-            {visible && (
-              <Error error={responseError.password} setVisible={setVisible} />
+            {visiblePasswordError && (
+              <Error error={responseError.password} setVisible={setVisiblePasswordError} />
             )}
           </div>
 
@@ -139,15 +150,15 @@ export const Register = () => {
               placeholder="Enter password"
             />
             
-            {(visible && errors.repeatPassword != null) && (
+            {(visibleError && errors.repeatPassword != null) && (
               <Error
                 error={errors.repeatPassword?.message}
-                setVisible={setVisible}
+                setVisible={setVisibleError}
               />
             )}
           </div>
         </div>
-        {(visible && typeof responseError === "string" )&& <Error error={responseError} setVisible={setVisible} />}
+        {(visibleError && typeof responseError === "string" )&& <Error error={responseError} setVisible={setVisibleError} />}
         <button type="submit" className="custom-black-btn mt-4">
           Register
         </button>
