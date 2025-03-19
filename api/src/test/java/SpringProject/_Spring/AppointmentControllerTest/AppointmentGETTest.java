@@ -4,6 +4,7 @@ import SpringProject._Spring.controller.AppointmentController;
 import SpringProject._Spring.model.*;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,20 +50,36 @@ public class AppointmentGETTest {
     @MockitoBean
     private AppointmentService appointmentService;
 
+    long petIdOne;
+    long petIdTwo;
+    long vetIdOne;
+    long vetIdTwo;
+    long clientId;
+    long appointmentOneId;
+    long appointmentTwoId;
+    String note;
+    Pet petOne;
+    Pet petTwo;
+    Vet vetOne;
+    Vet vetTwo;
+    ServiceAtClinic serviceAtClinicOne;
+    ServiceAtClinic serviceAtClinicTwo;
+    ServiceAtClinic serviceAtClinicThree;
+    ServiceAtClinic serviceAtClinicFour;
+    Appointment appointmentOne;
+    Appointment appointmentTwo;
 
-    @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getAppointments_whenGetClient_thenRespond200() throws Exception {
+    @BeforeEach
+    public void init() {
+        clientId = 1;
+        petIdOne = 9;
+        vetIdOne = 4;
+        petIdTwo = 47;
+        vetIdTwo = 65138;
+        appointmentOneId = 69420;
+        appointmentTwoId = 1337666;
 
-        long clientId = 1;
-        long petIdOne = 9;
-        long vetIdOne = 4;
-        long petIdTwo = 47;
-        long vetIdTwo = 65138;
-        long appointmentOneId = 69420;
-        long appointmentTwoId = 1337666;
-
-        Pet petOne = new Pet(
+        petOne = new Pet(
                 clientId,
                 "petOneName",
                 "petOneSpecies",
@@ -73,7 +89,7 @@ public class AppointmentGETTest {
 
         petOne.setId(petIdOne);
 
-        Pet petTwo = new Pet(
+        petTwo = new Pet(
                 clientId,
                 "petTwoName",
                 "petTwoSpecies",
@@ -84,7 +100,7 @@ public class AppointmentGETTest {
         petTwo.setId(petIdTwo);
 
 
-        Vet vetOne = new Vet(
+        vetOne = new Vet(
                 "vetOneName",
                 "vetOneLastName",
                 "111-111-111",
@@ -96,7 +112,7 @@ public class AppointmentGETTest {
         vetOne.setAccount(new Account("VetEmail", "VetPassword", List.of(new Role("Vet", 2))));
         vetOne.setId(vetIdOne);
 
-        Vet vetTwo = new Vet(
+        vetTwo = new Vet(
                 "vetTwoName",
                 "vetTwoLastName",
                 "222-222-222",
@@ -109,31 +125,31 @@ public class AppointmentGETTest {
         vetTwo.setId(vetIdTwo);
 
 
-        ServiceAtClinic serviceAtClinicOne = new ServiceAtClinic(
+        serviceAtClinicOne = new ServiceAtClinic(
                 "ServiceOneName",
                 "ServiceOneDescription",
                 BigDecimal.valueOf(111)
         );
 
-        ServiceAtClinic serviceAtClinicTwo = new ServiceAtClinic(
+        serviceAtClinicTwo = new ServiceAtClinic(
                 "ServiceTwoName",
                 "ServiceTwoDescription",
                 BigDecimal.valueOf(222)
         );
 
-        ServiceAtClinic serviceAtClinicThree = new ServiceAtClinic(
+        serviceAtClinicThree = new ServiceAtClinic(
                 "ServiceThreeName",
                 "ServiceThreeDescription",
                 BigDecimal.valueOf(333)
         );
 
-        ServiceAtClinic serviceAtClinicFour = new ServiceAtClinic(
+        serviceAtClinicFour = new ServiceAtClinic(
                 "ServiceFourName",
                 "ServiceFourDescription",
                 BigDecimal.valueOf(444)
         );
 
-        Appointment appointmentOne = new Appointment(
+        appointmentOne = new Appointment(
                 petIdOne,
                 vetIdOne,
                 List.of(serviceAtClinicOne, serviceAtClinicTwo),
@@ -143,7 +159,7 @@ public class AppointmentGETTest {
 
         appointmentOne.setId(appointmentOneId);
 
-        Appointment appointmentTwo = new Appointment(
+        appointmentTwo = new Appointment(
                 petIdTwo,
                 vetIdTwo,
                 List.of(serviceAtClinicThree, serviceAtClinicFour),
@@ -152,11 +168,18 @@ public class AppointmentGETTest {
                 Timestamp.valueOf(LocalDateTime.now()));
 
         appointmentTwo.setId(appointmentTwoId);
+    }
+
+    
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void getAppointments_whenGetClient_thenRespond200() throws Exception {
 
         when(accountService.findIdByEmail(any()))
                 .thenReturn(clientId);
         when(appointmentService.getAllAppointmentsByClientId(clientId))
-                .thenReturn(List.of(appointmentOne,appointmentTwo));
+                .thenReturn(List.of(appointmentOne, appointmentTwo));
 
         when(petService.getPetByid(petIdOne))
                 .thenReturn(Optional.of(petOne));
@@ -211,113 +234,15 @@ public class AppointmentGETTest {
                 .andExpect(jsonPath("[0].price").value(appointmentOne.getTotalServicesSum()))
                 .andExpect(jsonPath("[1].price").value(appointmentTwo.getTotalServicesSum()));
 
-        Mockito.verify(appointmentService,times(1)).getAllAppointmentsByClientId(clientId);
+        Mockito.verify(appointmentService, times(1)).getAllAppointmentsByClientId(clientId);
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void getAppointmentsById_whenGetAdmin_thenRespond200() throws Exception {
 
-        long clientId = 1;
-        long petIdOne = 9;
-        long vetIdOne = 4;
-        long petIdTwo = 47;
-        long vetIdTwo = 65138;
-        long appointmentOneId = 69420;
-        long appointmentTwoId = 1337666;
-
-        Pet petOne = new Pet(
-                clientId,
-                "petOneName",
-                "petOneSpecies",
-                "petOneBreed",
-                LocalDate.now(),
-                Gender.Female);
-
-        petOne.setId(petIdOne);
-
-        Pet petTwo = new Pet(
-                clientId,
-                "petTwoName",
-                "petTwoSpecies",
-                "petTwoBreed",
-                LocalDate.now(),
-                Gender.Female);
-
-        petTwo.setId(petIdTwo);
-
-
-        Vet vetOne = new Vet(
-                "vetOneName",
-                "vetOneLastName",
-                "111-111-111",
-                "vetOneSpecialty",
-                "vetOneLicenseNumber",
-                LocalDate.now()
-        );
-
-        vetOne.setAccount(new Account("VetEmail", "VetPassword", List.of(new Role("Vet", 2))));
-        vetOne.setId(vetIdOne);
-
-        Vet vetTwo = new Vet(
-                "vetTwoName",
-                "vetTwoLastName",
-                "222-222-222",
-                "vetTwoSpecialty",
-                "vetTwoLicenseNumber",
-                LocalDate.now()
-        );
-
-        vetTwo.setAccount(new Account("VetEmail", "VetPassword", List.of(new Role("Vet", 2))));
-        vetTwo.setId(vetIdTwo);
-
-
-        ServiceAtClinic serviceAtClinicOne = new ServiceAtClinic(
-                "ServiceOneName",
-                "ServiceOneDescription",
-                BigDecimal.valueOf(111)
-        );
-
-        ServiceAtClinic serviceAtClinicTwo = new ServiceAtClinic(
-                "ServiceTwoName",
-                "ServiceTwoDescription",
-                BigDecimal.valueOf(222)
-        );
-
-        ServiceAtClinic serviceAtClinicThree = new ServiceAtClinic(
-                "ServiceThreeName",
-                "ServiceThreeDescription",
-                BigDecimal.valueOf(333)
-        );
-
-        ServiceAtClinic serviceAtClinicFour = new ServiceAtClinic(
-                "ServiceFourName",
-                "ServiceFourDescription",
-                BigDecimal.valueOf(444)
-        );
-
-        Appointment appointmentOne = new Appointment(
-                petIdOne,
-                vetIdOne,
-                List.of(serviceAtClinicOne, serviceAtClinicTwo),
-                LocalDateTime.now(),
-                "notesOne",
-                Timestamp.valueOf(LocalDateTime.now()));
-
-        appointmentOne.setId(appointmentOneId);
-
-        Appointment appointmentTwo = new Appointment(
-                petIdTwo,
-                vetIdTwo,
-                List.of(serviceAtClinicThree, serviceAtClinicFour),
-                LocalDateTime.now(),
-                "notesTwo",
-                Timestamp.valueOf(LocalDateTime.now()));
-
-        appointmentTwo.setId(appointmentTwoId);
-
         when(appointmentService.getAllAppointmentsByClientId(clientId))
-                .thenReturn(List.of(appointmentOne,appointmentTwo));
+                .thenReturn(List.of(appointmentOne, appointmentTwo));
 
         when(petService.getPetByid(petIdOne))
                 .thenReturn(Optional.of(petOne));
@@ -329,7 +254,7 @@ public class AppointmentGETTest {
         when(vetService.getVetById(vetIdTwo))
                 .thenReturn(Optional.of(vetTwo));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/"+clientId))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + clientId))
                 .andExpect(status().isOk())
 
                 .andExpect(jsonPath("[0].id").value(appointmentOneId))
@@ -372,7 +297,7 @@ public class AppointmentGETTest {
                 .andExpect(jsonPath("[0].price").value(appointmentOne.getTotalServicesSum()))
                 .andExpect(jsonPath("[1].price").value(appointmentTwo.getTotalServicesSum()));
 
-        Mockito.verify(appointmentService,times(1)).getAllAppointmentsByClientId(clientId);
+        Mockito.verify(appointmentService, times(1)).getAllAppointmentsByClientId(clientId);
     }
 
     @Test
@@ -380,29 +305,29 @@ public class AppointmentGETTest {
     void getAppointments_whenGetAdmin_thenRespond200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
                 .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService,times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getAppointmentsById_whenGetClient_thenRespond200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/"+69))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService,times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
     }
 
     @Test
     void getAppointments_whenGetUnauthenticated_thenRespond200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
                 .andExpect(status().isUnauthorized());
-        Mockito.verify(appointmentService,times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
     }
 
     @Test
     void getAppointmentsById_whenGetUnauthenticated_thenRespond200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/"+69))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isUnauthorized());
-        Mockito.verify(appointmentService,times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
     }
 
 }
