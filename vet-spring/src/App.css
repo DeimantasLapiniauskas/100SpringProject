@@ -4,7 +4,7 @@
 /*WILL BE UPDATED AS PROJECT MOVES FORWARD////////////////////////////////// */
 
 /* Light Violet - COLOR used as lighter background for cards or boxes.
- Example: Not yet in use*/
+ Example: Log In Page and Register Page card*/
 .bg-\[\#97a0f1\] {
   background-color: #97a0f1;
 }
@@ -17,8 +17,8 @@
 }
 /* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#6A7AFF] flex">Content</div> */
 
-/* Light Orange - COLOR used as lighter background for cards or boxes.
- Example: Cards in Log In Page and Register Page */
+/* Light Orange - COLOR used as lighter orange background for cards or boxes.
+ Example: Not implemented yet */
  .bg-\[\#FFBD89\] {
   background-color: #FFBD89;
 }
@@ -28,6 +28,13 @@
  Example: Cards in Log In Page and Register Page */
  .bg-\[\#ac64b4\] {
   background-color: #ac64b4;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+
+/* Default Gray - COLOR used as EXTRA FOR FUTURE USE.
+ Example: Not implemented yet. Have to check other KOM-?? branches if it is in use */
+ .bg-\[\#CBC5C5\] {
+  background-color: #CBC5C5;
 }
 /* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
 
