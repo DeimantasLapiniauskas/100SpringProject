@@ -84,7 +84,9 @@ public class AppointmentController {
         updateDTO.status().ifPresent(appointmentFromDB::setStatus);
         updateDTO.newDate().ifPresent(appointmentFromDB::setAppointmentDate);
         appointmentService.saveAppointment(appointmentFromDB);
-        return ResponseEntity.ok("Appointment updated successfully!");
+        return ResponseEntity.ok("Appointment updated its " +
+                (updateDTO.status().isPresent() ? updateDTO.newDate().isPresent() ? "status and date " : "status " : "date ")
+                + "successfully!");
     }
 
 
