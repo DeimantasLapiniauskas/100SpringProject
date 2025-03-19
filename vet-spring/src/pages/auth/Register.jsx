@@ -16,8 +16,10 @@ export const Register = () => {
   } = useForm({ reValidateMode: "onSubmit " });
   const [responseError, setresponseError] = useState([]);
   const { login, register: registerUser } = useAuth();
+  const [visible, setVisible] = useState(false);
 
   const onSubmit = async (data) => {
+    setVisible(false);
     try {
       await registerUser(
         data.email,
@@ -31,6 +33,7 @@ export const Register = () => {
       setresponseError(
         error.response.data ?? error.message ?? "Something went wrong!"
       );
+      setVisible(true);
     }
   };
 
@@ -53,10 +56,9 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter first name"
             />
-            <Error
-              error={responseError.firstName}
-              isHidden={responseError.firstName == null}
-            />
+            {visible && (
+              <Error error={responseError.firstName} setVisible={setVisible} />
+            )}
           </div>
           <div>
             <label className="fieldset-label text-lg">Last Name</label>
@@ -66,10 +68,9 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter last name"
             />
-            <Error
-              error={responseError.lastName}
-              isHidden={responseError.lastName == null}
-            />
+            {visible && (
+              <Error error={responseError.lastName} setVisible={setVisible} />
+            )}
           </div>
 
           <div>
@@ -80,10 +81,12 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter phone number"
             />
-            <Error
-              error={responseError.phoneNumber}
-              isHidden={responseError.phoneNumber == null}
-            />
+            {visible && (
+              <Error
+                error={responseError.phoneNumber}
+                setVisible={setVisible}
+              />
+            )}
           </div>
 
           <div>
@@ -98,10 +101,9 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter email"
             />
-            <Error
-              error={responseError.email}
-              isHidden={responseError.email == null}
-            />
+            {visible && (
+              <Error error={responseError.email} setVisible={setVisible} />
+            )}
           </div>
 
           <div>
@@ -116,10 +118,9 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
-            <Error
-              error={responseError.password}
-              isHidden={responseError.password == null}
-            />
+            {visible && (
+              <Error error={responseError.password} setVisible={setVisible} />
+            )}
           </div>
 
           <div>
@@ -137,22 +138,19 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
-            {/* this error comes from form validatation. other error comes from server*/}
-            <Error
-              error={errors.repeatPassword?.message}
-              isHidden={errors.repeatPassword == null}
-            />
+            
+            {(visible && errors.repeatPassword != null) && (
+              <Error
+                error={errors.repeatPassword?.message}
+                setVisible={setVisible}
+              />
+            )}
           </div>
         </div>
-
+        {(visible && typeof responseError === "string" )&& <Error error={responseError} setVisible={setVisible} />}
         <button type="submit" className="custom-black-btn mt-4">
           Register
         </button>
-
-        <Error
-          error={responseError}
-          isHidden={typeof responseError !== "string"}
-        />
 
         <div className="text-center mt-2">
           Already have an account?

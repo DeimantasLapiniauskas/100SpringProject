@@ -1,21 +1,19 @@
-import { useRef } from "react";
-
 export const Error = (props) => {
-  const { isHidden, error } = props;
-  const selfRef = useRef();
 
-  if (isHidden) return;
-  else if (selfRef.current != undefined && selfRef.current != null) selfRef.current.className = "alert alert-error mt-4 flex justify-between";
-  
-  
-  const hide = () => {
-    selfRef.current.className = "hidden";
+  const {error, setVisible} = props;
+
+  if(typeof error === "undefined"){
+    return
   }
-
+  
   const errorMessages = Object.values(error);
 
+  const hide = () => {
+    setVisible(false);
+  }
+  
   return (
-    <div ref={selfRef} role="alert" className="alert alert-error mt-4 flex justify-between">
+    <div role="alert" className="alert alert-error mt-4 flex justify-between">
       {typeof error === "string" ? (
         <div>{error}</div>
       ) : (
@@ -25,7 +23,6 @@ export const Error = (props) => {
           })}
         </div>
       )}
-
       <div onClick={()=>hide()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
