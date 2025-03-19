@@ -39,35 +39,35 @@ export const Register = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="w-[400px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
         >
-          <div className="text-2xl text-center mb-4 px-4">
+          <div className="figma-headline-3 text-center mb-4 px-4">
             Join Happy Hearts Community! Register below
           </div>
 
           <div className="flex flex-col gap-4 w-full">
-            <label className="fieldset-label text-lg">First Name</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">First Name</label>
             <input
               {...register("firstName")}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter first name"
             />
 
-            <label className="fieldset-label text-lg">Last Name</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Last Name</label>
             <input
               {...register("lastName")}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter last name"
             />
 
-            <label className="fieldset-label text-lg">Phone Number</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Phone Number</label>
             <input
               {...register("phoneNumber")}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter phone number"
             />
-            <label className="fieldset-label text-lg">Email</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Email</label>
             <input
               {...register("email", {
                 required: {
@@ -75,10 +75,10 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter email"
             />
-            <label className="fieldset-label text-lg">Password</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Password</label>
             <input
               {...register("password", {
                 required: {
@@ -86,10 +86,10 @@ export const Register = () => {
                 }
               })}
               type="password"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter password"
             />
-            <label className="fieldset-label text-lg">Repeat Password</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Repeat Password</label>
             <input
               {...register("repeatPassword", {
                 required: {
@@ -100,17 +100,17 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter password"
             />
-            <button type="submit" className="custom-black-btn mt-4">
+            <button type="submit" className="custom-black-btn mt-4 figma-headline-4">
               Register
             </button>
           </div>
 
-          <div className="text-center mt-2">
+          <div className="figma-headline-4 text-center mt-2">
             Already have an account?
-            <NavLink to="/login" className="underline ml-1">
+            <NavLink to="/login" className="figma-headline-4 underline ml-1">
               Login
             </NavLink>
           </div>
