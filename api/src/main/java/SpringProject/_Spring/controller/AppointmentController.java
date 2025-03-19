@@ -70,7 +70,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/appointments/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<String> putAppointment(@PathVariable long id,
                                                  @RequestBody AppointmentUpdateDTO updateDTO) {
         if (updateDTO.newDate().isEmpty() && updateDTO.status().isEmpty()) {

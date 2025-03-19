@@ -62,56 +62,64 @@ public class AppointmentPOSTTest {
     private AppointmentService appointmentService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+    long petId;
+    long ownerId;
+    long vetId;
+    long serviceIdOne;
+    long serviceIdTwo;
+    String note;
+    Pet pet;
+    Vet vet;
+    ServiceAtClinic serviceOne;
+    ServiceAtClinic serviceTwo;
 
     @BeforeEach
     public void init() {
         objectMapper.registerModule(new JavaTimeModule());
-    }
 
-    @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void addAppointment_whenAddClient_thenRespond201() throws Exception {
+        petId = 1;
+        ownerId = 3;
+        vetId = 13;
+        serviceIdOne = 5;
+        serviceIdTwo = 8;
+        note = "Notes";
 
-        long petId = 1;
-        long ownerId = 3;
-        long vetId = 13;
-        long serviceIdOne = 5;
-        long serviceIdTwo = 8;
-        String note = "Notes";
-
-
-        Pet pet = new Pet(
+        pet = new Pet(
                 ownerId,
                 "Maya",
                 "Cat",
                 "Bald",
-                LocalDate.now(),
+                LocalDate.of(11, 11, 11),
                 Gender.Female);
 
-        Vet vet = new Vet(
+        vet = new Vet(
                 "vetName",
                 "vetLastName",
                 "666-666-666",
                 "Specialty",
                 "LicenseNumber",
-                LocalDate.now()
-        );
-
+                LocalDate.of(11, 11, 11));
         vet.setAccount(new Account("VetEmail", "VetPassword", List.of(new Role("Vet", 2))));
 
-        ServiceAtClinic serviceOne = new ServiceAtClinic(
+        serviceOne = new ServiceAtClinic(
                 "Service one",
                 "Service Description One",
                 BigDecimal.valueOf(10.1)
         );
         serviceOne.setId(serviceIdOne);
 
-        ServiceAtClinic serviceTwo = new ServiceAtClinic(
+        serviceTwo = new ServiceAtClinic(
                 "Service two",
                 "Service Description Two",
                 BigDecimal.valueOf(20.2)
         );
         serviceTwo.setId(serviceIdTwo);
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void addAppointment_whenAddClient_thenRespond201() throws Exception {
+
 
         when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
                 .thenReturn(false);
@@ -131,9 +139,10 @@ public class AppointmentPOSTTest {
                                 petId,
                                 vetId,
                                 List.of(serviceOne, serviceTwo),
-                                LocalDateTime.now(),
+                                LocalDateTime.of(3000, 11, 11, 11, 11, 11),
                                 note,
-                                Timestamp.valueOf(LocalDateTime.now())
+                                Timestamp.valueOf(LocalDateTime.of(3000, 11, 11, 11, 11, 11)
+                                )
                         )
                 );
 
@@ -151,7 +160,7 @@ public class AppointmentPOSTTest {
                                                 petId,
                                                 vetId,
                                                 List.of(serviceIdOne, serviceIdTwo),
-                                                LocalDateTime.now(),
+                                                LocalDateTime.of(3000, 11, 11, 11, 11, 11),
                                                 note)
                                 )
                         )
@@ -180,11 +189,6 @@ public class AppointmentPOSTTest {
 
     @Test
     void addAppointment_whenAddUnauthenticated_thenRespond401() throws Exception {
-        long petId = 1;
-        long vetId = 13;
-        long serviceIdOne = 5;
-        long serviceIdTwo = 8;
-        String note = "Notes";
 
         mockMvc.perform(post("/api/appointments")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -193,7 +197,7 @@ public class AppointmentPOSTTest {
                                                 petId,
                                                 vetId,
                                                 List.of(serviceIdOne, serviceIdTwo),
-                                                LocalDateTime.now(),
+                                                LocalDateTime.of(3000, 11, 11, 11, 11, 11),
                                                 note)
                                 )
                         )
@@ -207,47 +211,6 @@ public class AppointmentPOSTTest {
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void addAppointment_whenBadRequest_thenRespond400() throws Exception {
-
-        long petId = 1;
-        long ownerId = 3;
-        long vetId = 13;
-        long serviceIdOne = 5;
-        long serviceIdTwo = 8;
-        String note = "";
-
-
-        Pet pet = new Pet(
-                ownerId,
-                "Maya",
-                "Cat",
-                "Bald",
-                LocalDate.now(),
-                Gender.Female);
-
-        Vet vet = new Vet(
-                "vetName",
-                "vetLastName",
-                "666-666-666",
-                "Specialty",
-                "LicenseNumber",
-                LocalDate.now()
-        );
-
-        vet.setAccount(new Account("VetEmail", "VetPassword", List.of(new Role("Vet", 2))));
-
-        ServiceAtClinic serviceOne = new ServiceAtClinic(
-                "Service one",
-                "Service Description One",
-                BigDecimal.valueOf(10.1)
-        );
-        serviceOne.setId(serviceIdOne);
-
-        ServiceAtClinic serviceTwo = new ServiceAtClinic(
-                "Service two",
-                "Service Description Two",
-                BigDecimal.valueOf(20.2)
-        );
-        serviceTwo.setId(serviceIdTwo);
 
         when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
                 .thenReturn(false);
@@ -279,26 +242,18 @@ public class AppointmentPOSTTest {
         when(vetService.getVetById(vetId))
                 .thenReturn(Optional.of(vet));
 
-//        AppointmentRequestDTO goodAppointmentRequestDTO = new AppointmentRequestDTO(
-//                petId,
-//                vetId,
-//                List.of(serviceIdOne, serviceIdTwo),
-//                LocalDateTime.now(),
-//                note);
-
-
         mockMvc.perform(post("/api/appointments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(
-                                new AppointmentRequestDTO(
-                                        null,
-                                        vetId,
-                                        List.of(serviceIdOne, serviceIdTwo),
-                                        LocalDateTime.now(),
-                                        note)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                        new AppointmentRequestDTO(
+                                                null,
+                                                vetId,
+                                                List.of(serviceIdOne, serviceIdTwo),
+                                                LocalDateTime.now(),
+                                                note)
+                                )
                         )
                 )
-        )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("petId").value("You have to actually register a pet!"));
 
@@ -358,7 +313,7 @@ public class AppointmentPOSTTest {
                                                 petId,
                                                 vetId,
                                                 List.of(serviceIdOne, serviceIdTwo),
-                                                LocalDateTime.of(2000,11,11,11,11),
+                                                LocalDateTime.of(2000, 11, 11, 11, 11),
                                                 note)
                                 )
                         )
