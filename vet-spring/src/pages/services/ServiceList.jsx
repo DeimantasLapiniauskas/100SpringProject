@@ -89,24 +89,28 @@ export const ServiceList = () => {
           
 
           {/* Horizontal Image Section */}
-          <div className="flex space-x-4 overflow-x-auto">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {" "}
             {/* Ensures horizontal scroll if needed */}
-            <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <figure className="w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
               <img
                 src={ServiceListPageVetHoldingCat}
                 alt="Vet holding gray cat"
                 className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
               />
             </figure>
-            <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <figure className="hidden sm:block
+            
+            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4">
               <img
                 src={ServiceListPageVetHoldingDog}
                 alt="Vet holding black and white puppy"
                 className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
               />
             </figure>
-            <figure className="w-[400px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
+            <figure className="hidden lg:block 
+            
+            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4">
               <img
                 src={ServiceListPageCatPawBandage}
                 alt="Vet holding brown cat"
