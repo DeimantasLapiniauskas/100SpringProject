@@ -1,5 +1,5 @@
 import HomePageDog from "../../assets/dog.png"; 
-// import TestCarousel from "../designtest/TestCarousel";
+import TestCarousel from "../designtest/TestCarousel";
 
 export const HomePage = () => {
     return (
@@ -34,13 +34,6 @@ export const HomePage = () => {
                     />
                 </figure>
             </main>
-
-            {//////VLADIMIR ZORIN TRYING DEIGN///////////////////////////////////////////
-            /* <div className="w-full bg-[#6A7AFF] py-12 mt-12 rounded-t-[50px] shadow-lg">
-                <TestCarousel />
-                
-            </div> */}
-
         </div>
     );
 };

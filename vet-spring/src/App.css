@@ -24,6 +24,13 @@
 }
 /* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
 
+/* Default Purple - COLOR used in Navigation bar, for "Login" button and "Logout" button.
+ Example: Cards in Log In Page and Register Page */
+ .bg-\[\#ac64b4\] {
+  background-color: #ac64b4;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
 html, body {
@@ -51,8 +58,8 @@ html, body {
   background-color: #333;
 }
 
-/* Light pink button to be used in Navigation bar in the future */
-.custom-pink-btn {
+/* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
+.custom-purple-btn {
   background-color: #ac64b4;
   color: #000000;
   padding: 1rem;
@@ -68,7 +75,7 @@ html, body {
   justify-content: center;
 }
 
-.custom-pink-btn:hover {
+.custom-purple-btn:hover {
   background-color: #C7A4D6;
 }
 

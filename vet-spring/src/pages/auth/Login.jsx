@@ -30,7 +30,7 @@ export const Login = () => {
     return (
         <main className="h-screen flex justify-center items-center">
             <div className="flex items-center gap-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12">
                     <div className="text-2xl text-center mb-4 px-4">
                         Hi there! Welcome to Happy Hearts Community Dashboard
                     </div>
