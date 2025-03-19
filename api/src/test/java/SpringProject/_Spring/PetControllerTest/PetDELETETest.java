@@ -136,7 +136,7 @@ public class PetDELETETest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void deletePet_whenVet_thenRespond404() throws Exception {
+    void deletePet_whenVet_thenRespond403() throws Exception {
         long petId = 0;
 
         mockMvc.perform(delete("/api/pets/" + petId))

@@ -88,6 +88,7 @@ public class PetPUTTest {
         );
         account.setId(ownerId);
 
+
         UserDetails principal = User.withUsername("admin")
                 .password("password")
                 .roles("ADMIN")
@@ -126,23 +127,11 @@ public class PetPUTTest {
 
     @Test
     void putPet_whenUnauthenticated_thenRespond401() throws Exception {
-        long ownerId = 1;
-        Pet originalPet = new Pet(
-                ownerId, "Kitty", "Cat", "Bald", LocalDate.now(), Gender.Male
-        );
-
         PetRequestDTO changedPet = new PetRequestDTO(
                 "Little Bastard", "Catto", "Yes", LocalDate.MIN, Gender.Female
         );
-        when(accountService.existsAccountById(ownerId))
-                .thenReturn(true);
-        when(petService.existsById(0))
-                .thenReturn(true);
-        when(petService.getPetByid(0))
-                .thenReturn(Optional.of(originalPet));
 
-
-        mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
+        mockMvc.perform(put("/api/pets/" + 0)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(changedPet)

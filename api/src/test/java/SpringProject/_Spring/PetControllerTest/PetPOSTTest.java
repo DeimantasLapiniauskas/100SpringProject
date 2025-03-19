@@ -80,7 +80,7 @@ public class PetPOSTTest {
         account.setId(id);
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
-        
+
         when(clientService.findClientIdByEmail(any()))
                 .thenReturn(id);
         when(clientService.existsClientById(id))
