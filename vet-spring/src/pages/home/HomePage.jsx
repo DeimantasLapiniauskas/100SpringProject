@@ -14,7 +14,7 @@ export const HomePage = () => {
                         Twenty-four hours a day
                     </article>
 
-                    <h1 className="text-5xl sm:text-7xl text-black font-bold leading-tight">
+                    <h1 className="figma-headline text-black text-5xl sm:text-7xl">
                         Happy Hearts <br /> Veterinary Clinic
                     </h1>
 
