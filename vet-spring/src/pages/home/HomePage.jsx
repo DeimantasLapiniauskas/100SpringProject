@@ -19,8 +19,8 @@ export const HomePage = () => {
                     </h1>
 
                     <p className="text-lg sm:text-xl text-black leading-relaxed">
-                        As Lithuania’s leading animal health company, Happy Hearts is <br />
-                        driven by a singular purpose: to nurture Lithuania and <br />
+                        As Lithuania’s leading animal health company, Happy Hearts is
+                        driven by a singular purpose: to nurture Lithuania and
                         humankind by advancing care for animals.
                     </p>
                 </div>
