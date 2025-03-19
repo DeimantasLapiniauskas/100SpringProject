@@ -1,4 +1,4 @@
-import api from './api';
+import api from '../api';
 
 const url = "http://localhost:8080/api/services";
 

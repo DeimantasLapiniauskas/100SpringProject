@@ -9,7 +9,8 @@ export const MainLayout = () => {
             <header className="pb-1">
                 <Navbar/>
             </header>
-            <main className="border-2 border-[#5e6ce4] rounded-[10px]">
+            <main className="border-0 border-[#5e6ce4] rounded-[10px]">
+                {/* gal geriau kad */}
                 <Outlet />
             </main>
         </div>
