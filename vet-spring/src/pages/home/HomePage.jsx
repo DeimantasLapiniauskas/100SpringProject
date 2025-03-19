@@ -35,7 +35,8 @@ export const HomePage = () => {
                 </figure>
             </main>
 
-            {/* <div className="w-full bg-[#6A7AFF] py-12 mt-12 rounded-t-[50px] shadow-lg">
+            {//////VLADIMIR ZORIN TRYING DEIGN///////////////////////////////////////////
+            /* <div className="w-full bg-[#6A7AFF] py-12 mt-12 rounded-t-[50px] shadow-lg">
                 <TestCarousel />
                 
             </div> */}
