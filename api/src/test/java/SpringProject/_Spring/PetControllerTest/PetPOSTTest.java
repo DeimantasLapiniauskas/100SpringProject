@@ -80,12 +80,13 @@ public class PetPOSTTest {
         account.setId(id);
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
+        
         when(clientService.findClientIdByEmail(any()))
                 .thenReturn(id);
         when(clientService.existsClientById(id))
                 .thenReturn(true);
 
-        mockMvc.perform(post("/api/pets")
+        mockMvc.perform(post("/api/pets/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(
@@ -114,7 +115,7 @@ public class PetPOSTTest {
                 "Maja", "Egyptian", "cat", LocalDate.now(), Gender.Female
         );
 
-        mockMvc.perform(post("/api/pets")
+        mockMvc.perform(post("/api/pets/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(
@@ -133,7 +134,7 @@ public class PetPOSTTest {
 
     @Test
     void addPet_whenUnauthenticated_thenRespond401() throws Exception {
-        mockMvc.perform(post("/api/pets"))
+        mockMvc.perform(post("/api/pets/add"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
         Mockito.verify(petService, times(0)).savePet(any());

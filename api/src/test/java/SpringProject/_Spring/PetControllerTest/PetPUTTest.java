@@ -66,6 +66,7 @@ public class PetPUTTest {
 
     @Test
     void putPet_whenPutPetOwner_thenRespond200() throws Exception {
+
         long ownerId = 1;
         Pet originalPet = new Pet(
                 ownerId, "Kitty", "Cat", "Bald", LocalDate.now(), Gender.Male
@@ -75,12 +76,13 @@ public class PetPUTTest {
                 "Little Bastard", "Catto", "Yes", LocalDate.MIN, Gender.Female
         );
 
-        when(clientService.existsClientById(ownerId))
-                .thenReturn(true);
+        when(clientService.findClientIdByEmail(any()))
+                .thenReturn(ownerId);
         when(petService.existsById(0))
                 .thenReturn(true);
         when(petService.getPetByid(0))
                 .thenReturn(Optional.of(originalPet));
+
         Account account = new Account(
                 "UserEmail", "SecretPassword", List.of(new Role("CLIENT"))
         );
@@ -94,15 +96,18 @@ public class PetPUTTest {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
                 "password", principal.getAuthorities()));
-        SecurityContextHolder.setContext(securityContext);
+        SecurityContextHolder.setContext(securityContext); //comes with @PreAuthorize)
 
 
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
+
         when(clientService.findClientByAccountId(ownerId))
                 .thenReturn(client);
+        when(accountService.findByEmail(any()))
+                .thenReturn(Optional.of(account));
 
-        mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
+        mockMvc.perform(put("/api/pets/" + 0)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(changedPet)
@@ -161,8 +166,8 @@ public class PetPUTTest {
                 "Little Bastard", "Catto", "Yes", LocalDate.MIN, Gender.Female
         );
 
-        when(clientService.existsClientById(ownerId))
-                .thenReturn(true);
+        when(clientService.findClientIdByEmail(any()))
+                .thenReturn(ownerId + 5);
 
         when(petService.existsById(0))
                 .thenReturn(true);
@@ -173,6 +178,9 @@ public class PetPUTTest {
 
         Account account = new Account("UserEmail", "SecretPassword", List.of(new Role("ADMIN")));
         account.setId(ownerId + 4);
+
+        when(accountService.findByEmail(any()))
+                .thenReturn(Optional.of(account));
 
 
         //essentially faking a better @WithMockUser
@@ -192,7 +200,7 @@ public class PetPUTTest {
                 .thenReturn(client);
 
 
-        mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
+        mockMvc.perform(put("/api/pets/" + 0)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(changedPet)
@@ -253,7 +261,7 @@ public class PetPUTTest {
         when(clientService.findClientByAccountId(ownerId + 1))
                 .thenReturn(client);
 
-        mockMvc.perform(put("/api/pets/" + ownerId + "/" + 0)
+        mockMvc.perform(put("/api/pets/" + 0)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 objectMapper.writeValueAsString(changedPet)
