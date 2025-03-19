@@ -64,11 +64,14 @@ export const ServiceCard = (props) => {
         <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
             <div className="card-body">
             <h2 className="card-title">{name}</h2>
-            <div className="text-warp w-[20rem]">{description}</div>
+            <textarea readOnly
+            className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
+            
+            >{description}</textarea>
             <p>{price} €</p>
             <div className="card-actions">
-            {   checkRoles() &&(<button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0">Delete</button>)}
-            {   checkRoles() &&(<NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0">Edit</NavLink>)}
+            {   checkRoles() &&(<button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]">Delete</button>)}
+            {   checkRoles() &&(<NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]">Edit</NavLink>)}
              {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
                 </div>
                 <Error error={error} isHidden={!error} />

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { addService, updateService } from "../../utils/serviceService.js";
+import { addService } from "../../utils/helpers/serviceService.js";
 import { useNavigate } from "react-router";
 import {useState, useEffect} from "react";
 import {Error} from "../../components/Error.jsx";
@@ -67,7 +67,7 @@ export const ServiceAdd = ({ service}) => {
                 <form onSubmit={handleSubmit(formSubmitHandler)}>
                 {submitError && <p className="bg-red-700">{submitError}</p>}
 
-                    <fieldset className=" bg-orange-300 fieldset w-xs border border-base-300 p-4 rounded-box">
+                    <fieldset className=" bg-[#97a0f1] fieldset w-xs border border-base-300 p-4 rounded-box">
                         <legend className="fieldset-legend pt-8">ServiceAdd</legend>
 
                         <label className="fieldset-label"> Name </label>
@@ -82,14 +82,15 @@ export const ServiceAdd = ({ service}) => {
                         placeholder="Enter name of service" />
                         
                         <label className="fieldset-label ">Description</label>
-                        <input {...register("description", {
+                        <textarea  {...register("description", {
                           required:"Description is required",
                           maxLength:255
                         })} 
+                        rows="8"
                         type="text" 
-                        className="input focus:outline-[0px] focus:border-base-300" 
+                        className="block w-full text-sm resize-none text-gray-900 bg-gray-50 focus:outline-[0px]" 
                         placeholder="Enter description" />
-                       
+   
                         <label className="fieldset-label">Price</label>
                         <input {...register("price", {
                           required:"Price is required",
