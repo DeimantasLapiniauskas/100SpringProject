@@ -11,11 +11,11 @@ import java.util.List;
 public class PostMapper {
 
     public static Post toPost(PostRequestDTO postRequestDTO, Vet vet) {
-        return new Post(postRequestDTO.title(), postRequestDTO.text(), postRequestDTO.postType(), vet, LocalDateTime.now(), postRequestDTO.imgUrl());
+        return new Post(postRequestDTO.title(), postRequestDTO.content(), postRequestDTO.postType(), vet, postRequestDTO.imgUrl());
     }
 
     public static PostResponseDTO toPostResponseDTO(Post post) {
-        return new PostResponseDTO(post.getId(), post.getTitle(), post.getText(), post.getPostType(), post.getVet(),post.getCreatedAt(), post.getImageUrl());
+        return new PostResponseDTO(post.getId(), post.getTitle(), post.getContent(), post.getPostType(), post.getVet(),post.getCreatedAt(), post.getImageUrl());
     }
 
     public static Page<PostResponseDTO> postListResponsePageDTO(Page<Post> postsPage) {

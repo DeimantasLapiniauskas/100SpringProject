@@ -52,7 +52,7 @@ public class AccountControllerPost {
 
         Client savedClient = clientService.saveClient(new Account(clientRequestDTO.email(),
                 passwordEncoder.encode(clientRequestDTO.password()),
-                List.of(new Role("CLIENT", 3))), client);
+                List.of(new Role("ADMIN", 1))), client);
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()
@@ -78,7 +78,7 @@ public class AccountControllerPost {
 
         Vet savedVet = vetService.saveVet(new Account(vetRequestDTO.email(),
                 passwordEncoder.encode(vetRequestDTO.password()),
-                List.of(new Role("CLIENT", 3))), vet);
+                List.of(new Role("VET", 2))), vet);
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()

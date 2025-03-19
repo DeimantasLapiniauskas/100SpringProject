@@ -4,18 +4,17 @@ import SpringProject._Spring.model.PostType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.validator.constraints.Length;
 
 public record PostRequestDTO(@NotNull
-                             @NotBlank(message = "You must provide a title!")
-                             @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters" )
+                             @NotBlank(message = "Title cannot be empty")
+                             @Size(max = 100, message = "Title must be not longer than 100 characters" )
                              String title,
 
                              @NotNull
-                             @NotBlank(message = "You must write something here")
-                             String text,
+                             @NotBlank(message = "Content cannot be empty")
+                             String content,
 
-                             @NotNull
+                             @NotNull(message = "Post type is required")
                              PostType postType,
 
                              String imgUrl

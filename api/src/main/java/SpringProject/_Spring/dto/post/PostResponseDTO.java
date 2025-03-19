@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public record PostResponseDTO(long id,
                               String title,
-                              String text,
+                              String content,
                               PostType postType,
                               Vet vet,
                               LocalDateTime createdAt,

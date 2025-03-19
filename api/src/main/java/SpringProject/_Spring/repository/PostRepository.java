@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByPostType(String postType);
-    Page<Post> findAllPost(Pageable pageable);
 }

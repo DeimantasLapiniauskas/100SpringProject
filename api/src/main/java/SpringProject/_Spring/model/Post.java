@@ -2,7 +2,6 @@ package SpringProject._Spring.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,7 +13,9 @@ public class Post {
     private long id;
 
     private String title;
-    private String text;
+
+    @Column(nullable = false)
+    private String content;
 
     @Enumerated(EnumType.STRING)
     private PostType postType;
@@ -29,12 +30,11 @@ public class Post {
 
     private String imageUrl;
 
-    public Post(String title, String text, PostType postType, Vet vet, LocalDateTime createdAt, String imageUrl) {
+    public Post(String title, String content, PostType postType, Vet vet, String imageUrl) {
         this.title = title;
-        this.text = text;
+        this.content = content;
         this.postType = postType;
         this.vet = vet;
-        this.createdAt = createdAt;
         this.imageUrl = imageUrl;
     }
 
@@ -45,6 +45,10 @@ public class Post {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -53,12 +57,12 @@ public class Post {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public PostType getPostType() {
@@ -79,10 +83,6 @@ public class Post {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getImageUrl() {
