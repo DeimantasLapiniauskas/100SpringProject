@@ -58,19 +58,19 @@ public class AppointmentPUTTest {
     private AppointmentService appointmentService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    long appointmentId;
 
     @BeforeEach
     public void init() {
         objectMapper.registerModule(new Jdk8Module());
         objectMapper.registerModule(new JavaTimeModule());
+        appointmentId = 1;
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putAppointment_whenValidPutClient_thenRespond200() throws Exception {
 
-        long appointmentId = 1;
 
         Optional<Status> status = Optional.of(Status.Cancelled);
         Optional<LocalDateTime> newDate = Optional.of(LocalDateTime.now());
@@ -126,9 +126,8 @@ public class AppointmentPUTTest {
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putAppointment_whenInvalidPutClient_thenRespond400and404() throws Exception {
-        long appointmentId = 1;
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,null);
 
+        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -158,8 +157,8 @@ public class AppointmentPUTTest {
     }
 
     @Test
-    void putAppointment_whenPutUnauthenticated_thenRespond69() throws Exception {
-        long appointmentId = 1;
+    void putAppointment_whenPutUnauthenticated_thenRespond401() throws Exception {
+
         AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
@@ -171,7 +170,112 @@ public class AppointmentPUTTest {
                 .andExpect(jsonPath("$").doesNotExist());
 
         Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+    }
 
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void putAppointment_whenValidPutVet_thenRespond200() throws Exception {
+
+
+        Optional<Status> status = Optional.of(Status.Cancelled);
+        Optional<LocalDateTime> newDate = Optional.of(LocalDateTime.now());
+
+        Appointment appointment = new Appointment(1,2,List.of(),LocalDateTime.now(),"notes", Timestamp.valueOf(LocalDateTime.now()));
+
+
+        when(appointmentService.existsAppointmentById(appointmentId))
+                .thenReturn(true);
+
+        when(appointmentService.getAppointmentById(appointmentId))
+                .thenReturn(Optional.of(appointment));
+
+
+        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(status,null);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Appointment updated its status successfully!"));
+
+        Mockito.verify(appointmentService,Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
+
+        appointmentUpdateDTO = new AppointmentUpdateDTO(null,newDate);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Appointment updated its date successfully!"));
+
+        Mockito.verify(appointmentService,Mockito.times(2)).saveAppointment(ArgumentMatchers.any());
+
+        appointmentUpdateDTO = new AppointmentUpdateDTO(status,newDate);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Appointment updated its status and date successfully!"));
+
+        Mockito.verify(appointmentService,Mockito.times(3)).saveAppointment(ArgumentMatchers.any());
+    }
+
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void putAppointment_whenInvalidPutVet_thenRespond400and404() throws Exception {
+
+        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,null);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").value("You can't call this endpoint and then not give a date OR status!"));
+
+        Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+
+
+        when(appointmentService.existsAppointmentById(appointmentId))
+                .thenReturn(false);
+
+        appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").value("Appointment not found!"));
+
+        Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void putAppointment_whenPutAdmin_thenRespond403() throws Exception {
+
+        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
     }
 
 }

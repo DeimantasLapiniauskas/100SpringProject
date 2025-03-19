@@ -170,7 +170,7 @@ public class AppointmentGETTest {
         appointmentTwo.setId(appointmentTwoId);
     }
 
-    
+
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
