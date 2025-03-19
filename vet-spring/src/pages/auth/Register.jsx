@@ -35,10 +35,10 @@ export const Register = () => {
   };
 
   return (
-    <main className="h-screen flex justify-center items-center gap-8">
+    <main className="h-screen flex justify-center items-center gap-8 ml-12 mr-12">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-2xl bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12"
+        className="w-2xl bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] "
       >
         <div className="text-2xl text-center mb-4 px-4">
           Join Happy Hearts Community! Register below
