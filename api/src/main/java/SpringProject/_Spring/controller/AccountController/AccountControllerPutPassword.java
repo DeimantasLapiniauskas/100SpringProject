@@ -4,6 +4,7 @@ import SpringProject._Spring.dto.password.PasswordUpdateDTO;
 import SpringProject._Spring.dto.password.PasswordUpdateMapper;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.service.AccountService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ public class AccountControllerPutPassword {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Operation(summary = "Change current client password", description = "Changes currently authenticated client password")
     @PutMapping("/account/password")
     public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
@@ -42,6 +44,7 @@ public class AccountControllerPutPassword {
         return ResponseEntity.status(HttpStatus.OK).body("You have successfully updated your password!");
     }
 
+    @Operation(summary = "Changes password by ID (Admin)", description = "Admin changes Client or Vet password by their unique ID")
     @PutMapping("/account/password/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateAccountPasswordAdmin(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, @PathVariable long id) {
