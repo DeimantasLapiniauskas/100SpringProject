@@ -114,7 +114,7 @@ export const ServiceUpdate = () => {
                         
                         
                         
-                        <button type="submit" className="btn bg-black border-neutral-950 text-white mt-4">ServiceEdit</button>
+                        <button type="submit" className="btn bg-black border-neutral-950 text-white hover:bg-white hover:text-neutral-950 mt-4">ServiceEdit</button>
                         
                         
                     </fieldset>

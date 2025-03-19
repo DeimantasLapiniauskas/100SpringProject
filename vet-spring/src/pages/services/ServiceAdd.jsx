@@ -100,7 +100,7 @@ export const ServiceAdd = ({ service}) => {
                         className="input focus:outline-[0px] focus:border-base-300" 
                         placeholder="Enter price"/>
  
-                        <button type="submit" className="btn bg-black border-neutral-950 text-white mt-4">ServiceAdd</button>
+                        <button type="submit" className="btn bg-black border-neutral-950 text-white hover:bg-white hover:text-neutral-950 mt-4">ServiceAdd</button>
   
                     </fieldset>
                     <Error error={error} isHidden={!error} />
