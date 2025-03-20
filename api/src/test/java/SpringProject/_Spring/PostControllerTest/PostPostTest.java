@@ -84,10 +84,12 @@ public class PostPostTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("content").value("This is a test post."))
                 .andExpect(MockMvcResultMatchers.jsonPath("postType").value(PostType.Sale.toString()))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("vet.firstName").value(vet.getFirstName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("vet.lastName").value(vet.getLastName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("vet.phoneNumber").value(vet.getPhoneNumber()))
-                .andExpect(MockMvcResultMatchers.jsonPath("vet.specialty").value(vet.getSpecialty()));
+                // Change JSON path assertion to match the actual response structure
+                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.firstName").value(vet.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.lastName").value(vet.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.phoneNumber").value(vet.getPhoneNumber()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.specialty").value(vet.getSpecialty()));
+
 
 
         Mockito.verify(postService, times(1)).savePost(ArgumentMatchers.any(Post.class));
@@ -130,7 +132,7 @@ public class PostPostTest {
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void postPost_whenInvalidPostRequest_thenReturn400() throws Exception {
         // Given
-        PostRequestDTO invalidPost = new PostRequestDTO("", "", null, "https://example.com/image.jpg");
+        PostRequestDTO invalidPost = new PostRequestDTO("", "", null, "htt?ps:example.com/image.jpg");
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts")
@@ -143,7 +145,8 @@ public class PostPostTest {
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Title cannot be empty"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Content cannot be empty"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.postType").value("Post type is required"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.postType").value("Post type is required"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.imgUrl").value("Invalid URL format"));
 
         Mockito.verify(postService, times(0)).savePost(any());
     }
