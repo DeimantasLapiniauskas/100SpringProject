@@ -1,5 +1,6 @@
 import HomePageDog from "../../assets/dog.png"; 
-import TestCarousel from "../designtest/TestCarousel";
+import { PaginationProvider } from "../../context/PaginationContext";
+import PostCarousel from "../posts/PostsCarousel";
 
 export const HomePage = () => {
     return (
@@ -33,6 +34,9 @@ export const HomePage = () => {
                         alt="Dog; light brown and white fur; bent ears"
                     />
                 </figure>
+                <PaginationProvider>
+                <PostCarousel/>
+                </PaginationProvider>
             </main>
         </div>
     );

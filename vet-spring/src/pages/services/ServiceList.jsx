@@ -16,7 +16,7 @@ export const ServiceList = () => {
     onPageSizeChange,
     onPaginate,
     error,
-    content,
+    content: servises,
     currentPage,
     totalPages,
     pageSize,
@@ -48,7 +48,7 @@ export const ServiceList = () => {
           </NavLink>
         )}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {content?.map((service) => (
+          {servises?.map((service) => (
             <ServiceCard
               key={service.id}
               service={service}

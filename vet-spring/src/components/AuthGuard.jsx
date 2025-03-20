@@ -7,7 +7,7 @@ export const AuthGuard = ({ children }) => {
 
   if (!account) {
     return (
-      <div className="flex flex-col items-end pt-[9rem] ps-[9rem] lg:pe-[5rem] md:pe-[3rem] pe-[1rem] h-screen bg-center bg-cover" style={{ backgroundImage : `url(${vetClinicForbidden})`}}>
+      <div className="flex flex-col items-end pt-[9rem] ps-[9rem] lg:pe-[5rem] md:pe-[3rem] pe-[1rem] h-screen bg-center bg-cover rounded-[10px]" style={{ backgroundImage : `url(${vetClinicForbidden})`}}>
         <div>
           <p className="lg:text-3xl md:text-2xl text-lg pb-2 text-info-content text-center p-2">You must be logged<br/> to be able to use this option</p>
           <NavLink to={"/login"}>

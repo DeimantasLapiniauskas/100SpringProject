@@ -19,7 +19,11 @@ export const PaginationProvider = ({ children }) => {
 
   const getPage = useCallback(async (size, page, sort) => {
     const path = location.pathname;
-    const currentPath = path.split("/").pop();
+    let currentPath = path.split("/").pop();
+
+    if(currentPath === "home") {
+      currentPath = "posts"
+    }
     setCurrentPath(currentPath);
 
     try {

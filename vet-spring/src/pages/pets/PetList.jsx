@@ -15,7 +15,7 @@ export const PetList = () => {
     const [deleteModalID, setDeleteModalID] = useState("");
     const [editModalID, setEditModalID] = useState("");
     const [addModalID, setAddModalID] = useState("");
-    const { getPage, onPageSizeChange, onPaginate, error, content, currentPage, totalPages, pageSize } = usePagination();
+    const { getPage, onPageSizeChange, onPaginate, error, content: pets, currentPage, totalPages, pageSize } = usePagination();
 
     //TODO fadeout effect
     const welcomeClosure = () => {
@@ -44,7 +44,7 @@ export const PetList = () => {
                 </div>
                 <div className="flex flex-col items-center gap-8 p-8">
                     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {content?.map(pet => (
+                        {pets?.map(pet => (
                             <PetCard key={pet.id} pet={pet} getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
                         ))}
                     </ul>
