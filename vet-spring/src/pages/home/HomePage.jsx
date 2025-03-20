@@ -8,7 +8,7 @@ export const HomePage = () => {
             <main className="relative flex flex-col sm:flex-row-reverse items-center w-full max-w-screen-xl gap-12">
                 {/* Text Section */}
                 <div className="text-content flex flex-col sm:basis-1/2 text-left space-y-4 px-5">
-                    <article className="text-lg text-black">
+                    <article className="figma-headline-4 text-black">
                         Pavasario Avenue 100, Vilnius<br />
                         +370 511 233 78<br />
                         Twenty-four hours a day
@@ -18,7 +18,7 @@ export const HomePage = () => {
                         Happy Hearts <br /> Veterinary Clinic
                     </h1>
 
-                    <p className="text-lg sm:text-xl text-black leading-relaxed">
+                    <p className="figma-headline-4 text-black sm:text-xl">
                         As Lithuania’s leading animal health company, Happy Hearts is
                         driven by a singular purpose: to nurture Lithuania and
                         humankind by advancing care for animals.

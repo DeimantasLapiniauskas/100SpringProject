@@ -37,7 +37,7 @@ export const ServiceList = () => {
   return (
     <>
       <div className="flex flex-col items-center gap-8 p-8 ">
-      <h1 className="text-4xl text-black">
+      <h1 className="figma-headline-2 text-black">
             Find What Your Pet Needs
             <br /> Here To Make Your
             <br /> Pet Happy
