@@ -81,11 +81,11 @@ export const ServiceList = () => {
         </div>
         {/* Centered Text and Horizontal Image Section */}
         <div className="flex flex-col items-center text-center space-y-4">
-          <h1 className="text-4xl text-black">
+          <h1 className="figma-headline-2 text-black">
             Find What Your Pet Needs
             <br /> Here To Make Your
             <br /> Pet Happy
-          </h1>
+          </h1>{/* figma-headline-2 or text-4xl*/}
           
 
           {/* Horizontal Image Section */}
