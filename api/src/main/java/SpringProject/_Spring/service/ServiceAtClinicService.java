@@ -55,7 +55,7 @@ public class ServiceAtClinicService {
     }
 
     public Page<ServiceAtClinic> findAllServiceAtClinicPages(int page, int size, String sort) {
-        if (sort ==null) {
+        if (sort == null) {
             Pageable pageable = PageRequest.of(page, size);
             return serviceAtClinicRepository.findAll(pageable);
         }

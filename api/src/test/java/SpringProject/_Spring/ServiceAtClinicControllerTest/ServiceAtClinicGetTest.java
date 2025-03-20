@@ -34,8 +34,7 @@ public class ServiceAtClinicGetTest {
 
     //Happy path test
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getServices_whenClientGetAllServices_thenReturnAllServicesAnd200() throws Exception {
+    void getServices_whenAnyUserGetAllServices_thenReturnAllServicesAnd200() throws Exception {
 
         //given
         ServiceAtClinic serviceAtClinic1 = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00));
@@ -68,9 +67,7 @@ public class ServiceAtClinicGetTest {
 
     //Happy path test
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getService_whenClientGetService_thenReturnServiceAnd200() throws Exception {
-
+    void getService_whenAnyUserGetService_thenReturnServiceAnd200() throws Exception {
         //given
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00));
         serviceAtClinic.setId(1);
@@ -93,8 +90,7 @@ public class ServiceAtClinicGetTest {
 
     //Unhappy path test
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getServices_whenClientGetServices_thenReturnEmptyListAnd204() throws Exception {
+    void getServices_whenAnyUserGetServices_thenReturnEmptyListAnd204() throws Exception {
 
         //given
         List<ServiceAtClinic> serviceAtClinicList = List.of();

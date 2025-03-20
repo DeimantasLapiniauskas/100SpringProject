@@ -37,6 +37,11 @@ export const ServiceList = () => {
   return (
     <>
       <div className="flex flex-col items-center gap-8 p-8 ">
+      <h1 className="figma-headline-2 text-black">
+            Find What Your Pet Needs
+            <br /> Here To Make Your
+            <br /> Pet Happy
+          </h1>
         {checkRoles() && (
           <NavLink to={`/services/add`} className="btn btn-primary">
             Add
@@ -81,13 +86,7 @@ export const ServiceList = () => {
         </div>
         {/* Centered Text and Horizontal Image Section */}
         <div className="flex flex-col items-center text-center space-y-4">
-          <h1 className="figma-headline-2 text-black">
-            Find What Your Pet Needs
-            <br /> Here To Make Your
-            <br /> Pet Happy
-          </h1>
-          
-
+         
           {/* Horizontal Image Section */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {" "}

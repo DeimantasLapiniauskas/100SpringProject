@@ -1,5 +1,5 @@
-import { NavLink } from "react-router"
-import { useAuth } from "../context/AuthContext"
+import { NavLink } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 export const Navbar = () => {
 

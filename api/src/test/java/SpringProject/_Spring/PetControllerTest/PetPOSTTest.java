@@ -62,6 +62,7 @@ public class PetPOSTTest {
     @BeforeEach
     public void init() {
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.findAndRegisterModules();
     }
 
     @Test
