@@ -99,7 +99,7 @@ public class PostUpdateTest {
         }
 
         BDDMockito.given(vetService.findVetByAccountEmail(authenticatedAccount.getEmail()))
-                .willReturn(role.equals("SCOPE_ROLE_ADMIN") ? Optional.empty() : Optional.of(authenticatedVet));
+                .willReturn(role.equals("SCOPE_ROLE_ADMIN") ? Optional.of(new Vet("Admin", "User", "", "", "", LocalDate.now())) : Optional.of(authenticatedVet));
 
         BDDMockito.given(postService.findPostById(postId)).willReturn(Optional.of(post));
 
@@ -116,7 +116,7 @@ public class PostUpdateTest {
 
         // Run test with specified role
         SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken("testUser", "password", List.of(new SimpleGrantedAuthority(role)))
+                new UsernamePasswordAuthenticationToken(authenticatedAccount.getEmail(), "password", List.of(new SimpleGrantedAuthority(role)))
         );
 
         //When

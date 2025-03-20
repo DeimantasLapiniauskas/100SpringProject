@@ -55,7 +55,6 @@ public class SecurityConfig {
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/api/services/pagination").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/posts/pagination").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/register").anonymous()
                         .requestMatchers("/error/**").permitAll()

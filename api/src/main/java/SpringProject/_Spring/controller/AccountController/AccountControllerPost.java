@@ -54,7 +54,7 @@ public class AccountControllerPost {
 
         Client savedClient = clientService.saveClient(new Account(clientRequestDTO.email(),
                 passwordEncoder.encode(clientRequestDTO.password()),
-                List.of(new Role("ADMIN", 1))), client);
+                List.of(new Role("CLIENT", 3))), client);
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()
