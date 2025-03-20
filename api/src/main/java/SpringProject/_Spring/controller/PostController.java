@@ -48,16 +48,16 @@ public class PostController {
         Post savedPost = postService.savePost(post);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedPost.getId())
-                .toUri())
+                        .path("/{id}")
+                        .buildAndExpand(savedPost.getId())
+                        .toUri())
                 .body(PostMapper.toPostResponseDTO(savedPost));
     }
 
     @GetMapping("/posts/pagination")
     public ResponseEntity<?> getAllPostsPage(@RequestParam int page,
-                                                 @RequestParam int size,
-                                                 @RequestParam(required = false) String sort) {
+                                             @RequestParam int size,
+                                             @RequestParam(required = false) String sort) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -93,7 +93,7 @@ public class PostController {
     @PutMapping("posts/{postId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updatePost(@Valid @RequestBody PostRequestDTO postRequestDTO,
-                                           @PathVariable long postId, Authentication authentication) {
+                                        @PathVariable long postId, Authentication authentication) {
 
         Optional<Post> post = postService.findPostById(postId);
 
@@ -108,17 +108,13 @@ public class PostController {
 
         Optional<Vet> vet = vetService.findVetByAccountEmail(authentication.getName());
 
-        if (vet.isEmpty() && !isAdmin) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("You are not authenticated");
-        }
-
         if (foundPost.getPostType().equals(PostType.Blog)) {
-            if (!isAdmin) { // Normal vet restrictions
+            if (!isAdmin) {
                 Vet currentVet = vet.get();
                 if (foundPost.getVet().getId() != currentVet.getId()) {
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You cannot edit someone else's Blog");
                 }
-            } else { // Admin restriction
+            } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Admins cannot edit Blogs");
             }
         }
