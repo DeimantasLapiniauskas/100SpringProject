@@ -75,7 +75,7 @@ public class PostGetTest {
         //When
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isOk())
@@ -112,7 +112,7 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "2"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isOk())
@@ -137,7 +137,7 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "10"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isOk())
@@ -154,7 +154,7 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "-1")
                         .param("size", "12"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isBadRequest());
@@ -183,7 +183,7 @@ public class PostGetTest {
                         .param("page", "0")
                         .param("size", "5")
                         .param("sort", "invalidField"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isBadRequest());

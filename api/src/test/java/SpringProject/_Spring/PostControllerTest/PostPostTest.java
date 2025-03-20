@@ -84,7 +84,6 @@ public class PostPostTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("content").value("This is a test post."))
                 .andExpect(MockMvcResultMatchers.jsonPath("postType").value(PostType.Sale.toString()))
 
-                // Change JSON path assertion to match the actual response structure
                 .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.firstName").value(vet.getFirstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.lastName").value(vet.getLastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.phoneNumber").value(vet.getPhoneNumber()))
@@ -107,6 +106,8 @@ public class PostPostTest {
         mockMvc.perform(post("/api/posts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(validPost)))
+//                .andDo(MockMvcResultHandlers.print())
+
                 //Then
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -138,7 +139,7 @@ public class PostPostTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidPost)))
-                .andDo(MockMvcResultHandlers.print()) // Debugging output
+//                .andDo(MockMvcResultHandlers.print())
 
                 // Then
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())

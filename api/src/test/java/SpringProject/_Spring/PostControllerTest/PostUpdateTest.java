@@ -26,6 +26,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -123,6 +124,7 @@ public class PostUpdateTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().is(expectedStatus));
@@ -161,6 +163,7 @@ public class PostUpdateTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidUpdate)))
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isBadRequest())
