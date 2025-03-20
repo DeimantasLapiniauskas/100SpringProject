@@ -85,7 +85,7 @@ export const ServiceList = () => {
             Find What Your Pet Needs
             <br /> Here To Make Your
             <br /> Pet Happy
-          </h1>{/* figma-headline-2 or text-4xl*/}
+          </h1>
           
 
           {/* Horizontal Image Section */}
