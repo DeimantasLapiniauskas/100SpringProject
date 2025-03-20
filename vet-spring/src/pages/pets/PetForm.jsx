@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { addPet, updatePet } from "../../utils/helpers/petService";
+import ThemeContext from "../../utils/helpers/themeContext";
+import { useContext } from "react";
 
 const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
+  const { setEditModalID, setAddModalID } = useContext(ThemeContext);
+
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: "",
+      species: "",
+      breed: "",
+      birthdate: "",
+      gender: "",
+    },
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
 
   useEffect(() => {
-    if (pet) {
+    if (pet && Object.keys(pet).length > 0) {
       const { name, species, breed, birthdate, gender } = pet;
-
       setValue("name", name);
       setValue("species", species);
       setValue("breed", breed);
@@ -44,12 +55,14 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
       if (pet && pet.id) {
         await updatePet(pet.id, payload);
         await getPage(pageSize, currentPage);
+        setEditModalID("");
       } else {
         const newPayload = { ...trimmedData };
         await addPet(newPayload);
-        await getPage(pageSize, currentPage); 
+        await getPage(pageSize, currentPage);
+        setAddModalID(""); 
       }
-      reset({ name: "", species: "", breed: "", birthdate: "", gender: "" });
+      reset();
     } catch (error) {
       console.error("Error details:", error.response?.data || error.message);
       setSubmitError(error.response?.data?.message || "Failed to submit the form.");

@@ -5,7 +5,6 @@ import { AuthGuard } from "../components/AuthGuard.jsx";
 import { Login } from "../pages/auth/Login.jsx";
 import { Register } from "../pages/auth/Register.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
-// import { ViewPet } from "../pages/pets/ViewPet.jsx";
 import { NotFound } from "../components/NotFound.jsx";
 import { ServiceList } from "../pages/services/ServiceList.jsx";
 import { ServiceAdd } from "../pages/services/ServiceAdd.jsx";
@@ -13,7 +12,8 @@ import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
 import { PaginationProvider } from "../context/PaginationContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
-// import { BandymasRegisterPet } from "../pages/pets/BandymasRegisterPet.jsx";
+
+import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -47,6 +47,8 @@ const VetClinicRoutes = () => {
             />
             <Route path="services/add" element={<ServiceAdd />} />
             <Route path="services/edit/:id" element={<ServiceUpdate />} />
+            {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+            <Route path="/design" element={<BandytiDesign />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

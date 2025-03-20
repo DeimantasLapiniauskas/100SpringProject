@@ -6,6 +6,7 @@ import SpringProject._Spring.dto.service.ServiceAtClinicRequestDTO;
 import SpringProject._Spring.model.Post;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.service.ServiceAtClinicService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class ServiceAtClinicController {
         this.serviceAtClinicService = service;
     }
 
+    @Operation(summary = "Add new service", description = "Adds a new service to the database")
     @PostMapping("/services")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> addService(@Valid @RequestBody ServiceAtClinicRequestDTO serviceDTO) {
@@ -55,6 +57,7 @@ public class ServiceAtClinicController {
 
     }
 
+    @Operation(summary = "Get all services", description = "Retrieves a list of all services")
     @GetMapping("/services")
     public ResponseEntity<?> getAllServices() {
 
@@ -67,6 +70,7 @@ public class ServiceAtClinicController {
         return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicListDTO(allServices));
     }
 
+    @Operation(summary = "Get service by ID", description = "Retrieves a service by it's unique ID")
     @GetMapping("/services/{serviceId}")
     public ResponseEntity<?> getService(@PathVariable long serviceId) {
 
@@ -85,6 +89,7 @@ public class ServiceAtClinicController {
         return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicFromDB));
     }
 
+    @Operation(summary = "Update service by ID (Vet and Admin)", description = "Updates a service by it's unique ID")
     @PutMapping("/services/{serviceId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateService(@PathVariable long serviceId,
@@ -107,6 +112,7 @@ public class ServiceAtClinicController {
         return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicDTO(updatedService));
     }
 
+    @Operation(summary = "Delete service by ID (Vet and Admin)", description = "Deletes a service by it's unique ID")
     @DeleteMapping("/services/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
 
@@ -118,6 +124,7 @@ public class ServiceAtClinicController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Get all services and split them by pages", description = "Retrieves a list of all services and splits them by pages")
     @GetMapping("/services/pagination")
     public ResponseEntity<?> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort) {
 

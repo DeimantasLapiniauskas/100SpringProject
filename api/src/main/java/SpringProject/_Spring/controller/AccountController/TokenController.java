@@ -2,6 +2,7 @@ package SpringProject._Spring.controller.AccountController;
 
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.repository.AccountRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,6 +29,7 @@ public class TokenController {
         this.accountRepository = accountRepository;
     }
 
+    @Operation(summary = "Generate a JWT token", description = "Generates a JWT token for a user with their basic auth")
     @PostMapping("/token")
     public String token(Authentication authentication) {
         Instant now = Instant.now();
