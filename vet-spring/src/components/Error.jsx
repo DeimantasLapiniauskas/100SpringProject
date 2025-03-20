@@ -5,7 +5,7 @@ export const Error = (props) => {
   if(typeof error === "undefined"){
     return
   }
-  
+ 
   const errorMessages = Object.values(error);
 
   const hide = () => {
@@ -23,7 +23,8 @@ export const Error = (props) => {
           })}
         </div>
       )}
-      <div onClick={()=>hide()}>
+      {/* <div onClick={()=>hide()}> */}
+      <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6 shrink-0 stroke-current"

@@ -13,19 +13,20 @@ export const Register = () => {
     watch,
     clearErrors,
     formState: { errors },
-  } = useForm({ reValidateMode: "onSubmit " });
-  const [responseError, setresponseError] = useState([]);
+  } = useForm({ mode: "OnSubmit" , reValidateMode: "onChange " });
+  
   const { login, register: registerUser } = useAuth();
 
-  const [visibleError, setVisibleError] = useState(false);
-  const [visibleFirstNameError, setVisibleFirstNameError] = useState(false);
-  const [visibleLastNameError, setVisibleLastNameError] = useState(false);
-  const [visiblePhoneNumberError, setVisiblePhoneNumberError] = useState(false);
-  const [visibleEmailError, setVisibleEmailError] = useState(false);
-  const [visiblePasswordError, setVisiblePasswordError] = useState(false);
+  const [responseError, setresponseError] = useState([]);
+
+  // const [visibleFirstNameError, setVisibleFirstNameError] = useState(false);
+  // const [visibleLastNameError, setVisibleLastNameError] = useState(false);
+  // const [visiblePhoneNumberError, setVisiblePhoneNumberError] = useState(false);
+  // const [visibleEmailError, setVisibleEmailError] = useState(false);
+  // const [visiblePasswordError, setVisiblePasswordError] = useState(false);
+
 
   const onSubmit = async (data) => {
-    setVisibleError(false);
     try {
       await registerUser(
         data.email,
@@ -39,12 +40,12 @@ export const Register = () => {
       setresponseError(
         error.response?.data ?? error.message ?? "Something went wrong!"
       );
-      setVisibleError(true);
-      setVisibleFirstNameError(true);
-      setVisibleLastNameError(true);
-      setVisiblePhoneNumberError(true);
-      setVisibleEmailError(true);
-      setVisiblePasswordError(true);
+      // setVisibleError(true);
+      // setVisibleFirstNameError(true);
+      // setVisibleLastNameError(true);
+      // setVisiblePhoneNumberError(true);
+      // setVisibleEmailError(true);
+      // setVisiblePasswordError(true);
     }
   };
 
@@ -62,25 +63,59 @@ export const Register = () => {
           <div>
             <label className="fieldset-label text-lg">First Name</label>
             <input
-              {...register("firstName")}
+              {...register("firstName", {
+                required: {
+                  value: true,
+                  message: "This field is required",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Name must be longer than 3"
+                },
+                maxLength: {
+                  value: 100,
+                  message: "Name can't be longer than 100"
+                },
+                pattern: {
+                  value: /^[A-Za-z ]*$/,
+                  message: "Name can only contain letters and spaces"
+                }
+              })}
               type="text"
               className="input text-lg p-3 w-full"
               placeholder="Enter first name"
             />
-            {visibleFirstNameError && (
-              <Error error={responseError.firstName} setVisible={setVisibleFirstNameError} />
+            {errors.firstName != null && (
+              <Error error={errors.firstName?.message}/>
             )}
           </div>
           <div>
             <label className="fieldset-label text-lg">Last Name</label>
             <input
-              {...register("lastName")}
+              {...register("lastName", {  
+                required: {
+                  value: true,
+                  message: "This field is required",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Last name must be longer than 3"
+                },
+                maxLength: {
+                  value: 100,
+                  message: "Last name can't be longer than 100"
+                },
+                pattern: {
+                  value: /^[A-Za-z ]*$/,
+                  message: "Last name can only contain letters and spaces"
+                }
+              })}
               type="text"
               className="input text-lg p-3 w-full"
               placeholder="Enter last name"
             />
-            {visibleLastNameError && (
-              <Error error={responseError.lastName} setVisible={setVisibleLastNameError} />
+            {errors.lastName !=null && (
+              <Error error={errors.lastName?.message} />
             )}
           </div>
 
@@ -92,11 +127,8 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter phone number"
             />
-            {visiblePhoneNumberError && (
-              <Error
-                error={responseError.phoneNumber}
-                setVisible={setVisiblePhoneNumberError}
-              />
+            {errors.phoneNumber && (
+              <Error error={responseError.phoneNumber?.message}/>
             )}
           </div>
 
@@ -105,6 +137,7 @@ export const Register = () => {
             <input
               {...register("email", {
                 required: {
+                  value: true,
                   message: "This field is required",
                 },
               })}
@@ -112,8 +145,8 @@ export const Register = () => {
               className="input text-lg p-3 w-full"
               placeholder="Enter email"
             />
-            {visibleEmailError && (
-              <Error error={responseError.email} setVisible={setVisibleEmailError} />
+            {errors.email && (
+              <Error error={errors.email?.message}/>
             )}
           </div>
 
@@ -122,15 +155,20 @@ export const Register = () => {
             <input
               {...register("password", {
                 required: {
+                  value: true,
                   message: "This field is required",
+                },
+                minLength: {
+                  value: 8,
+                  message: 'min 8 characters',
                 },
               })}
               type="password"
               className="input text-lg p-3 w-full"
               placeholder="Enter password"
             />
-            {visiblePasswordError && (
-              <Error error={responseError.password} setVisible={setVisiblePasswordError} />
+            {errors.password != null && (
+              <Error error={errors.password?.message}/>
             )}
           </div>
 
@@ -139,6 +177,7 @@ export const Register = () => {
             <input
               {...register("repeatPassword", {
                 required: {
+                  value: true,
                   message: "This field is required",
                 },
                 validate: (value) => {
@@ -150,15 +189,12 @@ export const Register = () => {
               placeholder="Enter password"
             />
             
-            {(visibleError && errors.repeatPassword != null) && (
-              <Error
-                error={errors.repeatPassword?.message}
-                setVisible={setVisibleError}
-              />
+            {errors.repeatPassword != null && (
+              <Error error={errors.repeatPassword?.message}/>
             )}
           </div>
         </div>
-        {(visibleError && typeof responseError === "string" )&& <Error error={responseError} setVisible={setVisibleError} />}
+        {(typeof responseError === "string" )&& <Error error={responseError}/>}
         <button type="submit" className="custom-black-btn mt-4">
           Register
         </button>
