@@ -50,7 +50,7 @@ export const Login = () => {
                             placeholder="Enter password"
                         />
 
-                        {visible && <Error error={error} setVisible={setVisible}/>}
+                        {(visible && error.length != 0) && <Error error={error} setVisible={setVisible}/>}
 
                         <button type="submit" className="custom-black-btn mt-4">
                             Login

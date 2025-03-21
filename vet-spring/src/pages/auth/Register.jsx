@@ -17,13 +17,14 @@ export const Register = () => {
   
   const { login, register: registerUser } = useAuth();
 
-  const [responseError, setresponseError] = useState([]);
+  const [responseError, setResponseError] = useState([]);
 
-  // const [visibleFirstNameError, setVisibleFirstNameError] = useState(false);
-  // const [visibleLastNameError, setVisibleLastNameError] = useState(false);
-  // const [visiblePhoneNumberError, setVisiblePhoneNumberError] = useState(false);
-  // const [visibleEmailError, setVisibleEmailError] = useState(false);
-  // const [visiblePasswordError, setVisiblePasswordError] = useState(false);
+  const [visibleFirstNameError, setVisibleFirstNameError] = useState(false);
+  const [visibleLastNameError, setVisibleLastNameError] = useState(false);
+  const [visiblePhoneNumberError, setVisiblePhoneNumberError] = useState(false);
+  const [visibleEmailError, setVisibleEmailError] = useState(false);
+  const [visiblePasswordError, setVisiblePasswordError] = useState(false);
+  const [visibleRepeatPasswordError, setVisibleRepeatPasswordError] = useState(false);
 
 
   const onSubmit = async (data) => {
@@ -37,31 +38,35 @@ export const Register = () => {
       );
       await login(data.email, data.password);
     } catch (error) {
-      setresponseError(
+      setResponseError(
         error.response?.data ?? error.message ?? "Something went wrong!"
       );
-      // setVisibleError(true);
-      // setVisibleFirstNameError(true);
-      // setVisibleLastNameError(true);
-      // setVisiblePhoneNumberError(true);
-      // setVisibleEmailError(true);
-      // setVisiblePasswordError(true);
     }
   };
 
+  const switchErrorVisibility = () => {
+    setResponseError([]);
+    setVisibleFirstNameError(true);
+    setVisibleLastNameError(true);
+    setVisiblePhoneNumberError(true);
+    setVisibleEmailError(true);
+    setVisiblePasswordError(true);
+    setVisibleRepeatPasswordError(true);
+  }
+
   return (
-    <main className="h-screen flex justify-center items-center gap-8 ml-12 mr-12">
+    <main className="flex h-screen justify-center gap-8 items-center ml-12 mr-12">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-2xl bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] "
+        className="bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box w-2xl min-h-[500px]"
       >
         <div className="text-2xl text-center mb-4 px-4">
           Join Happy Hearts Community! Register below
         </div>
 
-        <div className="grid grid-cols-2 gap-4 w-full">
+        <div className="grid grid-cols-2 w-full gap-4">
           <div>
-            <label className="fieldset-label text-lg">First Name</label>
+            <label className="text-lg fieldset-label">First Name</label>
             <input
               {...register("firstName", {
                 required: {
@@ -82,15 +87,15 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input p-3 text-lg w-full"
               placeholder="Enter first name"
             />
-            {errors.firstName != null && (
-              <Error error={errors.firstName?.message}/>
+            {visibleFirstNameError && errors.firstName != null && (
+              <Error error={errors.firstName?.message} setVisible={setVisibleFirstNameError}/>
             )}
           </div>
           <div>
-            <label className="fieldset-label text-lg">Last Name</label>
+            <label className="text-lg fieldset-label">Last Name</label>
             <input
               {...register("lastName", {  
                 required: {
@@ -111,47 +116,76 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input p-3 text-lg w-full"
               placeholder="Enter last name"
             />
-            {errors.lastName !=null && (
-              <Error error={errors.lastName?.message} />
+            {visibleLastNameError && errors.lastName !=null && (
+              <Error error={errors.lastName?.message} setVisible={setVisibleLastNameError}/>
             )}
           </div>
 
           <div>
-            <label className="fieldset-label text-lg">Phone Number</label>
+            <label className="text-lg fieldset-label">Phone Number</label>
             <input
-              {...register("phoneNumber")}
+              {...register("phoneNumber", {
+                required: {
+                value: true,
+                message: "This field is required",
+                },
+                minLength:{
+                  value: 3,
+                  message: "Number must be longer than 3"
+                },
+                maxLength:{
+                  value: 17,
+                  message: "phone can't be longer 17"
+                },
+                pattern: {
+                  value: /^[0-9\-+]+$/,
+                  message: "Phone number has bad symbols"
+                }
+              })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input p-3 text-lg w-full"
               placeholder="Enter phone number"
             />
-            {errors.phoneNumber && (
-              <Error error={responseError.phoneNumber?.message}/>
+            {visiblePhoneNumberError && errors.phoneNumber != null && (
+              <Error error={errors.phoneNumber?.message} setVisible={setVisiblePhoneNumberError}/>
             )}
           </div>
 
           <div>
-            <label className="fieldset-label text-lg">Email</label>
+            <label className="text-lg fieldset-label">Email</label>
             <input
               {...register("email", {
                 required: {
                   value: true,
                   message: "This field is required",
                 },
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                  message: "Bad email, must be at least than 4 symbols before @, at least 3 after @, domain must be at least 2 symbols"
+                },
+                minLength: {
+                  value: 3,
+                  message: "Email must be longer than 11"
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Email can't be longer than 50"
+                }
               })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input p-3 text-lg w-full"
               placeholder="Enter email"
             />
-            {errors.email && (
-              <Error error={errors.email?.message}/>
+            {visibleEmailError && errors.email && (
+              <Error error={errors.email?.message} setVisible={setVisibleEmailError}/>
             )}
           </div>
 
           <div>
-            <label className="fieldset-label text-lg">Password</label>
+            <label className="text-lg fieldset-label">Password</label>
             <input
               {...register("password", {
                 required: {
@@ -160,20 +194,28 @@ export const Register = () => {
                 },
                 minLength: {
                   value: 8,
-                  message: 'min 8 characters',
+                  message: "Minimum 8 characters",
                 },
+                maxLength: {
+                  value: 50,
+                  message: "Too long"
+                },
+                pattern: {
+                  value: /^(?=(.*[a-zA-Z]))(?=(.*\d))[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_`{|}~ ]*$/,
+                  message: "Must contain at least one number and one letter"
+                }
               })}
               type="password"
-              className="input text-lg p-3 w-full"
+              className="input p-3 text-lg w-full"
               placeholder="Enter password"
             />
-            {errors.password != null && (
-              <Error error={errors.password?.message}/>
+            {visiblePasswordError && errors.password != null && (
+              <Error error={errors.password?.message} setVisible={setVisiblePasswordError}/>
             )}
           </div>
 
           <div>
-            <label className="fieldset-label text-lg">Repeat Password</label>
+            <label className="text-lg fieldset-label">Repeat Password</label>
             <input
               {...register("repeatPassword", {
                 required: {
@@ -185,33 +227,33 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input text-lg p-3 w-full"
+              className="input p-3 text-lg w-full"
               placeholder="Enter password"
             />
             
-            {errors.repeatPassword != null && (
-              <Error error={errors.repeatPassword?.message}/>
+            {visibleRepeatPasswordError && errors.repeatPassword != null && (
+              <Error error={errors.repeatPassword?.message} setVisible={setVisibleRepeatPasswordError}/>
             )}
           </div>
         </div>
         {(typeof responseError === "string" )&& <Error error={responseError}/>}
-        <button type="submit" className="custom-black-btn mt-4">
+        <button type="submit" className="custom-black-btn mt-4" onClick={() => switchErrorVisibility()}>
           Register
         </button>
 
         <div className="text-center mt-2">
           Already have an account?
-          <NavLink to="/login" className="underline ml-1">
+          <NavLink to="/login" className="ml-1 underline">
             Login
           </NavLink>
         </div>
       </form>
 
-      <figure className="w-[400px] h-[500px] rounded-box overflow-hidden">
+      <figure className="h-[500px] rounded-box w-[400px] overflow-hidden">
         <img
           src={RegisterPageDog} // This should be the same image used in Login
           alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </figure>
     </main>
