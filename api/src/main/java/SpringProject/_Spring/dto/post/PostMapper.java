@@ -1,11 +1,10 @@
 package SpringProject._Spring.dto.post;
 
-import SpringProject._Spring.model.Post;
-import SpringProject._Spring.model.Vet;
+import SpringProject._Spring.model.post.Post;
+import SpringProject._Spring.model.authentication.Vet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostMapper {
