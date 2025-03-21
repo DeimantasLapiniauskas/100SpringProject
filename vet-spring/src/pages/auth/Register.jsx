@@ -39,7 +39,7 @@ export const Register = () => {
       await login(data.email, data.password);
     } catch (error) {
       setResponseError(
-        error.response?.data ?? error.message ?? "Something went wrong!"
+        error.response?.data?.error ?? error.response?.data ?? error.message ?? "Something went wrong!"
       );
     }
   };
