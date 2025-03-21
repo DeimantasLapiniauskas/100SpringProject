@@ -14,7 +14,7 @@ export const BandytiDesignHomePage = () => {
           </div>
           <div
             className="pawss-for-background-medium"
-            style={{ left: "45%", top: "13%" }}
+            style={{ left: "47%", top: "13%" }}
           ></div>
           <div
             className="pawss-for-background-medium"

@@ -106,7 +106,7 @@ html {
   position: fixed;
   width: clamp(20px, 5%, 50px);
   height: clamp(30px, 5%, 50px);
-  background-image: url("/src/assets/pawss_for_background.png") !important;
+  background-image: url("/src/assets/pawss_for_background.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
