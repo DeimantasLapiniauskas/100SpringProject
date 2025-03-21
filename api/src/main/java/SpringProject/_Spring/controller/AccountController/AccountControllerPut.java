@@ -1,11 +1,15 @@
 package SpringProject._Spring.controller.AccountController;
 
+import SpringProject._Spring.dto.client.ClientMapping;
+import SpringProject._Spring.dto.client.ClientUpdateDTO;
 import SpringProject._Spring.dto.password.PasswordUpdateDTO;
 import SpringProject._Spring.dto.password.PasswordUpdateMapper;
 import SpringProject._Spring.dto.vet.VetMapping;
 import SpringProject._Spring.model.Account;
+import SpringProject._Spring.model.Client;
 import SpringProject._Spring.model.Vet;
 import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.service.ClientService;
 import SpringProject._Spring.service.VetService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -26,12 +30,14 @@ public class AccountControllerPut {
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
     private final VetService vetService;
+    private final ClientService clientService;
 
     @Autowired
-    public AccountControllerPut(AccountService accountService, PasswordEncoder passwordEncoder, VetService vetService) {
+    public AccountControllerPut(AccountService accountService, PasswordEncoder passwordEncoder, VetService vetService, ClientService clientService) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
         this.vetService = vetService;
+        this.clientService = clientService;
     }
 
     @Operation(summary = "Change current account password", description = "Changes currently authenticated account password")
@@ -78,5 +84,19 @@ public class AccountControllerPut {
         vetService.updateVet(vetFromDB);
 
         return ResponseEntity.ok(VetMapping.toVetUpdateResponseDTO(vetFromDB));
+    }
+
+    @Operation(summary = "Edit client information", description = "Edit client information (except password and email)")
+    @PutMapping("/client/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<?> updateClient(@Valid @RequestBody ClientUpdateDTO clientUpdateDTO, @PathVariable long id) {
+        Client clientFromDB = clientService.findClientById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client account not found!"));
+
+        ClientMapping.updateClientFromDTO(clientFromDB, clientUpdateDTO);
+
+        clientService.updateClient(clientFromDB);
+
+        return ResponseEntity.ok(ClientMapping.toClientUpdateResponseDTO(clientFromDB));
     }
 }
