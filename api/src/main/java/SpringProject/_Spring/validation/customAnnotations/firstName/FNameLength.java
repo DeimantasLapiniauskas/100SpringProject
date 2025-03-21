@@ -1,6 +1,5 @@
 package SpringProject._Spring.validation.customAnnotations.firstName;
 
-import SpringProject._Spring.validation.customAnnotations.password.PasswordLengthValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -11,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordLengthValidator.class)
+@Constraint(validatedBy = FNameLengthValidator.class)
 public @interface FNameLength {
     String message() default "Your first name must be between " +
             FNameLengthValidator.minLength + " and " +
