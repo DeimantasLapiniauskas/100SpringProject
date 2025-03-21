@@ -26,6 +26,10 @@ public class VetService {
         return vetRepository.save(vet);
     }
 
+    public Vet updateVet(Vet vet) {
+        return vetRepository.save(vet);
+    }
+
     public Optional<Vet> getVetById(long vetId) {
         return vetRepository.findById(vetId);
     }

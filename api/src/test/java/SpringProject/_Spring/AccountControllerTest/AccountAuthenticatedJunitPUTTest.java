@@ -1,6 +1,6 @@
 package SpringProject._Spring.AccountControllerTest;
 
-import SpringProject._Spring.controller.AccountController.AccountControllerPutPassword;
+import SpringProject._Spring.controller.AccountController.AccountControllerPut;
 import SpringProject._Spring.dto.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Optional;
 
-@WebMvcTest(controllers = AccountControllerPutPassword.class)
+@WebMvcTest(controllers = AccountControllerPut.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 public class AccountAuthenticatedJunitPUTTest {

@@ -64,7 +64,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
       }
       reset();
     } catch (error) {
-      console.error("Error details:", error.response?.data || error.message);
+      console.error("Error details: ", error.response?.data || error.message);
       setSubmitError(error.response?.data?.message || "Failed to submit the form.");
     } finally {
       setIsLoading(false);
