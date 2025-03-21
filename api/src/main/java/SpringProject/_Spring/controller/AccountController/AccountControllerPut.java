@@ -34,7 +34,7 @@ public class AccountControllerPut {
         this.vetService = vetService;
     }
 
-    @Operation(summary = "Change current client password", description = "Changes currently authenticated client password")
+    @Operation(summary = "Change current account password", description = "Changes currently authenticated account password")
     @PutMapping("/account/password")
     public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
