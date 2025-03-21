@@ -21,7 +21,11 @@ function AddPetButton({ getPage, currentPage, pageSize }) {
       {addModalID === "new" && (
         <dialog open className="modal bg-[#DCDEFE]">
           <div className="modal-box bg-[#97a0f1] text-center">
-            <PetForm getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
+            <PetForm
+              getPage={getPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+            />
             <form method="dialog">
               <button
                 className="text-white btn bg-red-500 hover:bg-red-700 w-16"

@@ -86,7 +86,6 @@ export const ServiceList = () => {
             <br /> Here To Make Your
             <br /> Pet Happy
           </h1>
-          
 
           {/* Horizontal Image Section */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -99,18 +98,22 @@ export const ServiceList = () => {
                 className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
               />
             </figure>
-            <figure className="hidden sm:block
+            <figure
+              className="hidden sm:block
             
-            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4">
+            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4"
+            >
               <img
                 src={ServiceListPageVetHoldingDog}
                 alt="Vet holding black and white puppy"
                 className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
               />
             </figure>
-            <figure className="hidden lg:block 
+            <figure
+              className="hidden lg:block 
             
-            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4">
+            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4"
+            >
               <img
                 src={ServiceListPageCatPawBandage}
                 alt="Vet holding brown cat"
