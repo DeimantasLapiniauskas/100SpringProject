@@ -6,7 +6,9 @@ import VetClinicRoutes from './components/VetClinicRoutes'
 
 const App = () => {
   return (
+    <div >
       <VetClinicRoutes/>
+      </div>
   )
 }
 

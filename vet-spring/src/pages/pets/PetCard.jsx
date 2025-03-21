@@ -1,14 +1,14 @@
-import DeleteButton from "../../components/DeleteButton"
+import DeleteButton from "./DeleteButton"
 import EditButton from "./EditButton"
 
 export const PetCard = ({ pet, getPage, currentPage, pageSize }) => {
     const { name, species, breed, birthdate, gender } = pet;
 
     return (
-        <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF] w-80">
+        <div className="card card-side shadow-sm bg-[#97a0f1] text-[#000000] w-80">
         <div className="p-6">
-            <div className="card-body w-80">
-                <h2 className="card-title">{name}</h2>
+            <div className="card-body  block break-words w-[16rem]">
+                <h2 className="card-title  block break-words w-[16rem]">{name}</h2>
                 <p className="py-2">{species}</p>
                 <p className="py-2">{breed}</p>
                 <p className="py-2">{birthdate}</p>

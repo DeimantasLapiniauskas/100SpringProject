@@ -19,12 +19,12 @@ function EditButton({ pet, getPage, currentPage, pageSize }) {
             </div>
 
             {editModalID == pet.id && (
-                <dialog open className="modal">
-                    <div className="modal-box bg-gray-600 text-center">
+                <dialog open className="modal bg-[#DCDEFE]">
+                    <div className="modal-box bg-[#97a0f1] text-center">
                         <PetForm pet={pet} getPage={getPage} currentPage={currentPage} pageSize={pageSize} />
                         <form method="dialog">
                             <button
-                                className="btn bg-red-500 w-16"
+                                className="text-white btn bg-red-500 hover:bg-red-700 w-16"
                                 onClick={() => {
                                     setEditModalID("");
                                 }}

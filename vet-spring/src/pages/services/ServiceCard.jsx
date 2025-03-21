@@ -63,7 +63,7 @@ export const ServiceCard = (props) => {
     return (
         <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
             <div className="card-body">
-            <h2 className="card-title block break-words w-[20rem]">{name}</h2>
+            <h2 className="card-title block break-all">{name}</h2>
             <textarea readOnly
             className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
             

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import ThemeContext from "../utils/helpers/themeContext";
-import { deletePet } from "../utils/helpers/deletePet";
+import ThemeContext from "../../utils/helpers/themeContext";
+import { deletePet } from "../../utils/helpers/deletePet";
 
 function DeleteButton({ pet, getPage, currentPage, pageSize }) {
     const { deleteModalID, setDeleteModalID } = useContext(ThemeContext);
@@ -31,20 +31,20 @@ function DeleteButton({ pet, getPage, currentPage, pageSize }) {
                 </button>
             </div>
             {deleteModalID == pet.id && (
-                <dialog open className="modal">
-                    <div className="modal-box bg-gray-800 text-center">
+                <dialog open className="modal bg-[#DCDEFE]">
+                    <div className="modal-box bg-[#97a0f1] text-center">
                         <h3 className="text-white">Delete</h3>
                         <p className="py-4 text-white">
                             Are you sure you want to delete this pet?
                         </p>
                         <div className="grid grid-cols-2 place-items-center">
                             <button
-                                className="btn bg-red-500 w-16"
+                                className="btn bg-red-500 hover:bg-red-700 w-16"
                                 onClick={handleDelete}>
                                 Delete
                             </button>
                             <button
-                                className="btn bg-gray-500 w-16"
+                                className="btn bg-gray-500 hover:bg-gray-700 w-16"
                                 onClick={() => setDeleteModalID("")}>
                                 Close
                             </button>
