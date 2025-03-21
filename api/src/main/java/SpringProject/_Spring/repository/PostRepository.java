@@ -1,8 +1,6 @@
 package SpringProject._Spring.repository;
 
-import SpringProject._Spring.model.Post;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import SpringProject._Spring.model.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

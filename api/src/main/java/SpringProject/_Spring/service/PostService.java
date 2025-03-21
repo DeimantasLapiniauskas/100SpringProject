@@ -1,7 +1,7 @@
 package SpringProject._Spring.service;
 
 import SpringProject._Spring.dto.post.PostRequestDTO;
-import SpringProject._Spring.model.Post;
+import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

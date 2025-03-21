@@ -1,6 +1,6 @@
 package SpringProject._Spring.dto.post;
 
-import SpringProject._Spring.model.PostType;
+import SpringProject._Spring.model.post.PostType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
