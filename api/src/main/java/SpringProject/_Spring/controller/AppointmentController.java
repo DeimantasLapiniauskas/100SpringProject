@@ -6,6 +6,7 @@ import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.dto.appointment.AppointmentResponseDTO;
 import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.service.*;
@@ -62,9 +63,10 @@ public class AppointmentController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new AppointmentResponseDTO(
+                        savedAppointment.getId(),
                         PetMapping.toPetResponseDTO(petService.getPetByid(savedAppointment.getPetId()).get()),
                         VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
-                        savedAppointment.getServices(),
+                        savedAppointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                         savedAppointment.getAppointmentDate(),
                         savedAppointment.getNotes(),
                         savedAppointment.getTotalServicesSum())
@@ -73,7 +75,7 @@ public class AppointmentController {
 
     @Operation(summary = "Update an appointment", description = "Updates an appointment by its unique ID")
     @PutMapping("/appointments/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<String> putAppointment(@PathVariable long id,
                                                  @RequestBody AppointmentUpdateDTO updateDTO) {
         if (updateDTO.newDate().isEmpty() && updateDTO.status().isEmpty()) {
@@ -87,7 +89,9 @@ public class AppointmentController {
         updateDTO.status().ifPresent(appointmentFromDB::setStatus);
         updateDTO.newDate().ifPresent(appointmentFromDB::setAppointmentDate);
         appointmentService.saveAppointment(appointmentFromDB);
-        return ResponseEntity.ok("Appointment updated successfully!");
+        return ResponseEntity.ok("Appointment updated its " +
+                (updateDTO.status().isPresent() ? updateDTO.newDate().isPresent() ? "status and date " : "status " : "date ")
+                + "successfully!");
     }
 
     @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
@@ -97,9 +101,10 @@ public class AppointmentController {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
                         .stream().map(appointment -> new AppointmentResponseDTO(
+                                appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
-                                appointment.getServices(),
+                                appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
                                 appointment.getTotalServicesSum()))
@@ -113,9 +118,10 @@ public class AppointmentController {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(id)
                         .stream().map(appointment -> new AppointmentResponseDTO(
+                                appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
-                                appointment.getServices(),
+                                appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
                                 appointment.getTotalServicesSum()))

@@ -79,10 +79,14 @@ public class PetDELETETest {
 
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
-        when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
+        when(clientService.findClientIdByEmail(any()))
+                .thenReturn(client.getId());
+
+        Pet pet = new Pet(ownerId, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male);
+        pet.setOwnerId(client.getId());
 
         when(petService.getPetByid(petId))
-                .thenReturn(Optional.of(new Pet(ownerId, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
+                .thenReturn(Optional.of(pet));
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isNoContent())
@@ -136,7 +140,7 @@ public class PetDELETETest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void deletePet_whenVet_thenRespond404() throws Exception {
+    void deletePet_whenVet_thenRespond403() throws Exception {
         long petId = 0;
 
         mockMvc.perform(delete("/api/pets/" + petId))

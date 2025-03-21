@@ -80,13 +80,15 @@ public class PetController {
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
+
         if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
                 petService.getPetByid(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
-                                role -> Objects.equals(
+                                role ->
+                                        Objects.equals(
                                         role.getName(), "ADMIN"
                                 )
                         )
