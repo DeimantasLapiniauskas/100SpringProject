@@ -1,35 +1,42 @@
-import HomePageDog from "../../assets/dog.png";
+import HomePageDog from "../../assets/dog.png"; 
+import TestCarousel from "../designtest/TestCarousel";
+//import HomePagePawArrow from "../../assets/dog.png"; 
 
 export const HomePage = () => {
     return (
-        <div className="min-h-screen bg-[#F5F4F4] flex justify-center items-center p-5">
-            <main className="flex flex-wrap justify-between items-start w-full max-w-screen-xl gap-8">
-                <figure className="flex-shrink-0 w-full sm:w-1/3">
-                    <img
-                        className="w-full max-w-[35vw] sm:max-w-[700px] h-auto object-cover"
-                        src={HomePageDog}
-                        alt="Dog; light brown and white fur; bent ears"
-                    />
-                </figure>
+      <div className="min-h-screen bg-[#DCDEFE] flex flex-col items-center p-5">
+        {/* Top Section - Dog Image & Text */}
+        <main className="relative flex flex-col sm:flex-row-reverse items-center w-full max-w-screen-xl gap-12">
+          {/* Text Section */}
+          <div className="text-content flex flex-col sm:basis-1/2 text-left space-y-4 px-5">
+            <article className="figma-headline-4 text-black">
+              Pavasario Avenue 100, Vilnius
+              <br />
+              +370 511 233 78
+              <br />
+              Twenty-four hours a day
+            </article>
 
-                <div className="text-content flex flex-col w-full sm:w-2/3 text-left pl-5 space-y-4">
-                    <article className="text-base text-black">
-                        Pavasario Avenue 100, Vilnius<br />
-                        +370 511 233 78<br />
-                        Twenty-four hours a day
-                    </article>
+            <h1 className="figma-headline text-black text-5xl sm:text-7xl">
+              Happy Hearts <br /> Veterinary Clinic
+            </h1>
 
-                    <h1 className="text-4xl text-black">
-                        Happy Hearts <br /> Veterinary clinic
-                    </h1>
+            <p className="figma-headline-4 text-black sm:text-xl">
+              As Lithuania’s leading animal health company, Happy Hearts is
+              driven by a singular purpose: to nurture Lithuania and humankind
+              by advancing care for animals.
+            </p>
+          </div>
 
-                    <p className="text-base text-black leading-relaxed">
-                        As Lithuania’s leading animal health company, Happy Hearts is<br />
-                        driven by a singular purpose: to nurture Lithuania and<br />
-                        humankind by advancing care for animals.
-                    </p>
-                </div>
-            </main>
-        </div>
+          {/* Image Section - Dog on Left */}
+          <figure className="relative sm:basis-1/2 flex justify-center">
+            <img
+              className="w-full max-w-[50vw] sm:max-w-[550px] h-auto object-cover drop-shadow-lg -mb-6"
+              src={HomePageDog}
+              alt="Dog; light brown and white fur; bent ears"
+            />
+          </figure>
+        </main>
+      </div>
     );
 };

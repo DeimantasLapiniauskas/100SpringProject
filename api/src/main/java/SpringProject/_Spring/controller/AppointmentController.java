@@ -7,9 +7,12 @@ import SpringProject._Spring.dto.appointment.AppointmentResponseDTO;
 import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
-import SpringProject._Spring.dto.vet.VetMapping;
-import SpringProject._Spring.model.Appointment;
+import SpringProject._Spring.dto.authentication.vet.VetMapping;
+import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.service.*;
+import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.VetService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +41,7 @@ public class AppointmentController {
         this.accountService = accountService;
     }
 
+    @Operation(summary = "Create new appointment", description = "Creates an appointment for a pet with selected vet")
     @PostMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO) {
@@ -69,6 +73,7 @@ public class AppointmentController {
         );
     }
 
+    @Operation(summary = "Update an appointment", description = "Updates an appointment by its unique ID")
     @PutMapping("/appointments/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<String> putAppointment(@PathVariable long id,
@@ -89,7 +94,7 @@ public class AppointmentController {
                 + "successfully!");
     }
 
-
+    @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
     @GetMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<List<AppointmentResponseDTO>> getOwnAppointments(Authentication authentication) {
@@ -106,6 +111,7 @@ public class AppointmentController {
                         .toList());
     }
 
+    @Operation(summary = "Get appointment by ID (Admin)", description = "Retrieves an appointment by it's unique ID")
     @GetMapping("/appointments/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<List<AppointmentResponseDTO>> getAdminAppointments(@PathVariable long id) {

@@ -1,6 +1,6 @@
 package SpringProject._Spring.service;
 
-import SpringProject._Spring.model.Appointment;
+import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
