@@ -30,7 +30,7 @@ public record VetRequestDTO(
 
         @NotNull(message = "Phone number can not be null!")
         @Length(min = 3, max = 17, message = "Vets phone number must be between 3 and 17 characters long!")
-        @Pattern(regexp = "^[0-9-]*$", message = "Vets phone number must only be numbers and dashes!")
+        @Pattern(regexp = "^[0-9\\-+]*$", message = "Vets phone number must only be numbers, pluses and dashes!")
         String phoneNumber,
 
         @NotNull(message = "Vets must have a specialty!")
