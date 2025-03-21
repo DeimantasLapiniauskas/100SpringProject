@@ -47,7 +47,7 @@ public class PetMapping {
         return pet;
     }
 
-    public static Page<PetResponseDTO> toPageListDTO(Page<Pet> petsPage) {
+    public static Page<PetResponseDTO> toPageListPageDTO(Page<Pet> petsPage) {
         List<PetResponseDTO> petListResponseDTO = petsPage.getContent().stream()
                 .map(PetMapping::toPetResponseDTO)
                 .toList();

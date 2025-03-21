@@ -55,19 +55,18 @@ export const Register = () => {
   }
 
   return (
-    <main className="flex h-screen justify-center gap-8 items-center ml-12 mr-12">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box w-2xl min-h-[500px]"
-      >
-        <div className="text-2xl text-center mb-4 px-4">
-          Join Happy Hearts Community! Register below
-        </div>
-
-        <div className="grid grid-cols-2 w-full gap-4">
-          <div>
-            <label className="text-lg fieldset-label">First Name</label>
-            <input
+    <main className="h-screen flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-[400px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
+        >
+          <div className="figma-headline-3 text-center mb-4 px-4">
+            Join Happy Hearts Community! Register below
+          </div>
+          <div className="grid grid-cols-2 w-full gap-4">
+            <div>
+              <label className="fieldset-label figma-headline-4 !font-bold">First Name</label>
+              <input
               {...register("firstName", {
                 required: {
                   value: true,
@@ -87,7 +86,7 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input p-3 text-lg w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter first name"
             />
             {visibleFirstNameError && errors.firstName != null && (
@@ -95,7 +94,8 @@ export const Register = () => {
             )}
           </div>
           <div>
-            <label className="text-lg fieldset-label">Last Name</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Last Name</label>
+
             <input
               {...register("lastName", {  
                 required: {
@@ -116,7 +116,7 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input p-3 text-lg w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter last name"
             />
             {visibleLastNameError && errors.lastName !=null && (
@@ -125,7 +125,8 @@ export const Register = () => {
           </div>
 
           <div>
-            <label className="text-lg fieldset-label">Phone Number</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Phone Number</label>
+
             <input
               {...register("phoneNumber", {
                 required: {
@@ -146,7 +147,7 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input p-3 text-lg w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter phone number"
             />
             {visiblePhoneNumberError && errors.phoneNumber != null && (
@@ -155,7 +156,7 @@ export const Register = () => {
           </div>
 
           <div>
-            <label className="text-lg fieldset-label">Email</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Email</label>
             <input
               {...register("email", {
                 required: {
@@ -176,7 +177,7 @@ export const Register = () => {
                 }
               })}
               type="text"
-              className="input p-3 text-lg w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter email"
             />
             {visibleEmailError && errors.email && (
@@ -185,7 +186,7 @@ export const Register = () => {
           </div>
 
           <div>
-            <label className="text-lg fieldset-label">Password</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Password</label>
             <input
               {...register("password", {
                 required: {
@@ -206,16 +207,16 @@ export const Register = () => {
                 }
               })}
               type="password"
-              className="input p-3 text-lg w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter password"
-            />
+              />
             {visiblePasswordError && errors.password != null && (
               <Error error={errors.password?.message} setVisible={setVisiblePasswordError}/>
             )}
           </div>
 
           <div>
-            <label className="text-lg fieldset-label">Repeat Password</label>
+            <label className="fieldset-label figma-headline-4 !font-bold">Repeat Password</label>
             <input
               {...register("repeatPassword", {
                 required: {
@@ -227,7 +228,7 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input p-3 text-lg w-full"
+              className="input figma-headline-4 p-3 w-full"
               placeholder="Enter password"
             />
             
@@ -237,18 +238,16 @@ export const Register = () => {
           </div>
         </div>
         {(typeof responseError === "string" )&& <Error error={responseError}/>}
-        <button type="submit" className="custom-black-btn mt-4" onClick={() => switchErrorVisibility()}>
+        <button type="submit" className="custom-black-btn mt-4 figma-headline-4" onClick={() => switchErrorVisibility()}>
           Register
         </button>
-
-        <div className="text-center mt-2">
-          Already have an account?
-          <NavLink to="/login" className="ml-1 underline">
-            Login
-          </NavLink>
-        </div>
-      </form>
-
+          <div className="figma-headline-4 text-center mt-2">
+            Already have an account?
+            <NavLink to="/login" className="figma-headline-4 underline ml-1">
+              Login
+            </NavLink>
+          </div>
+        </form>
       <figure className="h-[500px] rounded-box w-[400px] overflow-hidden">
         <img
           src={RegisterPageDog} // This should be the same image used in Login

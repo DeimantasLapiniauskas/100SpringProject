@@ -29,4 +29,8 @@ public class VetService {
     public Optional<Vet> getVetById(long vetId) {
         return vetRepository.findById(vetId);
     }
+
+    public Optional<Vet> findVetByAccountEmail(String email) {
+        return vetRepository.findByAccount_email(email);
+    }
 }

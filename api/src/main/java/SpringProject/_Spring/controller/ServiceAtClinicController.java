@@ -3,6 +3,7 @@ package SpringProject._Spring.controller;
 import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
 import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.service.ServiceAtClinicRequestDTO;
+import SpringProject._Spring.model.Post;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.service.ServiceAtClinicService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -125,7 +126,7 @@ public class ServiceAtClinicController {
 
     @Operation(summary = "Get all services and split them by pages", description = "Retrieves a list of all services and splits them by pages")
     @GetMapping("/services/pagination")
-    public ResponseEntity<Page<ServiceAtClinicResponseDTO>> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort) {
+    public ResponseEntity<?> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -135,7 +136,13 @@ public class ServiceAtClinicController {
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicListPageDTO(serviceAtClinicService.findAllServiceAtClinicPages(page, size, sort)));
+        Page<ServiceAtClinic> pagedServices = serviceAtClinicService.findAllServiceAtClinicPages(page, size, sort);
+
+        if (pagedServices.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body("Posts list is empty");
+        }
+
+        return ResponseEntity.ok(ServiceAtClinicMapper.toServiceAtClinicListPageDTO(pagedServices));
     }
 }
 

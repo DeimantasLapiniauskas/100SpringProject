@@ -1,5 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
+/*UNIQUE COLORS USED//////////////////////////////////////////////////////// */
+/*WILL BE UPDATED AS PROJECT MOVES FORWARD////////////////////////////////// */
+
+/* Light Violet - COLOR used as lighter background for cards or boxes.
+ Example: Log In Page and Register Page card*/
+.bg-light-violet {
+  background-color: #97a0f1;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#97a0f1] flex">Content</div> */
+
+/* Default Violet - COLOR used as default background for cards or boxes.
+ Example: Cards in Service List Page */
+.bg-default-violet {
+  background-color: #6A7AFF;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#6A7AFF] flex">Content</div> */
+
+/* Light Orange - COLOR used as lighter orange background for cards or boxes.
+ Example: Not implemented yet */
+ .bg-light-orange {
+  background-color: #FFBD89;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+
+/* Default Purple - COLOR used in Navigation bar, for "Login" button and "Logout" button.
+ Example: Cards in Log In Page and Register Page */
+ .bg-default-purple {
+  background-color: #ac64b4;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+
+/* Light Gray - COLOR used as EXTRA FOR FUTURE USE.
+ Example: Not implemented yet. Have to check other KOM-?? branches if it is in use */
+ .bg-light-gray {
+  background-color: #CBC5C5;
+}
+/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
 html, body {
@@ -14,8 +52,6 @@ html, body {
   padding: 1rem;
   width: 100%;
   border-radius: 1.5rem;
-  font-size: 1.125rem;
-  font-weight: bold;
   transition: background-color 0.3s ease;
 
   display: flex;
@@ -27,16 +63,33 @@ html, body {
   background-color: #333;
 }
 
-/* Light pink button to be used in Navigation bar in the future */
-.custom-pink-btn {
-  background-color: #F5D1DD;
+/* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
+.custom-purple-btn {
+  background-color: #ac64b4;
   color: #000000;
   padding: 1rem;
   width: 8.25rem; /* Adjusted width */
   height: 2.9375rem; /* Adjusted height */
   border-radius: 1.5rem;
-  font-size: 1.125rem;
-  font-weight: bold;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-purple-btn:hover {
+  background-color: #C7A4D6;
+}
+
+/* White button to be used inside boxes in the future */
+.custom-white-btn {
+  background-color: #FFFFFF;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem; /* Adjusted width */
+  height: 2.9375rem; /* Adjusted height */
+  border-radius: 1.5rem;
   transition: background-color 0.3s ease;
   
   display: flex;
@@ -44,7 +97,7 @@ html, body {
   justify-content: center;
 }
 
-.custom-pink-btn:hover {
+.custom-white-btn:hover {
   background-color: #C7A4D6;
 }
 
