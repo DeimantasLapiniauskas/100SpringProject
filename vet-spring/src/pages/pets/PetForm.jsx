@@ -74,10 +74,10 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
   return (
     <form
       onSubmit={handleSubmit(formSubmitHandler)}
-      className="text-center p-3">
+      className="text-center">
       {submitError && <p className="bg-red-700 text-white">{submitError}</p>}
-      <div className="p-3">
-        <div className="pb-5 text-center">
+      <div>
+        <div className="text-center border-b-1 border-gray-500">
           <label htmlFor="petName" className="font-bold text-lg text-white">
             Name:
           </label>
@@ -98,7 +98,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center border-b-1 border-gray-500">
           <label htmlFor="petSpecies" className="font-bold text-lg text-white">
             Species:
           </label>
@@ -117,7 +117,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center border-b-1 border-gray-500">
           <label htmlFor="petBreed" className="font-bold text-lg text-white">
             Breed:
           </label>
@@ -135,7 +135,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center border-b-1 border-gray-500">
           <label htmlFor="petBirthdate" className="font-bold text-lg text-white">
             Birthdate:
           </label>
@@ -152,7 +152,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center mb-2 border-b-1 border-gray-500">
           <label htmlFor="petGender" className="font-bold text-lg text-white">
             Gender:
           </label>
@@ -161,7 +161,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             className="form-text-select"
             {...register("gender", { required: "Gender is required" })}
           >
-            <option value="">Select gender</option>
+            <option hidden selected>Select gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -171,7 +171,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
         </div>
       </div>
 
-      <button type="submit" disabled={isLoading} className="text-white">
+      <button type="submit" disabled={isLoading} className="text-white bg-green-500 hover:bg-gree-700 border-1 rounded-[5px] p-1 cursor-pointer mb-2">
         {isLoading ? "Submitting..." : "Submit"}
       </button>
     </form>
