@@ -13,7 +13,7 @@ export const Error = (props) => {
   }
   
   return (
-    <div role="alert" className="alert alert-error mt-4 flex justify-between">
+    <div role="alert" className="alert alert-error mt-4 flex justify-between bg-[#ffaca6]  border-[#932e4e]">
       {typeof error === "string" ? (
         <div>{error}</div>
       ) : (

@@ -55,15 +55,15 @@ export const Register = () => {
   }
 
   return (
-    <main className="h-screen flex justify-center items-center">
+    <main className="h-screen flex justify-center items-center gap-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-[400px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
+          className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
         >
-          <div className="figma-headline-3 text-center mb-4 px-4">
+          <div className="figma-headline-3 text-center mb-4 px-24">
             Join Happy Hearts Community! Register below
           </div>
-          <div className="grid grid-cols-2 w-full gap-4">
+          <div className="grid grid-cols-2 w-full gap-y-4 gap-x-6">
             <div>
               <label className="fieldset-label figma-headline-4 !font-bold">First Name</label>
               <input
@@ -238,7 +238,7 @@ export const Register = () => {
           </div>
         </div>
         {(typeof responseError === "string" )&& <Error error={responseError}/>}
-        <button type="submit" className="custom-black-btn mt-4 figma-headline-4" onClick={() => switchErrorVisibility()}>
+        <button type="submit" className="!w-9/20 custom-black-btn mt-4 figma-headline-4 mx-auto" onClick={() => switchErrorVisibility()}>
           Register
         </button>
           <div className="figma-headline-4 text-center mt-2">
