@@ -77,6 +77,6 @@ public class AccountControllerPut {
 
         vetService.updateVet(vetFromDB);
 
-        return ResponseEntity.status(HttpStatus.OK).body("You have successfully updated veterinarian information");
+        return ResponseEntity.ok(VetMapping.toVetUpdateResponseDTO(vetFromDB));
     }
 }

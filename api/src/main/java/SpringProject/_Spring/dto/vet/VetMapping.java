@@ -36,4 +36,8 @@ public class VetMapping {
         vet.setSpecialty(vetUpdateDTO.specialty());
         vet.setLicenseNumber(vetUpdateDTO.licenseNumber());
     }
+
+    public static VetUpdateResponseDTO toVetUpdateResponseDTO(Vet vet) {
+        return new VetUpdateResponseDTO(vet.getFirstName(), vet.getLastName(), vet.getPhoneNumber(), vet.getSpecialty(), vet.getLicenseNumber());
+    }
 }
