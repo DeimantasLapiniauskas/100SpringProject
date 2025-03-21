@@ -1,7 +1,6 @@
 package SpringProject._Spring.validation.customAnnotations.lastName;
 
 
-import SpringProject._Spring.validation.customAnnotations.firstName.FNameLengthValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -16,8 +15,8 @@ import java.lang.annotation.Target;
 public @interface LNameLength {
 
     String message() default "Your last name must be between " +
-            FNameLengthValidator.minLength + " and " +
-            FNameLengthValidator.maxLength + " characters long!";
+            LNameLengthValidator.minLength + " and " +
+            LNameLengthValidator.maxLength + " characters long!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 
