@@ -107,4 +107,19 @@ public class AccountControllerJunitUpdateVetTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
     }
+
+    //unhappy path
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void updateVet_whenNotValidRequest_thenReturnAnd400() throws Exception {
+        //given
+        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("12", "UpdatedLastName", "12345-acgg6", "Professional", "123456");
+
+        //when
+        mockMvc.perform(put("/api/vet/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
+                //then
+                .andExpect(status().isBadRequest());
+    }
 }
