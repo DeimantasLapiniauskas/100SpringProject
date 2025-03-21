@@ -2,11 +2,11 @@ package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.post.PostMapper;
 import SpringProject._Spring.dto.post.PostRequestDTO;
-import SpringProject._Spring.model.Post;
-import SpringProject._Spring.model.PostType;
-import SpringProject._Spring.model.Vet;
+import SpringProject._Spring.model.post.Post;
+import SpringProject._Spring.model.post.PostType;
+import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.service.PostService;
-import SpringProject._Spring.service.VetService;
+import SpringProject._Spring.service.authentication.VetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

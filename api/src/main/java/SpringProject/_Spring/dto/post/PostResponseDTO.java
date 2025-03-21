@@ -1,9 +1,8 @@
 package SpringProject._Spring.dto.post;
 
-import SpringProject._Spring.model.PostType;
-import SpringProject._Spring.model.Vet;
+import SpringProject._Spring.model.post.PostType;
+import SpringProject._Spring.model.authentication.Vet;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 
 public record PostResponseDTO(long id,
