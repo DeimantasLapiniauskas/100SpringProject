@@ -30,34 +30,34 @@ export const Login = () => {
     return (
         <main className="h-screen flex justify-center items-center">
             <div className="flex items-center gap-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-[#FFBD89] border border-[#FFBD89] p-8 rounded-box min-h-[500px] ml-12">
-                    <div className="text-2xl text-center mb-4 px-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12">
+                    <div className="figma-headline-3 text-center mb-4 px-4">
                         Hi there! Welcome to Happy Hearts Community Dashboard
                     </div>
 
                     <div className="flex flex-col gap-4 w-full">
-                        <label className="fieldset-label text-lg">Email</label>
+                        <label className="fieldset-label figma-headline-4 !font-bold">Email</label>
                         <input
                             {...register("email")}
                             type="text"
-                            className="input text-lg p-3 w-full"
+                            className="input figma-headline-4 p-3 w-full"
                             placeholder="Enter email"
                         />
 
-                        <label className="fieldset-label text-lg">Password</label>
+                        <label className="fieldset-label figma-headline-4 !font-bold">Password</label>
                         <input
                             {...register("password")}
                             type="password"
-                            className="input text-lg p-3 w-full"
+                            className="input figma-headline-4 p-3 w-full"
                             placeholder="Enter password"
                         />
 
-                        <button type="submit" className="custom-black-btn mt-4">
-                            Login
+                        <button type="submit" className="custom-black-btn mt-4 figma-headline-4">
+                            Log in
                         </button>
                     </div>
 
-                    <NavLink to="/register" className="underline text-center mt-2 block">Register</NavLink>
+                    <NavLink to="/register" className="figma-headline-4 underline text-center mt-2 block">Register</NavLink>
                 </form>
                 <Error error={error} isHidden={!error} />
 
