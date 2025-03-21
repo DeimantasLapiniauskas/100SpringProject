@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { useContext } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import ThemeContext from "../utils/helpers/themeContext";
-import { addVet } from "../utils/helpers/addEditVet";
+import { updateVet } from "../utils/helpers/addEditVet";
 
-const VetAddForm = ({ getPage, currentPage, pageSize }) => {
-    const { setAddModalID } = useContext(ThemeContext);
+const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
+    const { setEditModalID } = useContext(ThemeContext);
 
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         defaultValues: {
-            email: "",
-            password: "",
             firstName: "",
             lastName: "",
             phoneNumber: "",
@@ -27,14 +27,23 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [submitError, setSubmitError] = useState(null);
 
+    useEffect(() => {
+        if (vet && Object.keys(vet).length > 0) {
+            const { firstName, lastName, phoneNumber, speciality, licenseNumber } = vet;
+            setValue("firstName", firstName);
+            setValue("lastName", lastName);
+            setValue("phoneNumber", phoneNumber);
+            setValue("speciality", speciality);
+            setValue("licenseNumber", licenseNumber);
+        }
+    }, [vet, setValue]);
+
     const formSubmitHandler = async (data) => {
         setIsLoading(true);
         setSubmitError(null);
 
         const trimmedData = {
             ...data,
-            email: data.email.trim(),
-            password: data.password.trim(),
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             phoneNumber: data.phoneNumber.trim(),
@@ -45,9 +54,9 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
         const payload = { ...trimmedData };
 
         try {
-            await addVet(payload);
+            await updateVet(vet.id, payload);
             await getPage(pageSize, currentPage);
-            setAddModalID("");
+            setEditModalID("");
             reset();
         } catch (error) {
             console.error("Error details: ", error.response?.data || error.message);
@@ -63,66 +72,6 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
             className="text-center p-3">
             {submitError && <p className="bg-red-700 text-white">{submitError}</p>}
             <div className="p-3">
-                <div className="pb-5 text-center">
-                    <label htmlFor="email" className="font-bold text-lg text-white">
-                        Email:
-                    </label>
-                    <input
-                        type="text"
-                        id="email"
-                        className="form-text-select"
-                        {...register("email", {
-                            required: "Email is required",
-                            maxLength: {
-                                value: 50,
-                                message: "Email cannot exceed 50 characters",
-                            },
-                            minLength: {
-                                value: 11,
-                                message: "Email cannot be shorter than 11 characters",
-                            },
-                            pattern: {
-                                value: /^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
-                                message: "Invalid email format, vets should have at least 4 symbols before @, at least 3 after @ and before domain, domain at least 2 symbols",
-                            },
-                        })}
-                        placeholder="Email"
-                    />
-                    <div className="text-red-500">
-                        {errors.email && <p>{errors.email.message}</p>}
-                    </div>
-                </div>
-
-                <div className="pb-5 text-center">
-                    <label htmlFor="password" className="font-bold text-lg text-white">
-                        Password:
-                    </label>
-                    <input
-                        type="text"
-                        id="password"
-                        className="form-text-select"
-                        {...register("password", {
-                            required: "Password is required",
-                            maxLength: {
-                                value: 50,
-                                message: "Password cannot exceed 50 characters",
-                            },
-                            minLength: {
-                                value: 8,
-                                message: "Password cannot be shorter than 8 characters",
-                            },
-                            pattern: {
-                                value: /^(?=(.*[a-zA-Z]))(?=(.*\d))[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_`{|}~ ]*$/,
-                                message: "Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!",
-                            },
-                        })}
-                        placeholder="Password"
-                    />
-                    <div className="text-red-500">
-                        {errors.password && <p>{errors.password.message}</p>}
-                    </div>
-                </div>
-
                 <div className="pb-5 text-center">
                     <label htmlFor="firstName" className="font-bold text-lg text-white">
                         First name:
@@ -265,4 +214,4 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
     );
 };
 
-export default VetAddForm;
+export default VetEditForm;
