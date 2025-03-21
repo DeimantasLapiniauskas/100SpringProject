@@ -6,6 +6,8 @@ import SpringProject._Spring.model.Account;
 import SpringProject._Spring.model.Role;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.service.ClientService;
+import SpringProject._Spring.service.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -40,9 +42,13 @@ public class AccountAdminJunitPUTTest {
     @MockitoBean
     private AccountService accountService;
     @MockitoBean
+    private VetService vetService;
+    @MockitoBean
+    private ClientService clientService;
+    @MockitoBean
     private PasswordEncoder passwordEncoder;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     //happy path
     @Test
