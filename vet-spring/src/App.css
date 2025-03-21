@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
+
 /*UNIQUE COLORS USED//////////////////////////////////////////////////////// */
 /*WILL BE UPDATED AS PROJECT MOVES FORWARD////////////////////////////////// */
 
@@ -40,7 +41,7 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-html, body {
+html {
   font-family: 'Kiwi Maru', sans-serif;
   background-color: #DCDEFE;
 }
@@ -101,6 +102,31 @@ html, body {
   background-color: #C7A4D6;
 }
 
+.pawss-for-background-medium {
+  position: fixed;
+  width: clamp(20px, 5%, 50px);
+  height: clamp(30px, 5%, 50px);
+  background-image: url("/src/assets/pawss_for_background.png") !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  transform: rotate(53.04deg);
+}
+
+/* .pawss-for-background-small { */
+  /* FIGMA paw smaller image to be used inside background of ards/boxes */
+  /* paws 4 in FIGMA description in FIGMA Services Page */
+
+  /* position: absolute;
+  width: 30px;
+  height: 27.6px;
+  left: 140.05px;
+  top: 236px;
+  background-image: url("/src/assets/pawss_for_background.png");
+  transform: rotate(53.04deg); */
+/* } */
+
 /*FOR NAVIGATION BAR TO USE IN FUTURE JUST IN CASE //////////////////////////////////////////////////////// */
 
 .paws-1 {
@@ -112,7 +138,7 @@ html, body {
   height: 52px;
   left: 63px;
   top: 16px;
-  background: url("/src/assets/paws.png");
+  background-image: url("/src/assets/paws.png");
 }
 
 .middle-color-light-orange-login-button {

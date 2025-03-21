@@ -14,6 +14,7 @@ import { PaginationProvider } from "../context/PaginationContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
+import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -49,6 +50,7 @@ const VetClinicRoutes = () => {
             <Route path="services/edit/:id" element={<ServiceUpdate />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/design" element={<BandytiDesign />} />
+            <Route path="/designh" element={<BandytiDesignHomePage />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

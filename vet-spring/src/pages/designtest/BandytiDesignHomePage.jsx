@@ -1,10 +1,31 @@
 import HomePageDog from "../../assets/dog.png"; 
 import TestCarousel from "../designtest/TestCarousel";
-//import HomePagePawArrow from "../../assets/dog.png"; 
+//import HomePagePawArrow from "../../assets/dog.png";
+//import "../../App.css"; // Adjust if needed 
 
-export const HomePage = () => {
+export const BandytiDesignHomePage = () => {
     return (
-      <div className="min-h-screen bg-[#DCDEFE] flex flex-col items-center p-5">
+      <div className="min-h-screen flex flex-col items-center p-5">
+        {/* Paw Prints in the Background */}
+        <div className="relative w-full h-full top-0 left-0">
+          <div
+            className="pawss-for-background-medium"
+            style={{ left: "5%", top: "10%" }}>
+          </div>
+          <div
+            className="pawss-for-background-medium"
+            style={{ left: "45%", top: "13%" }}
+          ></div>
+          <div
+            className="pawss-for-background-medium"
+            style={{ left: "43%", top: "36%" }}
+          ></div>
+          <div
+            className="pawss-for-background-medium"
+            style={{ left: "3%", top: "44%" }}
+          ></div>
+        </div>
+
         {/* Top Section - Dog Image & Text */}
         <main className="relative flex flex-col sm:flex-row-reverse items-center w-full max-w-screen-xl gap-12">
           {/* Text Section */}
@@ -41,7 +62,8 @@ export const HomePage = () => {
         <div className="w-full bg-[#6A7AFF] py-12 mt-12 rounded-t-[50px] shadow-lg">
           <TestCarousel />
         </div>
-        
       </div>
     );
 };
+
+export default BandytiDesignHomePage;
