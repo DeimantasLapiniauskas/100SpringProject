@@ -192,7 +192,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             className="form-text-select"
             {...register("gender", { required: "Gender is required" })}
           >
-            <option hidden selected>
+            <option value="" hidden selected>
               Select gender
             </option>
             <option value="Male">Male</option>
