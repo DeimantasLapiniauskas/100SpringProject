@@ -59,7 +59,6 @@ const VetClinicRoutes = () => {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-    
   );
 };
 
