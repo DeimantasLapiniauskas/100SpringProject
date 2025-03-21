@@ -1,7 +1,7 @@
 package SpringProject._Spring.dto.pet;
 
 
-import SpringProject._Spring.model.Gender;
+import SpringProject._Spring.model.pet.Gender;
 
 import java.time.LocalDate;
 
