@@ -74,11 +74,11 @@ export const Register = () => {
                 },
                 minLength: {
                   value: 3,
-                  message: "Name must be longer than 3"
+                  message: "Minimum 3 characters"
                 },
                 maxLength: {
                   value: 100,
-                  message: "Name can't be longer than 100"
+                  message: "Maximum 100 characters"
                 },
                 pattern: {
                   value: /^[A-Za-z ]*$/,
@@ -104,11 +104,11 @@ export const Register = () => {
                 },
                 minLength: {
                   value: 3,
-                  message: "Last name must be longer than 3"
+                  message: "Minimum 3 characters"
                 },
                 maxLength: {
                   value: 100,
-                  message: "Last name can't be longer than 100"
+                  message: "Maximum 100 characters"
                 },
                 pattern: {
                   value: /^[A-Za-z ]*$/,
@@ -135,15 +135,15 @@ export const Register = () => {
                 },
                 minLength:{
                   value: 3,
-                  message: "Number must be longer than 3"
+                  message: "Minimum 3 characters"
                 },
                 maxLength:{
                   value: 17,
-                  message: "phone can't be longer 17"
+                  message: "Maximum 17 characters"
                 },
                 pattern: {
                   value: /^[0-9\-+]+$/,
-                  message: "Phone number has bad symbols"
+                  message: "Phone number has invalid symbols"
                 }
               })}
               type="text"
@@ -165,15 +165,15 @@ export const Register = () => {
                 },
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
-                  message: "Bad email, must be at least than 4 symbols before @, at least 3 after @, domain must be at least 2 symbols"
+                  message: "Email must have at least 4 symbols before @, at least 3 after @ and the domain must be at least 2 symbols"
                 },
                 minLength: {
                   value: 3,
-                  message: "Email must be longer than 11"
+                  message: "Minimum 8 characters"
                 },
                 maxLength: {
                   value: 50,
-                  message: "Email can't be longer than 50"
+                  message: "Maximum 50 characters"
                 }
               })}
               type="text"
@@ -199,11 +199,11 @@ export const Register = () => {
                 },
                 maxLength: {
                   value: 50,
-                  message: "Too long"
+                  message: "Maximum 50 characters"
                 },
                 pattern: {
                   value: /^(?=(.*[a-zA-Z]))(?=(.*\d))[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_`{|}~ ]*$/,
-                  message: "Must contain at least one number and one letter"
+                  message: "Minumum of one number and letter & can contain common symbols"
                 }
               })}
               type="password"
