@@ -55,7 +55,7 @@ public class PostService {
             return  postRepository.findAll(pageable);
         }
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort).descending());
         return  postRepository.findAll(pageable);
     }
 

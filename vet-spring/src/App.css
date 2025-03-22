@@ -40,11 +40,6 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-html, body {
-  font-family: 'Kiwi Maru', sans-serif;
-  background-color: #DCDEFE;
-}
-
 /* Black button located in Login Page and Register Page */
 .custom-black-btn {
   background-color: #000000;

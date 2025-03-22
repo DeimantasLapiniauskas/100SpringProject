@@ -1,55 +1,85 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap");
 
 * {
   box-sizing: border-box;
 }
 
+html, body {
+  font-family: 'Kiwi Maru', sans-serif;
+  background-color: #DCDEFE;
+}
+
 @layer components {
-    .form-text-select {
-      @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
-    }
-  
-    .form-text-select:focus {
-      @apply border-b border-white bg-transparent text-white;
-    }
-  
-    .form-text-select option {
-      @apply text-black;
-    }
+  .form-text-select {
+    @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
   }
 
-  .figma-headline {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 4rem; /* 64px in FIGMA */ 
-    font-weight: 400;
-    letter-spacing: 0%;
-    font-style: normal; 
-    line-height: 5.8125rem; /* 93px in FIGMA */
+  .form-text-select:focus {
+    @apply border-b border-white bg-transparent text-white;
   }
-  
-  .figma-headline-2 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 2.5rem; /* 40px in FIGMA */ 
-    font-weight: 400;
-    font-style: normal; 
-    line-height: 3.625rem; /* 58px in FIGMA */  
+
+  .form-text-select option {
+    @apply text-black;
   }
-  
-  .figma-headline-3 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1.5rem; /* 24px in FIGMA */ 
-    font-weight: 400;
-    font-style: normal; 
-    line-height: 2.1875rem; /* 35px in FIGMA */   
-  }
-  
-  .figma-headline-4 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1rem; /* 16px in FIGMA */ 
-    font-weight: 400;
-    font-style: normal; 
-    line-height: 1.4375rem; /* 23px in FIGMA */   
-  }
+}
+
+/* .swiper-pagination-bullet {
+  @apply w-4 h-4 bg-white opacity-50 mx-1 rounded-full;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-blue-800 opacity-100 scale-110 transition-transform;
+} */
+
+
+.swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  opacity: 0.5;
+  margin: 0 6px;
+  transition: transform 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #1e40af; 
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+
+.figma-headline {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 4rem; /* 64px in FIGMA */
+  font-weight: 400;
+  letter-spacing: 0%;
+  font-style: normal;
+  line-height: 5.8125rem; /* 93px in FIGMA */
+}
+
+.figma-headline-2 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 2.5rem; /* 40px in FIGMA */
+  font-weight: 400;
+  font-style: normal;
+  line-height: 3.625rem; /* 58px in FIGMA */
+}
+
+.figma-headline-3 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 1.5rem; /* 24px in FIGMA */
+  font-weight: 400;
+  font-style: normal;
+  line-height: 2.1875rem; /* 35px in FIGMA */
+}
+
+.figma-headline-4 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 1rem; /* 16px in FIGMA */
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4375rem; /* 23px in FIGMA */
+}
