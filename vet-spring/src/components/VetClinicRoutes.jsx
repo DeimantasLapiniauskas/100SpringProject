@@ -14,6 +14,8 @@ import { PaginationProvider } from "../context/PaginationContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
+import { PostList } from "../pages/posts/PostList.jsx";
+import { ViewPost } from "../pages/posts/ViewPost.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -30,13 +32,21 @@ const VetClinicRoutes = () => {
               element={
                 <AuthGuard>
                   <PaginationProvider>
-                  <PetList />
+                    <PetList />
                   </PaginationProvider>
                 </AuthGuard>
               }
             />
-             <Route path="pets/add" element={<PetForm />} />
+            <Route path="pets/add" element={<PetForm />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+            <Route
+              path="/posts"
+              element={
+                <PaginationProvider>
+                  <PostList />
+                </PaginationProvider>
+              }
+            /><Route path="/posts/:postId" element={<ViewPost/>}/>
             <Route
               path="/services"
               element={

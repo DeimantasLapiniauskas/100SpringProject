@@ -3,14 +3,13 @@ import {useAuth} from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
 import {Error} from "../../components/Error.jsx";
 import {useState} from "react";
-import { usePagination } from "../../context/PaginationContext.jsx";
 
 export const ServiceCard = (props) => {
-    const{service} = props
+    const{service, getPage, currentPage, pageSize} = props
     const{id, name, description, price} = service
     const [error, setError] = useState("")
     const{ account } = useAuth()
-    const {getPage, currentPage, pageSize} = usePagination();
+   
     
     const deleteService = async () => {
         

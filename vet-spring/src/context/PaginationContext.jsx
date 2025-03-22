@@ -44,7 +44,7 @@ export const PaginationProvider = ({ children }) => {
         setContent(content);
         setTotalPages(totalPages);
       } catch (error) {
-        setError(error.response?.data ?? error.message);
+        setError(error.response?.data?.message ?? error.message);
       }
     },
     [currentPath]

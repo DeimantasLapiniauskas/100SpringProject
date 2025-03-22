@@ -52,7 +52,7 @@ export const ServiceList = () => {
             <ServiceCard
               key={service.id}
               service={service}
-              getServicePage={getPage}
+              getPage={getPage}
               currentPage={currentPage}
               pageSize={pageSize}
             />
