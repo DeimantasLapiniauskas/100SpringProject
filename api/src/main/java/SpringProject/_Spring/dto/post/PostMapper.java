@@ -14,14 +14,22 @@ public class PostMapper {
     }
 
     public static PostResponseDTO toPostResponseDTO(Post post) {
-        return new PostResponseDTO(post.getId(), post.getTitle(), post.getContent(), post.getPostType(), VetMapping.toVetResponseDTO(post.getVet()) ,post.getCreatedAt(), post.getImageUrl());
+        return new PostResponseDTO(post.getId(), post.getTitle(), post.getContent(), post.getPostType(), VetMapping.toVetResponseDTO(post.getVet()), post.getCreatedAt(), post.getImageUrl());
     }
 
-    public static Page<PostResponseDTO> postListResponsePageDTO(Page<Post> postsPage) {
-        List<PostResponseDTO> postResponseListDTO = postsPage.getContent().stream()
+    public static PostListPageResponseDTO postListResponsePageDTO(Page<Post> postsPage, String sortBy) {
+        List<PostResponseDTO> postResponseList = postsPage.getContent()
+                .stream()
                 .map(PostMapper::toPostResponseDTO)
                 .toList();
 
-        return new PageImpl<>(postResponseListDTO, postsPage.getPageable(), postsPage.getTotalElements());
+        return new PostListPageResponseDTO(
+                postResponseList,
+                postsPage.getTotalPages(),
+                (int) postsPage.getTotalElements(),
+                postsPage.getNumber(),
+                postsPage.getSize(),
+                sortBy
+        );
     }
 }

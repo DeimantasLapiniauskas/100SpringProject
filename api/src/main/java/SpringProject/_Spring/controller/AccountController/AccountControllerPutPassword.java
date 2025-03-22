@@ -1,5 +1,6 @@
 package SpringProject._Spring.controller.AccountController;
 
+import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.password.PasswordUpdateDTO;
 import SpringProject._Spring.dto.password.PasswordUpdateMapper;
 import SpringProject._Spring.model.Account;
@@ -17,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api")
-public class AccountControllerPutPassword {
+public class AccountControllerPutPassword extends BaseController  {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;

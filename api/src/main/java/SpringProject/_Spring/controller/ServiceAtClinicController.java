@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class ServiceAtClinicController {
+public class ServiceAtClinicController extends BaseController {
     private final ServiceAtClinicService serviceAtClinicService;
 
     @Autowired

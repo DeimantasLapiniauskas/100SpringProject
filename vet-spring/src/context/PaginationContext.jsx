@@ -7,6 +7,7 @@ import {
 } from "react";
 import { useLocation } from "react-router";
 import api from "../utils/api";
+import toast from "react-hot-toast";
 
 const PaginationContext = createContext({
   getPage: () => {},
@@ -40,12 +41,24 @@ export const PaginationProvider = ({ children }) => {
             sort ? `&sort=${sort}` : ""
           }`
         );
-        const { content, totalPages } = response.data;
-        setContent(content);
-        setTotalPages(totalPages);
+        const { data, message, success } = response.data;
+        if (success && data) {
+          setContent(data.content || []);
+          setTotalPages(data.totalPages ?? 0);
+          setError(null);
+          toast.success(message)
+        } else {
+          setError(message || "Something went wrong fetching data.");
+          setContent([]);
+          setTotalPages(0);
+        }
       } catch (error) {
-        setError(error.response?.data?.message ?? error.message);
-      }
+        const errorMessage =
+        error.response?.data?.message ?? error.message ?? "Unknown error";
+      setError(errorMessage);
+      setContent([]);
+      setTotalPages(0);
+    }
     },
     [currentPath]
   );

@@ -1,5 +1,6 @@
 package SpringProject._Spring.controller.AccountController;
 
+import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.client.ClientMapping;
 import SpringProject._Spring.dto.client.ClientRequestDTO;
 import SpringProject._Spring.dto.vet.VetMapping;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AccountControllerPost {
+public class AccountControllerPost extends BaseController {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
