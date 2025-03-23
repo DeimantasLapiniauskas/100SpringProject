@@ -12,10 +12,14 @@ export const PostList = () => {
     onPageSizeChange,
     onPaginate,
     error,
+    message,
     content: posts,
     currentPage,
     totalPages,
     pageSize,
+    isLoading,
+    isError,
+    isEmpty
   } = usePagination();
 
   const checkRoles = () => {
@@ -29,6 +33,8 @@ export const PostList = () => {
         account?.scope.includes("ROLE_ADMIN"))
     );
   };
+//   if (isLoading) return <Loading />;
+  if (isError) return <Error error={error} isHidden={!error} />
 
   return (
     <div className="flex flex-col items-center gap-5 px-10 ">
@@ -49,6 +55,7 @@ export const PostList = () => {
           Add
         </NavLink>
       )}
+       {isEmpty? <p>{message}</p> : ""}
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <PostCard
@@ -86,7 +93,6 @@ export const PostList = () => {
           <option value="12">12</option>
         </select>
       </div>
-      <Error error={error} isHidden={!error} />
     </div>
   );
 };
