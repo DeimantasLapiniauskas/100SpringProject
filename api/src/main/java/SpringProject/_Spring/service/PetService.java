@@ -35,7 +35,7 @@ public class PetService {
         return petRepository.existsById(petId);
     }
 
-    public Optional<Pet> getPetByid(long id) {
+    public Optional<Pet> getPetById(long id) {
         return petRepository.findById(id);
     }
 
@@ -56,7 +56,7 @@ public class PetService {
 
     public boolean isNotValidSortField(String sort) {
         List<String> validSortFields = List.of(
-                "ownerId", "name", "species", "breed", "birthday", "gender" );
+                "ownerId", "name", "species", "breed", "birthday", "gender");
         return !validSortFields.contains(sort);
     }
 }

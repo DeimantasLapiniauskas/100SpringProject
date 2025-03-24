@@ -179,7 +179,6 @@ public class AppointmentGETTest {
     }
 
 
-
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getAppointments_whenGetClient_thenRespond200() throws Exception {
@@ -189,9 +188,9 @@ public class AppointmentGETTest {
         when(appointmentService.getAllAppointmentsByClientId(clientId))
                 .thenReturn(List.of(appointmentOne, appointmentTwo));
 
-        when(petService.getPetByid(petIdOne))
+        when(petService.getPetById(petIdOne))
                 .thenReturn(Optional.of(petOne));
-        when(petService.getPetByid(petIdTwo))
+        when(petService.getPetById(petIdTwo))
                 .thenReturn(Optional.of(petTwo));
 
         when(vetService.getVetById(vetIdOne))
@@ -252,9 +251,9 @@ public class AppointmentGETTest {
         when(appointmentService.getAllAppointmentsByClientId(clientId))
                 .thenReturn(List.of(appointmentOne, appointmentTwo));
 
-        when(petService.getPetByid(petIdOne))
+        when(petService.getPetById(petIdOne))
                 .thenReturn(Optional.of(petOne));
-        when(petService.getPetByid(petIdTwo))
+        when(petService.getPetById(petIdTwo))
                 .thenReturn(Optional.of(petTwo));
 
         when(vetService.getVetById(vetIdOne))

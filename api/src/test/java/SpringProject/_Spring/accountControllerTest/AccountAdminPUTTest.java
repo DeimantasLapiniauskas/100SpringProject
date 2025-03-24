@@ -1,11 +1,13 @@
 package SpringProject._Spring.accountControllerTest;
 
-import SpringProject._Spring.controller.accountController.AccountControllerPutPassword;
+import SpringProject._Spring.controller.accountController.AccountControllerPut;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Role;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
+import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -29,20 +31,24 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = AccountControllerPutPassword.class)
+@WebMvcTest(controllers = AccountControllerPut.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-public class AccountAdminJunitPUTTest {
+public class AccountAdminPUTTest {
 
     @Autowired
     private MockMvc mockMvc;
     @MockitoBean
     private AccountService accountService;
     @MockitoBean
+    private VetService vetService;
+    @MockitoBean
+    private ClientService clientService;
+    @MockitoBean
     private PasswordEncoder passwordEncoder;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     //happy path
     @Test
@@ -156,4 +162,26 @@ public class AccountAdminJunitPUTTest {
                 .andExpect(jsonPath("$.newPassword").value("Password can not be null!"));
     }
 
+    //unhappy path
+    @Test
+    void updateAccountPasswordAdmin_whenUpdatesAnotherAdminPassword_thenReturnAnd400() throws Exception {
+        //given
+        Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_ADMIN")));
+        account.setId(1L);
+
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
+
+        when(accountService.findAccountById(1L)).thenReturn(Optional.of(account));
+
+        //when
+        mockMvc.perform(put("/api/account/password/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").value("You can't change password of another admin!"));
+
+        Mockito.verify(accountService, times(1)).findAccountById(1L);
+        Mockito.verify(passwordEncoder, times(0)).encode("newPassword");
+    }
 }

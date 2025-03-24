@@ -149,7 +149,7 @@ public class AppointmentPOSTTest {
                         )
                 );
 
-        when(petService.getPetByid(petId))
+        when(petService.getPetById(petId))
                 .thenReturn(Optional.of(pet));
 
         when(vetService.getVetById(vetId))
@@ -239,7 +239,7 @@ public class AppointmentPOSTTest {
                         )
                 );
 
-        when(petService.getPetByid(petId))
+        when(petService.getPetById(petId))
                 .thenReturn(Optional.of(pet));
 
         when(vetService.getVetById(vetId))
