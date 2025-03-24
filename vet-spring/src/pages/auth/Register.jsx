@@ -58,10 +58,10 @@ export const Register = () => {
   };
 
   return (
-    <main className="h-screen flex justify-center items-center gap-8">
+    <main className="h-screen flex md:flex-col-reverse lg:flex-row justify-center items-center gap-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
+        className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-3 rounded-box min-h-[500px] mx-6"
       >
         <div className="figma-headline-3 text-center mb-4 px-24">
           Join Happy Hearts Community! Register below
@@ -91,7 +91,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter first name"
             />
             {visibleFirstNameError && errors.firstName != null && (
@@ -126,7 +126,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter last name"
             />
             {visibleLastNameError && errors.lastName != null && (
@@ -162,7 +162,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter phone number"
             />
             {visiblePhoneNumberError && errors.phoneNumber != null && (
@@ -199,7 +199,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter email"
             />
             {visibleEmailError && errors.email && (
@@ -236,7 +236,7 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter password"
             />
             {visiblePasswordError && errors.password != null && (
@@ -262,7 +262,7 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter password"
             />
 
@@ -289,7 +289,7 @@ export const Register = () => {
           </NavLink>
         </div>
       </form>
-      <figure className="h-[500px] rounded-box w-[400px] overflow-hidden">
+      <figure className="h-[500px] rounded-box w-[400px] overflow-hidden hidden md:block">
         <img
           src={RegisterPageDog} // This should be the same image used in Login
           alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
