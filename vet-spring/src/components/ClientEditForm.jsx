@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { updateClient } from "../utils/helpers/updateClient";
 
+//not used right now, when will be used needs to be moved in another folder
 const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
     const { setEditModalID } = useContext(ThemeContext);
 
