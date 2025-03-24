@@ -1,12 +1,13 @@
 package SpringProject._Spring.AppointmentControllerTest;
 
 import SpringProject._Spring.controller.AppointmentController;
-import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
-import SpringProject._Spring.model.Appointment;
-import SpringProject._Spring.model.Status;
+import SpringProject._Spring.model.appointment.Appointment;
+import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
+import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -29,15 +30,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentController.class)
 @Import(SecurityConfig.class)
 public class AppointmentPUTTest {
-
-    //TODO: THIS!
 
     @Autowired
     private MockMvc mockMvc;
