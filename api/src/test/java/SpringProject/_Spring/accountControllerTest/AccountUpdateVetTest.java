@@ -1,8 +1,8 @@
 package SpringProject._Spring.accountControllerTest;
 
 import SpringProject._Spring.controller.accountController.AccountControllerPut;
-import SpringProject._Spring.dto.authentication.client.ClientUpdateDTO;
-import SpringProject._Spring.model.authentication.Client;
+import SpringProject._Spring.dto.authentication.vet.VetUpdateDTO;
+import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.authentication.AccountService;
 import SpringProject._Spring.service.authentication.ClientService;
@@ -20,21 +20,19 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = AccountControllerPut.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-public class AccountControllerJunitUpdateClientTest {
+public class AccountUpdateVetTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,59 +50,62 @@ public class AccountControllerJunitUpdateClientTest {
     //happy path
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateClient_whenValid_thenReturnAnd200() throws Exception {
+    void updateVet_whenValid_thenReturnAnd200() throws Exception {
         //given
-        ClientUpdateDTO clientUpdateDTO = new ClientUpdateDTO("UpdatedName", "UpdatedLastName", "123456");
+        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
 
-        Client existingClient = new Client("OldName", "OldLastName", "12345", new Timestamp(1742600400000L));
-        existingClient.setId(1L);
+        Vet existingVet = new Vet("FirstName", "LastName", "12345", "NotProfessional", "12345", LocalDate.of(2024, 4, 10));
+        existingVet.setId(1L);
 
-        when(clientService.findClientById(1L)).thenReturn(Optional.of(existingClient));
-        when(clientService.updateClient(any(Client.class))).thenReturn(existingClient);
+        when(vetService.existsVetById(1L)).thenReturn(true);
+        when(vetService.getVetById(1L)).thenReturn(Optional.of(existingVet));
+        when(vetService.updateVet(any(Vet.class))).thenReturn(existingVet);
 
         //when
-        mockMvc.perform(put("/api/client/{id}", 1L)
+        mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(clientUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
                 //then
                 .andExpect(status().isOk())
                 .andExpectAll((jsonPath("firstName").value("UpdatedName")),
                         (jsonPath("lastName").value("UpdatedLastName")),
-                        (jsonPath("phoneNumber").value("123456")));
+                        (jsonPath("phoneNumber").value("123456")),
+                        (jsonPath("specialty").value("Professional")),
+                        (jsonPath("licenseNumber").value("123456")));
 
-        Mockito.verify(clientService, times(1)).updateClient(existingClient);
+        Mockito.verify(vetService, times(1)).updateVet(existingVet);
     }
 
     //unhappy path
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateClient_whenClientDoesntExist_thenReturnAnd404() throws Exception {
+    void updateVet_whenVetDoesntExist_thenReturnAnd404() throws Exception {
         //given
-        ClientUpdateDTO clientUpdateDTO = new ClientUpdateDTO("UpdatedName", "UpdatedLastName", "123456");
+        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
 
-        given(clientService.findClientById(1L)).willReturn(Optional.empty());
+        given(vetService.existsVetById(1L)).willReturn(false);
 
         //when
-        mockMvc.perform(put("/api/client/{id}", 1L)
+        mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(clientUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
                 //then
                 .andExpect(status().isNotFound())
-                .andExpect(status().reason("Client account not found!"));
+                .andExpect(jsonPath("$").value("Vet account not found!"));
 
-        Mockito.verify(clientService, times(0)).updateClient(any());
+        Mockito.verify(vetService, times(0)).updateVet(any());
     }
 
     //unhappy path
     @Test
-    void updateClient_whenUnauthenticated_thenReturnAnd401() throws Exception {
+    void updateVet_whenUnauthenticated_thenReturnAnd401() throws Exception {
         //given
-        ClientUpdateDTO clientUpdateDTO = new ClientUpdateDTO("UpdatedName", "UpdatedLastName", "123456");
+        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
 
         //when
-        mockMvc.perform(put("/api/client/{id}", 1L)
+        mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(clientUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
                 //then
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -113,14 +114,14 @@ public class AccountControllerJunitUpdateClientTest {
     //unhappy path
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void updateClient_whenNotValidRequest_thenReturnAnd400() throws Exception {
+    void updateVet_whenNotValidRequest_thenReturnAnd400() throws Exception {
         //given
-        ClientUpdateDTO clientUpdateDTO = new ClientUpdateDTO("3", "12", "1");
+        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("12", "UpdatedLastName", "12345-acgg6", "Professional", "123456");
 
         //when
-        mockMvc.perform(put("/api/client/{id}", 1L)
+        mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(clientUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest());
     }

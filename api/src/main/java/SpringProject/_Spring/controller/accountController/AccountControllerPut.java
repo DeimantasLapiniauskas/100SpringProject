@@ -82,8 +82,11 @@ public class AccountControllerPut {
     @PutMapping("/vet/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateVet(@Valid @RequestBody VetUpdateDTO vetUpdateDTO, @PathVariable long id) {
-        Vet vetFromDB = vetService.getVetById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vet account not found!"));
+        if (!vetService.existsVetById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vet account not found!");
+        }
+
+        Vet vetFromDB = vetService.getVetById(id).get();
 
         VetMapping.updateVetFromDTO(vetFromDB, vetUpdateDTO);
 
@@ -96,8 +99,11 @@ public class AccountControllerPut {
     @PutMapping("/client/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateClient(@Valid @RequestBody ClientUpdateDTO clientUpdateDTO, @PathVariable long id) {
-        Client clientFromDB = clientService.findClientById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client account not found!"));
+        if (!clientService.existsClientById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client account not found!");
+        }
+
+        Client clientFromDB = clientService.findClientById(id).get();
 
         ClientMapping.updateClientFromDTO(clientFromDB, clientUpdateDTO);
 

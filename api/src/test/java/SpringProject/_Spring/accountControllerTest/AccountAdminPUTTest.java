@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-public class AccountAdminJunitPUTTest {
+public class AccountAdminPUTTest {
 
     @Autowired
     private MockMvc mockMvc;

@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = AccountControllerPost.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-public class AccountPublicJunitPOSTTest {
+public class AccountPublicPOSTTest {
 
     @Autowired
     private MockMvc mockMvc;

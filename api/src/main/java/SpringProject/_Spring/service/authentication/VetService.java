@@ -37,4 +37,8 @@ public class VetService {
     public Optional<Vet> findVetByAccountEmail(String email) {
         return vetRepository.findByAccount_email(email);
     }
+
+    public boolean existsVetById(long id) {
+        return vetRepository.existsById(id);
+    }
 }
