@@ -1,36 +1,44 @@
 package SpringProject._Spring.dto.authentication.vet;
 
-import jakarta.validation.constraints.Email;
+import SpringProject._Spring.validation.customAnnotations.email.EmailLength;
+import SpringProject._Spring.validation.customAnnotations.email.EmailRegex;
+import SpringProject._Spring.validation.customAnnotations.firstName.FNameLength;
+import SpringProject._Spring.validation.customAnnotations.firstName.FNameRegex;
+import SpringProject._Spring.validation.customAnnotations.lastName.LNameLength;
+import SpringProject._Spring.validation.customAnnotations.lastName.LNameRegex;
+import SpringProject._Spring.validation.customAnnotations.password.PasswordLength;
+import SpringProject._Spring.validation.customAnnotations.password.PasswordRegex;
+import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberLength;
+import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberRegex;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 public record VetRequestDTO(
-        @Email(regexp = "^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\\.[a-zA-Z]{2,}$",
-                message = "Invalid email format, vets should have at least 4 symbols before @, at least 3 after @ and before domain, domain at least 2 symbols")
-        @Length(min = 11, max = 50, message = "Vets email is either too short or too long! Min is 11, max is 50 symbols")
+
+        @NotNull(message = "Password cannot be null!")
+        @EmailLength
+        @EmailRegex //Two different custom annotations, so I could give each of them different default messages
         String email,
 
-        @NotNull(message = "Password can not be null!")
-        @Length(min = 8, max = 50, message = "Vets password is either too short or too long! Min length is 8, max is 50 symbols")
-        @Pattern(regexp = "^(?=(.*[a-zA-Z]))(?=(.*\\d))[a-zA-Z0-9!\"#$%&'()*+,-./:;<=>?@^_`{|}~ ]*$",
-                message = "Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!")
-        // qwerty symbols: !"#$%&'()*+,-./:;<=>?@[\]^_{|}~`
+        @NotNull(message = "Password cannot be null!")
+        @PasswordLength
+        @PasswordRegex
         String password,
 
         @NotNull(message = "First name can not be null!")
-        @Length(min = 3, max = 100, message = "Vets first name must be between 3 and 100 characters long!")
-        @Pattern(regexp = "^[A-Za-z ]*$", message = "Vets first name must only consist of letters and spaces!")
+        @FNameLength
+        @FNameRegex
         String firstName,
 
         @NotNull(message = "Last name can not be null!")
-        @Length(min = 3, max = 100, message = "Vets last name must be between 3 and 100 characters long!")
-        @Pattern(regexp = "^[A-Za-z ]*$", message = "Vets last name must only consist of letters and spaces!")
+        @LNameLength
+        @LNameRegex
         String lastName,
 
         @NotNull(message = "Phone number can not be null!")
-        @Length(min = 3, max = 17, message = "Vets phone number must be between 3 and 17 characters long!")
-        @Pattern(regexp = "^[0-9\\-+]*$", message = "Vets phone number must only be numbers, pluses and dashes!")
+        @NumberLength
+        @NumberRegex
         String phoneNumber,
 
         @NotNull(message = "Vets must have a specialty!")
