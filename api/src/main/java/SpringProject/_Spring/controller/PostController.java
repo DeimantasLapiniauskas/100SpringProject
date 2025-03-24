@@ -133,6 +133,6 @@ public class PostController extends BaseController{
         }
 
         postService.deletePostById(postId);
-        return ok(null, "Post deleted successfully");
+        return noContent(null, "Post deleted successfully");
     }
 }

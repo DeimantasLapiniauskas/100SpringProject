@@ -3,11 +3,12 @@ package SpringProject._Spring.validation;
 import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ public class GlobalExceptionHandler extends BaseController {
         ex.getConstraintViolations().forEach(violation ->
                 errors.put(violation.getPropertyPath().toString(), violation.getMessage())
         );
-
         return badRequest(errors, "Validation failed");
     }
 
@@ -31,7 +31,6 @@ public class GlobalExceptionHandler extends BaseController {
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage())
         );
-
         return badRequest(errors, "Validation failed");
     }
 
@@ -43,5 +42,10 @@ public class GlobalExceptionHandler extends BaseController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<String>> handleGenericException(Exception ex) {
         return serverError("An unexpected error occurred: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<String>> handleAccessDeniedException(AccessDeniedException ex) {
+        return forbidden("Access Denied");
     }
 }

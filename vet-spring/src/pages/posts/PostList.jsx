@@ -3,6 +3,8 @@ import { Error } from "../../components/Error";
 import { useAuth } from "../../context/AuthContext";
 import { usePagination } from "../../context/PaginationContext";
 import { NavLink } from "react-router";
+import { Loading } from "../../components/Loading";
+import { useUI } from "../../context/UIContext";
 
 export const PostList = () => {
   const { account } = useAuth();
@@ -17,10 +19,10 @@ export const PostList = () => {
     currentPage,
     totalPages,
     pageSize,
-    isLoading,
-    isError,
-    isEmpty
+    isEmpty,
   } = usePagination();
+
+  const {isLoading, isError} = useUI()
 
   const checkRoles = () => {
     //todo: make this better
@@ -33,13 +35,11 @@ export const PostList = () => {
         account?.scope.includes("ROLE_ADMIN"))
     );
   };
-//   if (isLoading) return <Loading />;
-  if (isError) return <Error error={error} isHidden={!error} />
 
   return (
     <div className="flex flex-col items-center gap-5 px-10 ">
-      <section className="px-4 py-8 text-center md:text-left">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
+      <section className="px-4 py-8 text-center ">
+        <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
           Stay Updated with News, Blogs & Sales
         </h2>
         <article className="text-sm md:text-base text-gray-700 max-w-3xl mx-auto text-center">
@@ -55,7 +55,9 @@ export const PostList = () => {
           Add
         </NavLink>
       )}
-       {isEmpty? <p>{message}</p> : ""}
+      {isEmpty ? <p>{message}</p> : ""}
+      {isLoading ? <Loading /> : ""}
+      {isError ? <Error error={error} isHidden={!error} /> : ""}
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <PostCard

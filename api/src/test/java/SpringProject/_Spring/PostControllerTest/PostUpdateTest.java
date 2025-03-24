@@ -167,9 +167,9 @@ public class PostUpdateTest {
 
                 //Then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.title").value("Title cannot be empty"))
-                .andExpect(jsonPath("$.content").value("Content cannot be empty"))
-                .andExpect(jsonPath("$.postType").value("Post type is required"));
+                .andExpect(jsonPath("$.data.title").value("Title cannot be empty"))
+                .andExpect(jsonPath("$.data.content").value("Content cannot be empty"))
+                .andExpect(jsonPath("$.data.postType").value("Post type is required"));
 
         Mockito.verify(postService, times(0)).updatePost(any(Post.class), any(PostRequestDTO.class));
     }

@@ -97,7 +97,7 @@ public class PostDeleteTest {
 
                 //Then
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("Post does not exist"));
+                .andExpect(jsonPath("$.message").value("Post does not exist"));
 
         Mockito.verify(postService, times(0)).deletePostById(postId);
     }

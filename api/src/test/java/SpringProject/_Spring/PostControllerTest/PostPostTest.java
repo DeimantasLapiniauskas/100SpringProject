@@ -80,14 +80,14 @@ public class PostPostTest {
                 //then
                 .andExpect(MockMvcResultMatchers.status().isCreated())
 
-                .andExpect(MockMvcResultMatchers.jsonPath("title").value("Sample Post"))
-                .andExpect(MockMvcResultMatchers.jsonPath("content").value("This is a test post."))
-                .andExpect(MockMvcResultMatchers.jsonPath("postType").value(PostType.Sale.toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("data.title").value("Sample Post"))
+                .andExpect(MockMvcResultMatchers.jsonPath("data.content").value("This is a test post."))
+                .andExpect(MockMvcResultMatchers.jsonPath("data.postType").value(PostType.Sale.toString()))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.firstName").value(vet.getFirstName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.lastName").value(vet.getLastName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.phoneNumber").value(vet.getPhoneNumber()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.vetResponseDTO.specialty").value(vet.getSpecialty()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.vetResponseDTO.firstName").value(vet.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.vetResponseDTO.lastName").value(vet.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.vetResponseDTO.phoneNumber").value(vet.getPhoneNumber()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.vetResponseDTO.specialty").value(vet.getSpecialty()));
 
 
 
@@ -110,7 +110,9 @@ public class PostPostTest {
 
                 //Then
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.message").value("Access Denied"))
+                .andExpect(jsonPath("$.data").doesNotExist());
 
         Mockito.verify(postService, times(0)).savePost(any());
     }
@@ -144,10 +146,10 @@ public class PostPostTest {
                 // Then
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Title cannot be empty"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Content cannot be empty"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.postType").value("Post type is required"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.imgUrl").value("Invalid URL format"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.title").value("Title cannot be empty"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.content").value("Content cannot be empty"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.postType").value("Post type is required"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.imgUrl").value("Invalid URL format"));
 
         Mockito.verify(postService, times(0)).savePost(any());
     }

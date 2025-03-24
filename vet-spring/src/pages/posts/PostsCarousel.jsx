@@ -50,13 +50,13 @@ const PostCarousel = () => {
               <p>{post.title}</p>
               <p className="font-bold">{post.postType}</p>
               <p className=" leading-[20px] text-sm text-gray-700 overflow-hidden">
-                {post.content.length > 120
-                  ? post.content.slice(0, 117) + "..."
+                {post.content.length > 50
+                  ? post.content.slice(0, 47) + "..."
                   : post.content}
               </p>
               <button
                 onClick={() => navigate(`/posts/${post.id}`)}
-                className="mt-auto text-white hover:underline text-sm font-medium"
+                className=" text-white hover:underline text-sm font-medium"
               >
                 Read more here
               </button>

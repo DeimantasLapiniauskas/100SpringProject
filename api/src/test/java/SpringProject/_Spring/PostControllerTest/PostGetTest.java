@@ -80,15 +80,15 @@ public class PostGetTest {
                 //Then
                 .andExpect(status().isOk())
 
-                .andExpect(jsonPath("$.title").value("Sample Post"))
-                .andExpect(jsonPath("$.content").value("This is a test post."))
-                .andExpect(jsonPath("$.postType").value(PostType.Sale.toString()))
-                .andExpect(jsonPath("$.imageUrl").value("https://example.com/image.jpg"))
+                .andExpect(jsonPath("$.data.title").value("Sample Post"))
+                .andExpect(jsonPath("$.data.content").value("This is a test post."))
+                .andExpect(jsonPath("$.data.postType").value(PostType.Sale.toString()))
+                .andExpect(jsonPath("$.data.imageUrl").value("https://example.com/image.jpg"))
 
-                .andExpect(jsonPath("$.vet.firstName").value(vet.getFirstName()))
-                .andExpect(jsonPath("$.vet.lastName").value(vet.getLastName()))
-                .andExpect(jsonPath("$.vet.phoneNumber").value(vet.getPhoneNumber()))
-                .andExpect(jsonPath("$.vet.specialty").value(vet.getSpecialty()));
+                .andExpect(jsonPath("$.data.vetResponseDTO.firstName").value(vet.getFirstName()))
+                .andExpect(jsonPath("$.data.vetResponseDTO.lastName").value(vet.getLastName()))
+                .andExpect(jsonPath("$.data.vetResponseDTO.phoneNumber").value(vet.getPhoneNumber()))
+                .andExpect(jsonPath("$.data.vetResponseDTO.specialty").value(vet.getSpecialty()));
 
 
         Mockito.verify(postService, times(1)).findPostById(postId);
@@ -100,6 +100,9 @@ public class PostGetTest {
     void getAllPostsPage_whenValidPageRequest_thenReturn200() throws Exception {
         // Given
         Vet vet = new Vet("Edgaras", "Laptevas", "+841185", "Doctor", "489815", LocalDate.now());
+        Account account = new Account("vet@gmail.com", "password123", List.of(new Role("Vet", 2)));
+        vet.setAccount(account);
+
         Post post1 = new Post("Title 1", "Content 1", PostType.Sale, vet, "https://image1.jpg");
         Post post2 = new Post("Title 2", "Content 2", PostType.Blog, vet, "https://image2.jpg");
 
@@ -112,14 +115,15 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "2"))
-//                .andDo(MockMvcResultHandlers.print())
+                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
 
-                .andExpect(jsonPath("$.content[0].title").value("Title 1"))
-                .andExpect(jsonPath("$.content[1].title").value("Title 2"))
-                .andExpect(jsonPath("$.totalElements").value(2));
+                .andExpect(jsonPath("$.data.content[0].title").value("Title 1"))
+                .andExpect(jsonPath("$.data.content[1].title").value("Title 2"))
+                .andExpect(jsonPath("$.data.totalElements").value(2));
 
         Mockito.verify(postService, times(1)).findAllPostsPage(0, 2, null);
     }
@@ -141,7 +145,7 @@ public class PostGetTest {
 
                 //Then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Posts list is empty"));
+                .andExpect(jsonPath("$.message").value("Posts list is empty"));
 
         Mockito.verify(postService, times(1)).findAllPostsPage(0, 10, null);
     }
