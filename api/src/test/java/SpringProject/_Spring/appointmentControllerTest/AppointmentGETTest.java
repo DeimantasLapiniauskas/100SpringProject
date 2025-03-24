@@ -1,4 +1,4 @@
-package SpringProject._Spring.AppointmentControllerTest;
+package SpringProject._Spring.appointmentControllerTest;
 
 import SpringProject._Spring.controller.AppointmentController;
 import SpringProject._Spring.model.*;
