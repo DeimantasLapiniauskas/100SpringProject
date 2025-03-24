@@ -8,22 +8,51 @@ export const BandytiDesignHomePage = () => {
       <div className="min-h-screen flex flex-col items-center p-5">
         {/* Paw Prints in the Background */}
         <div className="relative w-full h-full top-0 left-0">
+
+          {/* Paw 1 */}
           <div
-            className="pawss-for-background-medium"
-            style={{ left: "5%", top: "10%" }}>
-          </div>
+            className="
+      pawss-for-background-medium
+      left-[5%] top-[10%]
+      sm:left-[8%] sm:top-[12%]
+      md:left-[11%] md:top-[22%]
+      lg:left-[12%] lg:top-[18%]
+      xl:left-[15%] xl:top-[6%]
+    "></div>
+
+          {/* Paw 2 */}
           <div
-            className="pawss-for-background-medium"
-            style={{ left: "47%", top: "13%" }}
-          ></div>
+            className="
+      pawss-for-background-medium
+      left-[77%] top-[13%]
+      sm:left-[50%] sm:top-[15%]
+      md:left-[37%] md:top-[18%]
+      lg:left-[47%] lg:top-[15%]
+      xl:left-[50%] xl:top-[10%]
+    "></div>
+
+          {/* Paw 3 */}
           <div
-            className="pawss-for-background-medium"
-            style={{ left: "43%", top: "36%" }}
-          ></div>
+            className="
+      pawss-for-background-medium
+      left-[66%] top-[33%]
+      sm:left-[42%] sm:top-[38%]
+      md:left-[41%] md:top-[40%]
+      lg:left-[45%] lg:top-[56%]
+      xl:left-[45%] xl:top-[30%]
+    "></div>
+
+          {/* Paw 4 */}
           <div
-            className="pawss-for-background-medium"
-            style={{ left: "3%", top: "44%" }}
-          ></div>
+            className="
+      pawss-for-background-medium
+      left-[3%] top-[44%]
+      sm:left-[2%] sm:top-[45%]
+      md:left-[1%] md:top-[50%]
+      lg:left-[2%] lg:top-[67%]
+      xl:left-[5%] xl:top-[40%]
+    "></div>
+    
         </div>
 
         {/* Top Section - Dog Image & Text */}
@@ -38,7 +67,7 @@ export const BandytiDesignHomePage = () => {
               Twenty-four hours a day
             </article>
 
-            <h1 className="figma-headline text-black text-5xl sm:text-7xl">
+            <h1 className="figma-headline text-black sm:text-7xl">
               Happy Hearts <br /> Veterinary Clinic
             </h1>
 

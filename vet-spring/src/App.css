@@ -103,7 +103,7 @@ html {
 }
 
 .pawss-for-background-medium {
-  position: fixed;
+  position: absolute;
   width: clamp(20px, 5%, 50px);
   height: clamp(30px, 5%, 50px);
   background-image: url("/src/assets/pawss_for_background.png");
