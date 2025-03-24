@@ -41,9 +41,10 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
+
 html {
-  font-family: 'Kiwi Maru', sans-serif;
   background-color: #DCDEFE;
+  font-family: 'Kiwi Maru', sans-serif;
 }
 
 /* Black button located in Login Page and Register Page */
