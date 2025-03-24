@@ -4,10 +4,10 @@ package SpringProject._Spring.controller;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.dto.pet.PetResponseDTO;
-import SpringProject._Spring.model.Account;
-import SpringProject._Spring.model.Pet;
-import SpringProject._Spring.service.AccountService;
-import SpringProject._Spring.service.ClientService;
+import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.model.pet.Pet;
+import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -80,13 +80,15 @@ public class PetController {
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
+
         if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
                 petService.getPetByid(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
-                                role -> Objects.equals(
+                                role ->
+                                        Objects.equals(
                                         role.getName(), "ADMIN"
                                 )
                         )
@@ -155,6 +157,6 @@ public class PetController {
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        return ResponseEntity.ok(PetMapping.toPageListDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
+        return ResponseEntity.ok(PetMapping.toPageListPageDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
     }
 }

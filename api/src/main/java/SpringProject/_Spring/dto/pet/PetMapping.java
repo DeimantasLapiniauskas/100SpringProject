@@ -1,11 +1,10 @@
 package SpringProject._Spring.dto.pet;
 
-import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.pet.Pet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PetMapping {
 
@@ -47,7 +46,7 @@ public class PetMapping {
         return pet;
     }
 
-    public static Page<PetResponseDTO> toPageListDTO(Page<Pet> petsPage) {
+    public static Page<PetResponseDTO> toPageListPageDTO(Page<Pet> petsPage) {
         List<PetResponseDTO> petListResponseDTO = petsPage.getContent().stream()
                 .map(PetMapping::toPetResponseDTO)
                 .toList();

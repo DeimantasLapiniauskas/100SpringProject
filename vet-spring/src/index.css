@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
-@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
 * {
   box-sizing: border-box;
@@ -25,8 +25,7 @@
     font-family: 'Kiwi Maru', sans-serif;
     font-size: 4rem; /* 64px in FIGMA */ 
     font-weight: 400;
-    letter-spacing: 0%;
-    font-style: normal; 
+    letter-spacing: 0%; 
     line-height: 5.8125rem; /* 93px in FIGMA */
   }
   
@@ -34,7 +33,7 @@
     font-family: 'Kiwi Maru', sans-serif;
     font-size: 2.5rem; /* 40px in FIGMA */ 
     font-weight: 400;
-    font-style: normal; 
+    letter-spacing: 0%;
     line-height: 3.625rem; /* 58px in FIGMA */  
   }
   
@@ -42,7 +41,7 @@
     font-family: 'Kiwi Maru', sans-serif;
     font-size: 1.5rem; /* 24px in FIGMA */ 
     font-weight: 400;
-    font-style: normal; 
+    letter-spacing: 0%; 
     line-height: 2.1875rem; /* 35px in FIGMA */   
   }
   
@@ -50,6 +49,6 @@
     font-family: 'Kiwi Maru', sans-serif;
     font-size: 1rem; /* 16px in FIGMA */ 
     font-weight: 400;
-    font-style: normal; 
+    letter-spacing: 0%; 
     line-height: 1.4375rem; /* 23px in FIGMA */   
   }

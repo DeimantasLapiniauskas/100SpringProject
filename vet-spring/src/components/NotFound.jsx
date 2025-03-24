@@ -15,7 +15,7 @@ export const NotFound = () => {
       </div>
       <div className="flex items-center flex-col">
         <p className="font-bold lg:text-3xl md:text-2xl text-lg pb-2 text-amber-900">
-          Opps.. Page Not Found!
+          Opps... Page Not Found!
         </p>
         <NavLink to={"/home"}>
           <p
