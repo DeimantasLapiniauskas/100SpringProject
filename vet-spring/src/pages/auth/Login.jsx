@@ -8,12 +8,9 @@ import LoginPageDog from "../../assets/pet.png";
 
 export const Login = () => {
     const { register, handleSubmit } = useForm();
-    const [error, setError] = useState("")
-    const { login, account } = useAuth()
-
-    // useEffect(() => {
-    //     if (account)
-    // })
+    const [error, setError] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const { login, account } = useAuth();
 
     const onSubmit = async (data) => {
         try {
@@ -21,6 +18,7 @@ export const Login = () => {
         } catch (error) {
             if (error.response.status === 401) {
                 setError("Invalid credentials")
+                setVisible(true)
             } else {
                 setError(error.response?.data?.message || error.message)
             }
@@ -52,6 +50,8 @@ export const Login = () => {
                             placeholder="Enter password"
                         />
 
+                        {(visible && error.length != 0) && <Error error={error} setVisible={setVisible}/>}
+
                         <button type="submit" className="custom-black-btn mt-4 figma-headline-4">
                             Log in
                         </button>
@@ -59,7 +59,7 @@ export const Login = () => {
 
                     <NavLink to="/register" className="figma-headline-4 underline text-center mt-2 block">Register</NavLink>
                 </form>
-                <Error error={error} isHidden={!error} />
+                
 
                 <figure className="w-[400px] h-[500px] rounded-box overflow-hidden">
                     <img

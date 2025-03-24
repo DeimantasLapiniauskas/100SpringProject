@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
-
 @import "tailwindcss";
 @plugin "daisyui";
+
 
 * {
   box-sizing: border-box;
