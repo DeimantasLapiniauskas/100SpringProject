@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.password;
+package SpringProject._Spring.validation.customAnnotations.authentication.password;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.password;
+package SpringProject._Spring.validation.customAnnotations.authentication.vetExclusive.licenseNumber.licenseNumber;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,15 +10,12 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordRegexValidator.class)
-public @interface PasswordRegex {
-    String message() default "Your password must contain at least one number," +
-            " one letter, and it only accepts those and the regular qwerty keyboard symbols!";
-    // qwerty symbols: !"#$%&'()*+,-./:;<=>?@[\]^_{|}~`
+@Constraint(validatedBy = LicenseNumberLengthValidator.class)
+public @interface LicenseNumberLength {
+    String message() default "Your license number can't be longer than " +
+            LicenseNumberLengthValidator.maxLength + " characters!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 
     Class<? extends Payload>[] payload() default {}; //required for @Constraint
-
-
 }

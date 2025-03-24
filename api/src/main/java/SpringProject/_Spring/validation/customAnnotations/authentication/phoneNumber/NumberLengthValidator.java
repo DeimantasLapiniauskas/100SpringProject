@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.phoneNumber;
+package SpringProject._Spring.validation.customAnnotations.authentication.phoneNumber;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

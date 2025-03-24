@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.firstName;
+package SpringProject._Spring.validation.customAnnotations.authentication.password;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,13 +10,15 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = FNameLengthValidator.class)
-public @interface FNameLength {
-    String message() default "Your first name must be between " +
-            FNameLengthValidator.minLength + " and " +
-            FNameLengthValidator.maxLength + " characters long!";
+@Constraint(validatedBy = PasswordRegexValidator.class)
+public @interface PasswordRegex {
+    String message() default "Your password must contain at least one number," +
+            " one letter, and it only accepts those and the regular qwerty keyboard symbols!";
+    // qwerty symbols: !"#$%&'()*+,-./:;<=>?@[\]^_{|}~`
 
     Class<?>[] groups() default {}; //required for @Constraint
 
     Class<? extends Payload>[] payload() default {}; //required for @Constraint
+
+
 }

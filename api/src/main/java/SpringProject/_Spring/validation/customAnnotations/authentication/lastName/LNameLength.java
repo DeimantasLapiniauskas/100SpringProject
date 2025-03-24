@@ -1,4 +1,5 @@
-package SpringProject._Spring.validation.customAnnotations.phoneNumber;
+package SpringProject._Spring.validation.customAnnotations.authentication.lastName;
+
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,12 +11,12 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = NumberLengthValidator.class)
-public @interface NumberLength {
+@Constraint(validatedBy = LNameLengthValidator.class)
+public @interface LNameLength {
 
-    String message() default "Your phone number must be between " +
-            NumberLengthValidator.minLength + " and " +
-            NumberLengthValidator.maxLength + " characters long!";
+    String message() default "Your last name must be between " +
+            LNameLengthValidator.minLength + " and " +
+            LNameLengthValidator.maxLength + " characters long!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 

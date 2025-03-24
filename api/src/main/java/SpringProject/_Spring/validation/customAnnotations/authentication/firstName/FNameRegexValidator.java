@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.firstName;
+package SpringProject._Spring.validation.customAnnotations.authentication.firstName;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

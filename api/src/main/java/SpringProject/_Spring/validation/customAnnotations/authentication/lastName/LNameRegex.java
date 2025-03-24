@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.firstName;
+package SpringProject._Spring.validation.customAnnotations.authentication.lastName;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = FNameRegexValidator.class)
-public @interface FNameRegex {
-    String message() default "Your first name must only consist of letters and spaces!";
+@Constraint(validatedBy = LNameRegexValidator.class)
+public @interface LNameRegex {
+    String message() default "Your last name must only consist of letters and spaces!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 

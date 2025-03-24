@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.email;
+package SpringProject._Spring.validation.customAnnotations.authentication.firstName;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,12 +10,11 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EmailLengthValidator.class)
-public @interface EmailLength {
-
-    String message() default "Password has to be between " +
-            EmailLengthValidator.minLength + "and" +
-            EmailLengthValidator.maxLength + "characters long!";
+@Constraint(validatedBy = FNameLengthValidator.class)
+public @interface FNameLength {
+    String message() default "Your first name must be between " +
+            FNameLengthValidator.minLength + " and " +
+            FNameLengthValidator.maxLength + " characters long!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 

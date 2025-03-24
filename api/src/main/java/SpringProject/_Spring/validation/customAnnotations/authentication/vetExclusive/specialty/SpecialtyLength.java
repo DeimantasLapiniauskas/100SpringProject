@@ -1,4 +1,5 @@
-package SpringProject._Spring.validation.customAnnotations.lastName;
+package SpringProject._Spring.validation.customAnnotations.authentication.vetExclusive.specialty;
+
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,9 +11,10 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = LNameRegexValidator.class)
-public @interface LNameRegex {
-    String message() default "Your last name must only consist of letters and spaces!";
+@Constraint(validatedBy = SpecialtyLengthValidator.class)
+public @interface SpecialtyLength {
+    String message() default "Specialty can not be longer than " +
+            SpecialtyLengthValidator.maxLength + " characters!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 

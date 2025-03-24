@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.phoneNumber;
+package SpringProject._Spring.validation.customAnnotations.authentication.email.email;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,10 +10,12 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = NumberRegexValidator.class)
-public @interface NumberRegex {
+@Constraint(validatedBy = EmailLengthValidator.class)
+public @interface EmailLength {
 
-    String message() default "Your phone number must only be numbers and dashes!";
+    String message() default "Password has to be between " +
+            EmailLengthValidator.minLength + "and" +
+            EmailLengthValidator.maxLength + "characters long!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 

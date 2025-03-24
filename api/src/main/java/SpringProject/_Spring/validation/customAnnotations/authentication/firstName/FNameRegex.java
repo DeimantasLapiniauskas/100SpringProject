@@ -1,5 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.email;
-
+package SpringProject._Spring.validation.customAnnotations.authentication.firstName;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -11,10 +10,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EmailRegexValidator.class)
-public @interface EmailRegex {
-    String message() default "Invalid email format, you should have at least 4 symbols before @," +
-            " at least 3 after @ and before domain, domain at least 2 symbols";
+@Constraint(validatedBy = FNameRegexValidator.class)
+public @interface FNameRegex {
+    String message() default "Your first name must only consist of letters and spaces!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 
