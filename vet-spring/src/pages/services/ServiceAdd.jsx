@@ -84,7 +84,7 @@ export const ServiceAdd = ({ service }) => {
             <textarea
               {...register("description", {
                 required: "Description is required",
-                pattern: "^[A-Za-zs-]+$",
+                pattern: "^^[A-Za-z0-9\\s.\\-?!',]*$",
                 maxLength: 255,
               })}
               rows="8"
