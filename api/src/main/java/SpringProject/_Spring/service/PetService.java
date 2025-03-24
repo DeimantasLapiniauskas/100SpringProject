@@ -1,14 +1,13 @@
 package SpringProject._Spring.service;
 
 
-import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class PetService {
         return petRepository.existsById(petId);
     }
 
-    public Optional<Pet> getPetByid(long id) {
+    public Optional<Pet> getPetById(long id) {
         return petRepository.findById(id);
     }
 
@@ -57,7 +56,7 @@ public class PetService {
 
     public boolean isNotValidSortField(String sort) {
         List<String> validSortFields = List.of(
-                "ownerId", "name", "species", "breed", "birthday", "gender" );
+                "ownerId", "name", "species", "breed", "birthday", "gender");
         return !validSortFields.contains(sort);
     }
 }

@@ -8,41 +8,42 @@
 .bg-light-violet {
   background-color: #97a0f1;
 }
-/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#97a0f1] flex">Content</div> */
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#97a0f1] h-64 w-full">Content</div> */
 
 /* Default Violet - COLOR used as default background for cards or boxes.
  Example: Cards in Service List Page */
 .bg-default-violet {
   background-color: #6A7AFF;
 }
-/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#6A7AFF] flex">Content</div> */
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#6A7AFF] h-64 w-full">Content</div> */
 
 /* Light Orange - COLOR used as lighter orange background for cards or boxes.
  Example: Not implemented yet */
  .bg-light-orange {
   background-color: #FFBD89;
 }
-/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
 
 /* Default Purple - COLOR used in Navigation bar, for "Login" button and "Logout" button.
  Example: Cards in Log In Page and Register Page */
  .bg-default-purple {
   background-color: #ac64b4;
 }
-/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
 
 /* Light Gray - COLOR used as EXTRA FOR FUTURE USE.
  Example: Not implemented yet. Have to check other KOM-?? branches if it is in use */
  .bg-light-gray {
   background-color: #CBC5C5;
 }
-/* COLOR can be used in Tailwind code like this: <div className=" w-full h-64 bg-[#FFBD89] flex">Content</div> */
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-html, body {
-  font-family: 'Kiwi Maru', sans-serif;
+
+html {
   background-color: #DCDEFE;
+  font-family: 'Kiwi Maru', sans-serif;
 }
 
 /* Black button located in Login Page and Register Page */
@@ -52,8 +53,6 @@ html, body {
   padding: 1rem;
   width: 100%;
   border-radius: 1.5rem;
-  font-size: 1.125rem;
-  font-weight: bold;
   transition: background-color 0.3s ease;
 
   display: flex;
@@ -73,9 +72,7 @@ html, body {
   width: 8.25rem; /* Adjusted width */
   height: 2.9375rem; /* Adjusted height */
   border-radius: 1.5rem;
-  font-size: 1.125rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease; 
   
   display: flex;
   align-items: center;
@@ -94,8 +91,6 @@ html, body {
   width: 8.25rem; /* Adjusted width */
   height: 2.9375rem; /* Adjusted height */
   border-radius: 1.5rem;
-  font-size: 1.125rem;
-  font-weight: bold;
   transition: background-color 0.3s ease;
   
   display: flex;
@@ -118,7 +113,7 @@ html, body {
   height: 52px;
   left: 63px;
   top: 16px;
-  background: url(paws.jpg);
+  background: url("/src/assets/paws.png");
 }
 
 .middle-color-light-orange-login-button {
@@ -162,7 +157,41 @@ html, body {
   padding-left: 20px; /* Add some padding on the left for spacing */
 }
 
+/* Base Paw Button */
+.custom-paw-left-btn,
+.custom-paw-right-btn {
+  width: 50px;  /* Adjust as needed */
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Hover and Click Effects */
+.custom-paw-left-btn:hover,
+.custom-paw-right-btn:hover {
+  transform: scale(1.1);
+}
+
+.custom-paw-left-btn:active,
+.custom-paw-right-btn:active {
+  transform: scale(0.9);
+}
+
+/* Left Paw Button */
+.custom-paw-left-btn {
+  background-image: url("/src/assets/pawss_3_left.png");
+}
+
+/* Right Paw Button */
+.custom-paw-right-btn {
+  background-image: url("/src/assets/pawss_4_right.png");
+}
+
+
+
 /* /////////////////////////////////////////////////////////////////////// */
-
-
-

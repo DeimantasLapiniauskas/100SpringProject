@@ -47,7 +47,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
       species: data.species.trim(),
       breed: data.breed.trim(),
       birthdate: data.birthdate || null,
-    }
+    };
 
     const payload = { ...trimmedData };
 
@@ -60,24 +60,24 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
         const newPayload = { ...trimmedData };
         await addPet(newPayload);
         await getPage(pageSize, currentPage);
-        setAddModalID(""); 
+        setAddModalID("");
       }
       reset();
     } catch (error) {
-      console.error("Error details: ", error.response?.data || error.message);
-      setSubmitError(error.response?.data?.message || "Failed to submit the form.");
+      console.error("Error details:", error.response?.data || error.message);
+      setSubmitError(
+        error.response?.data?.message || "Failed to submit the form."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(formSubmitHandler)}
-      className="text-center p-3">
+    <form onSubmit={handleSubmit(formSubmitHandler)} className="text-center">
       {submitError && <p className="bg-red-700 text-white">{submitError}</p>}
-      <div className="p-3">
-        <div className="pb-5 text-center">
+      <div>
+        <div className="text-center border-b-1 border-gray-500">
           <label htmlFor="petName" className="font-bold text-lg text-white">
             Name:
           </label>
@@ -87,9 +87,19 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             className="form-text-select"
             {...register("name", {
               required: "Pet name is required",
-              maxLength: { value: 30, message: "Name cannot exceed 30 characters" },
-              minLength: { value: 2, message: "Name cannot be shorter than 2 characters" },
-              pattern: { value: /^[A-Za-z\s]+$/, message: "Name must contain only letters and spaces" },
+              maxLength: {
+                value: 30,
+                message: "Name cannot exceed 30 characters",
+              },
+              minLength: {
+                value: 2,
+                message: "Name cannot be shorter than 2 characters",
+              },
+              pattern: {
+                value: /^[A-Za-z\s]+$/,
+                message:
+                  "Name must contain only letters and spaces, allows only English alphabet",
+              },
             })}
             placeholder="Name"
           />
@@ -98,7 +108,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center border-b-1 border-gray-500">
           <label htmlFor="petSpecies" className="font-bold text-lg text-white">
             Species:
           </label>
@@ -108,12 +118,20 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             className="form-text-select"
             {...register("species", {
               required: "Species is required",
-              maxLength: { value: 50, message: "Species cannot exceed 50 characters" },
+              pattern: {
+                value: /^[A-Za-z\s]+$/,
+                message:
+                  "Species must contain only letters and spaces, allows only English alphabet",
+              },
+              maxLength: {
+                value: 50,
+                message: "Species cannot exceed 50 characters",
+              },
             })}
             placeholder="Species"
           />
           <div className="text-red-500">
-          {errors.species && <p>{errors.species.message}</p>}
+            {errors.species && <p>{errors.species.message}</p>}
           </div>
         </div>
 
@@ -126,17 +144,28 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             id="petBreed"
             className="form-text-select"
             {...register("breed", {
-              maxLength: { value: 50, message: "Breed cannot exceed 50 characters" },
+              pattern: {
+                value: /^[A-Za-z\s]+$/,
+                message:
+                  "Breed must contain only letters and spaces, allows only English alphabet",
+              },
+              maxLength: {
+                value: 50,
+                message: "Breed cannot exceed 50 characters",
+              },
             })}
             placeholder="Breed"
           />
           <div className="text-red-500">
-          {errors.breed && <p>{errors.breed.message}</p>}
+            {errors.breed && <p>{errors.breed.message}</p>}
           </div>
         </div>
 
-        <div className="pb-5 text-center">
-          <label htmlFor="petBirthdate" className="font-bold text-lg text-white">
+        <div className="text-center border-b-1 border-gray-500">
+          <label
+            htmlFor="petBirthdate"
+            className="font-bold text-lg text-white"
+          >
             Birthdate:
           </label>
           <input
@@ -144,15 +173,17 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             id="petBirthdate"
             className="form-text-select"
             {...register("birthdate", {
-              validate: (value) => new Date(value) <= new Date() || "Birthdate cannot be in the future",
+              validate: (value) =>
+                new Date(value) <= new Date() ||
+                "Birthdate cannot be in the future",
             })}
           />
           <div className="text-red-500">
-          {errors.birthdate && <p>{errors.birthdate.message}</p>}
+            {errors.birthdate && <p>{errors.birthdate.message}</p>}
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center mb-2 border-b-1 border-gray-500">
           <label htmlFor="petGender" className="font-bold text-lg text-white">
             Gender:
           </label>
@@ -161,17 +192,23 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
             className="form-text-select"
             {...register("gender", { required: "Gender is required" })}
           >
-            <option value="">Select gender</option>
+            <option value="" hidden selected>
+              Select gender
+            </option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
           <div className="text-red-500">
-          {errors.gender && <p>{errors.gender.message}</p>}
+            {errors.gender && <p>{errors.gender.message}</p>}
           </div>
         </div>
       </div>
 
-      <button type="submit" disabled={isLoading} className="text-white">
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="text-white bg-green-500 hover:bg-green-700 border-1 rounded-[5px] p-1 cursor-pointer mb-2"
+      >
         {isLoading ? "Submitting..." : "Submit"}
       </button>
     </form>

@@ -1,10 +1,9 @@
 package SpringProject._Spring.repository;
 
-import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.pet.Pet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
