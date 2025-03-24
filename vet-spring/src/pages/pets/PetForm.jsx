@@ -135,7 +135,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="text-center border-b-1 border-gray-500">
+        <div className="pb-5 text-center">
           <label htmlFor="petBreed" className="font-bold text-lg text-white">
             Breed:
           </label>

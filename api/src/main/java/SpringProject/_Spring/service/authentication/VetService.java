@@ -26,11 +26,19 @@ public class VetService {
         return vetRepository.save(vet);
     }
 
+    public Vet updateVet(Vet vet) {
+        return vetRepository.save(vet);
+    }
+
     public Optional<Vet> getVetById(long vetId) {
         return vetRepository.findById(vetId);
     }
 
     public Optional<Vet> findVetByAccountEmail(String email) {
         return vetRepository.findByAccount_email(email);
+    }
+
+    public boolean existsVetById(long id) {
+        return vetRepository.existsById(id);
     }
 }

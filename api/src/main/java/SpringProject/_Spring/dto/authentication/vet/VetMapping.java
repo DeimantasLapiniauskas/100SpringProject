@@ -27,4 +27,15 @@ public class VetMapping {
     }
 
 
+    public static void updateVetFromDTO(Vet vet, VetUpdateDTO vetUpdateDTO) {
+        vet.setFirstName(vetUpdateDTO.firstName());
+        vet.setLastName(vetUpdateDTO.lastName());
+        vet.setPhoneNumber(vetUpdateDTO.phoneNumber());
+        vet.setSpecialty(vetUpdateDTO.specialty());
+        vet.setLicenseNumber(vetUpdateDTO.licenseNumber());
+    }
+
+    public static VetUpdateResponseDTO toVetUpdateResponseDTO(Vet vet) {
+        return new VetUpdateResponseDTO(vet.getFirstName(), vet.getLastName(), vet.getPhoneNumber(), vet.getSpecialty(), vet.getLicenseNumber());
+    }
 }

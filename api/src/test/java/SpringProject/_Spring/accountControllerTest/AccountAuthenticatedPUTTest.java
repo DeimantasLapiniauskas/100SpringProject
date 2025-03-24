@@ -1,11 +1,13 @@
 package SpringProject._Spring.accountControllerTest;
 
-import SpringProject._Spring.controller.accountController.AccountControllerPutPassword;
+import SpringProject._Spring.controller.accountController.AccountControllerPut;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Role;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
+import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -33,19 +35,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Optional;
 
-@WebMvcTest(controllers = AccountControllerPutPassword.class)
+@WebMvcTest(controllers = AccountControllerPut.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-public class AccountAuthenticatedJunitPUTTest {
+public class AccountAuthenticatedPUTTest {
 
     @Autowired
     private MockMvc mockMvc;
     @MockitoBean
     private AccountService accountService;
     @MockitoBean
+    private VetService vetService;
+    @MockitoBean
+    private ClientService clientService;
+    @MockitoBean
     private PasswordEncoder passwordEncoder;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     //happy path
     @Test

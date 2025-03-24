@@ -85,7 +85,7 @@ public class PetDELETETest {
         Pet pet = new Pet(ownerId, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male);
         pet.setOwnerId(client.getId());
 
-        when(petService.getPetByid(petId))
+        when(petService.getPetById(petId))
                 .thenReturn(Optional.of(pet));
 
         mockMvc.perform(delete("/api/pets/" + petId))
@@ -113,9 +113,9 @@ public class PetDELETETest {
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
         when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
-        
+
         Pet pet = new Pet(userId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male);
-        when(petService.getPetByid(pet.getId()))
+        when(petService.getPetById(pet.getId()))
                 .thenReturn(Optional.of(pet));
 
         mockMvc.perform(delete("/api/pets/" + petId))
@@ -170,7 +170,7 @@ public class PetDELETETest {
         client.setAccount(new Account("email", "password", List.of(new Role("ADMIN", 1))));
         when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
 
-        when(petService.getPetByid(petId))
+        when(petService.getPetById(petId))
                 .thenReturn(Optional.of(new Pet(ownerId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male)));
 
         mockMvc.perform(delete("/api/pets/" + petId))
