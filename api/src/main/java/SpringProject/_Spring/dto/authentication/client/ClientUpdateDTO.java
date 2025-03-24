@@ -1,27 +1,25 @@
 package SpringProject._Spring.dto.authentication.client;
 
+import SpringProject._Spring.validation.customAnnotations.firstName.FNameLength;
+import SpringProject._Spring.validation.customAnnotations.firstName.FNameRegex;
+import SpringProject._Spring.validation.customAnnotations.lastName.LNameLength;
+import SpringProject._Spring.validation.customAnnotations.lastName.LNameRegex;
+import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberLength;
+import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberRegex;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.Length;
 
 public record ClientUpdateDTO(@NotNull(message = "First name can not be null!")
-                              @Length(min = 3, max = 100,
-                                      message = "Your first name must be between 3 and 100 characters long!")
-                              @Pattern(regexp = "^[A-Za-z ]*$",
-                                      message = "Your first name must only consist of letters and spaces!")
+                              @FNameLength
+                              @FNameRegex
                               String firstName,
 
                               @NotNull(message = "Last name can not be null!")
-                              @Length(min = 3, max = 100,
-                                      message = "Your last name must be between 3 and 100 characters long!")
-                              @Pattern(regexp = "^[A-Za-z ]*$",
-                                      message = "Your last name must only consist of letters and spaces!")
+                              @LNameLength
+                              @LNameRegex
                               String lastName,
 
                               @NotNull(message = "Phone number can not be null!")
-                              @Length(min = 3, max = 17,
-                                      message = "Your phone number must be between 3 and 17 characters long!")
-                              @Pattern(regexp = "^[0-9\\-+]+$",
-                                      message = "Your phone number must only be numbers and dashes!")
+                              @NumberLength
+                              @NumberRegex
                               String phoneNumber) {
 }
