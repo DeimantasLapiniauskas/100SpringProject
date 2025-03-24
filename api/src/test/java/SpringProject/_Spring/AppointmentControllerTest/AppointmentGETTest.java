@@ -2,8 +2,16 @@ package SpringProject._Spring.AppointmentControllerTest;
 
 import SpringProject._Spring.controller.AppointmentController;
 import SpringProject._Spring.model.*;
+import SpringProject._Spring.model.appointment.Appointment;
+import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.model.authentication.Role;
+import SpringProject._Spring.model.authentication.Vet;
+import SpringProject._Spring.model.pet.Gender;
+import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
+import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.VetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
