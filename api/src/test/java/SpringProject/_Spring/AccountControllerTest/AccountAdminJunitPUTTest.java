@@ -162,4 +162,26 @@ public class AccountAdminJunitPUTTest {
                 .andExpect(jsonPath("$.newPassword").value("Password can not be null!"));
     }
 
+    //unhappy path
+    @Test
+    void updateAccountPasswordAdmin_whenUpdatesAnotherAdminPassword_thenReturnAnd400() throws Exception {
+        //given
+        Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_ADMIN")));
+        account.setId(1L);
+
+        PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
+
+        when(accountService.findAccountById(1L)).thenReturn(Optional.of(account));
+
+        //when
+        mockMvc.perform(put("/api/account/password/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").value("You can't change password of another admin!"));
+
+        Mockito.verify(accountService, times(1)).findAccountById(1L);
+        Mockito.verify(passwordEncoder, times(0)).encode("newPassword");
+    }
 }

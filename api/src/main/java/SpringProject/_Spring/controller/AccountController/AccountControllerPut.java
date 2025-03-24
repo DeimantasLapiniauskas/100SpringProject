@@ -63,6 +63,11 @@ public class AccountControllerPut {
         Account accountFromDB = accountService.findAccountById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
 
+        if (accountFromDB.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().contains("ROLE_ADMIN"))) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You can't change password of another admin!");
+        }
+
         PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
 
         accountFromDB.setPassword(passwordEncoder.encode(accountFromDB.getPassword()));
