@@ -121,7 +121,7 @@ const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
               pattern: {
                 value: /^[A-Za-z\s]+$/,
                 message:
-                  "Specie must contain only letters and spaces, allows only English alphabet",
+                  "Species must contain only letters and spaces, allows only English alphabet",
               },
               maxLength: {
                 value: 50,

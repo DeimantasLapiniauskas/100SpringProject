@@ -17,10 +17,10 @@ public record PetRequestDTO(
 
         @NotNull(message = "Your pets' species cannot be null!")
         @NotBlank(message = "You must provide a species!")
-        @Pattern(regexp = "^[A-Za-z\\s-]+$", message = "Specie must contain only letters and spaces, allows only English alphabet")
+        @Pattern(regexp = "^[A-Za-z\\s-]+$", message = "Species must contain only letters and spaces, allows only English alphabet")
         String species,
 
-        @Pattern(regexp = "^[A-Za-z\\s-]+$", message = "Bread must contain only letters and spaces, allows only English alphabet")
+        @Pattern(regexp = "^[A-Za-z\\s-]+$", message = "Breed must contain only letters and spaces, allows only English alphabet")
         String breed, //breed can be null or empty
 
         LocalDate birthdate, // birthdate can be null or empty
