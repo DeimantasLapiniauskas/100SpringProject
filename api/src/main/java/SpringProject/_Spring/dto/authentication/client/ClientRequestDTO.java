@@ -1,7 +1,7 @@
 package SpringProject._Spring.dto.authentication.client;
 
-import SpringProject._Spring.validation.customAnnotations.authentication.email.email.EmailLength;
-import SpringProject._Spring.validation.customAnnotations.authentication.email.email.EmailRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailRegex;
 import SpringProject._Spring.validation.customAnnotations.authentication.firstName.FNameLength;
 import SpringProject._Spring.validation.customAnnotations.authentication.firstName.FNameRegex;
 import SpringProject._Spring.validation.customAnnotations.authentication.lastName.LNameLength;

@@ -1,4 +1,4 @@
-package SpringProject._Spring.validation.customAnnotations.authentication.email.email;
+package SpringProject._Spring.validation.customAnnotations.authentication.email;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
