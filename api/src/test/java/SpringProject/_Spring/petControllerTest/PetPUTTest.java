@@ -84,7 +84,7 @@ public class PetPUTTest {
                 .thenReturn(ownerId);
         when(petService.existsById(0))
                 .thenReturn(true);
-        when(petService.getPetByid(0))
+        when(petService.getPetById(0))
                 .thenReturn(Optional.of(originalPet));
 
         Account account = new Account(
@@ -165,7 +165,7 @@ public class PetPUTTest {
         when(petService.existsById(0))
                 .thenReturn(true);
 
-        when(petService.getPetByid(0))
+        when(petService.getPetById(0))
                 .thenReturn(Optional.of(originalPet));
 
 
@@ -225,7 +225,7 @@ public class PetPUTTest {
                 .thenReturn(true);
         when(petService.existsById(0))
                 .thenReturn(true);
-        when(petService.getPetByid(0))
+        when(petService.getPetById(0))
                 .thenReturn(Optional.of(originalPet));
 
         when(accountService.findByEmail(any()))

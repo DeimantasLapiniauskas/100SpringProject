@@ -7,6 +7,7 @@ import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
 import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -54,6 +55,9 @@ public class AppointmentPUTTest {
 
     @MockitoBean
     private AppointmentService appointmentService;
+
+    @MockitoBean
+    private ClientService clientService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     long appointmentId;

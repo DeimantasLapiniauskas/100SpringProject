@@ -83,7 +83,7 @@ public class PetController {
 
         if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
-                petService.getPetByid(petId).get().getOwnerId()
+                petService.getPetById(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
@@ -97,7 +97,7 @@ public class PetController {
                     .body("You can't edit someone else's pet!");
         }
 
-        Pet petFromDB = petService.getPetByid(petId).get();
+        Pet petFromDB = petService.getPetById(petId).get();
         petFromDB.setName(petRequestDTO.name());
         petFromDB.setSpecies(petRequestDTO.species());
         petFromDB.setBreed(petRequestDTO.breed());
@@ -121,7 +121,7 @@ public class PetController {
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
         if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
-                petService.getPetByid(petId).get().getOwnerId()
+                petService.getPetById(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(

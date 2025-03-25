@@ -10,7 +10,7 @@ import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.service.*;
-import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -30,15 +30,15 @@ public class AppointmentController {
     private final PetService petService;
     private final ServiceAtClinicService serviceService;
     private final VetService vetService;
-    private final AccountService accountService;
+    private final ClientService clientService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService, AccountService accountService) {
+    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService, ClientService clientService) {
         this.appointmentService = appointmentService;
         this.petService = petService;
         this.serviceService = serviceService;
         this.vetService = vetService;
-        this.accountService = accountService;
+        this.clientService = clientService;
     }
 
     @Operation(summary = "Create new appointment", description = "Creates an appointment for a pet with selected vet")
@@ -64,7 +64,7 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new AppointmentResponseDTO(
                         savedAppointment.getId(),
-                        PetMapping.toPetResponseDTO(petService.getPetByid(savedAppointment.getPetId()).get()),
+                        PetMapping.toPetResponseDTO(petService.getPetById(savedAppointment.getPetId()).get()),
                         VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
                         savedAppointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                         savedAppointment.getAppointmentDate(),
@@ -99,10 +99,10 @@ public class AppointmentController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<List<AppointmentResponseDTO>> getOwnAppointments(Authentication authentication) {
         return ResponseEntity.ok(
-                appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
+                appointmentService.getAllAppointmentsByClientId(clientService.findClientIdByEmail(authentication.getName()))
                         .stream().map(appointment -> new AppointmentResponseDTO(
                                 appointment.getId(),
-                                PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
+                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
@@ -119,7 +119,7 @@ public class AppointmentController {
                 appointmentService.getAllAppointmentsByClientId(id)
                         .stream().map(appointment -> new AppointmentResponseDTO(
                                 appointment.getId(),
-                                PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
+                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),

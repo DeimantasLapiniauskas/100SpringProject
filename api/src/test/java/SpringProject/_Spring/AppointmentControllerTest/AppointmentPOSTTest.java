@@ -13,6 +13,7 @@ import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
 import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -60,6 +61,9 @@ public class AppointmentPOSTTest {
 
     @MockitoBean
     private AccountService accountService; //throws errors if not here
+
+    @MockitoBean
+    private ClientService clientService;
 
     @MockitoBean
     private AppointmentService appointmentService;
@@ -149,7 +153,7 @@ public class AppointmentPOSTTest {
                         )
                 );
 
-        when(petService.getPetByid(petId))
+        when(petService.getPetById(petId))
                 .thenReturn(Optional.of(pet));
 
         when(vetService.getVetById(vetId))
@@ -239,7 +243,7 @@ public class AppointmentPOSTTest {
                         )
                 );
 
-        when(petService.getPetByid(petId))
+        when(petService.getPetById(petId))
                 .thenReturn(Optional.of(pet));
 
         when(vetService.getVetById(vetId))
