@@ -15,6 +15,7 @@ import PetForm from "../pages/pets/PetForm.jsx";
 
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
+import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -51,6 +52,7 @@ const VetClinicRoutes = () => {
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/design" element={<BandytiDesign />} />
             <Route path="/designh" element={<BandytiDesignHomePage />} />
+            <Route path="/designh1" element={<BandytiDesignH1 />} />
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>

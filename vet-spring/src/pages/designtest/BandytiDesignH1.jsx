@@ -3,9 +3,10 @@ import TestCarousel from "../designtest/TestCarousel";
 //import HomePagePawArrow from "../../assets/dog.png";
 //import "../../App.css"; // Adjust if needed 
 
-export const BandytiDesignHomePage = () => {
+export const BandytiDesignH1 = () => {
     return (
       <div className="bg-[#DCDEFE]">
+
         {/* Paw Prints in the Background */}
         <div className="absolute w-full min-h-screen top-0 left-0">
 
@@ -58,7 +59,7 @@ export const BandytiDesignHomePage = () => {
     "></div>
     
         </div>
-
+        
         {/* Top Section - Dog Image & Text */}
         <main className="relative flex flex-col sm:flex-row-reverse items-center sm:items-start md:items-start lg:items-start">
           {/* Text Section */}
@@ -99,4 +100,4 @@ export const BandytiDesignHomePage = () => {
     );
 };
 
-export default BandytiDesignHomePage;
+export default BandytiDesignH1;

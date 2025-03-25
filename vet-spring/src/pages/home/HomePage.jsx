@@ -4,11 +4,11 @@ import TestCarousel from "../designtest/TestCarousel";
 
 export const HomePage = () => {
     return (
-      <div className="min-h-screen bg-[#DCDEFE] flex flex-col items-center p-5">
+      <div className="bg-[#DCDEFE]">
         {/* Top Section - Dog Image & Text */}
-        <main className="relative flex flex-col sm:flex-row-reverse items-center w-full max-w-screen-xl gap-12">
+        <main className="flex flex-col sm:flex-row-reverse gap-2 items-center sm:items-start md:items-start lg:items-start">
           {/* Text Section */}
-          <div className="text-content flex flex-col sm:basis-1/2 text-left space-y-4 px-5">
+          <div className="flex flex-col px-3 lg:text-lg md:text-base sm:text-sm text-xs">
             <article className="figma-headline-4 text-black">
               Pavasario Avenue 100, Vilnius
               <br />
@@ -17,21 +17,20 @@ export const HomePage = () => {
               Twenty-four hours a day
             </article>
 
-            <h1 className="figma-headline text-black text-5xl sm:text-7xl">
+            <h1 className="figma-headline text-black lg:text-2xl md:text-xl sm:text-lg text-base">
               Happy Hearts <br /> Veterinary Clinic
             </h1>
 
-            <p className="figma-headline-4 text-black sm:text-xl">
+            <p className="figma-headline-4 text-black lg:text-lg md:text-base sm:text-sm text-xs">
               As Lithuania’s leading animal health company, Happy Hearts is
               driven by a singular purpose: to nurture Lithuania and humankind
               by advancing care for animals.
             </p>
           </div>
-
           {/* Image Section - Dog on Left */}
-          <figure className="relative sm:basis-1/2 flex justify-center">
+          <figure>
             <img
-              className="w-full max-w-[50vw] sm:max-w-[550px] h-auto object-cover drop-shadow-lg -mb-6"
+              className="w-full max-w-[10rem] sm:max-w-[25rem] md:max-w-[30rem] lg:max-w-[35rem] object-contain drop-shadow-lg"
               src={HomePageDog}
               alt="Dog; light brown and white fur; bent ears"
             />
@@ -41,7 +40,7 @@ export const HomePage = () => {
         <div className="w-full bg-[#6A7AFF] py-12 mt-12 rounded-t-[50px] shadow-lg">
           <TestCarousel />
         </div>
-        
+
       </div>
     );
 };
