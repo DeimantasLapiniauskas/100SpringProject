@@ -157,7 +157,7 @@ export const Register = () => {
                   message: "Maximum 17 characters",
                 },
                 pattern: {
-                  value: /^[0-9\-+]+$/,
+                  value: /^\+?[0-9]([0-9\-]*[0-9])?$/,
                   message: "Phone number has invalid symbols",
                 },
               })}
