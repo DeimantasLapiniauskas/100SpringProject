@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = EmailRegexValidator.class)
 public @interface EmailRegex {
     String message() default "Invalid email format, you should have at least 4 symbols before @," +
-            " at least 3 after @ and before domain, domain at least 2 symbols";
+            " at least 3 after @ and before domain, domain at least 2 symbols long, and not have any consecutive @'s or .'s";
 
     Class<?>[] groups() default {}; //required for @Constraint
 

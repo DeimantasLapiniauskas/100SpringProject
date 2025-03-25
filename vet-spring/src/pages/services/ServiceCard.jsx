@@ -84,7 +84,7 @@ export const ServiceCard = (props) => {
           )}
           {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
         </div>
-        <Error error={error} isHidden={!error} />
+        {error && <Error error={error} isHidden={!error} />}
       </div>
     </div>
   );
