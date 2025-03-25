@@ -187,7 +187,7 @@ export const Register = () => {
                   value:
                     /^[a-zA-Z0-9._%+-]+(?!(.*[.]{2,}|.*@{2,}))[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
                   message:
-                    "Email must have at least 4 symbols before @, at least 3 after @ and the domain must be at least 2 symbols",
+                    "At least 4 symbols before @, 3 after @, the domain must be at least 2 symbols, and no consecutive @'s or .'s.",
                 },
                 minLength: {
                   value: 3,
