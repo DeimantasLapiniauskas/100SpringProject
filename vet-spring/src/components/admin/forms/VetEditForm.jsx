@@ -165,7 +165,7 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
 
                 <div className="pb-5 text-center">
                     <label htmlFor="specialty" className="font-bold text-lg text-white">
-                    Specialty:
+                        Specialty:
                     </label>
                     <input
                         type="text"

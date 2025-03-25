@@ -1,20 +1,20 @@
+import { useState } from "react";
 import EditClientButton from "../admin/buttons/EditClientButton";
 
 
 const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, phoneNubmer } = client;
+    const { firstName, lastName, phoneNumber } = client;
+    const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="card card-side shadow-sm bg-[#97a0f1] text-[#000000] w-80">
-            <div className="p-6">
-                <div className="card-body  block break-words w-[16rem]">
-                    <h2 className="card-title  block break-words w-[16rem]">{name}</h2>
-                    <p className="py-2">{firstName}</p>
-                    <p className="py-2">{lastName}</p>
-                    <p className="py-2">{phoneNubmer}</p>
+        <li
+            className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+            onClick={() => setIsExpanded(!isExpanded)}
+        >
+            <div className="flex justify-between items-center py-4 px-6 md:px-4 md:py-2">
+                <div className="text-lg md:text-base font-medium">
+                    {firstName} {lastName}
                 </div>
-            </div>
-            <div className="card-actions">
                 <EditClientButton
                     client={client}
                     getPage={getPage}
@@ -22,7 +22,13 @@ const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
                     pageSize={pageSize}
                 />
             </div>
-        </div>
+
+            {isExpanded && (
+                <div className="px-6 py-4 bg-gray-50 text-gray-700">
+                    <p>Phone: {phoneNumber}</p>
+                </div>
+            )}
+        </li>
     )
 }
 

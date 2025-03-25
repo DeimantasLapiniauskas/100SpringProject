@@ -1,28 +1,33 @@
+import { useState } from "react";
 import EditVetButton from "../admin/buttons/EditVetButton";
 
-const VetCard = ({ client, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, phoneNubmer, specialty, licenseNumber } = client;
+const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
+    const { firstName, lastName, phoneNumber, specialty, licenseNumber } = vet;
+    const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="card card-side shadow-sm bg-[#97a0f1] text-[#000000] w-80">
-            <div className="p-6">
-                <div className="card-body  block break-words w-[16rem]">
-                    <h2 className="card-title  block break-words w-[16rem]">{firstName}</h2>
-                    <p className="py-2">{firstName}</p>
-                    <p className="py-2">{lastName}</p>
-                    <p className="py-2">{phoneNubmer}</p>
-                    <p className="py-2">{specialty}</p>
-                    <p className="py-2">{licenseNumber}</p>
+        <div
+            className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+            onClick={() => setIsExpanded(!isExpanded)}>
+            <div className="flex justify-between items-center py-4 px-6 md:px-4 md:py-2">
+                <div className="text-lg md:text-base font-medium">
+                    {firstName} {lastName}
                 </div>
-            </div>
-            <div className="card-actions">
                 <EditVetButton
-                    client={client}
+                    vet={vet}
                     getPage={getPage}
                     currentPage={currentPage}
                     pageSize={pageSize}
                 />
             </div>
+
+            {isExpanded && (
+                <div className="px-6 py-4 bg-gray-50 text-gray-700">
+                    <p>Phone: {phoneNumber}</p>
+                    <p>Specialty: {specialty}</p>
+                    <p>License: {licenseNumber}</p>
+                </div>
+            )}
         </div>
     )
 }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import ModalContext from "../../utils/helpers/modalContext";
 import ClientList from "./lists/ClientList";
 import VetList from "./lists/VetList"
-import AdminList from "./lists/AdminList"
 
 const AdminPage = () => {
     const [activeList, setActiveList] = useState("");
@@ -36,17 +35,10 @@ const AdminPage = () => {
                     >
                         Clients
                     </button>
-                    <button
-                        className={activeList === "admins" ? "active" : ""}
-                        onClick={() => setActiveList("admins")}
-                    >
-                        Admins
-                    </button>
                 </div>
 
                 {activeList === "vets" && <VetList />}
                 {activeList === "clients" && <ClientList />}
-                {activeList === "admins" && <AdminList />}
             </div>
         </ModalContext.Provider>
     );
