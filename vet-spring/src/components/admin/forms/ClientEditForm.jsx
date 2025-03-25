@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useContext } from "react";
-import { useEffect } from "react";
+import { useContext } from "react"
+import ThemeContext from "../../../utils/helpers/themeContext"
 import { useForm } from "react-hook-form";
-import ThemeContext from "../../utils/helpers/themeContext";
-import { updateVet } from "../../utils/helpers/addEditVet";
+import { useState } from "react";
+import { useEffect } from "react";
+import { updateClient } from "../../../utils/helpers/updateClient";
 
 //not used right now, when will be used needs to be moved in another folder
-const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
+const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
     const { setEditModalID } = useContext(ThemeContext);
 
     const {
@@ -20,24 +20,20 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
             firstName: "",
             lastName: "",
             phoneNumber: "",
-            speciality: "",
-            licenseNumber: "",
-        },
-    });
+        }
+    })
 
     const [isLoading, setIsLoading] = useState(false);
     const [submitError, setSubmitError] = useState(null);
 
     useEffect(() => {
-        if (vet && Object.keys(vet).length > 0) {
-            const { firstName, lastName, phoneNumber, speciality, licenseNumber } = vet;
+        if (client && Object.keys(client).length > 0) {
+            const { firstName, lastName, phoneNumber } = client;
             setValue("firstName", firstName);
             setValue("lastName", lastName);
             setValue("phoneNumber", phoneNumber);
-            setValue("speciality", speciality);
-            setValue("licenseNumber", licenseNumber);
         }
-    }, [vet, setValue]);
+    }, [client, setValue]);
 
     const formSubmitHandler = async (data) => {
         setIsLoading(true);
@@ -48,14 +44,12 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             phoneNumber: data.phoneNumber.trim(),
-            speciality: data.speciality.trim(),
-            licenseNumber: data.licenseNumber.trim(),
         };
 
         const payload = { ...trimmedData };
 
         try {
-            await updateVet(vet.id, payload);
+            await updateClient(client.id, payload);
             await getPage(pageSize, currentPage);
             setEditModalID("");
             reset();
@@ -162,57 +156,12 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
                         {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
                     </div>
                 </div>
-
-                <div className="pb-5 text-center">
-                    <label htmlFor="speciality" className="font-bold text-lg text-white">
-                        Speciality:
-                    </label>
-                    <input
-                        type="text"
-                        id="speciality"
-                        className="form-text-select"
-                        {...register("speciality", {
-                            required: "Speciality is required",
-                            maxLength: {
-                                value: 100,
-                                message: "Speciality cannot exceed 100 characters",
-                            },
-                        })}
-                        placeholder="Speciality"
-                    />
-                    <div className="text-red-500">
-                        {errors.speciality && <p>{errors.speciality.message}</p>}
-                    </div>
-                </div>
-
-                <div className="pb-5 text-center">
-                    <label htmlFor="licenseNumber" className="font-bold text-lg text-white">
-                        License number:
-                    </label>
-                    <input
-                        type="text"
-                        id="licenseNumber"
-                        className="form-text-select"
-                        {...register("licenseNumber", {
-                            required: "License number is required",
-                            maxLength: {
-                                value: 50,
-                                message: "License number cannot exceed 50 characters",
-                            },
-                        })}
-                        placeholder="License number"
-                    />
-                    <div className="text-red-500">
-                        {errors.licenseNumber && <p>{errors.licenseNumber.message}</p>}
-                    </div>
-                </div>
             </div>
 
             <button type="submit" disabled={isLoading} className="text-white">
                 {isLoading ? "Submitting..." : "Submit"}
             </button>
         </form>
-    );
+    )
 };
-
-export default VetEditForm;
+export default ClientEditForm;

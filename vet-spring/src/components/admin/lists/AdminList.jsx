@@ -1,7 +1,7 @@
-import { usePagination } from "../../context/PaginationContext";
-import { Error } from "../Error";
+import { usePagination } from "../../../context/PaginationContext";
+import { Error } from "../../Error";
 
-const ClientList = () => {
+const AdminList = () => {
 
     const {
         getPage,
@@ -59,4 +59,4 @@ const ClientList = () => {
     )
 }
 
-export default ClientList;
+export default AdminList;

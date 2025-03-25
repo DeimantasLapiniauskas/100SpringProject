@@ -1,5 +1,8 @@
 import { useState } from "react";
 import ModalContext from "../../utils/helpers/modalContext";
+import ClientList from "./lists/ClientList";
+import VetList from "./lists/VetList"
+import AdminList from "./lists/AdminList"
 
 const AdminPage = () => {
     const [activeList, setActiveList] = useState("");

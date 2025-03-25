@@ -1,39 +1,32 @@
-import { useContext } from "react"
-import ThemeContext from "../../utils/helpers/themeContext"
-import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useEffect } from "react";
-import { updateClient } from "../../utils/helpers/updateClient";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import ThemeContext from "../../../utils/helpers/themeContext";
+import { addVet } from "../../../utils/helpers/addEditVet";
 
 //not used right now, when will be used needs to be moved in another folder
-const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
-    const { setEditModalID } = useContext(ThemeContext);
+const VetAddForm = ({ getPage, currentPage, pageSize }) => {
+    const { setAddModalID } = useContext(ThemeContext);
 
     const {
         register,
         handleSubmit,
         reset,
-        setValue,
         formState: { errors },
     } = useForm({
         defaultValues: {
+            email: "",
+            password: "",
             firstName: "",
             lastName: "",
             phoneNumber: "",
-        }
-    })
+            speciality: "",
+            licenseNumber: "",
+        },
+    });
 
     const [isLoading, setIsLoading] = useState(false);
     const [submitError, setSubmitError] = useState(null);
-
-    useEffect(() => {
-        if (client && Object.keys(client).length > 0) {
-            const { firstName, lastName, phoneNumber } = client;
-            setValue("firstName", firstName);
-            setValue("lastName", lastName);
-            setValue("phoneNumber", phoneNumber);
-        }
-    }, [client, setValue]);
 
     const formSubmitHandler = async (data) => {
         setIsLoading(true);
@@ -41,17 +34,21 @@ const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
 
         const trimmedData = {
             ...data,
+            email: data.email.trim(),
+            password: data.password.trim(),
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             phoneNumber: data.phoneNumber.trim(),
+            speciality: data.speciality.trim(),
+            licenseNumber: data.licenseNumber.trim(),
         };
 
         const payload = { ...trimmedData };
 
         try {
-            await updateClient(client.id, payload);
+            await addVet(payload);
             await getPage(pageSize, currentPage);
-            setEditModalID("");
+            setAddModalID("");
             reset();
         } catch (error) {
             console.error("Error details: ", error.response?.data || error.message);
@@ -67,6 +64,66 @@ const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
             className="text-center p-3">
             {submitError && <p className="bg-red-700 text-white">{submitError}</p>}
             <div className="p-3">
+                <div className="pb-5 text-center">
+                    <label htmlFor="email" className="font-bold text-lg text-white">
+                        Email:
+                    </label>
+                    <input
+                        type="text"
+                        id="email"
+                        className="form-text-select"
+                        {...register("email", {
+                            required: "Email is required",
+                            maxLength: {
+                                value: 50,
+                                message: "Email cannot exceed 50 characters",
+                            },
+                            minLength: {
+                                value: 11,
+                                message: "Email cannot be shorter than 11 characters",
+                            },
+                            pattern: {
+                                value: /^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                                message: "Invalid email format, vets should have at least 4 symbols before @, at least 3 after @ and before domain, domain at least 2 symbols",
+                            },
+                        })}
+                        placeholder="Email"
+                    />
+                    <div className="text-red-500">
+                        {errors.email && <p>{errors.email.message}</p>}
+                    </div>
+                </div>
+
+                <div className="pb-5 text-center">
+                    <label htmlFor="password" className="font-bold text-lg text-white">
+                        Password:
+                    </label>
+                    <input
+                        type="text"
+                        id="password"
+                        className="form-text-select"
+                        {...register("password", {
+                            required: "Password is required",
+                            maxLength: {
+                                value: 50,
+                                message: "Password cannot exceed 50 characters",
+                            },
+                            minLength: {
+                                value: 8,
+                                message: "Password cannot be shorter than 8 characters",
+                            },
+                            pattern: {
+                                value: /^(?=(.*[a-zA-Z]))(?=(.*\d))[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_`{|}~ ]*$/,
+                                message: "Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!",
+                            },
+                        })}
+                        placeholder="Password"
+                    />
+                    <div className="text-red-500">
+                        {errors.password && <p>{errors.password.message}</p>}
+                    </div>
+                </div>
+
                 <div className="pb-5 text-center">
                     <label htmlFor="firstName" className="font-bold text-lg text-white">
                         First name:
@@ -156,12 +213,57 @@ const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
                         {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
                     </div>
                 </div>
+
+                <div className="pb-5 text-center">
+                    <label htmlFor="speciality" className="font-bold text-lg text-white">
+                        Speciality:
+                    </label>
+                    <input
+                        type="text"
+                        id="speciality"
+                        className="form-text-select"
+                        {...register("speciality", {
+                            required: "Speciality is required",
+                            maxLength: {
+                                value: 100,
+                                message: "Speciality cannot exceed 100 characters",
+                            },
+                        })}
+                        placeholder="Speciality"
+                    />
+                    <div className="text-red-500">
+                        {errors.speciality && <p>{errors.speciality.message}</p>}
+                    </div>
+                </div>
+
+                <div className="pb-5 text-center">
+                    <label htmlFor="licenseNumber" className="font-bold text-lg text-white">
+                        License number:
+                    </label>
+                    <input
+                        type="text"
+                        id="licenseNumber"
+                        className="form-text-select"
+                        {...register("licenseNumber", {
+                            required: "License number is required",
+                            maxLength: {
+                                value: 50,
+                                message: "License number cannot exceed 50 characters",
+                            },
+                        })}
+                        placeholder="License number"
+                    />
+                    <div className="text-red-500">
+                        {errors.licenseNumber && <p>{errors.licenseNumber.message}</p>}
+                    </div>
+                </div>
             </div>
 
             <button type="submit" disabled={isLoading} className="text-white">
                 {isLoading ? "Submitting..." : "Submit"}
             </button>
         </form>
-    )
+    );
 };
-export default ClientEditForm;
+
+export default VetAddForm;

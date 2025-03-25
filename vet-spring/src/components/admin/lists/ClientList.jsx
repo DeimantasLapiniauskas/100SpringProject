@@ -1,5 +1,6 @@
-import { usePagination } from "../../context/PaginationContext";
-import { Error } from "../Error";
+import { usePagination } from "../../../context/PaginationContext";
+import ClientCard from "../../cards/ClientCard";
+import { Error } from "../../Error";
 
 const ClientList = () => {
 
