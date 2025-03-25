@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { getAppointments } from "../../utils/helpers/getAppointments";
+import { RegisterAppointment } from "./RegisterAppointment";
 
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   const getAppointment = async () => {
     try {
       const response = await getAppointments();
-
       setAppointments(response.data);
-      console.log(response);
     } catch (error) {
       console.log(error.message, error);
     }
@@ -18,7 +18,7 @@ export const Appointment = () => {
   useEffect(() => {
     getAppointment();
   }, []);
-  //make table for appointment history??
+
   return (
     <div>
       <h1>Appointment history</h1>
@@ -32,14 +32,14 @@ export const Appointment = () => {
       </div>
       {appointments.map((a) => (
         <div className="grid-cols-6 grid" key={a.id}>
-          <p>{a.appointmentDate}</p>
+          <p>{a.appointmentDate.replace("T", " ")}</p>
           <div>
             <p>{a.petDTO.name}</p>
             <p>{a.petDTO.species}</p>
           </div>
           <p>{a.price}</p>
           <p>
-            {a.vetDTO.firstName}
+            {a.vetDTO.firstName}{" "}
             {a.vetDTO.lastName}
           </p>
           <div>
@@ -50,7 +50,8 @@ export const Appointment = () => {
           <p>{a.notes}</p>
         </div>
       ))}
-      <button className="custom-white-btn">New Appointment</button>
+      <button className="custom-white-btn" onClick={()=>setVisible(true)}>New Appointment</button>
+      {visible && <RegisterAppointment setVisible={setVisible}/>}
     </div>
   );
 };
