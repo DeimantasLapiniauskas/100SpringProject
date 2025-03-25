@@ -185,9 +185,9 @@ export const Register = () => {
                 },
                 pattern: {
                   value:
-                    /^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                    /^[a-zA-Z0-9._%+-]+(?!(.*[.]{2,}|.*@{2,}))[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
                   message:
-                    "Email must have at least 4 symbols before @, at least 3 after @ and the domain must be at least 2 symbols",
+                    "At least 4 symbols before @, 3 after @, the domain must be at least 2 symbols, and no consecutive @'s or .'s.",
                 },
                 minLength: {
                   value: 3,
@@ -274,7 +274,7 @@ export const Register = () => {
             )}
           </div>
         </div>
-        {typeof responseError === "string" && <Error error={responseError} />}
+        {responseError.length != 0 && <Error error={responseError} />}
         <button
           type="submit"
           className="!w-9/20 custom-black-btn mt-4 figma-headline-4 mx-auto"
