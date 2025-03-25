@@ -34,7 +34,7 @@ const PostCarousel = () => {
         pagination={{ clickable: true,
             el: '.custom-pagination',
          }}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
         breakpoints={{
           640: { slidesPerView: 3 },
           768: { slidesPerView: 3 },

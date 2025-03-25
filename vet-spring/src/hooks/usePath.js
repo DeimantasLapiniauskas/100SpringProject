@@ -8,3 +8,12 @@ export const useCurrentPath = () => {
     return path === "home" ? "posts" : path 
 
 }
+
+export const useRealPath = () => {
+
+    const location = useLocation()
+    const path = location.pathname.split("/").filter(Boolean).pop()
+
+    return path
+
+}

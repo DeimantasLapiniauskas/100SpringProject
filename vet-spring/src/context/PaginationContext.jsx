@@ -7,8 +7,8 @@ import {
   useRef,
 } from "react";
 import api from "../utils/api";
-import toast from "react-hot-toast";
-import { useCurrentPath } from "../hooks/useCurrentPath";
+// import toast from "react-hot-toast";
+import { useCurrentPath, useRealPath } from "../hooks/usePath";
 import { useIsMounted } from "../hooks/useIsMounted";
 import { useUI } from "./UIContext";
 import { UIStatus } from "../constants/UIStatus";
@@ -20,31 +20,36 @@ const PaginationContext = createContext({
   onSortBy: () => {},
 });
 
-const initialPagination = {
-  currentPage: 0,
-  totalPages: 0,
-  pageSize: 6,
-  sorted: null,
-  error: null,
-  content: [],
-  message: null,
-};
-
 export const PaginationProvider = ({ children }) => {
-  const [pagination, setPagination] = useState(initialPagination);
-
   const isFirstLoad = useRef(true);
   const isMounted = useIsMounted();
   const currentPath = useCurrentPath();
+  const realPath = useRealPath();
 
-  const { status, setStatus} = useUI();
-  const {Loading, Success, Error} = UIStatus;
+  const localStoragePath = realPath.replace(/\//g, "")
+  const defaultPageSize = parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 6;
+  const defaultSorted = localStorage.getItem(`${localStoragePath} - sorted`) || null;
+
+  const initialPagination = {
+    currentPage: 0,
+    totalPages: 0,
+    pageSize: defaultPageSize,
+    sorted: defaultSorted,
+    error: null,
+    content: [],
+    message: null,
+  };
+
+  const [pagination, setPagination] = useState(initialPagination);
+
+  const { status, setStatus } = useUI();
+  const { Loading, Success, Error } = UIStatus;
   const isEmpty = status === Success && pagination.content.length === 0;
 
   const getPage = useCallback(
     async (size, page, sort) => {
       try {
-        setStatus(Loading)
+        setStatus(Loading);
         const response = await api.get(
           `/${currentPath}/pagination?page=${page}&size=${size}${
             sort ? `&sort=${sort}` : ""
@@ -61,7 +66,7 @@ export const PaginationProvider = ({ children }) => {
             error: null,
             message: message,
           }));
-          setStatus(Success)
+          setStatus(Success);
           // if (message && data.length > 0) {
           //   toast.dismiss();
           //   toast.success(message);
@@ -71,9 +76,9 @@ export const PaginationProvider = ({ children }) => {
             ...prev,
             error: message || "Something went wrong fetching data.",
             content: [],
-            totalPages: 0
+            totalPages: 0,
           }));
-          setStatus(Error)
+          setStatus(Error);
         }
       } catch (error) {
         if (!isMounted.current) return;
@@ -83,9 +88,9 @@ export const PaginationProvider = ({ children }) => {
           ...prev,
           error: errorMessage,
           content: [],
-          totalPages: 0
+          totalPages: 0,
         }));
-        setStatus(Error)
+        setStatus(Error);
       }
     },
     [currentPath, isMounted, setStatus]
@@ -94,6 +99,7 @@ export const PaginationProvider = ({ children }) => {
   const onPageSizeChange = (e) => {
     const pageSize = Math.max(1, parseInt(e.target.value, 10));
     setPagination((prev) => ({ ...prev, currentPage: 0, pageSize: pageSize }));
+    localStorage.setItem(`${localStoragePath} - pageSize`, pageSize)
   };
 
   const onPaginate = (page) => {
@@ -107,13 +113,30 @@ export const PaginationProvider = ({ children }) => {
   };
 
   // const resetPagination = () => {
+  //   localStorage.removeItem("pageSize")
   //   setPagination(initialPagination); jei prireiks
   // };
 
+  // const resetSortBy = () => {
+  //   localStorage.removeItem("sorted") jei prireiks
+  //   setPagination(initialPagination)
+  // }
+
   useEffect(() => {
-    if (isFirstLoad.current && currentPath === "home") {
+    if (isFirstLoad.current && realPath === "home") {
       isFirstLoad.current = false;
-      setPagination((prev) => ({ ...prev, sorted: "createdAt", pageSize: 8 }));
+      // const newPageSize = 8;
+      // const newSort = "createdAt";
+      // const newPage = 0
+
+      setPagination((prev) => ({
+        ...prev,
+        pageSize: 8,
+        sorted: "createdAt",
+        // currentPage: newPage,
+      }));
+
+      // getPage(newPageSize, newPage, newSort);
       return;
     }
     getPage(pagination.pageSize, pagination.currentPage, pagination.sorted);
@@ -121,6 +144,7 @@ export const PaginationProvider = ({ children }) => {
     pagination.pageSize,
     pagination.currentPage,
     currentPath,
+    realPath,
     pagination.sorted,
     getPage,
   ]);
@@ -133,7 +157,7 @@ export const PaginationProvider = ({ children }) => {
         onPaginate,
         onSortBy,
         ...pagination,
-        isEmpty
+        isEmpty,
       }}
     >
       {children}

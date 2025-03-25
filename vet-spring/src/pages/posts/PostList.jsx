@@ -5,19 +5,20 @@ import { usePagination } from "../../context/PaginationContext";
 import { NavLink } from "react-router";
 import { Loading } from "../../components/Loading";
 import { useUI } from "../../context/UIContext";
+import { PaginationUI } from "../../components/PaginationUI";
+import { SelectUI } from "@/components/SelectUI";
+
+
 
 export const PostList = () => {
   const { account } = useAuth();
 
   const {
     getPage,
-    onPageSizeChange,
-    onPaginate,
     error,
     message,
     content: posts,
     currentPage,
-    totalPages,
     pageSize,
     isEmpty,
   } = usePagination();
@@ -38,6 +39,9 @@ export const PostList = () => {
 
   return (
     <div className="flex flex-col items-center gap-5 px-10 ">
+       <div className="flex w-full justify-end">
+        <SelectUI/>
+      </div>
       <section className="px-4 py-8 text-center ">
         <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
           Stay Updated with News, Blogs & Sales
@@ -69,32 +73,7 @@ export const PostList = () => {
           />
         ))}
       </ul>
-      <div className="join ">
-        <button
-          className="join-item btn "
-          onClick={async () => onPaginate(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          «
-        </button>
-        <button className="join-item btn ">Page {currentPage + 1}</button>
-        <button
-          className="join-item btn "
-          onClick={async () => onPaginate(currentPage + 1)}
-          disabled={currentPage === totalPages - 1}
-        >
-          »
-        </button>
-        <select
-          defaultValue="6"
-          className="join-item select ml-4"
-          onChange={onPageSizeChange}
-        >
-          <option value="6">6</option>
-          <option value="9">9</option>
-          <option value="12">12</option>
-        </select>
-      </div>
+      <PaginationUI/>
     </div>
   );
 };
