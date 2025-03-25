@@ -1,4 +1,5 @@
 import { usePagination } from "../../../context/PaginationContext";
+import VetCard from "../../cards/VetCard";
 import { Error } from "../../Error";
 
 const VetList = () => {
