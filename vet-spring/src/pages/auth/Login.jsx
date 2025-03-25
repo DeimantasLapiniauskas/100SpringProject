@@ -16,12 +16,12 @@ export const Login = () => {
         try {
             await login(data.email, data.password);
         } catch (error) {
-            if (error.response.status === 401) {
+            if (error.response?.status === 401) {
                 setError("Invalid credentials")
-                setVisible(true)
             } else {
-                setError(error.response?.data?.message || error.message)
+                setError(error.response?.data?.message ?? error.message)
             }
+            setVisible(true)
         }
     };
     
