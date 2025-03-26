@@ -121,7 +121,7 @@ export const ServiceList = () => {
             </figure>
           </div>
         </div>
-        <Error error={error} isHidden={!error} />
+        {error && <Error error={error} isHidden={!error} />}
       </div>
     </>
   );

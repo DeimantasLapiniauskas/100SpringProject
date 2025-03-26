@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = NumberRegexValidator.class)
 public @interface NumberRegex {
 
-    String message() default "Your phone number must only be numbers and dashes!";
+    String message() default "Must only be numbers and dashes, it can only start with a number or an optional plus, and can only end with a number!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 
