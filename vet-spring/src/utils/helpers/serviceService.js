@@ -6,3 +6,5 @@ export const addService = (payload) => api.post(`${url}`, payload);
 
 export const updateService = (Id, payload) =>
   api.put(`${url}/${Id}`, payload);
+
+export const getServices = () => api.get(`${url}`);
