@@ -58,10 +58,10 @@ export const Register = () => {
   };
 
   return (
-    <main className="h-screen flex justify-center items-center gap-8">
+    <main className="h-screen flex md:flex-col-reverse lg:flex-row justify-center items-center gap-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
+        className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-3 rounded-box min-h-[500px] mx-6"
       >
         <div className="figma-headline-3 text-center mb-4 px-24">
           Join Happy Hearts Community! Register below
@@ -91,7 +91,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter first name"
             />
             {visibleFirstNameError && errors.firstName != null && (
@@ -126,7 +126,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter last name"
             />
             {visibleLastNameError && errors.lastName != null && (
@@ -157,12 +157,12 @@ export const Register = () => {
                   message: "Maximum 17 characters",
                 },
                 pattern: {
-                  value: /^[0-9\-+]+$/,
+                  value: /^\+?[0-9]([0-9\-]*[0-9])?$/,
                   message: "Phone number has invalid symbols",
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter phone number"
             />
             {visiblePhoneNumberError && errors.phoneNumber != null && (
@@ -185,9 +185,9 @@ export const Register = () => {
                 },
                 pattern: {
                   value:
-                    /^[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                    /^[a-zA-Z0-9._%+-]+(?!(.*[.]{2,}|.*@{2,}))[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
                   message:
-                    "Email must have at least 4 symbols before @, at least 3 after @ and the domain must be at least 2 symbols",
+                    "At least 4 symbols before @, 3 after @, the domain must be at least 2 symbols, and no consecutive @'s or .'s.",
                 },
                 minLength: {
                   value: 3,
@@ -199,7 +199,7 @@ export const Register = () => {
                 },
               })}
               type="text"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter email"
             />
             {visibleEmailError && errors.email && (
@@ -236,7 +236,7 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter password"
             />
             {visiblePasswordError && errors.password != null && (
@@ -262,7 +262,7 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input figma-headline-4 p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter password"
             />
 
@@ -274,7 +274,7 @@ export const Register = () => {
             )}
           </div>
         </div>
-        {typeof responseError === "string" && <Error error={responseError} />}
+        {responseError.length != 0 && <Error error={responseError} />}
         <button
           type="submit"
           className="!w-9/20 custom-black-btn mt-4 figma-headline-4 mx-auto"
@@ -289,7 +289,7 @@ export const Register = () => {
           </NavLink>
         </div>
       </form>
-      <figure className="h-[500px] rounded-box w-[400px] overflow-hidden">
+      <figure className="h-[500px] rounded-box w-[400px] overflow-hidden hidden md:block">
         <img
           src={RegisterPageDog} // This should be the same image used in Login
           alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
