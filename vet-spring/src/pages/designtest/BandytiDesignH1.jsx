@@ -1,7 +1,6 @@
 import HomePageDog from "../../assets/dog.png"; 
 import TestCarousel from "../designtest/TestCarousel";
 //import HomePagePawArrow from "../../assets/dog.png";
-//import "../../App.css"; // Adjust if needed 
 
 export const BandytiDesignH1 = () => {
     return (
@@ -44,7 +43,7 @@ export const BandytiDesignH1 = () => {
               md:w-[8rem] md:h-[8rem]
               lg:w-[10rem] lg:h-[10rem]
 
-              left-[18rem] top-[4rem]
+              left-[18rem] top-[5rem]
             
               sm:left-[30rem] sm:top-[5rem]
 

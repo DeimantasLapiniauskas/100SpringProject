@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
-
 @import "tailwindcss";
 @plugin "daisyui";
 
@@ -40,10 +39,8 @@
   /* <h1 className=" text-black lg:figma-headline md:figma-headline-2 figma-headline-3">Some text</h1>
   WILL NOT WORK SINCE CSS overwrites Tailwind AND IT WILL RESULT IN TEXT STAYING THE SAME SIZE EVEN IF YOU CHANGE SCREEN SIZE. */
 
-  /* figma-headline-mobile WAS MY IDEA TO USE figma-headline; figma-headline-2; figma-headline-3; figma-headline-4
-  FOR DESKTOP AND TABLET SCREEN SIZES
-  AND USE figma-headline-mobile; figma-headline-2-mobile; figma-headline-3-mobile; figma-headline-4-mobile ONLY FOR MOBILE.
-  FOR NOW NOT SURE IF WE WILL IMPLEMENT IT */
+  /* figma-headline-5 IS MY IDEA FOR SMALLEST FONT SIZE.
+  NOT LISTED IN FIGMA Syle Guide PAGE. IS USED IN FIGMA iPhone 14 Pro Max - 1 PAGE. "I have read and agree to the Privacy Policy" .*/
 
   .figma-headline {
     font-family: 'Kiwi Maru', sans-serif;
@@ -77,34 +74,10 @@
     line-height: 1.4375rem; /* 23px in FIGMA */   
   }
 
-  .figma-headline-mobile {
+  .figma-headline-5 {
     font-family: 'Kiwi Maru', sans-serif;
-    font-size: 2.5rem; /* 40px */ /* Can use text-4xl since it is 2.25rem (36px) */
+    font-size: 0.5rem; /* 11px in FIGMA */ /* Can use text-xs since it is 0.75rem (12px) */ 
     font-weight: 400;
     letter-spacing: 0%; 
-    line-height: 3.625rem; /* 58px */
-  }
-  
-  .figma-headline-2-mobile {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1.5rem; /* 24px */ /* Can use text-2xl since it is 1.5rem (24px) */
-    font-weight: 400;
-    letter-spacing: 0%;
-    line-height: 2.1875rem; /* 35px */  
-  }
-  
-  .figma-headline-3-mobile {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1rem; /* 16px */ /* Can use text-base since it is 1rem (16px) */
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 1.4375rem; /* 23px */   
-  }
-  
-  .figma-headline-4-mobile {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 0.5rem; /* 11px */ /* Can use text-xs since it is 0.75rem (12px) */ 
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 1rem; /* 16px */   
+    line-height: 1rem; /* 16px in FIGMA */   
   }
