@@ -13,9 +13,19 @@ export const Register = () => {
     watch,
     clearErrors,
     formState: { errors },
-  } = useForm({ reValidateMode: "onSubmit " });
-  const [error, setError] = useState("");
+  } = useForm({ mode: "OnSubmit", reValidateMode: "onChange " });
+
   const { login, register: registerUser } = useAuth();
+
+  const [responseError, setResponseError] = useState([]);
+
+  const [visibleFirstNameError, setVisibleFirstNameError] = useState(false);
+  const [visibleLastNameError, setVisibleLastNameError] = useState(false);
+  const [visiblePhoneNumberError, setVisiblePhoneNumberError] = useState(false);
+  const [visibleEmailError, setVisibleEmailError] = useState(false);
+  const [visiblePasswordError, setVisiblePasswordError] = useState(false);
+  const [visibleRepeatPasswordError, setVisibleRepeatPasswordError] =
+    useState(false);
 
   const onSubmit = async (data) => {
     try {
@@ -28,71 +38,223 @@ export const Register = () => {
       );
       await login(data.email, data.password);
     } catch (error) {
-            setError(JSON.stringify(error.response.data) ?? error.message ?? "Something went wrong!");
+      setResponseError(
+        error.response?.data?.error ??
+          error.response?.data ??
+          error.message ??
+          "Something went wrong!"
+      );
     }
   };
 
-  return (
-    <main className="h-screen flex justify-center items-center">
-      <div className="flex items-center gap-8">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-[400px] bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] ml-12"
-        >
-          <div className="text-2xl text-center mb-4 px-4">
-            Join Happy Hearts Community! Register below
-          </div>
+  const switchErrorVisibility = () => {
+    setResponseError([]);
+    setVisibleFirstNameError(true);
+    setVisibleLastNameError(true);
+    setVisiblePhoneNumberError(true);
+    setVisibleEmailError(true);
+    setVisiblePasswordError(true);
+    setVisibleRepeatPasswordError(true);
+  };
 
-          <div className="flex flex-col gap-4 w-full">
-            <label className="fieldset-label text-lg">First Name</label>
+  return (
+    <main className="h-screen flex md:flex-col-reverse lg:flex-row justify-center items-center gap-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-3 rounded-box min-h-[500px] mx-6"
+      >
+        <div className="figma-headline-3 text-center mb-4 px-24">
+          Join Happy Hearts Community! Register below
+        </div>
+        <div className="grid grid-cols-2 w-full gap-y-4 gap-x-6">
+          <div>
+            <label className="fieldset-label figma-headline-4 !font-bold">
+              First Name
+            </label>
             <input
-              {...register("firstName")}
+              {...register("firstName", {
+                required: {
+                  value: true,
+                  message: "This field is required",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Minimum 3 characters",
+                },
+                maxLength: {
+                  value: 100,
+                  message: "Maximum 100 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-z ]*$/,
+                  message: "Name can only contain letters and spaces",
+                },
+              })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter first name"
             />
+            {visibleFirstNameError && errors.firstName != null && (
+              <Error
+                error={errors.firstName?.message}
+                setVisible={setVisibleFirstNameError}
+              />
+            )}
+          </div>
+          <div>
+            <label className="fieldset-label figma-headline-4 !font-bold">
+              Last Name
+            </label>
 
-            <label className="fieldset-label text-lg">Last Name</label>
             <input
-              {...register("lastName")}
+              {...register("lastName", {
+                required: {
+                  value: true,
+                  message: "This field is required",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Minimum 3 characters",
+                },
+                maxLength: {
+                  value: 100,
+                  message: "Maximum 100 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-z ]*$/,
+                  message: "Last name can only contain letters and spaces",
+                },
+              })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter last name"
             />
+            {visibleLastNameError && errors.lastName != null && (
+              <Error
+                error={errors.lastName?.message}
+                setVisible={setVisibleLastNameError}
+              />
+            )}
+          </div>
 
-            <label className="fieldset-label text-lg">Phone Number</label>
+          <div>
+            <label className="fieldset-label figma-headline-4 !font-bold">
+              Phone Number
+            </label>
+
             <input
-              {...register("phoneNumber")}
+              {...register("phoneNumber", {
+                required: {
+                  value: true,
+                  message: "This field is required",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Minimum 3 characters",
+                },
+                maxLength: {
+                  value: 17,
+                  message: "Maximum 17 characters",
+                },
+                pattern: {
+                  value: /^\+?[0-9]([0-9\-]*[0-9])?$/,
+                  message: "Phone number has invalid symbols",
+                },
+              })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter phone number"
             />
-            <label className="fieldset-label text-lg">Email</label>
+            {visiblePhoneNumberError && errors.phoneNumber != null && (
+              <Error
+                error={errors.phoneNumber?.message}
+                setVisible={setVisiblePhoneNumberError}
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="fieldset-label figma-headline-4 !font-bold">
+              Email
+            </label>
             <input
               {...register("email", {
                 required: {
-                  message: "This field is required"
-                }
+                  value: true,
+                  message: "This field is required",
+                },
+                pattern: {
+                  value:
+                    /^[a-zA-Z0-9._%+-]+(?!(.*[.]{2,}|.*@{2,}))[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                  message:
+                    "At least 4 symbols before @, 3 after @, the domain must be at least 2 symbols, and no consecutive @'s or .'s.",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Minimum 8 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Maximum 50 characters",
+                },
               })}
               type="text"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter email"
             />
-            <label className="fieldset-label text-lg">Password</label>
+            {visibleEmailError && errors.email && (
+              <Error
+                error={errors.email?.message}
+                setVisible={setVisibleEmailError}
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="fieldset-label figma-headline-4 !font-bold">
+              Password
+            </label>
             <input
               {...register("password", {
                 required: {
-                  message: "This field is required"
-                }
+                  value: true,
+                  message: "This field is required",
+                },
+                minLength: {
+                  value: 8,
+                  message: "Minimum 8 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Maximum 50 characters",
+                },
+                pattern: {
+                  value:
+                    /^(?=(.*[a-zA-Z]))(?=(.*\d))[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_`{|}~ ]*$/,
+                  message:
+                    "Minumum of one number and letter & can contain common symbols",
+                },
               })}
               type="password"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter password"
             />
-            <label className="fieldset-label text-lg">Repeat Password</label>
+            {visiblePasswordError && errors.password != null && (
+              <Error
+                error={errors.password?.message}
+                setVisible={setVisiblePasswordError}
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="fieldset-label figma-headline-4 !font-bold">
+              Repeat Password
+            </label>
             <input
               {...register("repeatPassword", {
                 required: {
+                  value: true,
                   message: "This field is required",
                 },
                 validate: (value) => {
@@ -100,31 +262,40 @@ export const Register = () => {
                 },
               })}
               type="password"
-              className="input text-lg p-3 w-full"
+              className="input figma-headline-4 p-3 w-full autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)]"
               placeholder="Enter password"
             />
-            <button type="submit" className="custom-black-btn mt-4">
-              Register
-            </button>
-          </div>
 
-          <div className="text-center mt-2">
-            Already have an account?
-            <NavLink to="/login" className="underline ml-1">
-              Login
-            </NavLink>
+            {visibleRepeatPasswordError && errors.repeatPassword != null && (
+              <Error
+                error={errors.repeatPassword?.message}
+                setVisible={setVisibleRepeatPasswordError}
+              />
+            )}
           </div>
-        </form>
-        <Error error={error} isHidden={!error} />
-
-        <figure className="w-[400px] h-[500px] rounded-box overflow-hidden">
-          <img
-            src={RegisterPageDog} // This should be the same image used in Login
-            alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
-            className="w-full h-full object-cover"
-          />
-        </figure>
-      </div>
+        </div>
+        {responseError.length != 0 && <Error error={responseError} />}
+        <button
+          type="submit"
+          className="!w-9/20 custom-black-btn mt-4 figma-headline-4 mx-auto"
+          onClick={() => switchErrorVisibility()}
+        >
+          Register
+        </button>
+        <div className="figma-headline-4 text-center mt-2">
+          Already have an account?
+          <NavLink to="/login" className="figma-headline-4 underline ml-1">
+            Login
+          </NavLink>
+        </div>
+      </form>
+      <figure className="h-[500px] rounded-box w-[400px] overflow-hidden hidden md:block">
+        <img
+          src={RegisterPageDog} // This should be the same image used in Login
+          alt="Dog puppy; light brown fur; in the car seat; chewing plastic straw"
+          className="h-full w-full object-cover"
+        />
+      </figure>
     </main>
   );
 };

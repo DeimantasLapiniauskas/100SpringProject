@@ -3,7 +3,6 @@ package SpringProject._Spring.validation;
 import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

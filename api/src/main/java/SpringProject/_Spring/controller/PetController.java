@@ -4,10 +4,10 @@ package SpringProject._Spring.controller;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.dto.pet.PetResponseDTO;
-import SpringProject._Spring.model.Account;
-import SpringProject._Spring.model.Pet;
-import SpringProject._Spring.service.AccountService;
-import SpringProject._Spring.service.ClientService;
+import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.model.pet.Pet;
+import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -80,22 +80,24 @@ public class PetController extends BaseController {
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
+
         if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
-                petService.getPetByid(petId).get().getOwnerId()
+                petService.getPetById(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
-                                role -> Objects.equals(
-                                        role.getName(), "ADMIN"
-                                )
+                                role ->
+                                        Objects.equals(
+                                                role.getName(), "ADMIN"
+                                        )
                         )
         ) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("You can't edit someone else's pet!");
         }
 
-        Pet petFromDB = petService.getPetByid(petId).get();
+        Pet petFromDB = petService.getPetById(petId).get();
         petFromDB.setName(petRequestDTO.name());
         petFromDB.setSpecies(petRequestDTO.species());
         petFromDB.setBreed(petRequestDTO.breed());
@@ -119,7 +121,7 @@ public class PetController extends BaseController {
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
         if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
-                petService.getPetByid(petId).get().getOwnerId()
+                petService.getPetById(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(

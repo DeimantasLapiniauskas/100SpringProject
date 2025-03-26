@@ -1,8 +1,8 @@
 package SpringProject._Spring.dto.vet;
 
-import SpringProject._Spring.model.Vet;
-
-import java.sql.Timestamp;
+import SpringProject._Spring.dto.authentication.vet.VetRequestDTO;
+import SpringProject._Spring.dto.authentication.vet.VetResponseDTO;
+import SpringProject._Spring.model.authentication.Vet;
 import java.time.LocalDate;
 
 public class VetMapping {

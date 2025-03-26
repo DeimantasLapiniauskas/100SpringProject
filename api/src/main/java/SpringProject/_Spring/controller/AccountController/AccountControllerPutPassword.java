@@ -1,10 +1,10 @@
 package SpringProject._Spring.controller.AccountController;
 
 import SpringProject._Spring.controller.BaseController;
-import SpringProject._Spring.dto.password.PasswordUpdateDTO;
-import SpringProject._Spring.dto.password.PasswordUpdateMapper;
-import SpringProject._Spring.model.Account;
-import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
+import SpringProject._Spring.dto.authentication.password.PasswordUpdateMapper;
+import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.service.authentication.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

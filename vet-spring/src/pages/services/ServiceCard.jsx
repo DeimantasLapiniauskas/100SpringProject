@@ -1,81 +1,91 @@
 import { NavLink } from "react-router";
-import {useAuth} from "../../context/AuthContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
-import {Error} from "../../components/Error.jsx";
-import {useState} from "react";
+import { Error } from "../../components/Error.jsx";
+import { useState } from "react";
+import { usePagination } from "../../context/PaginationContext.jsx";
 
 export const ServiceCard = (props) => {
-    const{service, getPage, currentPage, pageSize} = props
-    const{id, name, description, price} = service
-    const [error, setError] = useState("")
-    const{ account } = useAuth()
-   
-    
-    const deleteService = async () => {
-        
-        try {
-            await api.delete(`/services/${id}`);
-            getPage(pageSize, currentPage)
-        } catch (error) {
-            setError(error.response?.message || error.message);
-        }
-        
+  const { service } = props;
+  const { id, name, description, price } = service;
+  const [error, setError] = useState("");
+  const { account } = useAuth();
+  const { getPage, currentPage, pageSize } = usePagination();
+
+  const deleteService = async () => {
+    try {
+      await api.delete(`/services/${id}`);
+      getPage(pageSize, currentPage);
+    } catch (error) {
+      setError(error.response?.message || error.message);
     }
-    const editService = async () => {
-        try {
-            await api.put(`/services/${id}`);
-            await getPage(pageSize, currentPage)
-        } catch (error) {
-            setError(error.response?.message || error.message);
-        }
+  };
+  const editService = async () => {
+    try {
+      await api.put(`/services/${id}`);
+      await getPage(pageSize, currentPage);
+    } catch (error) {
+      setError(error.response?.message || error.message);
     }
+  };
 
+  // const registrApoiment = async(data) => {
+  //     const trimmedData = {
+  //         ...data,
+  //         name: data.id.trim(),
+  //       }
+  //       const payload = { ...trimmedData};
+  //       console.log(payload);
 
-    
-
-
-    // const registrApoiment = async(data) => {
-    //     const trimmedData = {
-    //         ...data,
-    //         name: data.id.trim(),
-    //       }
-    //       const payload = { ...trimmedData};
-    //       console.log(payload);
-          
-    //     try{
-    //         await api.post("/appointments", payload);
-    //     } catch (error) {
-    //         setError(error.response?.message || error.message);
-    //     }
-    //}
-    const checkRoles = () => {
-        //todo: make this better
-        return (
-          (account !== null &&
-            account.scope !== null &&
-            account.scope.includes("ROLE_VET")) ||
-          (account !== null &&
-            account.scope !== null &&
-            account?.scope.includes("ROLE_ADMIN"))
-        );
-      };
+  //     try{
+  //         await api.post("/appointments", payload);
+  //     } catch (error) {
+  //         setError(error.response?.message || error.message);
+  //     }
+  //}
+  const checkRoles = () => {
+    //todo: make this better
     return (
-        <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
-            <div className="card-body">
-            <h2 className="card-title block break-words w-[20rem]">{name}</h2>
-            <textarea readOnly
-            className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
-            
-            >{description}</textarea>
-            <p>{price} €</p>
-            <div className="card-actions">
-            {   checkRoles() &&(<button onClick={deleteService} className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]">Delete</button>)}
-            {   checkRoles() &&(<NavLink to={`/services/edit/${service.id}`} className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]">Edit</NavLink>)}
-             {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
-                </div>
-                <Error error={error} isHidden={!error} />
-            </div>
+      (account !== null &&
+        account.scope !== null &&
+        account.scope.includes("ROLE_VET")) ||
+      (account !== null &&
+        account.scope !== null &&
+        account?.scope.includes("ROLE_ADMIN"))
+    );
+  };
+  return (
+    <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
+      <div className="card-body">
+        <h2 className="card-title block break-all">{name}</h2>
+        <textarea
+          readOnly
+          className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
+        >
+          {description}
+        </textarea>
+        <p>{price} €</p>
+        <div className="card-actions">
+          {checkRoles() && (
+            <button
+              onClick={deleteService}
+              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+            >
+              Delete
+            </button>
+          )}
+          {checkRoles() && (
+            <NavLink
+              to={`/services/edit/${service.id}`}
+              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+            >
+              Edit
+            </NavLink>
+          )}
+          {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
         </div>
-    )
-}
-
+        {error && <Error error={error} isHidden={!error} />}
+      </div>
+    </div>
+  );
+};

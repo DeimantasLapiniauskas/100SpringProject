@@ -36,7 +36,7 @@ export const HomePage = () => {
             </main>
             <PaginationProvider>
                 <PostCarousel/>
-                </PaginationProvider>
+            </PaginationProvider>
         </div>
     );
 };

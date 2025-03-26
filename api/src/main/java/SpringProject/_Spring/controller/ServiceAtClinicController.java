@@ -3,7 +3,6 @@ package SpringProject._Spring.controller;
 import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
 import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.service.ServiceAtClinicRequestDTO;
-import SpringProject._Spring.model.Post;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.service.ServiceAtClinicService;
 import io.swagger.v3.oas.annotations.Operation;
