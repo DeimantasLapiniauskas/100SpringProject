@@ -71,7 +71,7 @@ export const BandytiDesignHomePage = () => {
               Twenty-four hours a day
             </article>
 
-            <h1 className="figma-headline text-black lg:text-2xl md:text-xl sm:text-lg text-base">
+            <h1 className=" text-black lg:text-2xl md:text-xl sm:text-lg text-base">
               Happy Hearts <br /> Veterinary Clinic
             </h1>
 
