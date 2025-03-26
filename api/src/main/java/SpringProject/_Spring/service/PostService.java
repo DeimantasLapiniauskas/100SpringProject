@@ -56,13 +56,18 @@ public class PostService {
             return  postRepository.findAll(pageable);
         }
 
+        if (sort.equals("createdAt")) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(sort).descending());
+            return postRepository.findAll(pageable);
+        }
+
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         PostType postType = PostType.valueOf(sort);
        return postRepository.findByPostType(postType, pageable);
     }
 
     public boolean isNotValidSortField(String sort) {
-        List<String> sortFields = List.of("News", "Sale", "Blog");
+        List<String> sortFields = List.of("News", "Sale", "Blog", "createdAt");
 
         return !sortFields.contains(sort);
     }

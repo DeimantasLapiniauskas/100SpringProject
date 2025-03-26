@@ -80,10 +80,10 @@ export const PaginationUI = () => {
               <PaginationLink
                 isActive={page === currentPage}
                 onClick={() => onPaginate(page)}
-                className={`text-xs px-2.5 py-1            
-                            sm:text-sm sm:px-3 sm:py-1.25
-                            md:text-base md:px-3.5 md:py-1.5
-                             lg:px-4 lg:py-1.75
+                className={`text-[10px] px-1.75 py-0.5            
+                            sm:text-xs sm:px-2.25 sm:py-0.75
+                            md:text-sm md:px-3 md:py-1
+                             lg:px-3.5 lg:py-1.25
                    rounded-md transition cursor-pointer ${
                      page === currentPage
                        ? "font-bold text-[#2B89A8] bg-blue-200 border border-blue-500 shadow-lg"

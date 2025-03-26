@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/filtering";
 import { usePagination } from "@/context/PaginationContext";
 import { FilterIcon } from "@/assets/icons/FilterIcon";
+
 export const FilterUI = () => {
   const { sorted, onSortBy } = usePagination();
 

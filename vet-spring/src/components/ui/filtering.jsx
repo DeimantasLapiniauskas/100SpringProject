@@ -25,7 +25,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
       {open ? (
         <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
       ) : (
-        <span className="absolute left-[52px] bottom-[614px] sm:bottom-[598px] md:bottom-[581px] lg:bottom-[569px]" >
+        <span className="absolute left-[52px] bottom-[599px] xs:bottom-[614.5px] sm:bottom-[598px] md:bottom-[581px] lg:bottom-[569px]" >
           <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white font-semibold" />
         </span>
       )}
@@ -41,7 +41,7 @@ const SelectContent = React.forwardRef(({ className, children, ...props }, ref) 
   position="popper"
   sideOffset={5}
   className={cn(
-    "z-50 w-[80px] sm:w-[100px] md:w-[120px] lg:w-[130px] overflow-auto rounded-md border border-blue-500 hover:bg-blue-200 shadow-lg", className
+    "z-50 w-[55px] sm:w-[75px] md:w-[90px] lg:w-[100px] overflow-auto rounded-md border border-blue-500 hover:bg-blue-200 shadow-lg", className
   )}
   {...props}
 >

@@ -3,6 +3,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap");
 
+@theme {
+  --breakpoint-xs: 425.6px
+}
+
 * {
   box-sizing: border-box;
 }

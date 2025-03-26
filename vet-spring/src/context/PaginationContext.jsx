@@ -12,6 +12,7 @@ import { useCurrentPath, useRealPath } from "../hooks/usePath";
 import { useIsMounted } from "../hooks/useIsMounted";
 import { useUI } from "./UIContext";
 import { UIStatus } from "../constants/UIStatus";
+import { useSearchParams } from "react-router";
 
 const PaginationContext = createContext({
   getPage: () => {},
@@ -21,15 +22,19 @@ const PaginationContext = createContext({
 });
 
 export const PaginationProvider = ({ children }) => {
+  const [searchParams, setSearchParams] = useSearchParams("");
   const isFirstLoad = useRef(true);
   const isMounted = useIsMounted();
   const currentPath = useCurrentPath();
   const realPath = useRealPath();
+  const localStoragePath = realPath.replace(/\//g, "");
 
-  const localStoragePath = realPath.replace(/\//g, "")
-  const defaultPageSize = parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 6;
-  const defaultCurrentPage = parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) || 0
-  const defaultSorted = localStorage.getItem(`${localStoragePath} - sorted`) || null;
+  const defaultPageSize = parseInt(searchParams.get("size")) ||
+    parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 6;
+  const defaultCurrentPage = parseInt(searchParams.get("page")) ??
+    (parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) || 0);
+  const defaultSorted = searchParams.get("sort") ||
+    localStorage.getItem(`${localStoragePath} - sorted`) || null;
 
   const initialPagination = {
     currentPage: defaultCurrentPage,
@@ -42,7 +47,6 @@ export const PaginationProvider = ({ children }) => {
   };
 
   const [pagination, setPagination] = useState(initialPagination);
-
   const { status, setStatus } = useUI();
   const { Loading, Success, Error } = UIStatus;
   const isEmpty = status === Success && pagination.content.length === 0;
@@ -99,23 +103,32 @@ export const PaginationProvider = ({ children }) => {
 
   const onPageSizeChange = (e) => {
     const pageSize = Math.max(1, parseInt(e.target.value, 10));
+    searchParams.set("size", pageSize);
+    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: 0, pageSize: pageSize }));
-    localStorage.setItem(`${localStoragePath} - pageSize`, pageSize)
+    localStorage.setItem(`${localStoragePath} - pageSize`, pageSize);
   };
 
   const onPaginate = (page) => {
     if (page < 0 || page >= pagination.totalPages) return;
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: page }));
-    localStorage.setItem(`${defaultCurrentPage} - currentPage`, page)
+    localStorage.setItem(`${defaultCurrentPage} - currentPage`, page);
   };
 
   const onSortBy = (e) => {
     let sortBy = e.target.value;
     if (sortBy === "Content") {
-      sortBy = null
+      searchParams.delete("sort");
+      setSearchParams(searchParams);
+      localStorage.removeItem(`${localStoragePath} - sorted`);
+      setPagination((prev) => ({ ...prev, sorted: null }));
+      return;
     }
-    console.log(sortBy)
+    searchParams.set("sort", sortBy), setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, sorted: sortBy }));
+    localStorage.setItem(`${localStoragePath} - sorted`, sortBy);
   };
 
   // const resetPagination = () => {
@@ -153,6 +166,7 @@ export const PaginationProvider = ({ children }) => {
     realPath,
     pagination.sorted,
     getPage,
+    searchParams,
   ]);
 
   return (
