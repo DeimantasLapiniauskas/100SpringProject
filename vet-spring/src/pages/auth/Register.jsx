@@ -185,7 +185,7 @@ export const Register = () => {
                 },
                 pattern: {
                   value:
-                    /^[a-zA-Z0-9._%+-]+(?!(.*[.]{2,}|.*@{2,}))[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                    /^[a-zA-Z0-9]+(?!.*(.*\.{2,}|.*@{2,}))[a-zA-Z0-9.\-]+[a-zA-Z0-9]+@[a-zA-Z0-9.\-]{3,}\.[a-zA-Z]{2,}/,
                   message:
                     "At least 4 symbols before @, 3 after @, the domain must be at least 2 symbols, and no consecutive @'s or .'s.",
                 },
