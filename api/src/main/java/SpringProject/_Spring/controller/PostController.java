@@ -1,20 +1,13 @@
 package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.ApiResponse;
-import SpringProject._Spring.dto.post.PostListPageResponseDTO;
+import SpringProject._Spring.dto.post.PostPageResponseDTO;
 import SpringProject._Spring.dto.post.PostMapper;
 import SpringProject._Spring.dto.post.PostRequestDTO;
-//<<<<<<< HEAD
-//import SpringProject._Spring.dto.post.PostResponseDTO;
-//import SpringProject._Spring.model.Post;
-//import SpringProject._Spring.model.PostType;
-//import SpringProject._Spring.model.Vet;
-//=======
 import SpringProject._Spring.dto.post.PostResponseDTO;
 import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.model.post.PostType;
 import SpringProject._Spring.model.authentication.Vet;
-//>>>>>>> main
 import SpringProject._Spring.service.PostService;
 import SpringProject._Spring.service.authentication.VetService;
 import jakarta.validation.Valid;
@@ -67,9 +60,9 @@ public class PostController extends BaseController{
     }
 
     @GetMapping("/posts/pagination")
-    public ResponseEntity<ApiResponse<PostListPageResponseDTO>> getAllPostsPage(@RequestParam int page,
-                                                                                @RequestParam int size,
-                                                                                @RequestParam(required = false) String sort) {
+    public ResponseEntity<ApiResponse<PostPageResponseDTO>> getAllPostsPage(@RequestParam int page,
+                                                                            @RequestParam int size,
+                                                                            @RequestParam(required = false) String sort) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -79,13 +72,13 @@ public class PostController extends BaseController{
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-
         Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort);
-        PostListPageResponseDTO responseDTO = PostMapper.postListResponsePageDTO(pagedPosts, sort);
-
         String message = pagedPosts.isEmpty() ? "Posts list is empty" : null;
+        PostPageResponseDTO responseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
+
         return ok(responseDTO, message);
     }
+
     @GetMapping("/posts/{postId}")
     public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 

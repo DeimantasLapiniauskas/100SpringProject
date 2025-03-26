@@ -11,25 +11,26 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   const [open, setOpen] = React.useState(false);
 
   return (
-    <SelectPrimitive.Trigger
-  ref={ref}
-  onClick={() => setOpen(!open)}
-  className={cn(
-    "outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:outline-none focus-visible:ring-0",
-    className
-  )}
-  {...props}
->
-
-      {children}
-      {open ? (
-        <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
-      ) : (
-        <span className="absolute left-[52px] bottom-[599px] xs:bottom-[614.5px] sm:bottom-[598px] md:bottom-[581px] lg:bottom-[569px]" >
-          <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white font-semibold" />
-        </span>
-      )}
-    </SelectPrimitive.Trigger>
+    <div className="relative">
+      <SelectPrimitive.Trigger
+        ref={ref}
+        onClick={() => setOpen(!open)}
+        className={cn(
+      "outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+      className
+        )}
+        {...props}
+      >
+        {children}
+        {open ? (
+          <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
+        ) : (
+          <span className={`${open ? "hidden" : "absolute left-[8px] bottom-0 sm:bottom-[-1.5px] md:bottom-[-2.5px]"}`} >
+            <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white font-semibold" />
+          </span>
+        )}
+      </SelectPrimitive.Trigger>
+    </div>
   );
 });
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName

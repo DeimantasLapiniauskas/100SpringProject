@@ -17,14 +17,14 @@ public class PostMapper {
         return new PostResponseDTO(post.getId(), post.getTitle(), post.getContent(), post.getPostType(), VetMapping.toVetResponseDTO(post.getVet()), post.getCreatedAt(), post.getImageUrl());
     }
 
-    public static PostListPageResponseDTO postListResponsePageDTO(Page<Post> postsPage, String sortBy) {
-        List<PostResponseDTO> postResponseList = postsPage.getContent()
+    public static PostPageResponseDTO toPostPageResponseDTO(Page<Post> postsPage, String sortBy) {
+        List<PostResponseDTO> postResponseListDTO = postsPage.getContent()
                 .stream()
                 .map(PostMapper::toPostResponseDTO)
                 .toList();
 
-        return new PostListPageResponseDTO(
-                postResponseList,
+        return new PostPageResponseDTO(
+                postResponseListDTO,
                 postsPage.getTotalPages(),
                 (int) postsPage.getTotalElements(),
                 postsPage.getNumber(),

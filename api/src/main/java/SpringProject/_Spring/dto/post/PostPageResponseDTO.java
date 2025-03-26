@@ -2,7 +2,7 @@ package SpringProject._Spring.dto.post;
 
 import java.util.List;
 
-public record PostListPageResponseDTO(
+public record PostPageResponseDTO(
         List<PostResponseDTO> content,
         int totalPages,
         int totalElements,

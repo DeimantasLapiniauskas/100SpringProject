@@ -48,7 +48,7 @@ export const ListProvider = ({ children }) => {
 
   const [pagination, setPagination] = useState(initialPagination);
   const { status, setStatus } = useUI();
-  const { Loading, Success, Error } = UIStatus;
+  const { Loading, Success, Error, BadRequest } = UIStatus;
   const isEmpty = status === Success && pagination.content.length === 0;
 
   const getPage = useCallback(
@@ -63,6 +63,9 @@ export const ListProvider = ({ children }) => {
         const { data, message, success } = response.data;
         console.log(response.data);
         if (!isMounted.current) return;
+        if (page >= data.content.totalPages) {
+          setStatus(BadRequest)
+        }
         if (success && data) {
           setPagination((prev) => ({
             ...prev,
@@ -121,8 +124,10 @@ export const ListProvider = ({ children }) => {
     let sortBy = e.target.value;
     if (sortBy === "Content") {
       searchParams.delete("sort");
+      searchParams.delete("page")
       setSearchParams(searchParams);
       localStorage.removeItem(`${localStoragePath} - sorted`);
+      localStorage.removeItem(`${localStoragePath} - currentPage`)
       setPagination((prev) => ({ ...prev, sorted: null }));
       return;
     }
@@ -167,7 +172,7 @@ export const ListProvider = ({ children }) => {
     getPage,
     searchParams,
   ]);
-  console.log(pagination.currentPage)
+  
   return (
     <ListContext.Provider
       value={{

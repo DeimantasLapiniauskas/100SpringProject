@@ -58,12 +58,12 @@ export const ServiceCard = (props) => {
     <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
       <div className="card-body">
         <h2 className="card-title block break-all">{name}</h2>
-        <textarea
+        <p
           readOnly
           className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
         >
           {description}
-        </textarea>
+        </p>
         <p>{price} €</p>
         <div className="card-actions">
           {checkRoles() && (
@@ -84,7 +84,6 @@ export const ServiceCard = (props) => {
           )}
           {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
         </div>
-        {error && <Error error={error} isHidden={!error} />}
       </div>
     </div>
   );

@@ -5,10 +5,9 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useList } from "../../context/ListContext";
 import "../../index.css";
-import { useNavigate } from "react-router";
+import { NavLink } from "react-router";
 
 const PostCarousel = () => {
-  const navigate = useNavigate();
   const { content: posts } = useList();
 
   return (
@@ -53,12 +52,11 @@ const PostCarousel = () => {
                   ? post.content.slice(0, 47) + "..."
                   : post.content}
               </p>
-              <button
-                onClick={() => navigate(`/posts/${post.id}`)}
-                className=" text-white hover:underline text-sm font-medium"
-              >
-                Read more here
-              </button>
+              <NavLink to={`/posts/${post.id}`}>
+        <p className=" text-white hover:underline text-sm font-medium">
+          Read more here
+        </p>
+      </NavLink>
             </div>
           </SwiperSlide>
         ))}

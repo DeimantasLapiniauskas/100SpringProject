@@ -8,6 +8,7 @@ import { useUI } from "../../context/UIContext";
 import { PaginationUI } from "../../components/PaginationUI";
 import { SelectUI } from "@/components/SelectUI";
 import { FilterUI } from "@/components/FilterUI";
+import { BadRequest } from "@/components/feedback/BadRequest";
 
 export const PostList = () => {
   const { account } = useAuth();
@@ -21,7 +22,7 @@ export const PostList = () => {
     isEmpty,
   } = useList();
 
-  const { isLoading, isError } = useUI();
+  const { isLoading, isError, isBadRequest } = useUI();
 
   const checkRoles = () => {
     //todo: make this better
@@ -61,6 +62,7 @@ export const PostList = () => {
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
+      {isBadRequest ? <BadRequest/> : ""}
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <PostCard
