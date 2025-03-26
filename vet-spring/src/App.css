@@ -115,6 +115,118 @@ html {
   transform: rotate(53.04deg);
 }
 
+@media (min-width: 1970px) {
+  .pawss-paw1-3xl-custom-breakpoint-override {
+    left: 74rem; /* Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 1rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 1970px) {
+  .pawss-paw2-3xl-custom-breakpoint-override {
+    left: 78rem; /* Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 5rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 1970px) {
+  .pawss-paw3-3xl-custom-breakpoint-override {
+    left: 72rem; /* Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 6rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 1970px) { 
+  .pawss-paw4-3xl-custom-breakpoint-override {
+    left: 76rem; /* Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 7rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw1-4xl-custom-breakpoint-override {
+    left: 82rem; /* Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 1rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw2-4xl-custom-breakpoint-override {
+    left: 86rem; /* Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 5rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw3-4xl-custom-breakpoint-override {
+    left: 80rem; /* Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 6rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw4-4xl-custom-breakpoint-override {
+    left: 84rem; /* Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 7rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw1-5xl-custom-breakpoint-override {
+    left: 98rem; /* Increase previous Paw 1 (left: value) by 16rem */
+    top: 1rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw2-5xl-custom-breakpoint-override {
+    left: 102rem; /* Increase previous Paw 2 (left: value) by 16rem */
+    top: 5rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw3-5xl-custom-breakpoint-override {
+    left: 96rem; /* Increase previous Paw 3 (left: value) by 16rem */
+    top: 6rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw4-5xl-custom-breakpoint-override {
+    left: 100rem; /* Increase previous Paw 4 (left: value) by 16rem */
+    top: 7rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw1-6xl-custom-breakpoint-override {
+    left: 106rem; /* Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 1rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw2-6xl-custom-breakpoint-override {
+    left: 110rem; /* Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 5rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw3-6xl-custom-breakpoint-override {
+    left: 104rem; /* Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 6rem; /* stays the same; */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw4-6xl-custom-breakpoint-override {
+    left: 108rem; /* Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 7rem; /* stays the same; */
+  }
+}
+
 /* .pawss-for-background-small { */
   /* FIGMA paw smaller image to be used inside background of ards/boxes */
   /* paws 4 in FIGMA description in FIGMA Services Page */

@@ -1,4 +1,5 @@
 
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -8,7 +9,7 @@ export default {
         'figma-headline-2': '2.5rem', // 40px
         'figma-headline-3': '1.5rem', // 24px
         'figma-headline-4': '1rem', // 16px
-      },
+      }
     },
   },
   plugins: [],
