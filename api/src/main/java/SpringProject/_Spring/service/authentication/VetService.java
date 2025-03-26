@@ -7,6 +7,7 @@ import SpringProject._Spring.repository.authentication.VetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,9 @@ public class VetService {
 
     public Optional<Vet> findVetByAccountEmail(String email) {
         return vetRepository.findByAccount_email(email);
+    }
+
+    public List<Vet> getAllVets() {
+        return vetRepository.findAll();
     }
 }

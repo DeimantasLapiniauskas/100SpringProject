@@ -5,6 +5,8 @@ import SpringProject._Spring.dto.appointment.AppointmentMapping;
 import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.dto.appointment.AppointmentResponseDTO;
 import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
+import SpringProject._Spring.dto.appointment.vet.VetAppointmentMapping;
+import SpringProject._Spring.dto.appointment.vet.VetAppointmentResponseDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
@@ -126,5 +128,13 @@ public class AppointmentController {
                                 appointment.getNotes(),
                                 appointment.getTotalServicesSum()))
                         .toList());
+    }
+
+    @Operation(summary = "Get vets list", description = "Retrieves a vet list (names, specialty)")
+    @GetMapping("/vets")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<List<VetAppointmentResponseDTO>> getVeterinarians(){
+        List<VetAppointmentResponseDTO> vetsDTO = vetService.getAllVets().stream().map(VetAppointmentMapping::toVetDTO).toList();
+        return ResponseEntity.ok(vetsDTO);
     }
 }
