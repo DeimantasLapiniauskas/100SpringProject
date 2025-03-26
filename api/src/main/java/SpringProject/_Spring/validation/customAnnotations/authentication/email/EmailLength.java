@@ -14,8 +14,8 @@ import java.lang.annotation.Target;
 public @interface EmailLength {
 
     String message() default "Password has to be between " +
-            EmailLengthValidator.minLength + "and" +
-            EmailLengthValidator.maxLength + "characters long!";
+            EmailLengthValidator.minLength + " and " +
+            EmailLengthValidator.maxLength + " characters long!";
 
     Class<?>[] groups() default {}; //required for @Constraint
 
