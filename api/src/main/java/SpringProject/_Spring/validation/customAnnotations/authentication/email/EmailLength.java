@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = EmailLengthValidator.class)
 public @interface EmailLength {
 
-    String message() default "Password has to be between " +
+    String message() default "Email has to be between " +
             EmailLengthValidator.minLength + " and " +
             EmailLengthValidator.maxLength + " characters long!";
 
