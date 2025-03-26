@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAppointments } from "../../utils/helpers/getAppointments";
+import { getAppointments } from "../../utils/helpers/appointments";
 import { RegisterAppointment } from "./RegisterAppointment";
 
 export const Appointment = () => {
