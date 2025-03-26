@@ -2,6 +2,7 @@ package SpringProject._Spring.service;
 
 import SpringProject._Spring.dto.post.PostRequestDTO;
 import SpringProject._Spring.model.Post;
+import SpringProject._Spring.model.PostType;
 import SpringProject._Spring.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,12 +56,13 @@ public class PostService {
             return  postRepository.findAll(pageable);
         }
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort).descending());
-        return  postRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        PostType postType = PostType.valueOf(sort);
+       return postRepository.findByPostType(postType, pageable);
     }
 
     public boolean isNotValidSortField(String sort) {
-        List<String> sortFields = List.of("title", "postType", "createdAt");
+        List<String> sortFields = List.of("News", "Sale", "Blog");
 
         return !sortFields.contains(sort);
     }

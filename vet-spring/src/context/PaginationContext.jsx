@@ -28,10 +28,11 @@ export const PaginationProvider = ({ children }) => {
 
   const localStoragePath = realPath.replace(/\//g, "")
   const defaultPageSize = parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 6;
+  const defaultCurrentPage = parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) || 0
   const defaultSorted = localStorage.getItem(`${localStoragePath} - sorted`) || null;
 
   const initialPagination = {
-    currentPage: 0,
+    currentPage: defaultCurrentPage,
     totalPages: 0,
     pageSize: defaultPageSize,
     sorted: defaultSorted,
@@ -105,10 +106,15 @@ export const PaginationProvider = ({ children }) => {
   const onPaginate = (page) => {
     if (page < 0 || page >= pagination.totalPages) return;
     setPagination((prev) => ({ ...prev, currentPage: page }));
+    localStorage.setItem(`${defaultCurrentPage} - currentPage`, page)
   };
 
   const onSortBy = (e) => {
-    const sortBy = e.target.value;
+    let sortBy = e.target.value;
+    if (sortBy === "Content") {
+      sortBy = null
+    }
+    console.log(sortBy)
     setPagination((prev) => ({ ...prev, sorted: sortBy }));
   };
 

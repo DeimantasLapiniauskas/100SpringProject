@@ -12,19 +12,22 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
 
   return (
     <SelectPrimitive.Trigger
-      ref={ref}
-      onClick={() => setOpen(!open)}
-      className={cn(
-        "flex w-full items-center gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input bg-transparent focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      {...props}
-    >
+  ref={ref}
+  onClick={() => setOpen(!open)}
+  className={cn(
+    "outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+    className
+  )}
+  {...props}
+>
+
       {children}
       {open ? (
         <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
       ) : (
-        <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
+        <span className="absolute left-[52px] bottom-[614px] sm:bottom-[598px] md:bottom-[581px] lg:bottom-[569px]" >
+          <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white font-semibold" />
+        </span>
       )}
     </SelectPrimitive.Trigger>
   );

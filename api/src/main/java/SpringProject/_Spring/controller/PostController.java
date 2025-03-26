@@ -72,6 +72,7 @@ public class PostController extends BaseController{
             throw new IllegalArgumentException("Invalid sort field");
         }
 
+
         Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort);
         PostListPageResponseDTO responseDTO = PostMapper.postListResponsePageDTO(pagedPosts, sort);
 

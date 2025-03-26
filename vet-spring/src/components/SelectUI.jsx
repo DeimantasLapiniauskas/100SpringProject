@@ -44,7 +44,7 @@ export const SelectUI = () => {
              lg:px-5 lg:py-1.75
                 hover:bg-blue-300
                 data-[state=checked]:font-semibold
-                text-info-content
+                text-info-content focus:font-semibold rounded-sm  
               `}
             >
               {num} per page

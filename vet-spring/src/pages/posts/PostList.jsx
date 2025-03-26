@@ -7,12 +7,10 @@ import { Loading } from "../../components/Loading";
 import { useUI } from "../../context/UIContext";
 import { PaginationUI } from "../../components/PaginationUI";
 import { SelectUI } from "@/components/SelectUI";
-
-
+import { FilterUI } from "@/components/FilterUI";
 
 export const PostList = () => {
   const { account } = useAuth();
-
   const {
     getPage,
     error,
@@ -23,7 +21,7 @@ export const PostList = () => {
     isEmpty,
   } = usePagination();
 
-  const {isLoading, isError} = useUI()
+  const { isLoading, isError } = useUI();
 
   const checkRoles = () => {
     //todo: make this better
@@ -39,8 +37,9 @@ export const PostList = () => {
 
   return (
     <div className="flex flex-col items-center gap-5 px-10 ">
-       <div className="flex w-full justify-end">
-        <SelectUI/>
+      <div className="flex w-full justify-between ">
+          <FilterUI />
+        <SelectUI />
       </div>
       <section className="px-4 py-8 text-center ">
         <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
@@ -73,7 +72,7 @@ export const PostList = () => {
           />
         ))}
       </ul>
-      <PaginationUI/>
+      <PaginationUI />
     </div>
   );
 };
