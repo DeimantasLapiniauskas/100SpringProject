@@ -1,9 +1,9 @@
 import { PostCard } from "./PostCard";
-import { Error } from "../../components/Error";
+import { Error } from "../../components/feedback/Error";
 import { useAuth } from "../../context/AuthContext";
-import { usePagination } from "../../context/PaginationContext";
+import { useList } from "../../context/ListContext";
 import { NavLink } from "react-router";
-import { Loading } from "../../components/Loading";
+import { Loading } from "../../components/feedback/Loading";
 import { useUI } from "../../context/UIContext";
 import { PaginationUI } from "../../components/PaginationUI";
 import { SelectUI } from "@/components/SelectUI";
@@ -19,7 +19,7 @@ export const PostList = () => {
     currentPage,
     pageSize,
     isEmpty,
-  } = usePagination();
+  } = useList();
 
   const { isLoading, isError } = useUI();
 

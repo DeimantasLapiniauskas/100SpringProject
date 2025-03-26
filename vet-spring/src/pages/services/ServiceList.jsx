@@ -1,7 +1,7 @@
-import { usePagination } from "../../context/PaginationContext.jsx";
+import { useList } from "../../context/ListContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { ServiceCard } from "./ServiceCard.jsx";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 import { NavLink } from "react-router";
 
 import ServiceListPageVetHoldingCat from "../../assets/cart.png";
@@ -20,7 +20,7 @@ export const ServiceList = () => {
     currentPage,
     totalPages,
     pageSize,
-  } = usePagination();
+  } = useList();
 
   const checkRoles = () => {
     //todo: make this better

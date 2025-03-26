@@ -1,4 +1,4 @@
-package SpringProject._Spring.controller.AccountController;
+package SpringProject._Spring.controller.accountController;
 
 import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.model.authentication.Account;

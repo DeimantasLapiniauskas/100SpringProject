@@ -7,10 +7,10 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
-import { usePagination } from "@/context/PaginationContext";
+import { useList } from "@/context/ListContext";
 
 export const PaginationUI = () => {
-  const { currentPage, totalPages, onPaginate } = usePagination();
+  const { currentPage, totalPages, onPaginate } = useList();
 
   const getPages = () => {
     const pages = [];

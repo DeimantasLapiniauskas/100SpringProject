@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { PetCard } from "./PetCard.jsx";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 import { useAuth } from "../../context/AuthContext";
 import ThemeContext from "../../utils/helpers/themeContext.js";
 import AddPetButton from "./AddPetButton.jsx";
-import { usePagination } from "../../context/PaginationContext.jsx";
+import { useList } from "../../context/ListContext.jsx";
 
 export const PetList = () => {
   const { account } = useAuth();
@@ -24,7 +24,7 @@ export const PetList = () => {
     currentPage,
     totalPages,
     pageSize,
-  } = usePagination();
+  } = useList();
 
   //TODO fadeout effect
   const welcomeClosure = () => {

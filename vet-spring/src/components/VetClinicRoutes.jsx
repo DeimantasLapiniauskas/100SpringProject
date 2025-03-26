@@ -5,12 +5,12 @@ import { AuthGuard } from "../pages/auth/AuthGuard.jsx";
 import { Login } from "../pages/auth/Login.jsx";
 import { Register } from "../pages/auth/Register.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
-import { NotFound } from "../components/NotFound.jsx";
+import { NotFound } from "./feedback/NotFound.jsx";
 import { ServiceList } from "../pages/services/ServiceList.jsx";
 import { ServiceAdd } from "../pages/services/ServiceAdd.jsx";
 import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
-import { PaginationProvider } from "../context/PaginationContext.jsx";
+import { ListProvider } from "../context/ListContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 import { PostList } from "../pages/posts/PostList.jsx";
@@ -34,9 +34,9 @@ const VetClinicRoutes = () => {
                 path="/pets"
                 element={
                   <AuthGuard>
-                    <PaginationProvider>
+                    <ListProvider>
                       <PetList />
-                    </PaginationProvider>
+                    </ListProvider>
                   </AuthGuard>
                 }
               />
@@ -45,18 +45,18 @@ const VetClinicRoutes = () => {
               <Route
                 path="/posts"
                 element={
-                  <PaginationProvider>
+                  <ListProvider>
                     <PostList />
-                  </PaginationProvider>
+                  </ListProvider>
                 }
               />
               <Route path="/posts/:postId" element={<ViewPost />} />
               <Route
                 path="/services"
                 element={
-                  <PaginationProvider>
+                  <ListProvider>
                     <ServiceList />
-                  </PaginationProvider>
+                  </ListProvider>
                 }
               />
               <Route path="services/add" element={<ServiceAdd />} />

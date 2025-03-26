@@ -3,14 +3,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { usePagination } from "../../context/PaginationContext";
+import { useList } from "../../context/ListContext";
 import "../../index.css";
 import { useNavigate } from "react-router";
 
 const PostCarousel = () => {
   const navigate = useNavigate();
-  const { content: posts } = usePagination();
-  console.log(posts)
+  const { content: posts } = useList();
 
   return (
     <div className="p-[1rem] bg-amber-300 relative rounded-[10px]">

@@ -1,16 +1,16 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 import { useState } from "react";
-import { usePagination } from "../../context/PaginationContext.jsx";
+import { useList } from "../../context/ListContext.jsx";
 
 export const ServiceCard = (props) => {
   const { service } = props;
   const { id, name, description, price } = service;
   const [error, setError] = useState("");
   const { account } = useAuth();
-  const { getPage, currentPage, pageSize } = usePagination();
+  const { getPage, currentPage, pageSize } = useList();
 
   const deleteService = async () => {
     try {
@@ -23,7 +23,7 @@ export const ServiceCard = (props) => {
   const editService = async () => {
     try {
       await api.put(`/services/${id}`);
-      await getPage(pageSize, currentPage);
+    getPage(pageSize, currentPage);
     } catch (error) {
       setError(error.response?.message || error.message);
     }

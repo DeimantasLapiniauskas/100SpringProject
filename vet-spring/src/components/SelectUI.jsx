@@ -5,10 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePagination } from "@/context/PaginationContext";
+import { useList } from "@/context/ListContext";
 
 export const SelectUI = () => {
-  const { pageSize, onPageSizeChange } = usePagination();
+  const { pageSize, onPageSizeChange } = useList();
 
   return (
     <div className="flex items-center gap-1 md:gap-2">

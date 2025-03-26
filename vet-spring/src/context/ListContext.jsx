@@ -14,14 +14,14 @@ import { useUI } from "./UIContext";
 import { UIStatus } from "../constants/UIStatus";
 import { useSearchParams } from "react-router";
 
-const PaginationContext = createContext({
+const ListContext = createContext({
   getPage: () => {},
   onPageSizeChange: () => {},
   onPaginate: () => {},
   onSortBy: () => {},
 });
 
-export const PaginationProvider = ({ children }) => {
+export const ListProvider = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams("");
   const isFirstLoad = useRef(true);
   const isMounted = useIsMounted();
@@ -31,7 +31,7 @@ export const PaginationProvider = ({ children }) => {
 
   const defaultPageSize = parseInt(searchParams.get("size")) ||
     parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 6;
-  const defaultCurrentPage = parseInt(searchParams.get("page")) ??
+  const defaultCurrentPage = parseInt(searchParams.get("page")) ||
     (parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) || 0);
   const defaultSorted = searchParams.get("sort") ||
     localStorage.getItem(`${localStoragePath} - sorted`) || null;
@@ -154,7 +154,6 @@ export const PaginationProvider = ({ children }) => {
         sorted: "createdAt",
         // currentPage: newPage,
       }));
-
       // getPage(newPageSize, newPage, newSort);
       return;
     }
@@ -168,9 +167,9 @@ export const PaginationProvider = ({ children }) => {
     getPage,
     searchParams,
   ]);
-
+  console.log(pagination.currentPage)
   return (
-    <PaginationContext.Provider
+    <ListContext.Provider
       value={{
         getPage,
         onPageSizeChange,
@@ -181,10 +180,10 @@ export const PaginationProvider = ({ children }) => {
       }}
     >
       {children}
-    </PaginationContext.Provider>
+    </ListContext.Provider>
   );
 };
 
-export const usePagination = () => {
-  return useContext(PaginationContext);
+export const useList = () => {
+  return useContext(ListContext);
 };

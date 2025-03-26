@@ -1,5 +1,5 @@
 import HomePageDog from "../../assets/dog.png"; 
-import { PaginationProvider } from "../../context/PaginationContext";
+import { ListProvider } from "../../context/ListContext";
 import PostCarousel from "../posts/PostsCarousel";
 
 export const HomePage = () => {
@@ -34,9 +34,9 @@ export const HomePage = () => {
                     />
                 </figure>
             </main>
-            <PaginationProvider>
+            <ListProvider>
                 <PostCarousel/>
-            </PaginationProvider>
+            </ListProvider>
         </div>
     );
 };
