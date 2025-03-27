@@ -74,11 +74,11 @@ export const RegisterAppointment = (props) => {
   };
 
   return (
-    <div>
-      <h1>Register to appointment</h1>
+    <div className="bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box min-h-[500px] relative z-10 m-auto h-2/3 w-[600px]">
+      <h1 className="center ">Register to appointment</h1>
       <form
         onSubmit={handleSubmit(formSubmitHandler)}
-        className="grid grid-cols-1 w-1/3"
+        className="grid grid-cols-1 w-2/3 m-auto"
       >
         <div>
           <label htmlFor="appointmentDate"> Pick date </label>
@@ -119,7 +119,6 @@ export const RegisterAppointment = (props) => {
               required: { value: true, message: "This field is requered" },
             })}
           >
-            {" "}
             <option value="">Veterianians</option>
             {vets?.map((vet) => (
               <option key={vet.id} value={vet.id}>
