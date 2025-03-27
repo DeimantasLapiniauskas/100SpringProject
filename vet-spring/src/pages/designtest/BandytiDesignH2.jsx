@@ -8,9 +8,9 @@ export const BandytiDesignH2 = () => {
         {/* Paw Prints in the Background */}
                 <div className="relative w-full h-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {/* Paw 1 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[??rem] to lg:left-[??rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[??rem] to lg:left-[??rem] */}
-          {/* Paw (top: value) stays the same */}
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[14rem] to lg:left-[50rem] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[50rem] to 2xl:left-[66rem] */}
+          {/* Paw (top: value; top-[1rem]) stays the same. Only for smallest (top: value; top-[1rem]) used once. */}
           <div
             className="
               pawss-for-background-medium
@@ -45,9 +45,9 @@ export const BandytiDesignH2 = () => {
           ></div>
 
           {/* Paw 2 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[??rem] to lg:left-[??rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[??rem] to lg:left-[??rem] */}
-          {/* Paw (top: value) stays the same */}
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[18rem] to lg:left-[54rem] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[54rem] to 2xl:left-[70rem] */}
+          {/* Paw (top: value; top-[5rem]) stays the same. Only for smallest (top: value; top-[5rem]) used once. */}
           <div
             className="
               pawss-for-background-medium
@@ -82,9 +82,9 @@ export const BandytiDesignH2 = () => {
           ></div>
 
           {/* Paw 3 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[??rem] to lg:left-[??rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[??rem] to lg:left-[??rem] */}
-          {/* Paw (top: value) stays the same */}
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[12rem] to lg:left-[48rem] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[48rem] to 2xl:left-[64rem] */}
+          {/* Paw (top: value; top-[6rem]) stays the same. Only for smallest (top: value; top-[5rem]) used once. */}
           <div
             className="
               pawss-for-background-medium
@@ -119,9 +119,9 @@ export const BandytiDesignH2 = () => {
           ></div>
 
           {/* Paw 4 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[??rem] to lg:left-[??rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[??rem] to lg:left-[??rem] */}
-          {/* Paw (top: value) stays the same */}
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[16rem] to lg:left-[52rem] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[52rem] to 2xl:left-[68rem] */}
+          {/* Paw (top: value; top-[7rem]) stays the same. Only for smallest (top: value; top-[6rem]) used once. */}
           <div
             className="
               pawss-for-background-medium
