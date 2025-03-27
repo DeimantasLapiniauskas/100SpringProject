@@ -5,6 +5,10 @@ import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.repository.authentication.AccountRepository;
 import SpringProject._Spring.repository.authentication.VetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -40,5 +44,16 @@ public class VetService {
 
     public boolean existsVetById(long id) {
         return vetRepository.existsById(id);
+    }
+
+    public Page<Vet> findAllPetsPage(int page, int size, String sort) {
+        if (sort == null) {
+            Pageable pageable = PageRequest.of(page, size);
+            return vetRepository.findAll(pageable);
+
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        return vetRepository.findAll(pageable);
     }
 }

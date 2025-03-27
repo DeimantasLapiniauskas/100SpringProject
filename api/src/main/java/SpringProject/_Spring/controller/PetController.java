@@ -5,12 +5,8 @@ import SpringProject._Spring.dto.ApiResponse;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.pet.PetPageResponseDTO;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
-import SpringProject._Spring.dto.pet.PetResponseDTO;
-import SpringProject._Spring.dto.post.PostMapper;
-import SpringProject._Spring.dto.post.PostPageResponseDTO;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.pet.Pet;
-import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.service.authentication.AccountService;
 import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.PetService;
@@ -24,7 +20,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -42,6 +37,7 @@ public class PetController extends BaseController {
         this.accountService = accountService;
     }
 
+    //by the idea we don't need this endpoint anymore, but I'll leave it here in case of something was broken
 //    @Operation(summary = "Get all pets by owner ID", description = "Retrieves all pets owned by client by his ID")
 //    @GetMapping("/{id}")
 //    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT')")
