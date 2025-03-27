@@ -12,7 +12,7 @@ const PostCarousel = () => {
 
   return (
     <div className="p-[1rem] bg-amber-300 relative rounded-[10px]">
-      <h3 className="text-center">FOLLOW OUR LATTEST NEWS</h3>
+      <h3 className="text-center">FOLLOW OUR LATEST NEWS</h3>
       <button className="custom-prev absolute left-0 top-1/2 z-10 bg-white p-2 rounded-full shadow">
         ◀
       </button>
@@ -29,9 +29,7 @@ const PostCarousel = () => {
           nextEl: ".custom-next",
           prevEl: ".custom-prev",
         }}
-        pagination={{ clickable: true,
-            el: '.custom-pagination',
-         }}
+        pagination={{ clickable: true, el: ".custom-pagination" }}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         breakpoints={{
           640: { slidesPerView: 3 },
@@ -41,10 +39,7 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div
-              className=" flex flex-col justify-between bg-blue-500 p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]
-"
-            >
+            <div className=" flex flex-col justify-between bg-blue-500 p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]">
               <p>{post.title}</p>
               <p className="font-bold">{post.postType}</p>
               <p className=" leading-[20px] text-sm text-gray-700 overflow-hidden">
@@ -53,10 +48,10 @@ const PostCarousel = () => {
                   : post.content}
               </p>
               <NavLink to={`/posts/${post.id}`}>
-        <p className=" text-white hover:underline text-sm font-medium">
-          Read more here
-        </p>
-      </NavLink>
+                <p className=" text-white hover:underline text-sm font-medium">
+                  Read more here
+                </p>
+              </NavLink>
             </div>
           </SwiperSlide>
         ))}

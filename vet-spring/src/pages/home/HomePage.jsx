@@ -1,6 +1,6 @@
 import HomePageDog from "../../assets/dog.png"; 
 import { ListProvider } from "../../context/ListContext";
-import PostCarousel from "../posts/PostsCarousel";
+import PostCarousel from "./PostsCarousel";
 
 export const HomePage = () => {
     return (
