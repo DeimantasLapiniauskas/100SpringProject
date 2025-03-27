@@ -63,9 +63,10 @@ export const ListProvider = ({ children }) => {
         const { data, message, success } = response.data;
         console.log(response.data);
         if (!isMounted.current) return;
-        if (page >= data.content.totalPages) {
-          setStatus(BadRequest)
-        }
+        // if (page >= data.content.totalPages) {
+        //  setStatus(BadRequest)
+        //  return
+        // }
         if (success && data) {
           setPagination((prev) => ({
             ...prev,
@@ -132,8 +133,9 @@ export const ListProvider = ({ children }) => {
       return;
     }
     searchParams.set("sort", sortBy), setSearchParams(searchParams);
-    setPagination((prev) => ({ ...prev, sorted: sortBy }));
+    setPagination((prev) => ({ ...prev, sorted: sortBy, currentPage: 0 }));
     localStorage.setItem(`${localStoragePath} - sorted`, sortBy);
+    localStorage.removeItem(`${localStoragePath} - currentPage`);
   };
 
   // const resetPagination = () => {
