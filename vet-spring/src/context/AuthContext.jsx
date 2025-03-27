@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }) => {
         if (decodedJwt.exp * 1000 < Date.now()) {
           localStorage.removeItem("jwt");
           setAccount(null);
-          // navigate("/login")
         }
       }
     };

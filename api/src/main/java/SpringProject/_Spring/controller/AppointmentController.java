@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AppointmentController {
+public class AppointmentController extends BaseController {
     private final AppointmentService appointmentService;
     private final PetService petService;
     private final ServiceAtClinicService serviceService;

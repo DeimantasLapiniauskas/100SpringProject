@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { PetCard } from "./PetCard.jsx";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 import { useAuth } from "../../context/AuthContext";
 import ThemeContext from "../../utils/helpers/themeContext.js";
 import AddPetButton from "./AddPetButton.jsx";
-import { usePagination } from "../../context/PaginationContext.jsx";
+import { useList } from "../../context/ListContext.jsx";
 
 export const PetList = () => {
   const { account } = useAuth();
@@ -19,11 +19,11 @@ export const PetList = () => {
     onPageSizeChange,
     onPaginate,
     error,
-    content,
+    content: pets,
     currentPage,
     totalPages,
     pageSize,
-  } = usePagination();
+  } = useList();
 
   //TODO fadeout effect
   const welcomeClosure = () => {
@@ -69,7 +69,34 @@ export const PetList = () => {
         </div>
         <div className="flex flex-col items-center gap-8 py-8">
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {content?.map((pet) => (
+            {pets?.map((pet) => (
+              <PetCard
+                key={pet.id}
+                pet={pet}
+                getPage={getPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
+            ))}
+          </ul>
+        </div>
+        <div className="join">
+          <button
+            className="join-item btn"
+            onClick={async () => onPaginate(currentPage - 1)}
+            disabled={currentPage === 0}
+          />
+        </div>
+        <div>
+          <AddPetButton
+            getPage={getPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </div>
+        <div className="flex flex-col items-center gap-8 p-8">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {pets?.map((pet) => (
               <PetCard
                 key={pet.id}
                 pet={pet}
