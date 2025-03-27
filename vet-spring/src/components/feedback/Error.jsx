@@ -2,7 +2,7 @@ export const Error = (props) => {
 
   const {error, setVisible} = props;
 
-  if(typeof error === "undefined"){
+  if(error == undefined || error == null ){
     return
   }
  
