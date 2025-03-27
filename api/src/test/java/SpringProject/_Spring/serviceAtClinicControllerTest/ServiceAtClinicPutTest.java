@@ -69,10 +69,10 @@ public class ServiceAtClinicPutTest {
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(1))
-                .andExpect(jsonPath("name").value("X-Ray"))
-                .andExpect(jsonPath("description").value("X-ray imaging to diagnose bone fractures and internal health issues."))
-                .andExpect(jsonPath("price").value("110.0"));
+                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.name").value("X-Ray"))
+                .andExpect(jsonPath("$.data.description").value("X-ray imaging to diagnose bone fractures and internal health issues."))
+                .andExpect(jsonPath("$.data.price").value("110.0"));
 
         Mockito.verify(serviceAtClinicService, times(1)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(1)).saveService(Mockito.any());
@@ -107,9 +107,9 @@ public class ServiceAtClinicPutTest {
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("name").value("Name must be between 3 and 150 characters long!"))
-                .andExpect(jsonPath("description").value("must not be blank"))
-                .andExpect(jsonPath("price").value("must be greater than or equal to 0"));
+                .andExpect(jsonPath("$.data.name").value("Name must be between 3 and 150 characters long!"))
+                .andExpect(jsonPath("$.data.description").value("must not be blank"))
+                .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"));
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
@@ -143,9 +143,9 @@ public class ServiceAtClinicPutTest {
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("name").value("Name must contain only letters, spaces, numbers and dashes!"))
-                .andExpect(jsonPath("description").value("must not be blank"))
-                .andExpect(jsonPath("price").value("must be greater than or equal to 0"));
+                .andExpect(jsonPath("$.data.name").value("Name must contain only letters, spaces, numbers and dashes!"))
+                .andExpect(jsonPath("$.data.description").value("must not be blank"))
+                .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"));
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
@@ -166,7 +166,10 @@ public class ServiceAtClinicPutTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.message").value("Access Denied"))
+                .andExpect(jsonPath("$.data").doesNotExist());
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());

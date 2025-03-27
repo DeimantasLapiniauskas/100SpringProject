@@ -118,7 +118,7 @@ public class ServiceAtClinicController extends BaseController {
         }
 
         Page<ServiceAtClinic> pagedServices = serviceAtClinicService.findAllServiceAtClinicPages(page, size, sort);
-        String message = pagedServices.isEmpty()? "Service list is empty" : null;
+        String message = pagedServices.isEmpty() ? "Service list is empty" : null;
         ServiceAtClinicPageResponseDTO serviceAtClinicPageResponseDTO = ServiceAtClinicMapper.toServiceAtClinicListPageDTO(pagedServices);
 
         return ok(serviceAtClinicPageResponseDTO, message);
