@@ -85,14 +85,14 @@ export const RegisterAppointment = (props) => {
         <div>
           <div className="flex flex-row justify-between">
             <label htmlFor="appointmentDate"> Date </label>
-            <div className="text-red-600 font-bold [text-shadow:_0_0px_2px_rgb(255_255_255_/_0.8)] z-30">
+            <div className="text-red-700 font-medium">
               {errors.appointmentDate?.message}
             </div>
           </div>
           <input
             type="datetime-local"
             {...register("appointmentDate", {
-              required: { value: true, message: "This field is requered" },
+              required: { value: true, message: "This field is required" },
             })}
             className="input autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)"
           />
@@ -101,7 +101,7 @@ export const RegisterAppointment = (props) => {
         <div>
           <div className="flex flex-row justify-between">
             <label htmlFor="pet">Your pet</label>
-            <div className="text-red-600 font-bold [text-shadow:_0_0px_2px_rgb(255_255_255_/_0.8)]">
+            <div className="text-red-700 font-medium">
               {errors.petId?.message}
             </div>
           </div>
@@ -109,7 +109,7 @@ export const RegisterAppointment = (props) => {
             name="pet"
             id="pet"
             {...register("petId", {
-              required: { value: true, message: "This field is requered" },
+              required: { value: true, message: "This field is required" },
             })}
             className="select autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)"
           >
@@ -125,7 +125,7 @@ export const RegisterAppointment = (props) => {
         <div>
           <div className="flex flex-row justify-between">
             <label htmlFor="vet"> Veterinarian</label>
-            <div className="text-red-600 font-bold [text-shadow:_0_0px_2px_rgb(255_255_255_/_0.8)]">
+            <div className="text-red-700 font-medium">
               {errors.vetId?.message}
             </div>
           </div>
@@ -133,7 +133,7 @@ export const RegisterAppointment = (props) => {
             name="vet"
             id="vet"
             {...register("vetId", {
-              required: { value: true, message: "This field is requered" },
+              required: { value: true, message: "This field is required" },
             })}
             className="select autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)"
           >
@@ -152,7 +152,7 @@ export const RegisterAppointment = (props) => {
         <div>
           <div className="flex flex-row justify-between">
             <label htmlFor="services">Services</label>
-            <div className="text-red-600 font-bold [text-shadow:_0_0px_2px_rgb(255_255_255_/_0.8)]">
+            <div className="text-red-700 font-medium">
               {errors.serviceIds?.message}
             </div>
           </div>
@@ -166,7 +166,7 @@ export const RegisterAppointment = (props) => {
                   {...register("serviceIds", {
                     required: {
                       value: true,
-                      message: "This field is requered",
+                      message: "This field is required",
                     },
                   })}
                   className="m-2"

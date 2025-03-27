@@ -10,6 +10,7 @@ export const Navbar = () => {
                 <NavLink to={"/home"}><p className="text-white">Home</p></NavLink>
                 <NavLink to={"/pets"}><p className=" text-white">Your Pets</p></NavLink>
                 <NavLink to={"/services"}><p className=" text-white">Service list</p></NavLink>
+                {account && <NavLink to={"/appointments"}><p className=" text-white">Appointments history</p></NavLink>}
                 {account ?
                 <button type="button" value="logout" onClick={logout} className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold">Log Out</button> :
                 <NavLink to={"/login"}><p><button className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold">Log In</button></p></NavLink>}
