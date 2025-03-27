@@ -17,7 +17,7 @@ export const Appointment = () => {
 
   useEffect(() => {
     getAppointment();
-  }, []);
+  }, [visible]);
 
   return (
     <div>
@@ -50,7 +50,7 @@ export const Appointment = () => {
           <p>{a.notes}</p>
         </div>
       ))}
-      <button className="custom-white-btn" onClick={()=>setVisible(true)}>New Appointment</button>
+      <button className="custom-white-btn !w-fit" onClick={()=>setVisible(true)}>New Appointment</button>
       {visible && <RegisterAppointment setVisible={setVisible}/>}
     </div>
   );
