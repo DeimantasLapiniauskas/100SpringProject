@@ -51,12 +51,7 @@ public class PostController extends BaseController{
 
         PostResponseDTO responseDTO = PostMapper.toPostResponseDTO(savedPost);
 
-        return ResponseEntity
-                .created(ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(savedPost.getId())
-                        .toUri())
-                .body(new ApiResponse<>(responseDTO, "Post created successfully", true));
+        return created(responseDTO, "Post created successfully");
     }
 
     @GetMapping("/posts/pagination")
@@ -134,6 +129,6 @@ public class PostController extends BaseController{
         }
 
         postService.deletePostById(postId);
-        return noContent(null, "Post deleted successfully");
+        return noContent("Post deleted successfully");
     }
 }

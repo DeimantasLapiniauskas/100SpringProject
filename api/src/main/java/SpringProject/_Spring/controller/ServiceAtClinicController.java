@@ -43,12 +43,7 @@ public class ServiceAtClinicController extends BaseController {
 
         ServiceAtClinicResponseDTO newService = ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicService.saveService(service));
 
-        return ResponseEntity.created(
-                        ServletUriComponentsBuilder.fromCurrentRequest()
-                                .path("/{id}")
-                                .buildAndExpand(newService.id())
-                                .toUri())
-                .body(new ApiResponse<>(newService, "Service created successfully", true));
+        return created(newService, "Service created successfully");
 
     }
 
@@ -102,7 +97,7 @@ public class ServiceAtClinicController extends BaseController {
             return notFound("Service not found");
         }
         serviceAtClinicService.deleteServiceById(id);
-        return ResponseEntity.noContent().build();
+        return noContent("service deleted successfully");
     }
 
     @Operation(summary = "Get all services and split them by pages", description = "Retrieves a list of all services and splits them by pages")
