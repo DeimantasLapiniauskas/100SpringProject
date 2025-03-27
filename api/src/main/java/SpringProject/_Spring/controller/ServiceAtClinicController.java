@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.util.Optional;
 
 @RestController
@@ -70,7 +71,7 @@ public class ServiceAtClinicController extends BaseController {
     @PutMapping("/services/{serviceId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<ServiceAtClinicResponseDTO>> updateService(@PathVariable long serviceId,
-                                           @Valid @RequestBody ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
+                                                                                 @Valid @RequestBody ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {
         if (serviceId < 0) {
             return badRequest(null, "Service ID cannot be negative");
         }
@@ -97,7 +98,8 @@ public class ServiceAtClinicController extends BaseController {
             return notFound("Service not found");
         }
         serviceAtClinicService.deleteServiceById(id);
-        return noContent("service deleted successfully");
+//        return noContent("service deleted successfully");
+        return noContent();
     }
 
     @Operation(summary = "Get all services and split them by pages", description = "Retrieves a list of all services and splits them by pages")
