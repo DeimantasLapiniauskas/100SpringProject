@@ -11,7 +11,6 @@ import SpringProject._Spring.validation.customAnnotations.password.PasswordRegex
 import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberLength;
 import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberRegex;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 public record VetRequestDTO(

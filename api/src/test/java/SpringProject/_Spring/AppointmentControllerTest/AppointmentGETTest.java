@@ -180,7 +180,6 @@ public class AppointmentGETTest {
     }
 
 
-
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getAppointments_whenGetClient_thenRespond200() throws Exception {

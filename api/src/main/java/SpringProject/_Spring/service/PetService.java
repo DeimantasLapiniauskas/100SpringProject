@@ -56,7 +56,7 @@ public class PetService {
 
     public boolean isNotValidSortField(String sort) {
         List<String> validSortFields = List.of(
-                "ownerId", "name", "species", "breed", "birthday", "gender" );
+                "ownerId", "name", "species", "breed", "birthday", "gender");
         return !validSortFields.contains(sort);
     }
 }

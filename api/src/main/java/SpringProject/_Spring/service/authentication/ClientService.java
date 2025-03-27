@@ -8,6 +8,8 @@ import SpringProject._Spring.repository.authentication.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -41,4 +43,11 @@ public class ClientService {
     }
 
 
+    public Optional<Client> findClientById(long id) {
+        return clientRepository.findById(id);
+    }
+
+    public Client updateClient(Client client) {
+        return clientRepository.save(client);
+    }
 }

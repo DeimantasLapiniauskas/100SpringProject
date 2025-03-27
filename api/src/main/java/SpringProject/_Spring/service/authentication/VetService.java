@@ -27,6 +27,10 @@ public class VetService {
         return vetRepository.save(vet);
     }
 
+    public Vet updateVet(Vet vet) {
+        return vetRepository.save(vet);
+    }
+
     public Optional<Vet> getVetById(long vetId) {
         return vetRepository.findById(vetId);
     }
@@ -37,5 +41,9 @@ public class VetService {
 
     public List<Vet> getAllVets() {
         return vetRepository.findAll();
+    }
+
+    public boolean existsVetById(long id) {
+        return vetRepository.existsById(id);
     }
 }

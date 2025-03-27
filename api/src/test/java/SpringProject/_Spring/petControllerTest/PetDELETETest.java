@@ -113,7 +113,7 @@ public class PetDELETETest {
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
         when(clientService.findClientByAccountId(account.getId())).thenReturn(client);
-        
+
         Pet pet = new Pet(userId + 1, "TestName", "TestBreed", "TestSpecies", LocalDate.now(), Gender.Male);
         when(petService.getPetById(pet.getId()))
                 .thenReturn(Optional.of(pet));

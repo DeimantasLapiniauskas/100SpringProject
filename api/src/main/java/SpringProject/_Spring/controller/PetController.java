@@ -97,8 +97,8 @@ public class PetController {
                         .noneMatch(
                                 role ->
                                         Objects.equals(
-                                        role.getName(), "ADMIN"
-                                )
+                                                role.getName(), "ADMIN"
+                                        )
                         )
         ) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
