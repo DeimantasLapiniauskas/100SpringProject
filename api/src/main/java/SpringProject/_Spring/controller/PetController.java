@@ -24,7 +24,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/pets")
-public class PetController {
+public class PetController extends BaseController {
 
     private final PetService petService;
     private final ClientService clientService;

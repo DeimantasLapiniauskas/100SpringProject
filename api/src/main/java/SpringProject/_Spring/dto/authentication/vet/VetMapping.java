@@ -22,6 +22,7 @@ public class VetMapping {
                 vet.getAccount().getEmail(),
                 vet.getFirstName(),
                 vet.getLastName(),
+                vet.getPhoneNumber(),
                 vet.getSpecialty()
         );
     }

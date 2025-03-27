@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { updateService } from "../../utils/helpers/serviceService.js";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 export const ServiceUpdate = () => {
   const { id } = useParams();
 
