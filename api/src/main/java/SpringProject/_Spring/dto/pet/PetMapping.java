@@ -1,16 +1,16 @@
 package SpringProject._Spring.dto.pet;
 
-import SpringProject._Spring.model.Pet;
+import SpringProject._Spring.model.pet.Pet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PetMapping {
 
     public static PetResponseDTO toPetResponseDTO(Pet pet) {
         return new PetResponseDTO(
+                pet.getId(),
                 pet.getName(),
                 pet.getSpecies(),
                 pet.getBreed(),
@@ -23,6 +23,7 @@ public class PetMapping {
         return pets.stream()
                 .map(
                         pet -> new PetResponseDTO(
+                                pet.getId(),
                                 pet.getName(),
                                 pet.getSpecies(),
                                 pet.getBreed(),
@@ -45,11 +46,23 @@ public class PetMapping {
         return pet;
     }
 
-    public static Page<PetResponseDTO> toPageListDTO(Page<Pet> petsPage) {
+    public static Page<PetResponseDTO> toPageListPageDTO(Page<Pet> petsPage) {
         List<PetResponseDTO> petListResponseDTO = petsPage.getContent().stream()
                 .map(PetMapping::toPetResponseDTO)
                 .toList();
 
         return new PageImpl<>(petListResponseDTO, petsPage.getPageable(), petsPage.getTotalElements());
     }
+
+    public static PetPageResponseDTO toPetPageResponseDTO(Page<Pet> petsPage) {
+        List<PetResponseDTO> petResponseListDTO = petsPage.getContent()
+                .stream()
+                .map(PetMapping::toPetResponseDTO)
+                .toList();    return new PetPageResponseDTO(
+                        petResponseListDTO,
+                petsPage.getTotalPages(),
+                (int) petsPage.getTotalElements(),
+                petsPage.getNumber(),
+                petsPage.getSize()
+        );}
 }

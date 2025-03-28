@@ -1,14 +1,17 @@
 package SpringProject._Spring.controller;
 
 
+import SpringProject._Spring.dto.ApiResponse;
 import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.pet.PetPageResponseDTO;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.dto.pet.PetResponseDTO;
-import SpringProject._Spring.model.Account;
-import SpringProject._Spring.model.Pet;
-import SpringProject._Spring.service.AccountService;
-import SpringProject._Spring.service.ClientService;
+import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.model.pet.Pet;
+import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.PetService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +26,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/pets")
-public class PetController {
+public class PetController extends BaseController {
 
     private final PetService petService;
     private final ClientService clientService;
@@ -36,34 +39,17 @@ public class PetController {
         this.accountService = accountService;
     }
 
-//Mes naudojame Pagination, tai sis GetMapping nenaudojamas
-//    @GetMapping
-//    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-//    public ResponseEntity<?> getAllPets(Authentication authentication) {
-//        //temporary: later will need to be able to get client id from authentication.
-//        long id = clientService.findAccountIdByEmail(authentication.getName());
-//
-//        if (id == -1) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body("User not found!");
-//        }
-//
-//        return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
-//                .map(PetMapping::toPetResponseDTO)
-//                .toList());
-//    }
-
-
+    @Operation(summary = "Get all pets by owner ID", description = "Retrieves all pets owned by client by his ID")
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<List<PetResponseDTO>> getAllPetsByOwnerId(@PathVariable long id) {
         return ResponseEntity.ok(petService.getAllPetsByOwnerId(id).stream()
                 .map(PetMapping::toPetResponseDTO)
                 .toList());
     }
 
-
-    @PostMapping
+    @Operation(summary = "Add new pet", description = "Adds a new pet to the database")
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> addPet(
             @Valid @RequestBody PetRequestDTO petRequestDTO,
@@ -83,41 +69,37 @@ public class PetController {
                 .body(PetMapping.toPetResponseDTO(createdPet));
     }
 
-
-    @PutMapping("/{ownerId}/{petId}")
+    @Operation(summary = "Update pet by ID (Client and Admin)", description = "Updates a pet by it's unique ID")
+    @PutMapping("/{petId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> updatePet(@PathVariable long ownerId,
-                                       @PathVariable long petId,
+    public ResponseEntity<?> updatePet(@PathVariable long petId,
                                        @Valid @RequestBody PetRequestDTO petRequestDTO,
                                        Authentication authentication
     ) {
-        if (!clientService.existsClientById(ownerId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Owner does not exist!");
-        }
-
         if (!petService.existsById(petId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Pet does not exist!");
         }
 
-        final Account currentAccount = (Account) authentication.getPrincipal();
-        if (clientService.findClientByAccountId(currentAccount.getId()).getAccountId()
+        final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
+
+        if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
-                petService.getPetByid(petId).get().getOwnerId()
+                petService.getPetById(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
-                                role -> Objects.equals(
-                                        role.getName(), "ADMIN"
-                                )
+                                role ->
+                                        Objects.equals(
+                                                role.getName(), "ADMIN"
+                                        )
                         )
         ) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("You can't edit someone else's pet!");
         }
 
-        Pet petFromDB = petService.getPetByid(petId).get();
+        Pet petFromDB = petService.getPetById(petId).get();
         petFromDB.setName(petRequestDTO.name());
         petFromDB.setSpecies(petRequestDTO.species());
         petFromDB.setBreed(petRequestDTO.breed());
@@ -127,7 +109,7 @@ public class PetController {
         return ResponseEntity.ok(PetMapping.toPetResponseDTO(petFromDB));
     }
 
-
+    @Operation(summary = "Delete pet by ID (Client and Admin)", description = "Deletes a pet by it's unique ID")
     @DeleteMapping("/{petId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> deletePet(
@@ -139,9 +121,9 @@ public class PetController {
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
-        if (clientService.findClientByAccountId(currentAccount.getId()).getAccountId()
+        if (clientService.findClientIdByEmail(currentAccount.getEmail())
                 !=
-                petService.getPetByid(petId).get().getOwnerId()
+                petService.getPetById(petId).get().getOwnerId()
                 &&
                 currentAccount.getRoles().stream()
                         .noneMatch(
@@ -157,34 +139,17 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/pagination")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')" )
-    public ResponseEntity<Page<PetResponseDTO>> getPetsPageByOwnerId(Authentication authentication,
-                                                            @RequestParam int page,
-                                                            @RequestParam int size,
-                                                            @RequestParam(required = false) String sort) {
-
-
-        long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
-
-
-        if (page < 0 || size <= 0) {
-            throw new IllegalArgumentException("Invalid page or size parameters");
-        }
-
-        if (sort != null && petService.isNotValidSortField(sort)) {
-            throw new IllegalArgumentException("Invalid sort field");
-        }
-
-        return ResponseEntity.ok(PetMapping.toPageListDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
-    }
-
+//    @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")
 //    @GetMapping("/pagination")
-//    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-//    public ResponseEntity<Page<PetResponseDTO>> getOwnerPetsPage(Authentication authentication,
-//                                                                 @RequestParam int page,
-//                                                                 @RequestParam int size,
-//                                                                 @RequestParam(required = false) String sort) {
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+//    public ResponseEntity<Page<PetResponseDTO>> getPetsPageByOwnerId(Authentication authentication,
+//                                                                     @RequestParam int page,
+//                                                                     @RequestParam int size,
+//                                                                     @RequestParam(required = false) String sort) {
+//
+//
+//        long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
+//
 //
 //        if (page < 0 || size <= 0) {
 //            throw new IllegalArgumentException("Invalid page or size parameters");
@@ -194,6 +159,21 @@ public class PetController {
 //            throw new IllegalArgumentException("Invalid sort field");
 //        }
 //
-//        return ResponseEntity.ok(PetMapping.toDTOListPage(petService.findAllOwnerPetsPage(authentication.getName(), page, size, sort)));
+//        return ResponseEntity.ok(PetMapping.toPageListPageDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
 //    }
+
+    @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")@GetMapping("/pagination")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<ApiResponse<PetPageResponseDTO>> getAllPetsPage(Authentication authentication,
+                                                                           @RequestParam int page,
+                                                                           @RequestParam int size,
+                                                                           @RequestParam(required = false) String sort) {
+        long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
+        if (page < 0 || size <= 0) {        throw new IllegalArgumentException("Invalid page or size parameters");    }
+        Page<Pet> pagedPets = petService.findAllPetsPage(page, size, sort, ownerAccountId);
+        String message = pagedPets.isEmpty() ? "Pet list is empty" : null;
+        PetPageResponseDTO responseDTO = PetMapping.toPetPageResponseDTO(pagedPets);
+        return ok(responseDTO, message);}
+
+
 }

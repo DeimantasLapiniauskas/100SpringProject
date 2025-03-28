@@ -54,8 +54,20 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/services/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/services","/api/services/**" ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/register").anonymous()
                         .requestMatchers("/error/**").permitAll()
+                        .requestMatchers(
+                                "/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui-custom.html",
+                                "/api-docs/swagger-config",
+                                "/api-docs.yaml"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 );
 

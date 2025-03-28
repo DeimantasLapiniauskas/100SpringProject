@@ -1,6 +1,8 @@
 package SpringProject._Spring.dto.service;
 
 import SpringProject._Spring.model.ServiceAtClinic;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -23,5 +25,20 @@ public class ServiceAtClinicMapper {
         serviceAtClinic.setDescription(serviceAtClinicRequestDTO.description());
         serviceAtClinic.setPrice(serviceAtClinicRequestDTO.price());
         return serviceAtClinic;
+    }
+
+    public static ServiceAtClinicPageResponseDTO toServiceAtClinicListPageDTO(Page<ServiceAtClinic> serviceAtClinicPage) {
+        List<ServiceAtClinicResponseDTO> serviceAtClinicResponseListDTO =
+                serviceAtClinicPage.getContent().stream()
+                        .map(ServiceAtClinicMapper::toServiceAtClinicDTO)
+                        .toList();
+
+       return new ServiceAtClinicPageResponseDTO(
+               serviceAtClinicResponseListDTO,
+               serviceAtClinicPage.getTotalPages(),
+               (int) serviceAtClinicPage.getTotalElements(),
+               serviceAtClinicPage.getNumber(),
+               serviceAtClinicPage.getSize()
+       );
     }
 }

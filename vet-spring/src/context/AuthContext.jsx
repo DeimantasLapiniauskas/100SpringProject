@@ -17,45 +17,58 @@ export const AuthProvider = ({ children }) => {
 
     if (maybeJwt) {
       const decodedJwt = jwtDecode(maybeJwt);
-      if(decodedJwt.exp * 1000 < Date.now()) {
-        localStorage.removeItem("jwt")
-        return null
+      if (decodedJwt.exp * 1000 < Date.now()) {
+        localStorage.removeItem("jwt");
+        return null;
       }
-      return decodedJwt
+      return decodedJwt;
     }
     return null;
   });
 
   useEffect(() => {
     const checkJwtExpiration = () => {
-    const maybeJwt = localStorage.getItem("jwt");
-    if (maybeJwt) {
-      const decodedJwt = jwtDecode(maybeJwt);
-      if(decodedJwt.exp * 1000 < Date.now()) {
-        localStorage.removeItem("jwt");
-        setAccount(null)
-        // navigate("/login")
+      const maybeJwt = localStorage.getItem("jwt");
+      if (maybeJwt) {
+        const decodedJwt = jwtDecode(maybeJwt);
+        if (decodedJwt.exp * 1000 < Date.now()) {
+          localStorage.removeItem("jwt");
+          setAccount(null);
+        }
       }
-    }
-  };
-  checkJwtExpiration();
+    };
+    checkJwtExpiration();
   }, []);
 
   const login = async (email, password) => {
-  
-    const response = await api.post("/token", {}, {
-      auth: { username: email, password }
-    });
+    const response = await api.post(
+      "/token",
+      {},
+      {
+        auth: { username: email, password },
+      }
+    );
     const jwt = response.data;
-    localStorage.setItem("jwt", jwt)
-    setAccount(jwtDecode(jwt))
-    setAuth(jwt)
-    navigate("/pets")
-
+    localStorage.setItem("jwt", jwt);
+    setAccount(jwtDecode(jwt));
+    setAuth(jwt);
+    navigate("/");
   };
 
-  const register = async (email, password, firstName, lastName, phoneNumber) => {
-    await api.post("/register", { email, password, firstName, lastName, phoneNumber });
+  const register = async (
+    email,
+    password,
+    firstName,
+    lastName,
+    phoneNumber
+  ) => {
+    await api.post("/register", {
+      email,
+      password,
+      firstName,
+      lastName,
+      phoneNumber,
+    });
   };
 
   const logout = () => {
@@ -72,7 +85,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
 
 // Sukuriamas custom hookas, kuris leidžia naudoti AuthContext
 export const useAuth = () => {

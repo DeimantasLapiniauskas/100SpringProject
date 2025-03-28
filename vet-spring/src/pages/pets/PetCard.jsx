@@ -1,39 +1,34 @@
-import {useAuth} from "../../context/AuthContext.jsx";
-import {NavLink} from "react-router";
-import api from "../../utils/api.js";
-import {Error} from "../../components/Error.jsx";
-import {useState} from "react";
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 
-export const PetCard = (props) => {
-    const { pet, getPetPage, currentPage, pageSize } = props
-    const { id, ownerId, name, species, breed, birthDate, gender } = pet
-    const [error, setError] = useState("")
-    // const { user } = useAuth()
+export const PetCard = ({ pet, getPage, currentPage, pageSize }) => {
+  const { name, species, breed, birthdate, gender } = pet;
 
-    const deletePet = async () => {
-        try {
-            await api.delete(`/pets/${id}`);
-            await getPetPage(pageSize, currentPage)
-        } catch (error) {
-            setError(error.response?.message || error.message);
-        }
-    }
-
-    return (
-        <div className="card card-side bg-base-100 shadow-sm">
-            <div className="card-body">
-                <h2 className="card-title">{ownerId}</h2>
-                <p>{name}</p>
-                <p>{species}</p>
-                <p>{breed}</p>
-                <p>{birthDate}</p>
-                <p>{gender}</p>
-                {/* <div className="card-actions">
-                    <NavLink to={`/pets/view/${id}`} className="btn btn-primary">View</NavLink>
-                    { user.roles?.includes("ROLE_ADMIN") && <button onClick={deletePet} className="btn btn-error">Delete</button> }
-                </div> */}
-                <Error error={error} isHidden={!error} />
-            </div>
+  return (
+    <div className="card card-side shadow-sm bg-[#97a0f1] text-[#000000] w-80">
+      <div className="p-6">
+        <div className="card-body  block break-words w-[16rem]">
+          <h2 className="card-title  block break-words w-[16rem]">{name}</h2>
+          <p className="py-2">{species}</p>
+          <p className="py-2">{breed}</p>
+          <p className="py-2">{birthdate}</p>
+          <p className="py-2">{gender}</p>
         </div>
-    )
-}
+        <div className="card-actions">
+          <EditButton
+            pet={pet}
+            getPage={getPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+          <DeleteButton
+            pet={pet}
+            getPage={getPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};

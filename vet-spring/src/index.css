@@ -1,2 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --breakpoint-xs: 425.6px
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Kiwi Maru', sans-serif;
+  background-color: #DCDEFE;
+}
+
+@layer components {
+  .form-text-select {
+    @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
+  }
+
+  .form-text-select:focus {
+    @apply border-b border-white bg-transparent text-white;
+  }
+
+  .form-text-select option {
+    @apply text-black;
+  }
+}
+
+/* .swiper-pagination-bullet {
+  @apply w-4 h-4 bg-white opacity-50 mx-1 rounded-full;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-blue-800 opacity-100 scale-110 transition-transform;
+} */
+
+
+.swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  opacity: 0.5;
+  margin: 0 6px;
+  transition: transform 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #1e40af; 
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+  /* RULES FOR USING FIGMA TYPOGRAPHY: */
+
+  /* FOUND OUT YOU NEED TO INSERT CSS LIKE .figma-headline INSIDE tailwind.config.js FOR THEM TO WORK WITH
+   lg:??? md:??? sm:??? SCREEN SIZE CHANGES */
+
+  /* IF THEY ARE NOT IN USE, IN YOUR PAGES, IT IS FINE FOR NOW. AS LONG AS YOUR TEXT WORKS WITH DIFFERENT SCREEN SIZES */
+  /* IF WE DECIDE WE CAN INSERT THESE WHEN WE HAVE MORE TIME IN FUTURE AND ARE SURE THEY WILL NOT BREAK LAYOUT */
+  /* IN THE COMMENTS BELOW ARE EQUIVALENTS IN FORM OF TAILWIND FONT SIZES THAT WE CAN USE INSTEAD */
+  /* SOME OF YOU HAVE ALREADY USED SOME */
+  /* LINE HEIGHTS I AM NOT SURE. BUT IT SHOULD WORK OK. */
+
+  /* LIKE text-6xl CAN BE USED INSTEAD OF .figma-headline IN CODE:
+  <h1 className="text-black text-6xl">Some text</h1> INSTEAD OF <h1 className="text-black figma-headline"> */
+
+  /* <h1 className=" text-black lg:figma-headline md:figma-headline-2 figma-headline-3">Some text</h1>
+  WILL NOT WORK SINCE CSS overwrites Tailwind AND IT WILL RESULT IN TEXT STAYING THE SAME SIZE EVEN IF YOU CHANGE SCREEN SIZE. */
+
+  /* figma-headline-5 IS MY IDEA FOR SMALLEST FONT SIZE.
+  NOT LISTED IN FIGMA Syle Guide PAGE. IS USED IN FIGMA iPhone 14 Pro Max - 1 PAGE. "I have read and agree to the Privacy Policy" .*/
+
+  .figma-headline {
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: 4rem; /* 64px in FIGMA */ /* Can use text-6xl since it is 3.75rem (60px) */
+    font-weight: 400;
+    letter-spacing: 0%; 
+    line-height: 5.8125rem; /* 93px in FIGMA */
+  }
+  
+  .figma-headline-2 {
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: 2.5rem; /* 40px in FIGMA */ /* Can use text-4xl since it is 2.25rem (36px) */
+    font-weight: 400;
+    letter-spacing: 0%;
+    line-height: 3.625rem; /* 58px in FIGMA */  
+  }
+  
+  .figma-headline-3 {
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: 1.5rem; /* 24px in FIGMA */ /* Can use text-2xl since it is 1.5rem (24px) */
+    font-weight: 400;
+    letter-spacing: 0%; 
+    line-height: 2.1875rem; /* 35px in FIGMA */   
+  }
+  
+  .figma-headline-4 {
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: 1rem; /* 16px in FIGMA */ /* Can use text-base since it is 1rem (16px) */
+    font-weight: 400;
+    letter-spacing: 0%; 
+    line-height: 1.4375rem; /* 23px in FIGMA */   
+  }
+
+  .figma-headline-5 {
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: 0.5rem; /* 11px in FIGMA */ /* Can use text-xs since it is 0.75rem (12px) */ 
+    font-weight: 400;
+    letter-spacing: 0%; 
+    line-height: 1rem; /* 16px in FIGMA */   
+  }

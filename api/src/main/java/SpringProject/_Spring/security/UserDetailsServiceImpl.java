@@ -1,7 +1,7 @@
 package SpringProject._Spring.security;
 
-import SpringProject._Spring.model.Account;
-import SpringProject._Spring.service.AccountService;
+import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.service.authentication.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

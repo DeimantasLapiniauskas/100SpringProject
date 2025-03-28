@@ -3,6 +3,10 @@ package SpringProject._Spring.service;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.repository.ServiceAtClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,4 +54,19 @@ public class ServiceAtClinicService {
         return serviceAtClinicRepository.findById(id);
     }
 
+    public Page<ServiceAtClinic> findAllServiceAtClinicPages(int page, int size, String sort) {
+        if (sort == null) {
+            Pageable pageable = PageRequest.of(page, size);
+            return serviceAtClinicRepository.findAll(pageable);
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        return serviceAtClinicRepository.findAll(pageable);
+    }
+
+    public boolean isNotValidSortField(String sort) {
+        List<String> validSortFields = List.of("name", "description", "price");
+
+        return !validSortFields.contains(sort);
+    }
 }
