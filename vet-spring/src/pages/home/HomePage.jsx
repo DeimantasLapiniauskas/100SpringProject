@@ -148,8 +148,8 @@ export const HomePage = () => {
             {/* Top Section - Dog Image & Text */}
             <main className="flex flex-col sm:flex-row-reverse gap-2 items-center sm:items-start md:items-start lg:items-start">
                 {/* Text Section */}
-                <div className="flex flex-col px-3 lg:text-lg md:text-base sm:text-sm text-xs gap-1">
-                    <article className=" text-black">
+                <div className="flex flex-col px-3 gap-1">
+                    <article className=" text-black lg:text-lg md:text-base sm:text-sm text-xs">
                         Pavasario Avenue 100, Vilnius<br />
                         +370 511 233 78<br />
                         Twenty-four hours a day
