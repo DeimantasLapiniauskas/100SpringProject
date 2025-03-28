@@ -2,8 +2,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@import url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap");
-
 @theme {
   --breakpoint-xs: 425.6px
 }

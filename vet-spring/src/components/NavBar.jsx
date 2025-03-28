@@ -8,16 +8,16 @@ export const Navbar = () => {
     <div>
       <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-[#6A7AFF] px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]">
         <NavLink to={"/home"}>
-          <p className="text-white">Home</p>
+          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Home</p>
         </NavLink>
         <NavLink to={"/pets"}>
-          <p className="text-white">Your Pets</p>
+          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Your Pets</p>
         </NavLink>
         <NavLink to={"/services"}>
-          <p className="text-white">Service list</p>
+          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Service list</p>
         </NavLink>
         <NavLink to={"/posts"}>
-          <p className="text-white">News</p>
+          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">News</p>
         </NavLink>
         <div class="dropdown">
           <button class="dropbtn btn bg-[#97a0f1] w-12">
@@ -32,3 +32,5 @@ export const Navbar = () => {
     </div>
   );
 };
+
+
