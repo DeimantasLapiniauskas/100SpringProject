@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import ThemeContext from "../utils/helpers/themeContext";
-import { addVet } from "../utils/helpers/addEditVet";
+import ThemeContext from "../../../utils/helpers/themeContext";
+import { addVet } from "../../../utils/helpers/addEditVet";
 
 //not used right now, when will be used needs to be moved in another folder
-const VetAddForm = ({ getPage, currentPage, pageSize }) => {
+const VetRegisterForm = ({ getPage, currentPage, pageSize }) => {
     const { setAddModalID } = useContext(ThemeContext);
 
     const {
@@ -266,4 +266,4 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
     );
 };
 
-export default VetAddForm;
+export default VetRegisterForm;

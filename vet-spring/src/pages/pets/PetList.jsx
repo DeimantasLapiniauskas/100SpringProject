@@ -11,7 +11,6 @@ export const PetList = () => {
   const { iat } = account || "";
   const [welcome, setWelcome] = useState(true);
 
-  //!!!!!!!!!!
   const [deleteModalID, setDeleteModalID] = useState("");
   const [editModalID, setEditModalID] = useState("");
   const [addModalID, setAddModalID] = useState("");
@@ -95,7 +94,7 @@ export const PetList = () => {
             pageSize={pageSize}
           />
         </div>
-        <div className="flex flex-col items-center gap-8 p-8">
+        <div className="flex flex-col items-center gap-8 py-8">
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {pets?.map((pet) => (
               <PetCard
