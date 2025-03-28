@@ -4,6 +4,7 @@ import api from "../../utils/api.js";
 import { Error } from "../../components/Error.jsx";
 import { useState } from "react";
 import { usePagination } from "../../context/PaginationContext.jsx";
+import { RegisterAppointment } from "../appointments/RegisterAppointment.jsx";
 
 export const ServiceCard = (props) => {
   const { service } = props;
@@ -11,6 +12,7 @@ export const ServiceCard = (props) => {
   const [error, setError] = useState("");
   const { account } = useAuth();
   const { getPage, currentPage, pageSize } = usePagination();
+  const [visible, setVisible] = useState(false);
 
   const deleteService = async () => {
     try {
@@ -54,7 +56,14 @@ export const ServiceCard = (props) => {
         account?.scope.includes("ROLE_ADMIN"))
     );
   };
-  return (
+
+  const checkRoleClient = () => {
+    return (account !== null &&
+        account.scope !== null &&
+        account.scope.includes("ROLE_CLIENT"))
+  }
+
+  return (<>
     <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
       <div className="card-body">
         <h2 className="card-title block break-all">{name}</h2>
@@ -83,9 +92,14 @@ export const ServiceCard = (props) => {
             </NavLink>
           )}
           {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
+          <div>
+            {checkRoleClient() && <button className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]" onClick={()=>setVisible(true)}>Register</button>}
+          </div>
         </div>
+        
         {error && <Error error={error} isHidden={!error} />}
       </div>
     </div>
+      {visible && <RegisterAppointment setVisible={setVisible} serviceId={service.id}/>}</>
   );
 };
