@@ -2,9 +2,9 @@ export const Error = (props) => {
 
   const {error, setVisible} = props;
 
-  // if(typeof error === "undefined"){
-  //   return
-  // }
+  if(error == undefined || error == null ){
+    return
+  }
  
   const errorMessages = Object.values(error);
 
