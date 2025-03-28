@@ -48,6 +48,7 @@ const VetClinicRoutes = () => {
                 </PaginationProvider>
               }
             />
+            <Route path="/appointments" element={<Appointment/>}/>
             <Route path="services/add" element={<ServiceAdd />} />
             <Route path="services/edit/:id" element={<ServiceUpdate />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
@@ -55,7 +56,7 @@ const VetClinicRoutes = () => {
             <Route path="/designh" element={<BandytiDesignHomePage />} />
             <Route path="/designh1" element={<BandytiDesignH1 />} />
           </Route>
-          <Route path="/appointments" element={<Appointment/>}/>
+          
           <Route path={"*"} element={<NotFound />} />
         </Routes>
       </AuthProvider>

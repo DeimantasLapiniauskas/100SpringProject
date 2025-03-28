@@ -21,8 +21,17 @@ export const Appointment = () => {
 
   return (
     <div>
-      <h1>Appointment history</h1>
-      <div className="m-4">
+      <div className="flex flex-row justify-start m-6 items-baseline">
+        <h1 className="text-2xl mr-6">Appointment history</h1>
+        <button
+          className="custom-white-btn !w-fit"
+          onClick={() => setVisible(true)}
+        >
+          New Appointment
+        </button>
+      </div>
+
+      <div className="bg-white m-8 p-8 rounded-box">
         <div className="grid grid-cols-6 border-b border-[#97a0f1]">
           <p>Appointment Date</p>
           <p>Pet</p>
@@ -32,17 +41,22 @@ export const Appointment = () => {
           <p>Notes</p>
         </div>
         {appointments.map((a) => (
-          <div className="grid-cols-6 grid border-b border-[#97a0f1]" key={a.id}>
+          <div
+            className="grid-cols-6 grid border-b border-[#97a0f1]"
+            key={a.id}
+          >
             <p>{a.appointmentDate.replace("T", " ")}</p>
             <div>
               <p>{a.petDTO.name}</p>
-              <p>{a.petDTO.species}</p>
+              <p className="text-slate-500 pt-1">{a.petDTO.species}</p>
             </div>
             <p>{a.price}</p>
-            <p>
-              {a.vetDTO.firstName}{" "}
-              {a.vetDTO.lastName}
-            </p>
+            <div>
+              <p>
+                {a.vetDTO.firstName} {a.vetDTO.lastName}
+              </p>
+              <p className="text-slate-500 pt-1">{a.vetDTO.specialty}</p>
+            </div>
             <div>
               {a.services.map((s) => (
                 <div key={s.id}>{s.name}</div>
@@ -52,8 +66,8 @@ export const Appointment = () => {
           </div>
         ))}
       </div>
-      <button className="custom-white-btn !w-fit" onClick={()=>setVisible(true)}>New Appointment</button>
-      {visible && <RegisterAppointment setVisible={setVisible}/>}
+
+      {visible && <RegisterAppointment setVisible={setVisible} />}
     </div>
   );
 };

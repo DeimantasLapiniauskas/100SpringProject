@@ -77,7 +77,7 @@ export const RegisterAppointment = (props) => {
 
   return (
     <div className="bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box absolute z-20 w-[600px] h-fit top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-      <h1 className="text-center text-3xl">Register to appointment</h1>
+      <h1 className="text-center text-2xl p-4">Register to appointment</h1>
       <form
         onSubmit={handleSubmit(formSubmitHandler)}
         className="grid grid-cols-1 w-3/5 m-auto mb-16"
@@ -100,7 +100,7 @@ export const RegisterAppointment = (props) => {
         
         <div>
           <div className="flex flex-row justify-between">
-            <label htmlFor="pet">Your pet</label>
+            <label className="p-2" htmlFor="pet">Your pet</label>
             <div className="text-red-700 font-medium">
               {errors.petId?.message}
             </div>
@@ -124,7 +124,7 @@ export const RegisterAppointment = (props) => {
 
         <div>
           <div className="flex flex-row justify-between">
-            <label htmlFor="vet"> Veterinarian</label>
+            <label className="p-2" htmlFor="vet"> Veterinarian</label>
             <div className="text-red-700 font-medium">
               {errors.vetId?.message}
             </div>
@@ -151,7 +151,7 @@ export const RegisterAppointment = (props) => {
 
         <div>
           <div className="flex flex-row justify-between">
-            <label htmlFor="services">Services</label>
+            <label className="p-2" htmlFor="services">Services</label>
             <div className="text-red-700 font-medium">
               {errors.serviceIds?.message}
             </div>
@@ -178,7 +178,7 @@ export const RegisterAppointment = (props) => {
         </div>
 
         <div>
-          <label htmlFor="notes">Notes</label>
+          <label className="p-2" htmlFor="notes">Notes</label>
           <textarea
             type="text"
             cols={40}
