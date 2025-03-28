@@ -59,4 +59,13 @@ public class PetService {
                 "ownerId", "name", "species", "breed", "birthday", "gender");
         return !validSortFields.contains(sort);
     }
+
+    public Page<Pet> findAllPetsPage(int page, int size, String sort, long ownerAccountId) {
+        if (sort == null) {
+            Pageable pageable = PageRequest.of(page, size);
+            return petRepository.findAllByOwnerId(ownerAccountId, pageable);
+        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        return petRepository.findAllByOwnerId(ownerAccountId, pageable);
+    }
 }

@@ -1,7 +1,9 @@
 package SpringProject._Spring.controller;
 
 
+import SpringProject._Spring.dto.ApiResponse;
 import SpringProject._Spring.dto.pet.PetMapping;
+import SpringProject._Spring.dto.pet.PetPageResponseDTO;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.dto.pet.PetResponseDTO;
 import SpringProject._Spring.model.authentication.Account;
@@ -137,26 +139,41 @@ public class PetController extends BaseController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")
-    @GetMapping("/pagination")
+//    @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")
+//    @GetMapping("/pagination")
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+//    public ResponseEntity<Page<PetResponseDTO>> getPetsPageByOwnerId(Authentication authentication,
+//                                                                     @RequestParam int page,
+//                                                                     @RequestParam int size,
+//                                                                     @RequestParam(required = false) String sort) {
+//
+//
+//        long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
+//
+//
+//        if (page < 0 || size <= 0) {
+//            throw new IllegalArgumentException("Invalid page or size parameters");
+//        }
+//
+//        if (sort != null && petService.isNotValidSortField(sort)) {
+//            throw new IllegalArgumentException("Invalid sort field");
+//        }
+//
+//        return ResponseEntity.ok(PetMapping.toPageListPageDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
+//    }
+
+    @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")@GetMapping("/pagination")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<Page<PetResponseDTO>> getPetsPageByOwnerId(Authentication authentication,
-                                                                     @RequestParam int page,
-                                                                     @RequestParam int size,
-                                                                     @RequestParam(required = false) String sort) {
-
-
+    public ResponseEntity<ApiResponse<PetPageResponseDTO>> getAllPostsPage(Authentication authentication,
+                                                                           @RequestParam int page,
+                                                                           @RequestParam int size,
+                                                                           @RequestParam(required = false) String sort) {
         long ownerAccountId = clientService.findClientIdByEmail(authentication.getName());
+        if (page < 0 || size <= 0) {        throw new IllegalArgumentException("Invalid page or size parameters");    }
+        Page<Pet> pagedPets = petService.findAllPetsPage(page, size, sort, ownerAccountId);
+        String message = pagedPets.isEmpty() ? "Pet list is empty" : null;
+        PetPageResponseDTO responseDTO = PetMapping.toPetPageResponseDTO(pagedPets);
+        return ok(responseDTO, message);}
 
 
-        if (page < 0 || size <= 0) {
-            throw new IllegalArgumentException("Invalid page or size parameters");
-        }
-
-        if (sort != null && petService.isNotValidSortField(sort)) {
-            throw new IllegalArgumentException("Invalid sort field");
-        }
-
-        return ResponseEntity.ok(PetMapping.toPageListPageDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
-    }
 }

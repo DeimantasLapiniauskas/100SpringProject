@@ -80,33 +80,7 @@ export const PetList = () => {
               />
             ))}
           </ul>
-        </div>
-        <div className="join">
-          <button
-            className="join-item btn"
-            onClick={async () => onPaginate(currentPage - 1)}
-            disabled={currentPage === 0}
-          />
-        </div>
-        <div>
-          <AddPetButton
-            getPage={getPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        </div>
-        <div className="flex flex-col items-center gap-8 p-8">
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {pets?.map((pet) => (
-              <PetCard
-                key={pet.id}
-                pet={pet}
-                getPage={getPage}
-                currentPage={currentPage}
-                pageSize={pageSize}
-              />
-            ))}
-          </ul>
+      
           <div className="join">
             <button
               className="join-item btn"
