@@ -21,6 +21,7 @@ import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
 
 const VetClinicRoutes = () => {
+  
   return (
     <BrowserRouter>
       <UIProvider>

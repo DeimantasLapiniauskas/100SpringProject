@@ -20,29 +20,7 @@ export const ServiceCard = (props) => {
       setError(error.response?.message || error.message);
     }
   };
-  const editService = async () => {
-    try {
-      await api.put(`/services/${id}`);
-    getPage(pageSize, currentPage);
-    } catch (error) {
-      setError(error.response?.message || error.message);
-    }
-  };
 
-  // const registrApoiment = async(data) => {
-  //     const trimmedData = {
-  //         ...data,
-  //         name: data.id.trim(),
-  //       }
-  //       const payload = { ...trimmedData};
-  //       console.log(payload);
-
-  //     try{
-  //         await api.post("/appointments", payload);
-  //     } catch (error) {
-  //         setError(error.response?.message || error.message);
-  //     }
-  //}
   const checkRoles = () => {
     //todo: make this better
     return (
@@ -58,12 +36,12 @@ export const ServiceCard = (props) => {
     <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
       <div className="card-body">
         <h2 className="card-title block break-all">{name}</h2>
-        <p
+        <textarea
           readOnly
           className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
         >
           {description}
-        </p>
+        </textarea>
         <p>{price} €</p>
         <div className="card-actions">
           {checkRoles() && (
