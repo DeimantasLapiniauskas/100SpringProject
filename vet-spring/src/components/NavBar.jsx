@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import { DropdownMenu } from "../pages/profile/DropdownMenu";
 
 export const Navbar = () => {
   const { account, logout } = useAuth();

@@ -20,6 +20,7 @@ import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 
 const VetClinicRoutes = () => {
+  
   return (
     <BrowserRouter>
       <UIProvider>
