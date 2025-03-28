@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
+
 /*UNIQUE COLORS USED//////////////////////////////////////////////////////// */
 /*WILL BE UPDATED AS PROJECT MOVES FORWARD////////////////////////////////// */
 
@@ -40,7 +41,6 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-
 html {
   background-color: #DCDEFE;
   font-family: 'Kiwi Maru', sans-serif;
@@ -54,7 +54,7 @@ html {
   width: 100%;
   border-radius: 1.5rem;
   transition: background-color 0.3s ease;
-
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,6 +118,32 @@ html {
   background-color: #C7A4D6;
 }
 
+.pawss-for-background-medium {
+  /* position: absolute; */
+  width: clamp(20px, 5%, 50px);
+  height: clamp(30px, 5%, 50px);
+  background-image: url("/src/assets/pawss_for_background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  transform: rotate(53.04deg);
+}
+
+/* .pawss-for-background-small { */
+  /* FIGMA paw smaller image to be used inside background of ards/boxes */
+  /* paws 4 in FIGMA description in FIGMA Services Page */
+  /* position: absolute;
+  width: 30px;
+  height: 27.6px;
+  left: 140.05px;
+  top: 236px;
+  background-image: url("/src/assets/pawss_for_background.png");
+  transform: rotate(53.04deg); */
+/* } */
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
 /*FOR NAVIGATION BAR TO USE IN FUTURE JUST IN CASE //////////////////////////////////////////////////////// */
 
 .paws-1 {
@@ -129,12 +155,13 @@ html {
   height: 52px;
   left: 63px;
   top: 16px;
-  background: url("/src/assets/paws.png");
+  background-image: url("/src/assets/paws.png");
 }
 
 .middle-color-light-orange-login-button {
   /* FIGMA Middle Color light Orange Log In button on Navigation Bar  */
   /* Rectangle 76 in FIGMA description */
+  /* NOT YET IN USE */
   position: absolute;
   width: 132px;
   height: 47px;
@@ -149,6 +176,7 @@ html {
 .main-color-orange-book-now-button {
   /* FIGMA Main Color Orange Book Now button on Navigation Bar  */
   /* Rectangle 77 in FIGMA description */
+  /* NOT YET IN USE */
   position: absolute;
   width: 132px;
   height: 47px;

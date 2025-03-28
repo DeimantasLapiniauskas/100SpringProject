@@ -4,11 +4,18 @@ import SpringProject._Spring.controller.ServiceAtClinicController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ServiceAtClinicService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,7 +24,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,37 +39,12 @@ public class ServiceAtClinicGetTest {
     @MockitoBean
     private ServiceAtClinicService serviceAtClinicService;
 
-    //Happy path test
-    @Test
-    void getServices_whenAnyUserGetAllServices_thenReturnAllServicesAnd200() throws Exception {
+    ObjectMapper objectMapper = new ObjectMapper();
 
-        //given
-        ServiceAtClinic serviceAtClinic1 = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00));
-
-        ServiceAtClinic serviceAtClinic2 = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
-
-        List<ServiceAtClinic> serviceAtClinicList = List.of(serviceAtClinic1, serviceAtClinic2);
-
-        given(serviceAtClinicService.findAllServiceAtClinic()).willReturn(serviceAtClinicList);
-
-        //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/services"))
-
-                //then
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("length()").value(2))
-                .andExpect(jsonPath("[0].id").exists())
-                .andExpect(jsonPath("[0].name").value("Blood Test"))
-                .andExpect(jsonPath("[0].description").value("Laboratory blood tests to assess your pet's internal health."))
-                .andExpect(jsonPath("[0].price").value("60.0"))
-
-                .andExpect(jsonPath("[1].id").exists())
-                .andExpect(jsonPath("[1].name").value("X-Ray"))
-                .andExpect(jsonPath("[1].description").value("X-ray imaging to diagnose bone fractures and internal health issues."))
-                .andExpect(jsonPath("[1].price").value("100.0"));
-
-        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinic();
-
+    @BeforeEach
+    public void init() {
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.findAndRegisterModules();
     }
 
     //Happy path test
@@ -71,38 +54,125 @@ public class ServiceAtClinicGetTest {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00));
         serviceAtClinic.setId(1);
 
-        given(serviceAtClinicService.findServiceAtClinicById(1)).willReturn(Optional.of(serviceAtClinic));
+        BDDMockito.given(serviceAtClinicService.findServiceAtClinicById(1)).willReturn(Optional.of(serviceAtClinic));
 
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/1")
+                        .contentType(MediaType.APPLICATION_JSON))
 
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value("1"))
-                .andExpect(jsonPath("name").value("Blood Test"))
-                .andExpect(jsonPath("description").value("Laboratory blood tests to assess your pet's internal health."))
-                .andExpect(jsonPath("price").value("60.0"));
+                .andExpect(jsonPath("$.data.id").value("1"))
+                .andExpect(jsonPath("$.data.name").value("Blood Test"))
+                .andExpect(jsonPath("$.data.description").value("Laboratory blood tests to assess your pet's internal health."))
+                .andExpect(jsonPath("$.data.price").value("60.0"));
 
         Mockito.verify(serviceAtClinicService, times(1)).findServiceAtClinicById(1);
-
     }
 
-    //Unhappy path test
+    //Happy path
     @Test
-    void getServices_whenAnyUserGetServices_thenReturnEmptyListAnd204() throws Exception {
+    void getAllServicesPage_whenValidPageRequest_thenReturn200() throws Exception {
+        //Given
+        ServiceAtClinic s1 = new ServiceAtClinic("Consultation", "Vet consultation.", BigDecimal.valueOf(30.00));
+        s1.setId(1);
 
-        //given
-        List<ServiceAtClinic> serviceAtClinicList = List.of();
+        ServiceAtClinic s2 = new ServiceAtClinic("Vaccination", "Pet vaccination.", BigDecimal.valueOf(45.00));
+        s2.setId(2);
 
-        given(serviceAtClinicService.findAllServiceAtClinic()).willReturn(serviceAtClinicList);
+        List<ServiceAtClinic> services = List.of(s1, s2);
+        Page<ServiceAtClinic> pagedServices = new PageImpl<>(services);
 
-        //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/services"))
-                //then
-                .andExpect(status().isNoContent())
-                .andExpect(content().string("Service list is empty"));
+        BDDMockito.given(serviceAtClinicService.findAllServiceAtClinicPages(0, 2, null)).willReturn(pagedServices);
 
-        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinic();
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
+                        .param("page", "0")
+                        .param("size", "2"))
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.content[0].name").value("Consultation"))
+                .andExpect(jsonPath("$.data.content[1].name").value("Vaccination"))
+                .andExpect(jsonPath("$.data.totalElements").value(2));
+
+        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinicPages(0, 2, null);
     }
-}
 
+    //Unhappy path
+    @Test
+    void getAllServicesPage_whenEmptyList_thenReturnEmptyMessage() throws Exception {
+        //Given
+        Page<ServiceAtClinic> emptyPage = Page.empty();
+
+        BDDMockito.given(serviceAtClinicService.findAllServiceAtClinicPages(0, 10, null)).willReturn(emptyPage);
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
+                        .param("page", "0")
+                        .param("size", "10"))
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Service list is empty"));
+
+        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinicPages(0, 10, null);
+    }
+
+    //Unhappy path
+    @Test
+    void getAllServicesPage_whenInvalidParams_thenReturn400() throws Exception {
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
+                        .param("page", "-1")
+                        .param("size", "10"))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
+                        .param("page", "0")
+                        .param("size", "0"))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        Mockito.verify(serviceAtClinicService, times(0)).findAllServiceAtClinicPages(anyInt(), anyInt(), any());
+    }
+
+    //Unhappy path
+    @Test
+    void getAllServicesPage_whenInvalidSort_thenReturn400() throws Exception {
+        //Given
+        BDDMockito.given(serviceAtClinicService.isNotValidSortField("invalidSort")).willReturn(true);
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
+                        .param("page", "0")
+                        .param("size", "5")
+                        .param("sort", "invalidSort"))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        Mockito.verify(serviceAtClinicService, times(0)).findAllServiceAtClinicPages(anyInt(), anyInt(), any());
+    }
+
+    //Unhappy path
+    @Test
+    void getService_whenServiceDoesNotExist_thenReturn404() throws Exception {
+        //Given
+        BDDMockito.given(serviceAtClinicService.findServiceAtClinicById(anyInt())).willReturn(Optional.empty());
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/services/999")
+                        .contentType(MediaType.APPLICATION_JSON))
+
+                //Then
+                .andExpect(status().isNotFound());
+
+        Mockito.verify(serviceAtClinicService, times(1)).findServiceAtClinicById(999);
+    }
+
+}

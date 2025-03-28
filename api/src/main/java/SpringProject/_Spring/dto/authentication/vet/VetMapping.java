@@ -22,17 +22,18 @@ public class VetMapping {
                 vet.getAccount().getEmail(),
                 vet.getFirstName(),
                 vet.getLastName(),
+                vet.getPhoneNumber(),
                 vet.getSpecialty()
         );
     }
 
 
-    public static void updateVetFromDTO(Vet vet, VetUpdateDTO vetUpdateDTO) {
-        vet.setFirstName(vetUpdateDTO.firstName());
-        vet.setLastName(vetUpdateDTO.lastName());
-        vet.setPhoneNumber(vetUpdateDTO.phoneNumber());
-        vet.setSpecialty(vetUpdateDTO.specialty());
-        vet.setLicenseNumber(vetUpdateDTO.licenseNumber());
+    public static void updateVetFromDTO(Vet vet, VetUpdateRequestDTO vetUpdateRequestDTO) {
+        vet.setFirstName(vetUpdateRequestDTO.firstName());
+        vet.setLastName(vetUpdateRequestDTO.lastName());
+        vet.setPhoneNumber(vetUpdateRequestDTO.phoneNumber());
+        vet.setSpecialty(vetUpdateRequestDTO.specialty());
+        vet.setLicenseNumber(vetUpdateRequestDTO.licenseNumber());
     }
 
     public static VetUpdateResponseDTO toVetUpdateResponseDTO(Vet vet) {

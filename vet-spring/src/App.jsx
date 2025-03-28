@@ -1,15 +1,15 @@
-//import { useState } from 'react'
-import './App.css'
-import VetClinicRoutes from './components/VetClinicRoutes'
 
-
+import "./App.css";
+import VetClinicRoutes from "./components/VetClinicRoutes";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <>
-      <VetClinicRoutes/>
-      </>
-  )
-}
+      <Toaster position="top-right" reverseOrder={false} />
+      <VetClinicRoutes />
+    </>
+  );
+};
 
-export default App
+export default App;

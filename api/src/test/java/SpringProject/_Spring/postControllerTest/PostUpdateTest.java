@@ -29,6 +29,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -124,6 +125,7 @@ public class PostUpdateTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().is(expectedStatus));
@@ -162,12 +164,13 @@ public class PostUpdateTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidUpdate)))
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.title").value("Title cannot be empty"))
-                .andExpect(jsonPath("$.content").value("Content cannot be empty"))
-                .andExpect(jsonPath("$.postType").value("Post type is required"));
+                .andExpect(jsonPath("$.data.title").value("Title cannot be empty"))
+                .andExpect(jsonPath("$.data.content").value("Content cannot be empty"))
+                .andExpect(jsonPath("$.data.postType").value("Post type is required"));
 
         Mockito.verify(postService, times(0)).updatePost(any(Post.class), any(PostRequestDTO.class));
     }
