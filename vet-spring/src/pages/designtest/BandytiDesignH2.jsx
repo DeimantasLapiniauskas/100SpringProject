@@ -8,13 +8,10 @@ export const BandytiDesignH2 = () => {
         {/* Paw Prints in the Background */}
                 <div className="relative w-full h-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {/* Paw 1 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[14rem] to lg:left-[50rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[50rem] to 2xl:left-[66rem] */}
-          {/* Paw (top: value; top-[1rem]) stays the same. Only for smallest (top: value; top-[1rem]) used once. */}
-          <div
-            className="
-              pawss-for-background-medium
-              absolute
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[14rem][59.7%] to lg:left-[50rem][78.13%] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[50rem][78.13%] to 2xl:left-[66rem][68.75%] */}
+          {/* Paw (top: value; top-[1rem]) stays the same in [rem] but differs eachtime in [%]. */}
+          {/* Units that were listed in rem:
               w-[6rem] h-[6rem]
               sm:w-[7rem] sm:h-[7rem]
               md:w-[8rem] md:h-[8rem]
@@ -40,25 +37,53 @@ export const BandytiDesignH2 = () => {
 
               pawss-paw1-6xl-custom-breakpoint-override
 
+              translate-x-[1rem] translate-y-[1rem] */}
+              {/* Paw 1 */}
+          <div
+            className="
+              pawss-for-background-medium
+              absolute
+              w-[25.6%] h-[25.6%]
+              sm:w-[17.5%] sm:h-[17.5%]
+              md:w-[16.7%] md:h-[16.7%]
+              lg:w-[15.6%] lg:h-[15.6%]
+
+              left-[59.7%] top-[20px]
+
+              sm:left-[65%] sm:top-[20px]
+
+              md:left-[79.16%] md:top-[20px]
+
+              lg:left-[78.13%] lg:top-[20px]
+
+              xl:left-[72.5%] xl:top-[20px]
+
+              2xl:left-[68.75%] 2xl:top-[20px]
+
+              pawss-paw1-3xl-custom-breakpoint-override
+
+              pawss-paw1-4xl-custom-breakpoint-override
+
+              pawss-paw1-5xl-custom-breakpoint-override
+
+              pawss-paw1-6xl-custom-breakpoint-override
+
               translate-x-[1rem] translate-y-[1rem]
             "
           ></div>
 
           {/* Paw 2 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[18rem] to lg:left-[54rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[54rem] to 2xl:left-[70rem] */}
-          {/* Paw (top: value; top-[5rem]) stays the same. Only for smallest (top: value; top-[5rem]) used once. */}
-          <div
-            className="
-              pawss-for-background-medium
-              absolute
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[18rem][76.8%] to lg:left-[54rem][84.38%] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[54rem][84.38%] to 2xl:left-[70rem][] */}
+          {/* Paw (top: value; top-[5rem]) stays the same in [rem] but differs eachtime in [%]. */}
+          {/* Units that were listed in rem:
               w-[6rem] h-[6rem]
               sm:w-[7rem] sm:h-[7rem]
               md:w-[8rem] md:h-[8rem]
               lg:w-[10rem] lg:h-[10rem]
 
               left-[18rem] top-[5rem]
-            
+
               sm:left-[30rem] sm:top-[5rem]
 
               md:left-[42rem] md:top-[5rem]
@@ -77,18 +102,46 @@ export const BandytiDesignH2 = () => {
 
               pawss-paw2-6xl-custom-breakpoint-override
 
+              translate-x-[1rem] translate-y-[1rem] */}
+              {/* Paw 2 */}
+          <div
+            className="
+              pawss-for-background-medium
+              absolute
+              w-[25.6%] h-[25.6%]
+              sm:w-[17.5%] sm:h-[17.5%]
+              md:w-[16.7%] md:h-[16.7%]
+              lg:w-[15.6%] lg:h-[15.6%]
+
+              left-[76.8%] top-[77px]
+            
+              sm:left-[75%] sm:top-[77px]
+
+              md:left-[87.5%] md:top-[77px]
+
+              lg:left-[84.38%] lg:top-[77px]
+
+              xl:left-[77.5%] xl:top-[77px]
+
+              2xl:left-[72.92%] 2xl:top-[77px]
+
+              pawss-paw2-3xl-custom-breakpoint-override
+
+              pawss-paw2-4xl-custom-breakpoint-override
+
+              pawss-paw2-5xl-custom-breakpoint-override
+
+              pawss-paw2-6xl-custom-breakpoint-override
+
               translate-x-[-0.5rem] translate-y-[-0.5rem]
             "
           ></div>
 
           {/* Paw 3 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[12rem] to lg:left-[48rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[48rem] to 2xl:left-[64rem] */}
-          {/* Paw (top: value; top-[6rem]) stays the same. Only for smallest (top: value; top-[5rem]) used once. */}
-          <div
-            className="
-              pawss-for-background-medium
-              absolute
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[12rem][51.2%] to lg:left-[48rem][75%] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[48rem][75%] to 2xl:left-[64rem][66.67%] */}
+          {/* Paw (top: value; top-[6rem]) stays the same in [rem] but differs eachtime in [%]. Only for smallest (top: value; top-[5rem][21.3%]) used once. */}
+          {/* Units that were listed in rem:
               w-[6rem] h-[6rem]
               sm:w-[7rem] sm:h-[7rem]
               md:w-[8rem] md:h-[8rem]
@@ -114,18 +167,46 @@ export const BandytiDesignH2 = () => {
 
               pawss-paw3-6xl-custom-breakpoint-override
 
+              translate-x-[1rem] translate-y-[1rem] */}
+              {/* Paw 3 */}
+          <div
+            className="
+              pawss-for-background-medium
+              absolute
+              w-[25.6%] h-[25.6%]
+              sm:w-[17.5%] sm:h-[17.5%]
+              md:w-[16.7%] md:h-[16.7%]
+              lg:w-[15.6%] lg:h-[15.6%]
+
+              left-[51.2%] top-[82px]
+
+              sm:left-[60%] sm:top-[82px]
+
+              md:left-[75%] md:top-[82px]
+
+              lg:left-[75%] lg:top-[82px]
+
+              xl:left-[70%] xl:top-[82px]
+
+              2xl:left-[66.67%] 2xl:top-[82px]
+
+              pawss-paw3-3xl-custom-breakpoint-override
+
+              pawss-paw3-4xl-custom-breakpoint-override
+
+              pawss-paw3-5xl-custom-breakpoint-override
+
+              pawss-paw3-6xl-custom-breakpoint-override
+
               translate-x-[1rem] translate-y-[-1rem]
             "
           ></div>
 
           {/* Paw 4 */}
-          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[16rem] to lg:left-[52rem] */}
-          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[52rem] to 2xl:left-[68rem] */}
-          {/* Paw (top: value; top-[7rem]) stays the same. Only for smallest (top: value; top-[6rem]) used once. */}
-          <div
-            className="
-              pawss-for-background-medium
-              absolute
+          {/* Increase previous Paw (left: value) by 12rem each new breakpoint from left-[16rem][68,27%] to lg:left-[52rem][81.25%] */}
+          {/* Increase previous Paw (left: value) by 8rem each new breakpoint from lg:left-[52rem][81.25%] to 2xl:left-[68rem][70.83%] */}
+          {/* Paw (top: value; top-[7rem]) stays the same in [rem] but differs eachtime in [%]. Only for smallest (top: value; top-[6rem][25.6%]) used once. */}
+          {/* Units that were listed in rem:
               w-[6rem] h-[6rem]
               sm:w-[7rem] sm:h-[7rem]
               md:w-[8rem] md:h-[8rem]
@@ -142,6 +223,37 @@ export const BandytiDesignH2 = () => {
               xl:left-[60rem] xl:top-[7rem]
 
               2xl:left-[68rem] 2xl:top-[7rem]
+
+              pawss-paw4-3xl-custom-breakpoint-override
+
+              pawss-paw4-4xl-custom-breakpoint-override
+
+              pawss-paw4-5xl-custom-breakpoint-override
+
+              pawss-paw4-6xl-custom-breakpoint-override
+
+              translate-x-[1rem] translate-y-[1rem] */}
+              {/* Paw 4 */}
+          <div
+            className="
+              pawss-for-background-medium
+              absolute
+              w-[25.6%] h-[25.6%]
+              sm:w-[17.5%] sm:h-[17.5%]
+              md:w-[16.7%] md:h-[16.7%]
+              lg:w-[15.6%] lg:h-[15.6%]
+
+              left-[69.27%] top-[92px]
+
+              sm:left-[70%] sm:top-[92px]
+
+              md:left-[83.33%] md:top-[92px]
+
+              lg:left-[81.25%] lg:top-[92px]
+
+              xl:left-[75%] xl:top-[92px]
+
+              2xl:left-[70.83%] 2xl:top-[92px]
 
               pawss-paw4-3xl-custom-breakpoint-override
 

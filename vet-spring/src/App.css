@@ -117,113 +117,113 @@ html {
 
 @media (min-width: 1970px) {
   .pawss-paw1-3xl-custom-breakpoint-override {
-    left: 74rem; /* Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 1rem; /* stays the same; */
+    left: 60.1%; /* Was written[74rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem]; */
   }
 }
 
 @media (min-width: 1970px) {
   .pawss-paw2-3xl-custom-breakpoint-override {
-    left: 78rem; /* Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 5rem; /* stays the same; */
+    left: 63.35%; /* Was written[78rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
   }
 }
 
 @media (min-width: 1970px) {
   .pawss-paw3-3xl-custom-breakpoint-override {
-    left: 72rem; /* Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 6rem; /* stays the same; */
+    left: 58.48%; /* Was written[72rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[1rem];  */
   }
 }
 
 @media (min-width: 1970px) { 
   .pawss-paw4-3xl-custom-breakpoint-override {
-    left: 76rem; /* Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 7rem; /* stays the same; */
+    left: 61.73%; /* Was written[76rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
   }
 }
 
 @media (min-width: 2165px) {
   .pawss-paw1-4xl-custom-breakpoint-override {
-    left: 82rem; /* Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 1rem; /* stays the same; */
+    left: 60.6%; /* Was written[82rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem];  */
   }
 }
 
 @media (min-width: 2165px) {
   .pawss-paw2-4xl-custom-breakpoint-override {
-    left: 86rem; /* Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 5rem; /* stays the same; */
+    left: 63.56%; /* Was written[86rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
   }
 }
 
 @media (min-width: 2165px) {
   .pawss-paw3-4xl-custom-breakpoint-override {
-    left: 80rem; /* Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 6rem; /* stays the same; */
+    left: 59.12%; /* Was written[80rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[6rem];  */
   }
 }
 
 @media (min-width: 2165px) {
   .pawss-paw4-4xl-custom-breakpoint-override {
-    left: 84rem; /* Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 7rem; /* stays the same; */
+    left: 62.08%; /* Was written[84rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
   }
 }
 
 @media (min-width: 2296px) {
   .pawss-paw1-5xl-custom-breakpoint-override {
-    left: 98rem; /* Increase previous Paw 1 (left: value) by 16rem */
-    top: 1rem; /* stays the same; */
+    left: 68.29%; /* Was written[98rem]; Increase previous Paw 1 (left: value) by 16rem */
+    top: 20px; /* Was written[1rem];  */
   }
 }
 
 @media (min-width: 2296px) {
   .pawss-paw2-5xl-custom-breakpoint-override {
-    left: 102rem; /* Increase previous Paw 2 (left: value) by 16rem */
-    top: 5rem; /* stays the same; */
+    left: 71.08%; /* Was written[102rem]; Increase previous Paw 2 (left: value) by 16rem */
+    top: 77px; /* Was written[5rem];  */
   }
 }
 
 @media (min-width: 2296px) {
   .pawss-paw3-5xl-custom-breakpoint-override {
-    left: 96rem; /* Increase previous Paw 3 (left: value) by 16rem */
-    top: 6rem; /* stays the same; */
+    left: 66.9%; /* Was written[96rem]; Increase previous Paw 3 (left: value) by 16rem */
+    top: 82px; /* Was written[6rem];  */
   }
 }
 
 @media (min-width: 2296px) {
   .pawss-paw4-5xl-custom-breakpoint-override {
-    left: 100rem; /* Increase previous Paw 4 (left: value) by 16rem */
-    top: 7rem; /* stays the same; */
+    left: 69.72%; /* Was written[100rem]; Increase previous Paw 4 (left: value) by 16rem */
+    top: 92px; /* Was written[7rem];  */
   }
 }
 
 @media (min-width: 2552px) {
   .pawss-paw1-6xl-custom-breakpoint-override {
-    left: 106rem; /* Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 1rem; /* stays the same; */
+    left: 66.46%; /* Was written[106rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem];  */
   }
 }
 
 @media (min-width: 2552px) {
   .pawss-paw2-6xl-custom-breakpoint-override {
-    left: 110rem; /* Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 5rem; /* stays the same; */
+    left: 68.97%; /* Was written[110rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
   }
 }
 
 @media (min-width: 2552px) {
   .pawss-paw3-6xl-custom-breakpoint-override {
-    left: 104rem; /* Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 6rem; /* stays the same; */
+    left: 65.2%; /* Was written[104rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[6rem];  */
   }
 }
 
 @media (min-width: 2552px) {
   .pawss-paw4-6xl-custom-breakpoint-override {
-    left: 108rem; /* Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 7rem; /* stays the same; */
+    left: 67.71%; /* Was written[108rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
   }
 }
 
