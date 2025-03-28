@@ -5,14 +5,12 @@ import { useEffect, useState } from "react";
 import { getServices } from "../../utils/helpers/serviceService";
 import { postAppointment } from "../../utils/helpers/appointments";
 import { Error } from "../../components/Error";
-import { useAuth } from "../../context/AuthContext.jsx";
 
 export const RegisterAppointment = (props) => {
   const { serviceId, setVisible } = props;
   const [pets, setPets] = useState([]);
   const [vets, setVets] = useState([]);
   const [services, setServices] = useState([]);
-  const { account } = useAuth();
 
   const [error, setError] = useState();
   const [visibleError, setVisibleError] = useState(false);
@@ -22,13 +20,6 @@ export const RegisterAppointment = (props) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  if (
-    account !== null &&
-    account.scope !== null &&
-    account.scope.includes("ROLE_CLIENT")
-  )
-    exitRegFor();
 
   const allPets = async () => {
     try {
@@ -179,6 +170,9 @@ export const RegisterAppointment = (props) => {
                 {errors.serviceIds?.message}
               </div>
             </div>
+
+            {serviceId != null && <div>Hello</div>}
+
             <div className="bg-white rounded-[0.5rem] border-slate-400 border h-fit flex flex-wrap items-start p-2">
               {services?.map((s) => (
                 <div key={s.id}>
@@ -198,6 +192,7 @@ export const RegisterAppointment = (props) => {
                 </div>
               ))}
             </div>
+
           </div>
 
           <div>
