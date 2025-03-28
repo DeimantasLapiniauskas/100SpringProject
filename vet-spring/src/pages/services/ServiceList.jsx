@@ -19,7 +19,7 @@ export const ServiceList = () => {
     getPage,
     error,
     message,
-    content: servises,
+    content,
     currentPage,
     pageSize,
   } = useList();
@@ -59,7 +59,7 @@ export const ServiceList = () => {
               {isLoading ? <Loading /> : ""}
               {isError ? <Error error={error} isHidden={!error} /> : ""}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {servises?.map((service) => (
+          {content?.map((service) => (
             <ServiceCard
               key={service.id}
               service={service}
