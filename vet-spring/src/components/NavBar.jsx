@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { DropdownMenu } from "../pages/profile/DropdownMenu";
-
+import menu from "../assets/icons/menu.svg";
 export const Navbar = () => {
   const { account, logout } = useAuth();
   return (
@@ -19,24 +19,15 @@ export const Navbar = () => {
         <NavLink to={"/posts"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">News</p>
         </NavLink>
-        {account ? (
-          <button
-            type="button"
-            value="logout"
-            onClick={logout}
-            className="custom-purple-btn cursor-pointer lg:text-lg md:text-base sm:text-sm text-xs !font-bold"
-          >
-            Log Out
+        <div class="dropdown">
+          <button class="dropbtn btn bg-[#97a0f1] w-12">
+            <img src={menu} alt="" className="w-10 absolute" />
+            <i class="fa fa-caret-down mb-10"></i>
           </button>
-        ) : (
-          <NavLink to={"/login"}>
-            <p>
-              <button className="custom-purple-btn cursor-pointer lg:text-lg md:text-base sm:text-sm text-xs !font-bold">
-                Log In
-              </button>
-            </p>
-          </NavLink>
-        )}
+          <div class="dropdown-content flex flex-col ml-[-30px]">
+            <DropdownMenu />
+          </div>
+        </div>
       </nav>
     </div>
   );

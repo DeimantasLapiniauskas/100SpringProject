@@ -229,7 +229,7 @@ export const PetList = () => {
               />
             ))}
           </ul>
-      
+
           <div className="join">
             <button
               className="join-item btn"

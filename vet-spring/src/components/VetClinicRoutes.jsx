@@ -18,8 +18,8 @@ import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
+import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
-
 const VetClinicRoutes = () => {
   
   return (
@@ -64,6 +64,11 @@ const VetClinicRoutes = () => {
               <Route path="services/add" element={<ServiceAdd />} />
               <Route path="services/edit/:id" element={<ServiceUpdate />} />
               {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+              <Route path="/profile" element={
+                <AuthGuard>
+                <Profile />
+                </AuthGuard>
+              } />
               <Route path="/design" element={<BandytiDesign />} />
               <Route path="/designh" element={<BandytiDesignHomePage />} />
               <Route path="/designh1" element={<BandytiDesignH1 />} />
