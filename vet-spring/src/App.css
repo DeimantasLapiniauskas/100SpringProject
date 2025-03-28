@@ -41,11 +41,6 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-html {
-  background-color: #DCDEFE;
-  font-family: 'Kiwi Maru', sans-serif;
-}
-
 /* Black button located in Login Page and Register Page */
 .custom-black-btn {
   background-color: #000000;
