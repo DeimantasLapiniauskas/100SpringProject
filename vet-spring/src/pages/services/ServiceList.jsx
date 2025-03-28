@@ -15,16 +15,9 @@ import { FilterUI } from "@/components/FilterUI.jsx";
 export const ServiceList = () => {
   const { account } = useAuth();
 
-  const {
-    getPage,
-    error,
-    message,
-    content,
-    currentPage,
-    pageSize,
-  } = useList();
+  const { getPage, error, message, content, currentPage, pageSize } = useList();
 
-  const {isLoading, isEmpty, isError} = useUI();
+  const { isLoading, isEmpty, isError } = useUI();
 
   const checkRoles = () => {
     //todo: make this better
@@ -41,23 +34,23 @@ export const ServiceList = () => {
   return (
     <>
       <div className="flex flex-col items-center gap-8 p-8 ">
-         <div className="flex w-full justify-between ">
-                  <FilterUI />
-                <SelectUI />
-              </div>
-      <h1 className="figma-headline-2 text-black">
-            Find What Your Pet Needs
-            <br /> Here To Make Your
-            <br /> Pet Happy
-          </h1>
+        <div className="flex w-full justify-between ">
+          <FilterUI />
+          <SelectUI />
+        </div>
+        <h1 className="figma-headline-2 text-black">
+          Find What Your Pet Needs
+          <br /> Here To Make Your
+          <br /> Pet Happy
+        </h1>
         {checkRoles() && (
           <NavLink to={`/services/add`} className="btn btn-primary">
             Add
           </NavLink>
         )}
         {isEmpty ? <p>{message}</p> : ""}
-              {isLoading ? <Loading /> : ""}
-              {isError ? <Error error={error} isHidden={!error} /> : ""}
+        {isLoading ? <Loading /> : ""}
+        {isError ? <Error error={error} isHidden={!error} /> : ""}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {content?.map((service) => (
             <ServiceCard
@@ -69,7 +62,7 @@ export const ServiceList = () => {
             />
           ))}
         </ul>
-     <PaginationUI />
+        <PaginationUI />
         {/* Centered Text and Horizontal Image Section */}
         <div className="flex flex-col items-center text-center space-y-4">
           {/* Horizontal Image Section */}
