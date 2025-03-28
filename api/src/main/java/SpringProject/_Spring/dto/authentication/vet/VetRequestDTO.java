@@ -1,18 +1,18 @@
 package SpringProject._Spring.dto.authentication.vet;
 
-import SpringProject._Spring.validation.customAnnotations.email.EmailLength;
-import SpringProject._Spring.validation.customAnnotations.email.EmailRegex;
-import SpringProject._Spring.validation.customAnnotations.firstName.FNameLength;
-import SpringProject._Spring.validation.customAnnotations.firstName.FNameRegex;
-import SpringProject._Spring.validation.customAnnotations.lastName.LNameLength;
-import SpringProject._Spring.validation.customAnnotations.lastName.LNameRegex;
-import SpringProject._Spring.validation.customAnnotations.password.PasswordLength;
-import SpringProject._Spring.validation.customAnnotations.password.PasswordRegex;
-import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberLength;
-import SpringProject._Spring.validation.customAnnotations.phoneNumber.NumberRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.firstName.FNameLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.firstName.FNameRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.lastName.LNameLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.lastName.LNameRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.vetExclusive.licenseNumber.licenseNumber.LicenseNumberLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.password.PasswordLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.password.PasswordRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.phoneNumber.NumberLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.phoneNumber.NumberRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.vetExclusive.specialty.SpecialtyLength;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.Length;
 
 public record VetRequestDTO(
 
@@ -42,11 +42,11 @@ public record VetRequestDTO(
         String phoneNumber,
 
         @NotNull(message = "Vets must have a specialty!")
-        @Length(max = 100, message = "Specialty can not be longer than 100 characters!")
+        @SpecialtyLength
         String specialty,
 
         @NotNull(message = "Vets must have a license number!")
-        @Length(max = 50, message = "License number can't be longer than 50 characters!")
+        @LicenseNumberLength
         String licenseNumber
 ) {
 }

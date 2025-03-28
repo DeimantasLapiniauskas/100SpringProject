@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { updateService } from "../../utils/helpers/serviceService.js";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 export const ServiceUpdate = () => {
   const { id } = useParams();
 
@@ -24,7 +24,8 @@ export const ServiceUpdate = () => {
     const fetchData = async () => {
       try {
         const response = await api.get(`/services/${id}`);
-        const data = response.data;
+        
+        const data = response.data.data;
         const { name, description, price } = data;
 
         setValue("name", name);
@@ -89,6 +90,7 @@ export const ServiceUpdate = () => {
             <textarea
               {...register("description", {
                 required: "Description is required",
+                pattern: "^[A-Za-z0-9\\s.\\-?!',]*$",
                 maxLength: 255,
               })}
               rows="8"

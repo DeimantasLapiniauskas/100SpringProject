@@ -1,7 +1,10 @@
 package SpringProject._Spring.controller;
 
+import SpringProject._Spring.dto.ApiResponse;
+import SpringProject._Spring.dto.post.PostPageResponseDTO;
 import SpringProject._Spring.dto.post.PostMapper;
 import SpringProject._Spring.dto.post.PostRequestDTO;
+import SpringProject._Spring.dto.post.PostResponseDTO;
 import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.model.post.PostType;
 import SpringProject._Spring.model.authentication.Vet;
@@ -10,7 +13,6 @@ import SpringProject._Spring.service.authentication.VetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,7 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class PostController {
+public class PostController extends BaseController{
 
     public final VetService vetService;
     public final PostService postService;
@@ -34,12 +36,12 @@ public class PostController {
 
     @PostMapping("/posts")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
-    public ResponseEntity<?> postPost(@Valid @RequestBody PostRequestDTO postRequestDTO, Authentication authentication) {
+    public ResponseEntity<ApiResponse<PostResponseDTO>> postPost(@Valid @RequestBody PostRequestDTO postRequestDTO, Authentication authentication) {
 
         Optional<Vet> vet = vetService.findVetByAccountEmail(authentication.getName());
 
         if (vet.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not allowed to post here");
+            return forbidden("You are not allowed to post here");
         }
 
         Vet foundVet = vet.get();
@@ -47,17 +49,15 @@ public class PostController {
         Post post = PostMapper.toPost(postRequestDTO, foundVet);
         Post savedPost = postService.savePost(post);
 
-        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedPost.getId())
-                .toUri())
-                .body(PostMapper.toPostResponseDTO(savedPost));
+        PostResponseDTO responseDTO = PostMapper.toPostResponseDTO(savedPost);
+
+        return created(responseDTO, "Post created successfully");
     }
 
     @GetMapping("/posts/pagination")
-    public ResponseEntity<?> getAllPostsPage(@RequestParam int page,
-                                                 @RequestParam int size,
-                                                 @RequestParam(required = false) String sort) {
+    public ResponseEntity<ApiResponse<PostPageResponseDTO>> getAllPostsPage(@RequestParam int page,
+                                                                            @RequestParam int size,
+                                                                            @RequestParam(required = false) String sort) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -68,78 +68,68 @@ public class PostController {
         }
 
         Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort);
+        String message = pagedPosts.isEmpty() ? "Posts list is empty" : null;
+        PostPageResponseDTO responseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
 
-        if (pagedPosts.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK).body("Posts list is empty");
-        }
-
-        return ResponseEntity.ok(PostMapper.postListResponsePageDTO(pagedPosts));
+        return ok(responseDTO, message);
     }
 
     @GetMapping("/posts/{postId}")
-    public ResponseEntity<?> getPost(@PathVariable long postId) {
+    public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
 
         if (post.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post does not exist");
+            return notFound("Post does not exist");
         }
 
-        Post foundPost = post.get();
-
-        return ResponseEntity.ok(PostMapper.toPostResponseDTO(foundPost));
+        return ok(PostMapper.toPostResponseDTO(post.get()), null);
     }
 
-    @PutMapping("posts/{postId}")
+
+    @PutMapping("/posts/{postId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> updatePost(@Valid @RequestBody PostRequestDTO postRequestDTO,
-                                           @PathVariable long postId, Authentication authentication) {
+    public ResponseEntity<ApiResponse<PostResponseDTO>> updatePost(@Valid @RequestBody PostRequestDTO postRequestDTO,
+                                                                   @PathVariable long postId,
+                                                                   Authentication authentication) {
 
         Optional<Post> post = postService.findPostById(postId);
-
         if (post.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post does not exist");
+            return notFound("Post does not exist");
         }
 
         Post foundPost = post.get();
-
         boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch((auth) -> auth.getAuthority().equals("SCOPE_ROLE_ADMIN"));
+                .anyMatch(auth -> auth.getAuthority().equals("SCOPE_ROLE_ADMIN"));
 
         Optional<Vet> vet = vetService.findVetByAccountEmail(authentication.getName());
 
-        if (vet.isEmpty() && !isAdmin) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("You are not authenticated");
-        }
-
         if (foundPost.getPostType().equals(PostType.Blog)) {
-            if (!isAdmin) { // Normal vet restrictions
+            if (!isAdmin) {
                 Vet currentVet = vet.get();
                 if (foundPost.getVet().getId() != currentVet.getId()) {
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You cannot edit someone else's Blog");
+                    return forbidden( "You cannot edit someone else's Blog");
                 }
-            } else { // Admin restriction
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Admins cannot edit Blogs");
+            } else {
+                return forbidden("Admins cannot edit Blogs");
             }
         }
 
         Post updatedPost = postService.updatePost(foundPost, postRequestDTO);
-
-        return ResponseEntity.ok(PostMapper.toPostResponseDTO(updatedPost));
+        return ok(PostMapper.toPostResponseDTO(updatedPost), "Post updated successfully");
     }
 
-    @DeleteMapping("posts/{postId}")
+    @DeleteMapping("/posts/{postId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> deletePost(@PathVariable long postId) {
+    public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
-
         if (post.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post does not exist");
+            return notFound("Post does not exist");
         }
 
         postService.deletePostById(postId);
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Post deleted successfully");
+//        return noContent("Post deleted successfully");
+        return noContent();
     }
 }

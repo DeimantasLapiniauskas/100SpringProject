@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import {NavLink} from "react-router";
 import {useState} from "react";
 import {useAuth} from "../../context/AuthContext.jsx";
-import {Error} from "../../components/Error.jsx";
+import {Error} from "../../components/feedback/Error.jsx";
 
 import LoginPageDog from "../../assets/pet.png";
 
@@ -16,12 +16,12 @@ export const Login = () => {
         try {
             await login(data.email, data.password);
         } catch (error) {
-            if (error.response.status === 401) {
+            if (error.response?.status === 401) {
                 setError("Invalid credentials")
-                setVisible(true)
             } else {
-                setError(error.response?.data?.message || error.message)
+                setError(error.response?.data?.message ?? error.message)
             }
+            setVisible(true)
         }
     };
     

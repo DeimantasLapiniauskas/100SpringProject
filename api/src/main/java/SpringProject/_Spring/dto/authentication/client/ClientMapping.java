@@ -24,4 +24,13 @@ public class ClientMapping {
     }
 
 
+    public static void updateClientFromDTO(Client client, ClientUpdateDTO clientUpdateDTO) {
+        client.setFirstName(clientUpdateDTO.firstName());
+        client.setLastName(clientUpdateDTO.lastName());
+        client.setPhoneNumber(clientUpdateDTO.phoneNumber());
+    }
+
+    public static ClientUpdateResponseDTO toClientUpdateResponseDTO(Client client) {
+        return new ClientUpdateResponseDTO(client.getFirstName(), client.getLastName(), client.getPhoneNumber());
+    }
 }

@@ -1,5 +1,6 @@
 package SpringProject._Spring.controller.accountController;
 
+import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.authentication.client.ClientMapping;
 import SpringProject._Spring.dto.authentication.client.ClientRequestDTO;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
@@ -19,14 +20,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AccountControllerPost {
+public class AccountControllerPost extends BaseController {
 
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;

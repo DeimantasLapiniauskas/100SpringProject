@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AppointmentController {
+public class AppointmentController extends BaseController {
     private final AppointmentService appointmentService;
     private final PetService petService;
     private final ServiceAtClinicService serviceService;
@@ -64,7 +64,7 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new AppointmentResponseDTO(
                         savedAppointment.getId(),
-                        PetMapping.toPetResponseDTO(petService.getPetByid(savedAppointment.getPetId()).get()),
+                        PetMapping.toPetResponseDTO(petService.getPetById(savedAppointment.getPetId()).get()),
                         VetMapping.toVetResponseDTO(vetService.getVetById(savedAppointment.getVetId()).get()),
                         savedAppointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                         savedAppointment.getAppointmentDate(),
@@ -102,7 +102,7 @@ public class AppointmentController {
                 appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
                         .stream().map(appointment -> new AppointmentResponseDTO(
                                 appointment.getId(),
-                                PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
+                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
@@ -119,7 +119,7 @@ public class AppointmentController {
                 appointmentService.getAllAppointmentsByClientId(id)
                         .stream().map(appointment -> new AppointmentResponseDTO(
                                 appointment.getId(),
-                                PetMapping.toPetResponseDTO(petService.getPetByid(appointment.getPetId()).get()),
+                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get()),
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
