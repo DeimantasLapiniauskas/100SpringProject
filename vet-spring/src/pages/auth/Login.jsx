@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import {NavLink} from "react-router";
 import {useState} from "react";
 import {useAuth} from "../../context/AuthContext.jsx";
-import {Error} from "../../components/Error.jsx";
+import {Error} from "../../components/feedback/Error.jsx";
 
 import LoginPageDog from "../../assets/pet.png";
 
