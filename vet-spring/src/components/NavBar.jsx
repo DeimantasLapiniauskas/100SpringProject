@@ -42,13 +42,3 @@ export const Navbar = () => {
 };
 
 
- /////////////////////////////
-
-    //EDGAR NavBar Design 2025-03-28; Stays horizontal even on when less than 640px; 375px and smaller:
-//<nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-[#6A7AFF] px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]"></nav>
-
-//VLADIMIR NavBar Design 2025-03-28; transforms into vertical when less than 640px; 375px and smaller:
-{/* <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-auto bg-[#6A7AFF] rounded-[10px] border-2 border-[#CBC5C5]
- flex flex-col sm:flex-row justify-center sm:justify-between items-center px-4 sm:px-[5rem] py-2 gap-2 sm:gap-0"></nav> */}
-
-
