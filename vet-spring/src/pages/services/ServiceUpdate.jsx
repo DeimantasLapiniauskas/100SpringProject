@@ -24,6 +24,7 @@ export const ServiceUpdate = () => {
     const fetchData = async () => {
       try {
         const response = await api.get(`/services/${id}`);
+        console.log(response)
         const data = response.data;
         const { name, description, price } = data;
 
