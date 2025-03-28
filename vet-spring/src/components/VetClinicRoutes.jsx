@@ -13,9 +13,12 @@ import { HomePage } from "../pages/home/HomePage.jsx";
 import { PaginationProvider } from "../context/PaginationContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 
+import { Profile } from "../pages/profile/Profile.jsx";
+
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 
 const VetClinicRoutes = () => {
+  
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -49,6 +52,12 @@ const VetClinicRoutes = () => {
             <Route path="services/edit/:id" element={<ServiceUpdate />} />
             {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
             <Route path="/design" element={<BandytiDesign />} />
+
+
+            <Route path="/profile" element={<Profile/>} />
+            
+
+
           </Route>
           <Route path={"*"} element={<NotFound />} />
         </Routes>
