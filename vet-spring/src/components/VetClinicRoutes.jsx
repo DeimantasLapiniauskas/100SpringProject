@@ -18,6 +18,7 @@ import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
+import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
 
 const VetClinicRoutes = () => {
   
@@ -66,6 +67,7 @@ const VetClinicRoutes = () => {
               <Route path="/design" element={<BandytiDesign />} />
               <Route path="/designh" element={<BandytiDesignHomePage />} />
               <Route path="/designh1" element={<BandytiDesignH1 />} />
+              <Route path="/designh2" element={<BandytiDesignH2 />} />
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>
