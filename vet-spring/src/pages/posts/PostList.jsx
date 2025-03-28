@@ -37,8 +37,8 @@ export const PostList = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 px-10 ">
-      <div className="flex w-full justify-between ">
+    <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 ">
+      <div className="flex w-full justify-end gap-5">
           <FilterUI />
         <SelectUI />
       </div>
@@ -55,9 +55,11 @@ export const PostList = () => {
       </section>
 
       {checkRoles() && (
-        <NavLink to={`/services/add`} className="btn btn-primary">
-          Add
-        </NavLink>
+        <div className="flex justify-center w-full">
+          <NavLink to={`/posts/post`} className="btn bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-400 border-1 border-info">
+            Post
+          </NavLink>
+        </div>
       )}
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
@@ -74,7 +76,9 @@ export const PostList = () => {
           />
         ))}
       </ul>
-      <PaginationUI />
+      <div className="p-3">
+        <PaginationUI />
+      </div>
     </div>
   );
 };

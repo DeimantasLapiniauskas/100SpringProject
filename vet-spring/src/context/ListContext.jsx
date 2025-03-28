@@ -63,10 +63,10 @@ export const ListProvider = ({ children }) => {
         const { data, message, success } = response.data;
         console.log(response.data);
         if (!isMounted.current) return;
-        // if (page >= data.content.totalPages) {
-        //  setStatus(BadRequest)
-        //  return
-        // }
+        if (page >= data.totalPages) {
+         setStatus(BadRequest)
+         return
+        }
         if (success && data) {
           setPagination((prev) => ({
             ...prev,

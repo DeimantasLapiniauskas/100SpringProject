@@ -4,6 +4,7 @@ import api from "../../utils/api.js";
 import { Error } from "../../components/feedback/Error.jsx";
 import { useState } from "react";
 import { useList } from "../../context/ListContext.jsx";
+import { motion } from "framer-motion";
 
 export const ServiceCard = (props) => {
   const { service } = props;
@@ -55,16 +56,21 @@ export const ServiceCard = (props) => {
     );
   };
   return (
-    <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
-      <div className="card-body">
+    <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.03 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+    className="card card-side will-change-transform bg-purple-50/20 backdrop-blur-lg p-6 rounded-xl shadow-lg ">
+
+      <div className="card-body shadow-lg shadow-[#854685] rounded-[10px] bg-gradient-to-tr  to-indigo-600 text-[#FFFFFF] ">
         <h2 className="card-title block break-all">{name}</h2>
         <p
-          readOnly
           className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
         >
           {description}
         </p>
-        <p>{price} €</p>
+        <p className="text-[#854685]">{price} €</p>
         <div className="card-actions">
           {checkRoles() && (
             <button
@@ -82,9 +88,8 @@ export const ServiceCard = (props) => {
               Edit
             </NavLink>
           )}
-          {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

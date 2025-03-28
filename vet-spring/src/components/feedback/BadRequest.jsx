@@ -1,7 +1,8 @@
 export const BadRequest = () => {
     return (
-        <>
-        <p>BAD REQUEST</p>
+        <><p>400</p>
+        <p>BAD REQUEST </p>
+        <p>Page does not exist...</p>
         </>
     )
 }

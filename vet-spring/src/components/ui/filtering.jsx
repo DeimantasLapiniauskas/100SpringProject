@@ -1,6 +1,6 @@
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
-import { Check, ChevronDown, ChevronUp } from "lucide-react"
+import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const Select = SelectPrimitive.Root
@@ -11,7 +11,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="relative">
+    <div >
       <SelectPrimitive.Trigger
         ref={ref}
         onClick={() => setOpen(!open)}
@@ -22,13 +22,6 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
         {...props}
       >
         {children}
-        {open ? (
-          <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
-        ) : (
-          <span className={`${open ? "hidden" : "absolute left-[8px] bottom-0 sm:bottom-[-1.5px] md:bottom-[-2.5px]"}`} >
-            <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white font-semibold" />
-          </span>
-        )}
       </SelectPrimitive.Trigger>
     </div>
   );

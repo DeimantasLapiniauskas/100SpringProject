@@ -17,7 +17,10 @@ export const FilterUI = () => {
         onValueChange={(value) => onSortBy({ target: { value } })}
       >
         <SelectTrigger>
-              <FilterIcon />
+          <div className="flex items-center gap-1 md:gap-2">
+            <p className="text-[8px] sm:text-[10px] md:text-xs text-info-content">Filter:</p>
+                <FilterIcon />
+          </div>
         </SelectTrigger>
         <SelectContent>
           {["Content", "News", "Sale", "Blog"].map((postType) => (

@@ -26,7 +26,7 @@ export const SelectUI = () => {
              lg:px-4 lg:py-1.75
             border text-info-content font-semibold border-blue-500
             hover:bg-blue-200 focus:ring-1 focus:ring-blue-400
-            transition duration-150 ease-in-out
+            transition duration-150 ease-in-out 
           `}
         >
           <SelectValue placeholder="Per page" />

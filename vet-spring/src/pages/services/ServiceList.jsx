@@ -24,7 +24,7 @@ export const ServiceList = () => {
     pageSize,
   } = useList();
 
-  const {isLoading, isEmpty, isError} = useUI();
+  const { isLoading, isEmpty, isError } = useUI();
 
   const checkRoles = () => {
     //todo: make this better
@@ -40,24 +40,61 @@ export const ServiceList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-8 p-8 ">
-         <div className="flex w-full justify-between ">
-                  <FilterUI />
-                <SelectUI />
-              </div>
-      <h1 className="figma-headline-2 text-black">
+      <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 ">
+        <div className="flex w-full justify-end gap-5">
+          <FilterUI />
+          <SelectUI />
+        </div>
+        <div className="grid grid-cols-2 w-full">
+          <div className="flex gap-1 bottom-[60%]">
+            {/* Ensures horizontal scroll if needed */}
+            <figure className="w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2 flex items-center justify-center overflow-hidden">
+              <img
+                src={ServiceListPageVetHoldingCat}
+                alt="Vet holding gray cat"
+                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+              />
+            </figure>
+            <figure
+              className="
+             w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2"
+            >
+              <img
+                src={ServiceListPageVetHoldingDog}
+                alt="Vet holding black and white puppy"
+                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+              />
+            </figure>
+            <figure
+              className="
+              w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2"
+            >
+              <img
+                src={ServiceListPageCatPawBandage}
+                alt="Vet holding brown cat"
+                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+              />
+            </figure>
+          </div>
+          <h1 className="text-info-content text-lg sm:text-xl md:text-2xl lg:text-3xl">
             Find What Your Pet Needs
             <br /> Here To Make Your
             <br /> Pet Happy
           </h1>
+        </div>
         {checkRoles() && (
-          <NavLink to={`/services/add`} className="btn btn-primary">
-            Add
-          </NavLink>
+          <div className="w-full flex justify-center ">
+            <NavLink
+              to={`/services/add`}
+              className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 transform transition duration-400 text-info-content border-1 border-[#854685]"
+            >
+              Add Service
+            </NavLink>
+          </div>
         )}
         {isEmpty ? <p>{message}</p> : ""}
-              {isLoading ? <Loading /> : ""}
-              {isError ? <Error error={error} isHidden={!error} /> : ""}
+        {isLoading ? <Loading /> : ""}
+        {isError ? <Error error={error} isHidden={!error} /> : ""}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {servises?.map((service) => (
             <ServiceCard
@@ -69,45 +106,9 @@ export const ServiceList = () => {
             />
           ))}
         </ul>
-     <PaginationUI />
-        {/* Centered Text and Horizontal Image Section */}
-        <div className="flex flex-col items-center text-center space-y-4">
-          {/* Horizontal Image Section */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {" "}
-            {/* Ensures horizontal scroll if needed */}
-            <figure className="w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4 flex items-center justify-center overflow-hidden">
-              <img
-                src={ServiceListPageVetHoldingCat}
-                alt="Vet holding gray cat"
-                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
-              />
-            </figure>
-            <figure
-              className="hidden sm:block
-            
-            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4"
-            >
-              <img
-                src={ServiceListPageVetHoldingDog}
-                alt="Vet holding black and white puppy"
-                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
-              />
-            </figure>
-            <figure
-              className="hidden lg:block 
-            
-            w-[300px] h-[500px] bg-[#6A7AFF] border-4 border-white rounded-[70px] p-4"
-            >
-              <img
-                src={ServiceListPageCatPawBandage}
-                alt="Vet holding brown cat"
-                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
-              />
-            </figure>
-          </div>
+        <div className="p-3">
+          <PaginationUI />
         </div>
-        {error && <Error error={error} isHidden={!error} />}
       </div>
     </>
   );

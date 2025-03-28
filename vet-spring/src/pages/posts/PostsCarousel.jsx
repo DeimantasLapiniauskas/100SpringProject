@@ -11,8 +11,8 @@ const PostCarousel = () => {
   const { content: posts } = useList();
 
   return (
-    <div className="p-[1rem] bg-amber-300 relative rounded-[10px]">
-      <h3 className="text-center">FOLLOW OUR LATTEST NEWS</h3>
+    <div className="p-[1rem] bg-[#6A7AFF] relative rounded-[10px]">
+      <h3 className="text-center pb-3 text-info-content font-semibold">FOLLOW OUR LATEST NEWS</h3>
       <button className="custom-prev absolute left-0 top-1/2 z-10 bg-white p-2 rounded-full shadow">
         ◀
       </button>
@@ -29,9 +29,7 @@ const PostCarousel = () => {
           nextEl: ".custom-next",
           prevEl: ".custom-prev",
         }}
-        pagination={{ clickable: true,
-            el: '.custom-pagination',
-         }}
+        pagination={{ clickable: true, el: ".custom-pagination" }}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         breakpoints={{
           640: { slidesPerView: 3 },
@@ -41,22 +39,39 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div
-              className=" flex flex-col justify-between bg-blue-500 p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]
-"
-            >
-              <p>{post.title}</p>
-              <p className="font-bold">{post.postType}</p>
-              <p className=" leading-[20px] text-sm text-gray-700 overflow-hidden">
-                {post.content.length > 50
-                  ? post.content.slice(0, 47) + "..."
+    <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[15rem] p-5 ">
+              <h2
+                className={`card-title block break-all min-h-[50px] ${
+                  post.postType === "Sale"
+                    ? `text-red-500`
+                    : post.postType === "Blog"
+                    ? `text-purple-800`
+                    : `text-info-content`
+                }`}
+              >
+                {post.title}
+              </h2>
+              <h3
+                className={`py-1 font-semibold text-left ${
+                  post.postType === "Sale"
+                    ? `text-red-500 animate-pulse`
+                    : post.postType === "Blog"
+                    ? `text-purple-800`
+                    : `text-info-content`
+                }`}
+              >
+                {post.postType === "Sale" ? post.postType + "!" : post.postType}
+              </h3>
+              <p className=" leading-[20px] text-left overflow-hidden min-h-[100px] text-sm ">
+                {post.content.length > 120
+                  ? post.content.slice(0, 117) + "..."
                   : post.content}
               </p>
               <NavLink to={`/posts/${post.id}`}>
-        <p className=" text-white hover:underline text-sm font-medium">
-          Read more here
-        </p>
-      </NavLink>
+                <p className=" text-white hover:underline text-sm font-medium p-1">
+                  Read more here
+                </p>
+              </NavLink>
             </div>
           </SwiperSlide>
         ))}
