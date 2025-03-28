@@ -161,7 +161,7 @@ public class PetController extends BaseController {
 //        return ResponseEntity.ok(PetMapping.toPageListPageDTO(petService.findAllPetsPageByOwnerId(page, size, sort, ownerAccountId)));
 //    }
     @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")
-    @GetMapping("/pets/pagination")
+    @GetMapping("/pagination")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<PetPageResponseDTO>> getAllPostsPage(Authentication authentication,
                                                                            @RequestParam int page,

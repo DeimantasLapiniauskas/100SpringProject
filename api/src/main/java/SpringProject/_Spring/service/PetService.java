@@ -65,7 +65,6 @@ public class PetService {
         if (sort == null) {
             Pageable pageable = PageRequest.of(page, size);
             return petRepository.findAllByOwnerId(ownerAccountId, pageable);
-
         }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
