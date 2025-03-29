@@ -16,9 +16,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -32,6 +40,34 @@ public class PostController extends BaseController{
     public PostController(VetService vetService, PostService postService) {
         this.vetService = vetService;
         this.postService = postService;
+    }
+
+    @PostMapping("/posts/upload")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null) {
+            return badRequest(null, "File must have a name");
+        }
+        String fileName = StringUtils.cleanPath(originalFilename);
+        Path uploadPath = Paths.get("uploads/images");
+
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            return badRequest(null, "Only image files are allowed");
+        }
+
+
+        Path filePath = uploadPath.resolve(fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            String fileUrl = "/images/" + fileName;
+
+            return ok(fileUrl);
     }
 
     @PostMapping("/posts")

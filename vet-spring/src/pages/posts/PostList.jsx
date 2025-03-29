@@ -56,7 +56,7 @@ export const PostList = () => {
 
       {checkRoles() && (
         <div className="flex justify-center w-full">
-          <NavLink to={`/posts/post`} className="btn bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-400 border-1 border-info">
+          <NavLink to={`/posts/post`} className="btn bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-700 border-1 border-info">
             Post
           </NavLink>
         </div>

@@ -13,14 +13,16 @@ public class ServiceAtClinic {
     private String name;
     private String description;
     private BigDecimal price;
+    private String imageURL;
 
     public ServiceAtClinic() {
     }
 
-    public ServiceAtClinic(String name, String description, BigDecimal price) {
+    public ServiceAtClinic(String name, String description, BigDecimal price, String imageURL) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.imageURL = imageURL;
     }
 
     public void setId(long id) {
@@ -53,5 +55,13 @@ public class ServiceAtClinic {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

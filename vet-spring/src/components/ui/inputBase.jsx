@@ -1,0 +1,38 @@
+import * as React from "react"
+import { cn } from "@/lib/utils"
+import { cva } from "class-variance-authority"
+
+const inputVariants = cva(
+  "flex w-full rounded border px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  {
+    variants: {
+      size: {
+        sm: "h-8 text-sm",
+        md: "h-10 text-sm",
+        lg: "h-12 text-base",
+      },
+      intent: {
+        default: "border-input",
+        error: "border-red-500 focus:ring-red-500",
+        success: "border-green-500 focus:ring-green-500",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+      intent: "default",
+    },
+  }
+)
+
+const Input = React.forwardRef(({ className, size, intent, ...props }, ref) => {
+  return (
+    <input
+      className={cn(inputVariants({ size, intent }), className)}
+      ref={ref}
+      {...props}
+    />
+  )
+})
+Input.displayName = "Input"
+
+export { Input, inputVariants }

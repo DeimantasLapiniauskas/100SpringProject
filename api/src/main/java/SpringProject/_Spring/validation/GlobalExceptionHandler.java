@@ -8,6 +8,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +48,10 @@ public class GlobalExceptionHandler extends BaseController {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse<String>> handleAccessDeniedException(AccessDeniedException ex) {
         return forbidden("Access Denied");
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ApiResponse<String>> handleIOException(IOException ex) {
+        return badRequest(null, "Upload failed" + ex.getMessage());
     }
 }

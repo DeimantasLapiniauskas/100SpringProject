@@ -45,7 +45,7 @@ export const ServiceList = () => {
           <FilterUI />
           <SelectUI />
         </div>
-        <div className="grid grid-cols-2 w-full">
+        <div className="flex w-full items-center">
           <div className="flex gap-1 bottom-[60%]">
             {/* Ensures horizontal scroll if needed */}
             <figure className="w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2 flex items-center justify-center overflow-hidden">
@@ -76,17 +76,17 @@ export const ServiceList = () => {
               />
             </figure>
           </div>
-          <h1 className="text-info-content text-lg sm:text-xl md:text-2xl lg:text-3xl">
+          <h1 className="text-info-content text-md sm:text-lg md:text-xl lg:text-2xl text-center px-[8rem]">
             Find What Your Pet Needs
-            <br /> Here To Make Your
-            <br /> Pet Happy
+             Here To Make Your
+             Pet Happy
           </h1>
         </div>
         {checkRoles() && (
           <div className="w-full flex justify-center ">
             <NavLink
               to={`/services/add`}
-              className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 transform transition duration-400 text-info-content border-1 border-[#854685]"
+              className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 transform transition duration-700 text-info-content border-1 border-[#854685]"
             >
               Add Service
             </NavLink>

@@ -18,56 +18,58 @@ import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
+import { PostRegister } from "@/pages/posts/PostRegister.jsx";
 
 const VetClinicRoutes = () => {
   return (
     <BrowserRouter>
       <UIProvider>
         <AuthProvider>
-          <Routes>
-            <Route path={"/login"} element={<Login />} />
-            <Route path={"/register"} element={<Register />} />
-            <Route path={"/"} element={<MainLayout />}>
-              <Route index element={<Navigate to="home" replace />} />
-              <Route path="home" element={<HomePage />} />
-              <Route
-                path="/pets"
-                element={
-                  <AuthGuard>
+            <Routes>
+              <Route path={"/login"} element={<Login />} />
+              <Route path={"/register"} element={<Register />} />
+              <Route path={"/"} element={<MainLayout />}>
+                <Route index element={<Navigate to="home" replace />} />
+                <Route path="home" element={<HomePage />} />
+                <Route
+                  path="/pets"
+                  element={
+                    <AuthGuard>
+                      <ListProvider>
+                        <PetList />
+                      </ListProvider>
+                    </AuthGuard>
+                  }
+                />
+                <Route path="pets/add" element={<PetForm />} />
+                {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+                <Route
+                  path="/posts"
+                  element={
                     <ListProvider>
-                      <PetList />
+                      <PostList />
                     </ListProvider>
-                  </AuthGuard>
-                }
-              />
-              <Route path="pets/add" element={<PetForm />} />
-              {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-              <Route
-                path="/posts"
-                element={
-                  <ListProvider>
-                    <PostList />
-                  </ListProvider>
-                }
-              />
-              <Route path="/posts/:postId" element={<ViewPost />} />
-              <Route
-                path="/services"
-                element={
-                  <ListProvider>
-                    <ServiceList />
-                  </ListProvider>
-                }
-              />
-              <Route path="services/add" element={<ServiceAdd />} />
-              <Route path="services/edit/:id" element={<ServiceUpdate />} />
-              {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-              <Route path="/design" element={<BandytiDesign />} />
-              <Route path="/designh" element={<BandytiDesignHomePage />} />
-              <Route path="/designh1" element={<BandytiDesignH1 />} />
-            </Route>
-            <Route path={"*"} element={<NotFound />} />
-          </Routes>
+                  }
+                />
+                <Route path="/posts/post" element={<PostRegister />} />
+                <Route path="/posts/:postId" element={<ViewPost />} />
+                <Route
+                  path="/services"
+                  element={
+                    <ListProvider>
+                      <ServiceList />
+                    </ListProvider>
+                  }
+                />
+                <Route path="services/add" element={<ServiceAdd />} />
+                <Route path="services/edit/:id" element={<ServiceUpdate />} />
+                {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+                <Route path="/design" element={<BandytiDesign />} />
+                <Route path="/designh" element={<BandytiDesignHomePage />} />
+                <Route path="/designh1" element={<BandytiDesignH1 />} />
+              </Route>
+              <Route path={"*"} element={<NotFound />} />
+            </Routes>
         </AuthProvider>
       </UIProvider>
     </BrowserRouter>

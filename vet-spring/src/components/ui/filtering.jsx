@@ -35,7 +35,7 @@ const SelectContent = React.forwardRef(({ className, children, ...props }, ref) 
   position="popper"
   sideOffset={5}
   className={cn(
-    "z-50 w-[55px] sm:w-[75px] md:w-[90px] lg:w-[100px] overflow-auto rounded-md border border-blue-500 hover:bg-blue-200 shadow-lg", className
+    "z-50 w-[55px] sm:w-[75px] md:w-[90px] lg:w-[100px] overflow-auto rounded-md border border-blue-500 bg-blue-200 shadow-lg", className
   )}
   {...props}
 >
