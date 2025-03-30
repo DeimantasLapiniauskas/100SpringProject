@@ -1,4 +1,4 @@
-import * as React from "react"
+
 import { useFormContext, Controller } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
@@ -76,11 +76,26 @@ export function FormMessage({ children, className, intent = "error" }) {
 }
 
 export function Dropzone({ onDrop, previewUrl, error }) {
+  const maxSizeMB = 5;
+  const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
-      if (acceptedFiles.length > 0) {
-        onDrop(acceptedFiles[0]);
+      const file = acceptedFiles[0];
+      if (!file) return;
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+      if (!allowedTypes.includes(file.type)) {
+        alert("Only image files (.jpg, .png, .webp, .gif) are allowed.");
+        return;
       }
+
+      if (file.size > maxSizeBytes) {
+        alert(`File is too large. Max size is ${maxSizeMB}MB.`);
+        return;
+      }
+
+      onDrop(file);
     },
     accept: { 'image/*': [] },
     multiple: false,

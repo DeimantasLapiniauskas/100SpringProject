@@ -13,7 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 @RestController
@@ -44,6 +52,39 @@ public class ServiceAtClinicController extends BaseController {
 
         return created(newService, "Service created successfully");
 
+    }
+
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
+    @PostMapping("/services/upload")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isBlank()) {
+            return badRequest(null, "File must have a valid name");
+        }
+
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            return badRequest(null, "Only image files are allowed");
+        }
+
+        long maxFileSize = 5 * 1024 * 1024;
+        if (file.getSize() > maxFileSize) {
+            return badRequest(null, "File too large. Max allowed size is 5MB.");
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename); // Unikalus vardas
+        Path uploadPath = Paths.get("uploads/images");
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        Path filePath = uploadPath.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        String fileUrl = "/images/" + fileName;
+
+        return ok(fileUrl);
     }
 
     @Operation(summary = "Get service by ID", description = "Retrieves a service by it's unique ID")

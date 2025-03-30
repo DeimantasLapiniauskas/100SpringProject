@@ -119,7 +119,7 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "2"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isOk())
@@ -171,7 +171,7 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "0"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isBadRequest());

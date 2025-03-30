@@ -42,32 +42,37 @@ public class PostController extends BaseController{
         this.postService = postService;
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     @PostMapping("/posts/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-
         String originalFilename = file.getOriginalFilename();
-        if (originalFilename == null) {
-            return badRequest(null, "File must have a name");
+        if (originalFilename == null || originalFilename.isBlank()) {
+            return badRequest(null, "File must have a valid name");
         }
-        String fileName = StringUtils.cleanPath(originalFilename);
-        Path uploadPath = Paths.get("uploads/images");
-
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
 
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
             return badRequest(null, "Only image files are allowed");
         }
 
+        long maxFileSize = 5 * 1024 * 1024;
+        if (file.getSize() > maxFileSize) {
+            return badRequest(null, "File too large. Max allowed size is 5MB.");
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename); // Unikalus vardas
+        Path uploadPath = Paths.get("uploads/images");
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
 
         Path filePath = uploadPath.resolve(fileName);
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            String fileUrl = "/images/" + fileName;
+        String fileUrl = "/images/" + fileName;
 
-            return ok(fileUrl);
+        return ok(fileUrl);
     }
 
     @PostMapping("/posts")

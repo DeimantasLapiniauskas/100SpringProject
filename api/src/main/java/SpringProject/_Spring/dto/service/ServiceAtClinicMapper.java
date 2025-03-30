@@ -8,12 +8,12 @@ import java.util.List;
 
 public class ServiceAtClinicMapper {
     public static ServiceAtClinicResponseDTO toServiceAtClinicDTO(ServiceAtClinic service) {
-        return new ServiceAtClinicResponseDTO(service.getId(), service.getName(), service.getDescription(), service.getPrice());
+        return new ServiceAtClinicResponseDTO(service.getId(), service.getName(), service.getDescription(), service.getPrice(), service.getImageUrl());
     }
 
 
     public static List<ServiceAtClinicResponseDTO> toServiceAtClinicListDTO(List<ServiceAtClinic> services) {
-        return services.stream().map(s -> new ServiceAtClinicResponseDTO(s.getId(), s.getName(), s.getDescription(), s.getPrice())).toList();
+        return services.stream().map(s -> new ServiceAtClinicResponseDTO(s.getId(), s.getName(), s.getDescription(), s.getPrice(), s.getImageUrl())).toList();
     }
 
     public static ServiceAtClinic toServiceAtClinic(ServiceAtClinicRequestDTO serviceAtClinicRequestDTO) {

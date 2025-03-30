@@ -22,10 +22,12 @@ public record PostRequestDTO(@NotNull
                              PostType postType,
 
                              @Pattern(
-                                     regexp = "^(https?://)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d+)?(/[^\s]*)?$",
-                                     message = "Invalid URL format"
+                                     regexp = "^(https?://)?([\\w-]+\\.)+[a-zA-Z]{2,}(:\\d+)?(/[\\w\\-.~:/?#[\\\\]@!$&'()*+,;=]*)\\.(jpg|jpeg|png|webp|gif)$",
+                                     message = "Image URL must be valid and end with .jpg, .png, .webp or .gif"
                              )
+                             @NotBlank(message = "Image URL is required")
                              @Size(max = 255, message = "URL must not exceed 255 characters")
-                             String imgUrl
+                             String imageUrl
+
 ) {
 }

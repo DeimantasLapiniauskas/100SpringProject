@@ -44,7 +44,7 @@ public class PostService {
         post.setTitle(postRequestDTO.title());
         post.setContent(postRequestDTO.content());
         post.setPostType(postRequestDTO.postType());
-        post.setImageUrl(postRequestDTO.imgUrl());
+        post.setImageUrl(postRequestDTO.imageUrl());
         savePost(post);
 
         return post;

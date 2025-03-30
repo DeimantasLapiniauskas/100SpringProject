@@ -71,7 +71,7 @@ public class PostUpdateTest {
             "SCOPE_ROLE_ADMIN, Blog, 403"
     })
     void updatePost_whenVetOrAdminUpdatesPost_thenReturn200Or403(String role, String postType, int expectedStatus) throws Exception {
-        //Given:
+        // Given:
         Account ownerAccount = new Account("owner@example.com", "securePass", List.of(new Role("VET")));
         Account otherVetAccount = new Account("other@example.com", "securePass", List.of(new Role("VET")));
         Account adminAccount = new Account("admin@example.com", "securePass", List.of(new Role("ADMIN")));
@@ -101,7 +101,9 @@ public class PostUpdateTest {
         }
 
         BDDMockito.given(vetService.findVetByAccountEmail(authenticatedAccount.getEmail()))
-                .willReturn(role.equals("SCOPE_ROLE_ADMIN") ? Optional.of(new Vet("Admin", "User", "", "", "", LocalDate.now())) : Optional.of(authenticatedVet));
+                .willReturn(role.equals("SCOPE_ROLE_ADMIN") ?
+                        Optional.of(new Vet("Admin", "User", "", "", "", LocalDate.now())) :
+                        Optional.of(authenticatedVet));
 
         BDDMockito.given(postService.findPostById(postId)).willReturn(Optional.of(post));
 
@@ -112,26 +114,32 @@ public class PostUpdateTest {
                     existingPost.setTitle(dto.title());
                     existingPost.setContent(dto.content());
                     existingPost.setPostType(dto.postType());
-                    existingPost.setImageUrl(dto.imgUrl());
+                    existingPost.setImageUrl(dto.imageUrl());
                     return existingPost;
                 });
 
-        // Run test with specified role
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(authenticatedAccount.getEmail(), "password", List.of(new SimpleGrantedAuthority(role)))
         );
 
-        //When
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
+        // When
+        var resultActions = mockMvc.perform(MockMvcRequestBuilders
+                        .put("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
 //                .andDo(MockMvcResultHandlers.print())
-
-                //Then
                 .andExpect(status().is(expectedStatus));
 
+        // Then
+        if (expectedStatus == 200) {
+            resultActions
+                    .andExpect(jsonPath("$.data.title").value("New Title"))
+                    .andExpect(jsonPath("$.data.content").value("Updated content."))
+                    .andExpect(jsonPath("$.data.imageUrl").value("https://example.com/new.jpg"));
+        }
 
-        Mockito.verify(postService, times(expectedStatus == 200 ? 1 : 0)).updatePost(any(Post.class), any(PostRequestDTO.class));
+        Mockito.verify(postService, times(expectedStatus == 200 ? 1 : 0))
+                .updatePost(any(Post.class), any(PostRequestDTO.class));
     }
 
     //Unhappy path
@@ -145,6 +153,7 @@ public class PostUpdateTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isUnauthorized());
@@ -173,6 +182,26 @@ public class PostUpdateTest {
                 .andExpect(jsonPath("$.data.postType").value("Post type is required"));
 
         Mockito.verify(postService, times(0)).updatePost(any(Post.class), any(PostRequestDTO.class));
+    }
+
+    //Unhappy path
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void updatePost_whenPostNotFound_thenReturn404() throws Exception {
+        long nonExistentPostId = 999L;
+        PostRequestDTO updateRequest = new PostRequestDTO("Updated", "Content", PostType.News, "https://example.com/new.jpg");
+
+        BDDMockito.given(postService.findPostById(nonExistentPostId)).willReturn(Optional.empty());
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", nonExistentPostId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+//                .andDo(MockMvcResultHandlers.print())
+
+                //Then
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Post does not exist"));
     }
 
 }

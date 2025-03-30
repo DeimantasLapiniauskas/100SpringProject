@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  Dropzone
 } from "@/components/ui/formBase";
 import { useState } from "react";
 
@@ -42,25 +43,22 @@ export const PostRegister = () => {
   });
 
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { setValue } = form;
+//   const { setValue } = form;
 
-  const handleDrop = (event) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setValue("imageFile", file);
-      const reader = new FileReader();
-      reader.onload = () => setPreviewUrl(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
+//   const handleDrop = (event) => {
+//     event.preventDefault();
+//     const file = event.dataTransfer.files[0];
+//     if (file && file.type.startsWith("image/")) {
+//       setValue("imageFile", file);
+//       const reader = new FileReader();
+//       reader.onload = () => setPreviewUrl(reader.result);
+//       reader.readAsDataURL(file);
+//     }
+//   };
 
   return (
     <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => console.log(data))}
-        className="space-y-6"
-      >
+      <Form onSubmit={form.handleSubmit((data) => console.log(data))}>
         <FormField
           name="title"
           render={({ field }) => (
@@ -116,7 +114,7 @@ export const PostRegister = () => {
             </FormItem>
           )}
         />
-        <FormItem>
+        {/* <FormItem>
           <FormLabel>Image</FormLabel>
           <div
             onClick={() => document.getElementById("fileInput").click()}
@@ -154,9 +152,27 @@ export const PostRegister = () => {
               {form.formState.errors.imageFile.message}
             </p>
           )}
-        </FormItem>
+        </FormItem> */}
+        <FormField
+          name="imageFile"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <Dropzone
+                onDrop={(file) => {
+                  field.onChange(file);
+                  const reader = new FileReader();
+                  reader.onload = () => setPreviewUrl(reader.result);
+                  reader.readAsDataURL(file);
+                }}
+                previewUrl={previewUrl}
+                error={form.formState.errors.imageFile?.message}
+              />
+            </FormItem>
+          )}
+        />
         <Button type="submit">Submit</Button>
-      </form>
+      </Form>
     </FormProvider>
   );
 };

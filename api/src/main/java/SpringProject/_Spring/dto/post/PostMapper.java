@@ -10,7 +10,7 @@ import java.util.List;
 public class PostMapper {
 
     public static Post toPost(PostRequestDTO postRequestDTO, Vet vet) {
-        return new Post(postRequestDTO.title(), postRequestDTO.content(), postRequestDTO.postType(), vet, postRequestDTO.imgUrl());
+        return new Post(postRequestDTO.title(), postRequestDTO.content(), postRequestDTO.postType(), vet, postRequestDTO.imageUrl());
     }
 
     public static PostResponseDTO toPostResponseDTO(Post post) {
