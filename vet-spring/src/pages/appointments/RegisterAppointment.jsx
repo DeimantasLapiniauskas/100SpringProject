@@ -171,8 +171,6 @@ export const RegisterAppointment = (props) => {
               </div>
             </div>
 
-            {serviceId != null && <div>Hello</div>}
-
             <div className="bg-white rounded-[0.5rem] border-slate-400 border h-fit flex flex-wrap items-start p-2">
               {services?.map((s) => (
                 <div key={s.id}>
@@ -187,6 +185,7 @@ export const RegisterAppointment = (props) => {
                       },
                     })}
                     className="m-2"
+                    {...s.id == serviceId && checked}
                   />
                   <label htmlFor="services">{s.name}</label>
                 </div>
