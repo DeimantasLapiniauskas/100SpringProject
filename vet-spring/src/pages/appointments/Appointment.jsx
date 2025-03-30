@@ -21,8 +21,8 @@ export const Appointment = () => {
 
   return (
     <div>
-      <div className="flex flex-row justify-start m-6 items-baseline">
-        <h1 className="text-2xl mr-6">Appointment history</h1>
+      <div className="flex flex-row justify-start m-6 items-baselin">
+        <h1 className="text-2xl mr-6 text-black">Appointment history</h1>
         <button
           className="custom-white-btn !w-fit"
           onClick={() => setVisible(true)}
@@ -31,7 +31,7 @@ export const Appointment = () => {
         </button>
       </div>
 
-      <div className="bg-white m-8 p-8 rounded-box">
+      <div className="bg-white m-8 p-8 rounded-box text-black">
         <div className="grid grid-cols-6 border-b border-[#97a0f1]">
           <p>Appointment Date</p>
           <p>Pet</p>
@@ -67,7 +67,7 @@ export const Appointment = () => {
         ))}
       </div>
 
-      {visible && <RegisterAppointment setVisible={setVisible} />}
+      {visible && <RegisterAppointment setVisible={setVisible} serviceId={-1}/>}
     </div>
   );
 };

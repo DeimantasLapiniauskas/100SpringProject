@@ -59,6 +59,11 @@ export const RegisterAppointment = (props) => {
 
   const formSubmitHandler = async (data) => {
     try {
+      if (typeof(data.serviceIds)=='string'){
+        console.log('yes');
+        data.serviceIds = [data.serviceIds];
+        console.log(data);
+      } 
       await postAppointment(data);
       reset({
         appointmentDate: "",
@@ -71,7 +76,6 @@ export const RegisterAppointment = (props) => {
     } catch (error) {
       setVisibleError(true);
       setError(error.response?.data || error.message);
-      <q></q>;
     }
   };
 
@@ -185,7 +189,7 @@ export const RegisterAppointment = (props) => {
                       },
                     })}
                     className="m-2"
-                    {...s.id == serviceId && checked}
+                    defaultChecked={s.id === serviceId}
                   />
                   <label htmlFor="services">{s.name}</label>
                 </div>
