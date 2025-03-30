@@ -46,7 +46,7 @@ public class VetService {
         return vetRepository.existsById(id);
     }
 
-    public Page<Vet> findAllPetsPage(int page, int size, String sort) {
+    public Page<Vet> findAllVetsPage(int page, int size, String sort) {
         if (sort == null) {
             Pageable pageable = PageRequest.of(page, size);
             return vetRepository.findAll(pageable);

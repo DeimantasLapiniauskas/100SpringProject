@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/adminpage")
 public class VetController extends BaseController {
 
     private final VetService vetService;
@@ -27,7 +27,7 @@ public class VetController extends BaseController {
     }
 
     @Operation(summary = "Get vets for admin page (Admin)", description = "Retrieves all vets and splits the list by pages")
-    @GetMapping("/vet/pagination")
+    @GetMapping("/vets/pagination")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<VetPageResponseDTO>> getAllVetsPage(@RequestParam int page,
                                                                           @RequestParam int size,
@@ -36,7 +36,7 @@ public class VetController extends BaseController {
             throw new IllegalArgumentException("Invalid page or size parameters");
         }
 
-        Page<Vet> pagedVets = vetService.findAllPetsPage(page, size, sort);
+        Page<Vet> pagedVets = vetService.findAllVetsPage(page, size, sort);
         String message = pagedVets.isEmpty() ? "Vet list is empty" : null;
         VetPageResponseDTO responseDTO = VetMapping.toVetPageResponseDTO(pagedVets);
 

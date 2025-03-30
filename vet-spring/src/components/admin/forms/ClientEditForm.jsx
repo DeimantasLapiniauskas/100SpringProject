@@ -1,13 +1,13 @@
 import { useContext } from "react"
-import ThemeContext from "../../../utils/helpers/themeContext"
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useEffect } from "react";
 import { updateClient } from "../../../utils/helpers/updateClient";
+import ModalContext from "@/utils/helpers/modalContext";
 
 //not used right now, when will be used needs to be moved in another folder
 const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
-    const { setEditModalID } = useContext(ThemeContext);
+    const { setEditModalID } = useContext(ModalContext);
 
     const {
         register,

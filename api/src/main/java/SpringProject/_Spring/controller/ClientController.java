@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/adminpage")
 public class ClientController extends BaseController {
 
     private final ClientService clientService;
@@ -27,7 +27,7 @@ public class ClientController extends BaseController {
     }
 
     @Operation(summary = "Get clients for admin page (Admin)", description = "Retrieves all clients and splits the list by pages")
-    @GetMapping("/client/pagination")
+    @GetMapping("/clients/pagination")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<ClientPageResponseDTO>> getAllClientsPage(@RequestParam int page,
                                                                                 @RequestParam int size,

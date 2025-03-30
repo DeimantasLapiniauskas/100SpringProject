@@ -1,21 +1,24 @@
-import { usePagination } from "../../../context/PaginationContext";
+import { Error } from "@/components/feedback/Error";
 import VetCard from "../../cards/VetCard";
-import { Error } from "../../Error";
 import AddVetButton from "../buttons/AddVetButton";
+import { useList } from "@/context/ListContext";
+import { useUI } from "@/context/UIContext";
+import { PaginationUI } from "@/components/PaginationUI";
+import { BadRequest } from "@/components/feedback/BadRequest";
+import { Loading } from "@/components/feedback/Loading";
 
 const VetList = () => {
-
   const {
     getPage,
-    onPageSizeChange,
-    onPaginate,
     error,
-    content,
+    message,
+    content: vets,
     currentPage,
-    totalPages,
     pageSize,
-  } = usePagination();
+    isEmpty,
+  } = useList();
 
+  const { isLoading, isError, isBadRequest } = useUI();
 
   return (
     <div className="flex flex-col items-center gap-8 py-8">
@@ -24,8 +27,12 @@ const VetList = () => {
         currentPage={currentPage}
         pageSize={pageSize}
       />
+      {isEmpty ? <p>{message}</p> : ""}
+            {isLoading ? <Loading /> : ""}
+            {isError ? <Error error={error} isHidden={!error} /> : ""}
+            {isBadRequest ? <BadRequest/> : ""}
       <ul className="w-full divide-y divide-gray-200">
-        {content?.map((vet) => (
+        {vets?.map((vet) => (
           <VetCard
             key={vet.id}
             vet={vet}
@@ -35,7 +42,15 @@ const VetList = () => {
           />
         ))}
       </ul>
-      <div className="join">
+      <PaginationUI />
+    </div>
+  );
+};
+
+export default VetList;
+
+
+{/* <div className="join">
         <button
           className="join-item btn"
           onClick={async () => onPaginate(currentPage - 1)}
@@ -52,18 +67,13 @@ const VetList = () => {
           »
         </button>
         <select
-          defaultValue="6"
+          defaultValue="10"
           className="join-item select ml-4"
           onChange={onPageSizeChange}
         >
-          <option value="6">6</option>
-          <option value="9">9</option>
-          <option value="12">12</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
         </select>
-      </div>
-      <Error error={error} isHidden={!error} />
-    </div>
-  )
-}
-
-export default VetList;
+      </div> */}
+      {/* <Error error={error} isHidden={!error} /> */}
