@@ -11,14 +11,19 @@ const PostCarousel = () => {
   const { content: posts } = useList();
 
   return (
-    <div className="p-[1rem] bg-[#6A7AFF] relative rounded-[10px]">
-      <h3 className="text-center pb-3 text-info-content font-semibold">FOLLOW OUR LATEST NEWS</h3>
-      <button className="custom-prev absolute left-0 top-1/2 z-10 bg-white p-2 rounded-full shadow">
-        ◀
-      </button>
-      <button className="custom-next absolute right-0 top-1/2  z-10 bg-white p-2 rounded-full shadow">
-        ▶
-      </button>
+    <div className="px-[1rem] bg-[#6A7AFF] relative rounded-[10px]">
+      <div className="flex items-center  justify-between py-2 px-[6rem]">
+        <h2 className="text-info-content font-semibold text-xl">FOLLOW OUR LATEST NEWS</h2>
+        <div className="flex items-center gap-2">
+          <button className="custom-prev z-10 custom-paw-left-btn">
+            ◀
+          </button>
+          <p className="text-info-content font-semibold">View More</p>
+          <button className="custom-next z-10 custom-paw-right-btn">
+            ▶
+          </button>
+        </div>
+      </div>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={10}
@@ -76,7 +81,7 @@ const PostCarousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="custom-pagination mt-4 flex justify-center z-0" />
+      <div className="custom-pagination p-2 flex justify-center z-0" />
     </div>
   );
 };

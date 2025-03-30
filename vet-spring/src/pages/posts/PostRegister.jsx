@@ -18,8 +18,8 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-  Dropzone
 } from "@/components/ui/formBase";
+import { Dropzone } from "@/components/ui/dropZoneBase";
 import { useState } from "react";
 
 const postSchema = z.object({
@@ -34,6 +34,7 @@ const postSchema = z.object({
 export const PostRegister = () => {
   const form = useForm({
     resolver: zodResolver(postSchema),
+    mode: "onChange",
     defaultValues: {
       title: "",
       postType: "",
@@ -43,136 +44,121 @@ export const PostRegister = () => {
   });
 
   const [previewUrl, setPreviewUrl] = useState(null);
-//   const { setValue } = form;
+  //   const { setValue } = form;
 
-//   const handleDrop = (event) => {
-//     event.preventDefault();
-//     const file = event.dataTransfer.files[0];
-//     if (file && file.type.startsWith("image/")) {
-//       setValue("imageFile", file);
-//       const reader = new FileReader();
-//       reader.onload = () => setPreviewUrl(reader.result);
-//       reader.readAsDataURL(file);
-//     }
-//   };
+  //   const handleDrop = (event) => {
+  //     event.preventDefault();
+  //     const file = event.dataTransfer.files[0];
+  //     if (file && file.type.startsWith("image/")) {
+  //       setValue("imageFile", file);
+  //       const reader = new FileReader();
+  //       reader.onload = () => setPreviewUrl(reader.result);
+  //       reader.readAsDataURL(file);
+  //     }
+  //   };
 
   return (
-    <FormProvider {...form}>
-      <Form onSubmit={form.handleSubmit((data) => console.log(data))}>
-        <FormField
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input
-                  intent={form.formState.errors.title ? "error" : "default"}
-                  placeholder="Enter post title"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="postType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Post Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <div className="w-1/2 p-2 sm:p-4 md:p-6">
+      <FormProvider {...form}>
+        <Form onSubmit={form.handleSubmit((data) => console.log(data))}>
+          <FormField
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a type" />
-                  </SelectTrigger>
+                  <Input
+                    intent={
+                      form.formState.errors.title
+                        ? "error"
+                        : field.value && !form.formState.errors.title
+                        ? "success"
+                        : "default"
+                    }
+                    placeholder="Enter post title"
+                    {...field}
+                  />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="News">News</SelectItem>
-                  <SelectItem value="Blog">Blog</SelectItem>
-                  <SelectItem value="Sale">Sale</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  intent={
-                    form.formState.errors.description ? "error" : "default"
-                  }
-                  placeholder="Write a description..."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* <FormItem>
-          <FormLabel>Image</FormLabel>
-          <div
-            onClick={() => document.getElementById("fileInput").click()}
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
-            className="border-dashed border-2 rounded-xl p-6 text-center transition bg-background hover:bg-muted cursor-pointer"
-          >
-            {previewUrl ? (
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="mx-auto max-h-48 object-contain"
-              />
-            ) : (
-              <p>Drag & drop an image here or click to upload</p>
+                <FormMessage />
+              </FormItem>
             )}
-          </div>
-          <input
-            id="fileInput"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                setValue("imageFile", file);
-                const reader = new FileReader();
-                reader.onload = () => setPreviewUrl(reader.result);
-                reader.readAsDataURL(file);
-              }
-            }}
           />
-          {form.formState.errors.imageFile && (
-            <p className="text-sm text-red-500 mt-2">
-              {form.formState.errors.imageFile.message}
-            </p>
-          )}
-        </FormItem> */}
-        <FormField
-          name="imageFile"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <Dropzone
-                onDrop={(file) => {
-                  field.onChange(file);
-                  const reader = new FileReader();
-                  reader.onload = () => setPreviewUrl(reader.result);
-                  reader.readAsDataURL(file);
-                }}
-                previewUrl={previewUrl}
-                error={form.formState.errors.imageFile?.message}
-              />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </Form>
-    </FormProvider>
+          <FormField
+            name="postType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Post Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger
+                      intent={
+                        form.formState.errors.postType
+                          ? "error"
+                          : field.value && !form.formState.errors.postType
+                          ? "success"
+                          : "default"
+                      }
+                      className="w-full"
+                    >
+                      <SelectValue placeholder="Select a type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="News">News</SelectItem>
+                    <SelectItem value="Blog">Blog</SelectItem>
+                    <SelectItem value="Sale">Sale</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    intent={
+                      form.formState.errors.description
+                        ? "error"
+                        : field.value && !form.formState.errors.description
+                        ? "success"
+                        : "default"
+                    }
+                    placeholder="Write a description..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="imageFile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <Dropzone
+                  onDrop={(file) => {
+                    field.onChange(file);
+                    const reader = new FileReader();
+                    reader.onload = () => setPreviewUrl(reader.result);
+                    reader.readAsDataURL(file);
+                  }}
+                  previewUrl={previewUrl}
+                  error={form.formState.errors.imageFile?.message}
+                />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Submit</Button>
+        </Form>
+      </FormProvider>
+    </div>
   );
 };

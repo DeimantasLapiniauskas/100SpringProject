@@ -71,7 +71,7 @@ export const PaginationUI = () => {
               <PaginationEllipsis
                 className="text-xs font-bold text-info-content 
                             sm:text-sm 
-                            md:text-base 
+                            md:text-base
                              "
               />
             </PaginationItem>

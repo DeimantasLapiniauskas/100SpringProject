@@ -56,7 +56,6 @@ public class PostDeleteTest {
     //Happy path
     @ParameterizedTest
     @ValueSource(strings = {"SCOPE_ROLE_VET", "SCOPE_ROLE_ADMIN"})
-    @WithMockUser
     void deletePost_whenAuthorizedUserDeletesPost_thenReturn204(String role) throws Exception {
         //Given
         long postId = 1L;

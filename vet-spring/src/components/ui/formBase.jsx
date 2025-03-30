@@ -2,10 +2,9 @@
 import { useFormContext, Controller } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
-import { useDropzone } from "react-dropzone"
 
 export function Form({ className, ...props }) {
-  return <form className={cn("space-y-6", className)} {...props} />
+  return <form className={cn("space-y-2 md:space-y-4", className)} {...props} />
 }
 
 export function FormField({ name, control, render, ...props }) {
@@ -21,13 +20,13 @@ export function FormField({ name, control, render, ...props }) {
 }
 
 export function FormItem({ className, ...props }) {
-  return <div className={cn("space-y-2", className)} {...props} />
+  return <div className={cn(" space-y-2", className)} {...props} />
 }
 
 const formLabelVariants = cva("text-sm font-medium", {
   variants: {
     intent: {
-      default: "text-foreground",
+      default: "text-info-content",
       error: "text-red-500",
       success: "text-green-600",
       muted: "text-muted-foreground",
@@ -36,11 +35,12 @@ const formLabelVariants = cva("text-sm font-medium", {
       sm: "text-xs",
       md: "text-sm",
       lg: "text-base",
+      responsive : "text-xs sm:text-sm md:text-base lg:text-lg"
     },
   },
   defaultVariants: {
     intent: "default",
-    size: "md",
+    size: "responsive",
   },
 })
 
@@ -75,52 +75,4 @@ export function FormMessage({ children, className, intent = "error" }) {
   return <p className={cn(formMessageVariants({ intent }), className)}>{children}</p>
 }
 
-export function Dropzone({ onDrop, previewUrl, error }) {
-  const maxSizeMB = 5;
-  const maxSizeBytes = maxSizeMB * 1024 * 1024;
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (!file) return;
-
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-      if (!allowedTypes.includes(file.type)) {
-        alert("Only image files (.jpg, .png, .webp, .gif) are allowed.");
-        return;
-      }
-
-      if (file.size > maxSizeBytes) {
-        alert(`File is too large. Max size is ${maxSizeMB}MB.`);
-        return;
-      }
-
-      onDrop(file);
-    },
-    accept: { 'image/*': [] },
-    multiple: false,
-  });
-
-  return (
-    <div {...getRootProps()} className={cn(
-      "border-dashed border-2 rounded-xl p-6 text-center transition cursor-pointer",
-      isDragActive ? "bg-muted" : "bg-background"
-    )}>
-      <input {...getInputProps()} />
-      {previewUrl ? (
-        <img
-          src={previewUrl}
-          alt="Preview"
-          className="mx-auto max-h-48 object-contain"
-        />
-      ) : (
-        <p>Drag & drop an image here or click to upload</p>
-      )}
-      {error && (
-        <p className="text-sm text-red-500 mt-2">{error}</p>
-      )}
-    </div>
-  );
-}
-
-export { formLabelVariants, formMessageVariants }
+export { formLabelVariants, formMessageVariants}

@@ -167,7 +167,7 @@ public class PostPostTest {
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void postPost_whenInvalidPostRequest_thenReturn400() throws Exception {
         // Given
-        PostRequestDTO invalidPost = new PostRequestDTO("", "", null, "htt?ps:example.com/image.jpg");
+        PostRequestDTO invalidPost = new PostRequestDTO("    ", "            ", null, "htt?ps:example.com/image.jpg");
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts")

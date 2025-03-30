@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,7 +168,7 @@ public class PostUpdateTest {
         //Given
         long postId = 1L;
 
-        PostRequestDTO invalidUpdate = new PostRequestDTO("", "", null, "");
+        PostRequestDTO invalidUpdate = new PostRequestDTO("    ", "            ", null, "");
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", postId)
@@ -185,23 +186,32 @@ public class PostUpdateTest {
     }
 
     //Unhappy path
-    @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void updatePost_whenPostNotFound_thenReturn404() throws Exception {
+    @ParameterizedTest
+    @ValueSource(strings = {"SCOPE_ROLE_VET", "SCOPE_ROLE_ADMIN"})
+    void updatePost_whenPostNotFound_thenReturn404(String role) throws Exception {
         long nonExistentPostId = 999L;
-        PostRequestDTO updateRequest = new PostRequestDTO("Updated", "Content", PostType.News, "https://example.com/new.jpg");
+
+        PostRequestDTO updateRequest = new PostRequestDTO(
+                "Updated",
+                "This is a valid content with more than ten characters.",
+                PostType.News,
+                "https://example.com/new.jpg"
+        );
 
         BDDMockito.given(postService.findPostById(nonExistentPostId)).willReturn(Optional.empty());
 
-        //When
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken("testUser", "password", List.of(new SimpleGrantedAuthority(role)))
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/{postId}", nonExistentPostId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
-//                .andDo(MockMvcResultHandlers.print())
-
-                //Then
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("Post does not exist"));
+
+        Mockito.verify(postService, times(0)).updatePost(any(Post.class), any(PostRequestDTO.class));
     }
 
 }
