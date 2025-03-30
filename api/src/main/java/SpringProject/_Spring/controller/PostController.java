@@ -69,10 +69,11 @@ public class PostController extends BaseController{
 
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        System.out.println("✅ Image saved to: " + filePath.toAbsolutePath());
 
         String fileUrl = "/images/" + fileName;
 
-        return ok(fileUrl);
+        return ok(fileUrl, "Image uploaded successfully");
     }
 
     @PostMapping("/posts")
@@ -162,11 +163,21 @@ public class PostController extends BaseController{
 
     @DeleteMapping("/posts/{postId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) {
+    public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) throws IOException {
 
-        Optional<Post> post = postService.findPostById(postId);
-        if (post.isEmpty()) {
+        Optional<Post> postOpt = postService.findPostById(postId);
+        if (postOpt.isEmpty()) {
             return notFound("Post does not exist");
+        }
+
+        Post post = postOpt.get();
+        String imageUrl = post.getImageUrl();
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            String filename = Paths.get(imageUrl).getFileName().toString();
+            Path path = Paths.get("uploads/images").resolve(filename);
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
         }
 
         postService.deletePostById(postId);

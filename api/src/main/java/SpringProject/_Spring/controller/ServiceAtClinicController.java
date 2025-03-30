@@ -84,7 +84,7 @@ public class ServiceAtClinicController extends BaseController {
 
         String fileUrl = "/images/" + fileName;
 
-        return ok(fileUrl);
+        return ok(fileUrl, "Image uploaded successfully");
     }
 
     @Operation(summary = "Get service by ID", description = "Retrieves a service by it's unique ID")
@@ -132,10 +132,21 @@ public class ServiceAtClinicController extends BaseController {
     @DeleteMapping("/services/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
 
-    public ResponseEntity<ApiResponse<String>> deleteService(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<String>> deleteService(@PathVariable long id) throws IOException {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return notFound("Service not found");
         }
+
+        ServiceAtClinic serviceAtClinic = serviceAtClinicService.findServiceAtClinicById(id).get();
+        String imageUrl = serviceAtClinic.getImageUrl();
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            String fileName = Paths.get(imageUrl).getFileName().toString();
+            Path path = Paths.get("uploads/images").resolve(fileName);
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+        }
+
         serviceAtClinicService.deleteServiceById(id);
         return noContent("service deleted successfully");
     }

@@ -33,6 +33,7 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
+      console.log("📥 Dropzone gavo failą:", file);
       if (!file) return;
 
       const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -45,8 +46,8 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
         alert(`File is too large. Max size is ${maxSizeMB}MB.`);
         return;
       }
-
-      onDrop(file);
+      console.log("📤 Iškviečiam props.onDrop su failu:", file);
+      onDrop && onDrop(file);
     },
     accept: { 'image/*': [] },
     multiple: false,

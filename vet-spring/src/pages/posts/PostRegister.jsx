@@ -21,14 +21,18 @@ import {
 } from "@/components/ui/formBase";
 import { Dropzone } from "@/components/ui/dropZoneBase";
 import { useState } from "react";
+import { useUI } from "@/context/UIContext";
+import { UIStatus } from "@/constants/UIStatus";
+import { postPost, uploadImage } from "@/utils/helpers/uploadImage";
+import { Controller } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const postSchema = z.object({
   title: z.string().min(3),
   postType: z.enum(["News", "Blog", "Sale"]),
-  description: z.string().min(10),
-  imageFile: z.any().refine((file) => file instanceof File || file === null, {
-    message: "Image is required",
-  }),
+  content: z.string().min(10),
+  // imageFile: z.instanceof(File, { message: "Image is required" })
+  imageFile: z.instanceof(File).optional().nullable()
 });
 
 export const PostRegister = () => {
@@ -37,34 +41,71 @@ export const PostRegister = () => {
     mode: "onChange",
     defaultValues: {
       title: "",
-      postType: "",
+      postType: undefined,
       description: "",
       imageFile: null,
     },
   });
 
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  //   const { setValue } = form;
+  const { Loading, Success, Error } = UIStatus;
+  const { status, setStatus } = useUI();
 
-  //   const handleDrop = (event) => {
-  //     event.preventDefault();
-  //     const file = event.dataTransfer.files[0];
-  //     if (file && file.type.startsWith("image/")) {
-  //       setValue("imageFile", file);
-  //       const reader = new FileReader();
-  //       reader.onload = () => setPreviewUrl(reader.result);
-  //       reader.readAsDataURL(file);
-  //     }
-  //   };
+  const handleFormSubmit = async (data) => {
+let imageUrl = null
+
+    try {
+      setStatus(Loading);
+      if (data.imageFile) {
+      const formData = new FormData();
+      formData.append("file", data.imageFile);
+      const imageRes = await uploadImage(formData);
+      imageUrl = imageRes.data.data;
+      }
+      const payload = {
+        title: data.title,
+        postType: data.postType,
+        content: data.content,
+        imageUrl,
+      };
+      const response = await postPost(payload);
+      const { data: data2, message, success } = response.data;
+      setStatus(Success);
+
+      if (data2 && success) {
+        setMessage(message);
+        toast.dismiss();
+        toast.success(message);
+        form.reset();
+        setPreviewUrl(null);
+      } else {
+        setMessage(message || "Something went wrong");
+        toast.error(message || "Something went wrong");
+        form.reset();
+        setPreviewUrl(null);
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ?? error.message ?? "Unknown error";
+        toast.error(errorMessage);
+      setError(errorMessage);
+      setStatus(Error);
+    } finally {
+      form.setValue("imageFile", null);
+    }
+  
+  };
 
   return (
-    <div className="w-1/2 p-2 sm:p-4 md:p-6">
+    <div className="w-1/2 md:w-2/5 p-2 sm:p-4 md:p-6">
       <FormProvider {...form}>
-        <Form onSubmit={form.handleSubmit((data) => console.log(data))}>
+        <Form onSubmit={form.handleSubmit(handleFormSubmit)}>
           <FormField
             name="title"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="md:w-1/2">
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input
@@ -86,7 +127,7 @@ export const PostRegister = () => {
           <FormField
             name="postType"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="md:w-1/2">
                 <FormLabel>Post Type</FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -117,20 +158,20 @@ export const PostRegister = () => {
             )}
           />
           <FormField
-            name="description"
+            name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Content</FormLabel>
                 <FormControl>
                   <Textarea
                     intent={
-                      form.formState.errors.description
+                      form.formState.errors.content
                         ? "error"
-                        : field.value && !form.formState.errors.description
+                        : field.value && !form.formState.errors.content
                         ? "success"
                         : "default"
                     }
-                    placeholder="Write a description..."
+                    placeholder="Write a content..."
                     {...field}
                   />
                 </FormControl>
@@ -138,14 +179,19 @@ export const PostRegister = () => {
               </FormItem>
             )}
           />
-          <FormField
+          <Controller
+            control={form.control}
             name="imageFile"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <Dropzone
-                  onDrop={(file) => {
+                  onDrop={ async (file) => {
+                    console.log("🔥 Dropzone gavo failą:", file);
                     field.onChange(file);
+                    await form.trigger("imageFile")
+                    console.log("📌 Formos imageFile po trigger:", form.getValues("imageFile"));
+                    
                     const reader = new FileReader();
                     reader.onload = () => setPreviewUrl(reader.result);
                     reader.readAsDataURL(file);
@@ -157,6 +203,12 @@ export const PostRegister = () => {
             )}
           />
           <Button type="submit">Submit</Button>
+          {/* <Button type="submit" disabled={form.formState.isSubmitting}>
+  {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+</Button> */}
+          <pre className="text-xs text-red-500">
+            {JSON.stringify(form.formState.errors, null, 2)}
+          </pre>
         </Form>
       </FormProvider>
     </div>

@@ -23,10 +23,9 @@ public record ServiceAtClinicRequestDTO(
         BigDecimal price,
 
         @Pattern(
-                regexp = "^(https?://)?([\\w-]+\\.)+[a-zA-Z]{2,}(:\\d+)?(/[\\w\\-.~:/?#[\\\\]@!$&'()*+,;=]*)\\.(jpg|jpeg|png|webp|gif)$",
-                message = "Image URL must be valid and end with .jpg, .png, .webp or .gif"
+                regexp = ".*\\.(jpg|jpeg|png|webp|gif)$",
+                message = "Image URL must end with .jpg, .png, .webp or .gif"
         )
-        @NotBlank(message = "Image URL is required")
         @Size(max = 255, message = "URL must not exceed 255 characters")
         String imageUrl
 ) {
