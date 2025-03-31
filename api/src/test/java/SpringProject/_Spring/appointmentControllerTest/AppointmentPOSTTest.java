@@ -258,7 +258,7 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("petId").value("You have to actually register a pet!"));
+                .andExpect(jsonPath("data.petId").value("You have to actually register a pet!"));
 
 
         mockMvc.perform(post("/api/appointments")
@@ -274,7 +274,7 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("vetId").value("You have to actually register to a vet!"));
+                .andExpect(jsonPath("data.vetId").value("You have to actually register to a vet!"));
 
 
         mockMvc.perform(post("/api/appointments")
@@ -290,7 +290,7 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("serviceIds").value("You have to actually register to a service!"));
+                .andExpect(jsonPath("data.serviceIds").value("You have to actually register to a service!"));
 
 
         mockMvc.perform(post("/api/appointments")
@@ -306,7 +306,7 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("appointmentDate").value("You have to actually register at a predetermined time!"));
+                .andExpect(jsonPath("data.appointmentDate").value("You have to actually register at a predetermined time!"));
 
 
         mockMvc.perform(post("/api/appointments")
@@ -322,7 +322,7 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("appointmentDate").value("You can't make an appointment in the past!"));
+                .andExpect(jsonPath("data.appointmentDate").value("You can't make an appointment in the past!"));
 
 
         mockMvc.perform(post("/api/appointments")
@@ -338,7 +338,7 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("notes").value("Your note is too long! Please keep it to 255 or less characters."));
+                .andExpect(jsonPath("data.notes").value("Your note is too long! Please keep it to 255 or less characters."));
 
         Mockito.verify(appointmentService, times(0)).saveAppointment(ArgumentMatchers.any());
     }

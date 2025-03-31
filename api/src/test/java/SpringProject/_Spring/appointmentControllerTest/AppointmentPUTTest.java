@@ -271,7 +271,7 @@ public class AppointmentPUTTest {
                         )
                 )
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("message").value("Access Denied"));
 
         Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
     }
