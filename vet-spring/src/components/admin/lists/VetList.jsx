@@ -18,7 +18,10 @@ const VetList = () => {
     isEmpty,
   } = useList();
 
+
   const { isLoading, isError, isBadRequest } = useUI();
+
+  //console.log("VetList vets:", vets?.map(vet => vet.id));
 
   return (
     <div className="flex flex-col items-center gap-8 py-8">
@@ -28,11 +31,11 @@ const VetList = () => {
         pageSize={pageSize}
       />
       {isEmpty ? <p>{message}</p> : ""}
-            {isLoading ? <Loading /> : ""}
-            {isError ? <Error error={error} isHidden={!error} /> : ""}
-            {isBadRequest ? <BadRequest/> : ""}
+      {isLoading ? <Loading /> : ""}
+      {isError ? <Error error={error} isHidden={!error} /> : ""}
+      {isBadRequest ? <BadRequest /> : ""}
       <ul className="w-full divide-y divide-gray-200">
-        {vets?.map((vet) => (
+        {vets.map((vet) => (
           <VetCard
             key={vet.id}
             vet={vet}
@@ -48,32 +51,3 @@ const VetList = () => {
 };
 
 export default VetList;
-
-
-{/* <div className="join">
-        <button
-          className="join-item btn"
-          onClick={async () => onPaginate(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          «
-        </button>
-        <button className="join-item btn">Page {currentPage + 1}</button>
-        <button
-          className="join-item btn"
-          onClick={async () => onPaginate(currentPage + 1)}
-          disabled={currentPage === totalPages - 1}
-        >
-          »
-        </button>
-        <select
-          defaultValue="10"
-          className="join-item select ml-4"
-          onChange={onPageSizeChange}
-        >
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-        </select>
-      </div> */}
-      {/* <Error error={error} isHidden={!error} /> */}

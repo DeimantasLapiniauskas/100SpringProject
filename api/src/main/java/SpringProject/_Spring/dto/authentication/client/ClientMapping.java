@@ -19,9 +19,11 @@ public class ClientMapping {
 
     public static ClientResponseDTO toClientResponseDTO(Client client) {
         return new ClientResponseDTO(
+                client.getId(),
                 client.getAccount().getEmail(),
                 client.getFirstName(),
-                client.getLastName()
+                client.getLastName(),
+                client.getPhoneNumber()
         );
     }
 

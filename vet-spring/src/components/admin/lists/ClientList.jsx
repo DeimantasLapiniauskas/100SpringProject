@@ -16,7 +16,7 @@ const ClientList = () => {
     pageSize,
     isEmpty,
   } = useList();
-
+//.filter(client => client?.id != null)
   const { isLoading, isError, isBadRequest } = useUI();
 
   return (
@@ -26,7 +26,8 @@ const ClientList = () => {
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadRequest ? <BadRequest /> : ""}
       <ul className="w-full divide-y divide-gray-200">
-        {clients?.map((client) => (
+        {clients.map((client) => (
+
           <ClientCard
             key={client.id}
             client={client}

@@ -24,11 +24,13 @@ public class VetMapping {
 
     public static VetResponseDTO toVetResponseDTO(Vet vet) {
         return new VetResponseDTO(
+                vet.getId(),
                 vet.getAccount().getEmail(),
                 vet.getFirstName(),
                 vet.getLastName(),
                 vet.getPhoneNumber(),
-                vet.getSpecialty()
+                vet.getSpecialty(),
+                vet.getLicenseNumber()
         );
     }
 
