@@ -38,7 +38,7 @@ const SelectTrigger = React.forwardRef(
         {...props}
       >
         {children}
-        <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+        <ChevronDown className=" h-3 w-3 md:h-4 md:w-4 opacity-50 text-info-content" />
       </SelectPrimitive.Trigger>
     );
   }

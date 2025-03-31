@@ -13,15 +13,13 @@ const PostCarousel = () => {
   return (
     <div className="px-[1rem] bg-[#6A7AFF] relative rounded-[10px]">
       <div className="flex items-center  justify-between py-2 px-[6rem]">
-        <h2 className="text-info-content font-semibold text-xl">FOLLOW OUR LATEST NEWS</h2>
+        <h2 className="text-info-content font-semibold text-xl">
+          FOLLOW OUR LATEST NEWS
+        </h2>
         <div className="flex items-center gap-2">
-          <button className="custom-prev z-10 custom-paw-left-btn">
-            ◀
-          </button>
+          <button className="custom-prev z-10 custom-paw-left-btn">◀</button>
           <p className="text-info-content font-semibold">View More</p>
-          <button className="custom-next z-10 custom-paw-right-btn">
-            ▶
-          </button>
+          <button className="custom-next z-10 custom-paw-right-btn">▶</button>
         </div>
       </div>
       <Swiper
@@ -44,7 +42,7 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-    <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[15rem] p-5 ">
+            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[15rem] p-5 border-1 border-blue-400">
               <h2
                 className={`card-title block break-all min-h-[50px] ${
                   post.postType === "Sale"
@@ -67,13 +65,30 @@ const PostCarousel = () => {
               >
                 {post.postType === "Sale" ? post.postType + "!" : post.postType}
               </h3>
-              <p className=" leading-[20px] text-left overflow-hidden min-h-[100px] text-sm ">
-                {post.content.length > 120
-                  ? post.content.slice(0, 117) + "..."
-                  : post.content}
-              </p>
+              <div className={post.imageUrl ? "grid grid-cols-3 gap-2" : ""}>
+                <p className=" leading-[20px] text-left overflow-hidden min-h-[100px] text-sm col-span-2 break-words">
+                  {post.imageUrl
+                    ? post.content.length > 120
+                      ? post.content.slice(0, 117) + "..."
+                      : post.content
+                    : post.content.length > 170
+                    ? post.content.slice(0, 167)
+                    : post.content}
+                </p>
+                {post.imageUrl && (
+                  <img
+                    src={
+                      post.imageUrl.startsWith("http")
+                        ? post.imageUrl
+                        : import.meta.env.VITE_API_URL + post.imageUrl
+                    }
+                    alt={post.title}
+                    className="object-cover h-25 rounded-[10px] border-1 border-blue-400 w-full"
+                  />
+                )}
+              </div>
               <NavLink to={`/posts/${post.id}`}>
-                <p className=" text-white hover:underline text-sm font-medium p-1">
+                <p className=" text-white hover:underline text-xs md:text-sm font-medium p-1">
                   Read more here
                 </p>
               </NavLink>

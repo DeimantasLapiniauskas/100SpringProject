@@ -42,11 +42,11 @@ export const PostList = () => {
           <FilterUI />
         <SelectUI />
       </div>
-      <section className="px-4 py-8 text-center ">
+      <section className="px-2 py-4 sm:px-3 sm:py-6 md:px-4 md:py-8 text-center ">
         <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
           Stay Updated with News, Blogs & Sales
         </h2>
-        <article className="text-sm md:text-base text-gray-700 max-w-3xl mx-auto text-center">
+        <article className="text-sm md:text-base lg:text-lg text-gray-700 max-w-3xl mx-auto text-center">
           Explore our latest updates, expert advice, and exclusive promotions.
           From helpful pet care blogs to limited-time sales, we’re here to keep
           you informed and your pets happy. Check back often for fresh content
@@ -56,8 +56,8 @@ export const PostList = () => {
 
       {checkRoles() && (
         <div className="flex justify-center w-full">
-          <NavLink to={`/posts/post`} className="btn bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-700 border-1 border-info">
-            Post
+          <NavLink to={`/posts/register`} ><p className="text-xs py-0.5 px-2 sm:text-sm sm:py-1 sm:px-3 md:text-base md:py-1.5 md:px-4 rounded-[5px] bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-700 border-1 border-info">
+         Post</p>
           </NavLink>
         </div>
       )}
@@ -65,7 +65,7 @@ export const PostList = () => {
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadRequest ? <BadRequest/> : ""}
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 ">
         {posts.map((post) => (
           <PostCard
             key={post.id}

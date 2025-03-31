@@ -52,7 +52,7 @@ public class PostService {
 
     public Page<Post> findAllPostsPage(int page, int size, String sort) {
         if (sort == null) {
-            Pageable pageable = PageRequest.of(page, size);
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
             return  postRepository.findAll(pageable);
         }
 

@@ -57,11 +57,12 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
     <div {...getRootProps()} className={cn(
       dropzoneVariants({ intent, size }),
       className,
-      isDragActive ? "bg-muted" : "bg-background"
+      isDragActive ? "bg-muted" : "bg-background",
+      "relative w-full h-full overflow-hidden flex items-center justify-center"
     )}>
       <input {...getInputProps()} />
       {previewUrl ? (
-        <img src={previewUrl} alt="Preview" className="mx-auto max-h-48 object-contain" />
+        <img src={previewUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover rounded-xl" />
       ) : (
         <p>Drag & drop an image here or click to upload</p>
       )}

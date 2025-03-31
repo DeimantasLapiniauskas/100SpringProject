@@ -100,7 +100,7 @@ public class ServiceAtClinicPutTest {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00), "https://example.com/new.jpg");
         serviceAtClinic.setId(1L);
 
-        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO(" ", "", BigDecimal.valueOf(-0.01), "");
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO(" ", "", BigDecimal.valueOf(-0.01), "/images/testing.map");
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
@@ -116,7 +116,7 @@ public class ServiceAtClinicPutTest {
                 .andExpect(jsonPath("$.data.name").value("Name must be between 3 and 150 characters long!"))
                 .andExpect(jsonPath("$.data.description").value("must not be blank"))
                 .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"))
-                .andExpect(jsonPath("$.data.imageUrl").value("Image URL is required"));
+                .andExpect(jsonPath("$.data.imageUrl").value("Image URL must end with .jpg, .png, .webp or .gif"));
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
@@ -155,7 +155,7 @@ public class ServiceAtClinicPutTest {
                 .andExpect(jsonPath("$.data.name").value("Name must contain only letters, spaces, numbers and dashes!"))
                 .andExpect(jsonPath("$.data.description").value("must not be blank"))
                 .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"))
-                .andExpect(jsonPath("$.data.imageUrl").value("Image URL must be valid and end with .jpg, .png, .webp or .gif"));
+                .andExpect(jsonPath("$.data.imageUrl").value("Image URL must end with .jpg, .png, .webp or .gif"));
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());

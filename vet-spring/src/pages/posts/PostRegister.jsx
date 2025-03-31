@@ -20,49 +20,71 @@ import {
   FormMessage,
 } from "@/components/ui/formBase";
 import { Dropzone } from "@/components/ui/dropZoneBase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
-import { postPost, uploadImage } from "@/utils/helpers/uploadImage";
+import { postPost, updatePost, uploadImage } from "@/utils/helpers/posts";
 import { Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 
+
 const postSchema = z.object({
-  title: z.string().min(3),
-  postType: z.enum(["News", "Blog", "Sale"]),
-  content: z.string().min(10),
-  // imageFile: z.instanceof(File, { message: "Image is required" })
-  imageFile: z.instanceof(File).optional().nullable()
+  title: z.string()
+  .min(3, { message: "Title must be atleast 3 characters long" })
+  .max(100, { message: "Title must not exceed 100 characters"})
+  .refine((val) => val.trim() !== "", {
+    message: "Title cannot be blank",
+  }),
+  postType: z.enum(["News", "Blog", "Sale"], {message : "Post type is required"}),
+  content: z.string()
+  .min(10, { message: "Content must be at least 10 characters long" })
+  .max(1000, { message: "Content must not exceed 1000 characters" })
+  .refine((val) => val.trim() !== "", {
+    message: "Content cannot be blank",
+  }),
+  imageFile: z.instanceof(File).optional().nullable(),
+  imageUrl: z
+  .string()
+  .trim()
+  .regex(/\.(jpg|jpeg|png|webp|gif)$/i, { message: "URL must end with .jpg, .png, .webp or .gif" })
+  .max(255, { message: "URL must not exceed 255 characters" })
+  .optional()
+  .or(z.literal(null)),
 });
 
-export const PostRegister = () => {
+export const PostRegister = ({initialData}) => {
   const form = useForm({
     resolver: zodResolver(postSchema),
     mode: "onChange",
     defaultValues: {
-      title: "",
-      postType: undefined,
-      description: "",
+      title: initialData?.title ?? "",
+      postType: initialData?.postType ?? undefined,
+      content: initialData?.content ?? "",
       imageFile: null,
+      imageUrl: initialData?.imageUrl ?? null,
     },
   });
 
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(initialData?.imageUrl ?? null)
   const { Loading, Success, Error } = UIStatus;
   const { status, setStatus } = useUI();
 
+const isEditMode = !!initialData
+
   const handleFormSubmit = async (data) => {
-let imageUrl = null
+    let imageUrl = null;
 
     try {
       setStatus(Loading);
       if (data.imageFile) {
-      const formData = new FormData();
-      formData.append("file", data.imageFile);
-      const imageRes = await uploadImage(formData);
-      imageUrl = imageRes.data.data;
+        const formData = new FormData();
+        formData.append("file", data.imageFile);
+        const imageRes = await uploadImage(formData);
+        imageUrl = imageRes.data.data;
+        setUploadedImage(imageUrl)
       }
       const payload = {
         title: data.title,
@@ -70,36 +92,46 @@ let imageUrl = null
         content: data.content,
         imageUrl,
       };
-      const response = await postPost(payload);
+      const response = isEditMode ?
+      await updatePost(initialData.id, payload) :
+      await postPost(payload);
+
       const { data: data2, message, success } = response.data;
       setStatus(Success);
-
+console.log(response.data)
       if (data2 && success) {
         setMessage(message);
         toast.dismiss();
         toast.success(message);
         form.reset();
         setPreviewUrl(null);
+        setUploadedImage(null)
       } else {
-        setMessage(message || "Something went wrong");
         toast.error(message || "Something went wrong");
-        form.reset();
         setPreviewUrl(null);
+        setUploadedImage(null)
       }
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
-        toast.error(errorMessage);
+      toast.error(errorMessage);
       setError(errorMessage);
       setStatus(Error);
     } finally {
       form.setValue("imageFile", null);
     }
-  
   };
 
+
+useEffect(() => {
+  if (initialData?.imageUrl) {
+    setPreviewUrl(initialData.imageUrl);
+  }
+}, [initialData]);
+
+
   return (
-    <div className="w-1/2 md:w-2/5 p-2 sm:p-4 md:p-6">
+    <div className="w-1/2 md:w-2/5 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px]">
       <FormProvider {...form}>
         <Form onSubmit={form.handleSubmit(handleFormSubmit)}>
           <FormField
@@ -120,7 +152,9 @@ let imageUrl = null
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>
+                {form.formState.errors.title?.message}
+                </ FormMessage >
               </FormItem>
             )}
           />
@@ -153,7 +187,9 @@ let imageUrl = null
                     <SelectItem value="Sale">Sale</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormMessage>
+                {form.formState.errors.postType?.message}
+                </ FormMessage >
               </FormItem>
             )}
           />
@@ -175,7 +211,9 @@ let imageUrl = null
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>
+                {form.formState.errors.content?.message}
+                </ FormMessage >
               </FormItem>
             )}
           />
@@ -186,12 +224,9 @@ let imageUrl = null
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <Dropzone
-                  onDrop={ async (file) => {
-                    console.log("🔥 Dropzone gavo failą:", file);
+                  onDrop={async (file) => {
                     field.onChange(file);
-                    await form.trigger("imageFile")
-                    console.log("📌 Formos imageFile po trigger:", form.getValues("imageFile"));
-                    
+                    await form.trigger("imageFile");
                     const reader = new FileReader();
                     reader.onload = () => setPreviewUrl(reader.result);
                     reader.readAsDataURL(file);
@@ -202,13 +237,12 @@ let imageUrl = null
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
-          {/* <Button type="submit" disabled={form.formState.isSubmitting}>
-  {form.formState.isSubmitting ? "Submitting..." : "Submit"}
-</Button> */}
-          <pre className="text-xs text-red-500">
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? isEditMode ? "Updating..." : "Submitting..." : isEditMode ? "Update" : "Submit"}
+          </Button>
+          {/* <pre className="text-xs text-red-500">
             {JSON.stringify(form.formState.errors, null, 2)}
-          </pre>
+          </pre> */}
         </Form>
       </FormProvider>
     </div>

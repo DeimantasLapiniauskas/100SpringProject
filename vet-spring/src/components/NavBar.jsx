@@ -5,7 +5,7 @@ export const Navbar = () => {
   const { account, logout } = useAuth();
   return (
     <div>
-      <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-[#6A7AFF] px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]">
+      <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-gradient-to-br from-blue-400 to-indigo-600 px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]">
         <NavLink to={"/home"}>
           <p className="text-white">Home</p>
         </NavLink>

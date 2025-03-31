@@ -51,7 +51,8 @@ const VetClinicRoutes = () => {
                     </ListProvider>
                   }
                 />
-                <Route path="/posts/post" element={<PostRegister />} />
+                <Route path="/posts/register" element={<PostRegister />} />
+                <Route path="/posts/edit/:id" element={<PostRegister />} />
                 <Route path="/posts/:postId" element={<ViewPost />} />
                 <Route
                   path="/services"

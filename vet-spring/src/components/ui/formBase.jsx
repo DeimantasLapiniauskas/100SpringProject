@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
 
 export function Form({ className, ...props }) {
-  return <form className={cn("space-y-2 md:space-y-4", className)} {...props} />
+  return <form className={cn("space-y-1 md:space-y-2", className)} {...props} />
 }
 
 export function FormField({ name, control, render, ...props }) {
@@ -35,7 +35,7 @@ const formLabelVariants = cva("text-sm font-medium", {
       sm: "text-xs",
       md: "text-sm",
       lg: "text-base",
-      responsive : "text-xs sm:text-sm md:text-base lg:text-lg"
+      responsive : "text-xs sm:text-sm md:text-base  "
     },
   },
   defaultVariants: {

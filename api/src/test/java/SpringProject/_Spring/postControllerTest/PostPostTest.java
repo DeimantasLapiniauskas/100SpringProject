@@ -167,7 +167,7 @@ public class PostPostTest {
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void postPost_whenInvalidPostRequest_thenReturn400() throws Exception {
         // Given
-        PostRequestDTO invalidPost = new PostRequestDTO("    ", "            ", null, "htt?ps:example.com/image.jpg");
+        PostRequestDTO invalidPost = new PostRequestDTO("    ", "            ", null, "htt?ps:example.com/image.pnp");
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts")
@@ -181,7 +181,7 @@ public class PostPostTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.title").value("Title cannot be empty"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.content").value("Content cannot be empty"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.postType").value("Post type is required"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.imageUrl").value("Image URL must be valid and end with .jpg, .png, .webp or .gif"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.imageUrl").value("Image URL must end with .jpg, .png, .webp or .gif"));
 
         Mockito.verify(postService, times(0)).savePost(any());
     }

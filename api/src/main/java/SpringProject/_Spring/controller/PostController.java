@@ -69,7 +69,6 @@ public class PostController extends BaseController{
 
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        System.out.println("✅ Image saved to: " + filePath.toAbsolutePath());
 
         String fileUrl = "/images/" + fileName;
 
