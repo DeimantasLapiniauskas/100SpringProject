@@ -32,17 +32,18 @@ export const Appointment = () => {
       </div>
 
       <div className="bg-white m-8 p-8 rounded-box text-black">
-        <div className="grid grid-cols-6 border-b border-[#97a0f1]">
+        <div className="grid grid-cols-7 border-b border-[#97a0f1]">
           <p>Appointment Date</p>
           <p>Pet</p>
           <p>Price</p>
           <p>Veterinarian</p>
           <p>Services</p>
+          <p>Status</p>
           <p>Notes</p>
         </div>
         {appointments.map((a) => (
           <div
-            className="grid-cols-6 grid border-b border-[#97a0f1]"
+            className="grid-cols-7 grid border-b border-[#97a0f1]"
             key={a.id}
           >
             <p>{a.appointmentDate.replace("T", " ")}</p>
@@ -62,6 +63,7 @@ export const Appointment = () => {
                 <div key={s.id}>{s.name}</div>
               ))}
             </div>
+            <p>{a.status}</p>
             <p>{a.notes}</p>
           </div>
         ))}

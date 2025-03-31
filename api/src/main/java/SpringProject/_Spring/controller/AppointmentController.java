@@ -71,7 +71,8 @@ public class AppointmentController {
                         savedAppointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                         savedAppointment.getAppointmentDate(),
                         savedAppointment.getNotes(),
-                        savedAppointment.getTotalServicesSum())
+                        savedAppointment.getTotalServicesSum(),
+                        savedAppointment.getStatus())
         );
     }
 
@@ -109,7 +110,8 @@ public class AppointmentController {
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
-                                appointment.getTotalServicesSum()))
+                                appointment.getTotalServicesSum(),
+                                appointment.getStatus()))
                         .toList());
     }
 
@@ -126,7 +128,8 @@ public class AppointmentController {
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
-                                appointment.getTotalServicesSum()))
+                                appointment.getTotalServicesSum(),
+                                appointment.getStatus()))
                         .toList());
     }
 

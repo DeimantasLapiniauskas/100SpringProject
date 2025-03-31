@@ -94,7 +94,7 @@ export const RegisterAppointment = (props) => {
           className="grid grid-cols-1 w-3/5 m-auto mb-16"
         >
           <div>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between pt-2">
               <label htmlFor="appointmentDate"> Date </label>
               <div className="text-red-700 font-medium">
                 {errors.appointmentDate?.message}
@@ -110,8 +110,8 @@ export const RegisterAppointment = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-row justify-between">
-              <label className="p-2" htmlFor="pet">
+            <div className="flex flex-row justify-between pt-2">
+              <label htmlFor="pet">
                 Your pet
               </label>
               <div className="text-red-700 font-medium">
@@ -136,8 +136,8 @@ export const RegisterAppointment = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-row justify-between">
-              <label className="p-2" htmlFor="vet">
+            <div className="flex flex-row justify-between pt-2">
+              <label htmlFor="vet">
                 {" "}
                 Veterinarian
               </label>
@@ -166,8 +166,8 @@ export const RegisterAppointment = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-row justify-between">
-              <label className="p-2" htmlFor="services">
+            <div className="flex flex-row justify-between pt-2">
+              <label htmlFor="services">
                 Services
               </label>
               <div className="text-red-700 font-medium">
@@ -198,8 +198,8 @@ export const RegisterAppointment = (props) => {
 
           </div>
 
-          <div>
-            <label className="p-2" htmlFor="notes">
+          <div className="pt-2">
+            <label htmlFor="notes">
               Notes
             </label>
             <textarea
