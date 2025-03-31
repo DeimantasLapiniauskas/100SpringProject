@@ -132,7 +132,7 @@ public class PetPOSTTest {
                         )
                 )
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("message").value("Access Denied"));
 
         Mockito.verify(petService, times(0)).savePet(any());
     }
