@@ -145,7 +145,7 @@ public class PetDELETETest {
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("message").value("Access Denied"));
 
         Mockito.verify(petService, times(0)).deletePetById(petId);
     }

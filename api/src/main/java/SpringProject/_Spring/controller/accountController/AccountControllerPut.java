@@ -43,10 +43,10 @@ public class AccountControllerPut {
 
     @Operation(summary = "Change current account password", description = "Changes currently authenticated account password")
     @PutMapping("/account/password")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
-        Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
+        Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId()).get();
 
         PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
 
@@ -61,8 +61,10 @@ public class AccountControllerPut {
     @PutMapping("/account/password/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateAccountPasswordAdmin(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, @PathVariable long id) {
-        Account accountFromDB = accountService.findAccountById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
+        if(!accountService.existsAccountById(id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
+        }
+        Account accountFromDB = accountService.findAccountById(id).get();
 
         if (accountFromDB.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().contains("ROLE_ADMIN"))) {
