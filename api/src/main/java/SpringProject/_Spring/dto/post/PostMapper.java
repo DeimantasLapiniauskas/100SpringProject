@@ -1,6 +1,6 @@
 package SpringProject._Spring.dto.post;
 
-import SpringProject._Spring.dto.vet.VetMapping;
+import SpringProject._Spring.dto.authentication.vet.VetMapping;
 import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.model.authentication.Vet;
 import org.springframework.data.domain.Page;
