@@ -4,7 +4,7 @@ import { getAllVets } from "../../utils/helpers/getAllVets";
 import { useEffect, useState } from "react";
 import { getServices } from "../../utils/helpers/serviceService";
 import { postAppointment } from "../../utils/helpers/appointments";
-import { Error } from "../../components/Error";
+import { Error } from "../../components/feedback/Error";
 
 export const RegisterAppointment = (props) => {
   const { serviceId, setVisible } = props;
@@ -60,9 +60,7 @@ export const RegisterAppointment = (props) => {
   const formSubmitHandler = async (data) => {
     try {
       if (typeof(data.serviceIds)=='string'){
-        console.log('yes');
         data.serviceIds = [data.serviceIds];
-        console.log(data);
       } 
       await postAppointment(data);
       reset({
@@ -74,8 +72,8 @@ export const RegisterAppointment = (props) => {
       });
       setVisible(false);
     } catch (error) {
-      setVisibleError(true);
-      setError(error.response?.data || error.message);
+      setVisibleError(true); 
+      setError(error.response?.data.data || error.response?.data || error.message);
     }
   };
 
@@ -94,7 +92,7 @@ export const RegisterAppointment = (props) => {
           className="grid grid-cols-1 w-3/5 m-auto mb-16"
         >
           <div>
-            <div className="flex flex-row justify-between pt-2">
+            <div className="flex flex-row justify-between pt-2 pb-1">
               <label htmlFor="appointmentDate"> Date </label>
               <div className="text-red-700 font-medium">
                 {errors.appointmentDate?.message}
@@ -110,7 +108,7 @@ export const RegisterAppointment = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-row justify-between pt-2">
+            <div className="flex flex-row justify-between pt-2 pb-1">
               <label htmlFor="pet">
                 Your pet
               </label>
@@ -136,7 +134,7 @@ export const RegisterAppointment = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-row justify-between pt-2">
+            <div className="flex flex-row justify-between pt-2 pb-1">
               <label htmlFor="vet">
                 {" "}
                 Veterinarian
@@ -166,7 +164,7 @@ export const RegisterAppointment = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-row justify-between pt-2">
+            <div className="flex flex-row justify-between pt-2 pb-1">
               <label htmlFor="services">
                 Services
               </label>
@@ -198,7 +196,7 @@ export const RegisterAppointment = (props) => {
 
           </div>
 
-          <div className="pt-2">
+          <div className="pt-2  pb-1">
             <label htmlFor="notes">
               Notes
             </label>

@@ -11,7 +11,7 @@ export const Appointment = () => {
       const response = await getAppointments();
       setAppointments(response.data);
     } catch (error) {
-      console.log(error.message, error);
+      console.log(error.message);
     }
   };
 

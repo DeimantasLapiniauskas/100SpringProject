@@ -19,11 +19,11 @@ export const Error = (props) => {
       ) : (
         <div>
           {errorMessages.map((e, i) => {
-            return <li key={i}>{e}</li>;
+            return <li className="list-none" key={i}>{e}</li>;
           })}
         </div>
       )}
-      
+
       <div onClick={()=>hide()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
