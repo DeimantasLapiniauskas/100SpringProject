@@ -37,9 +37,9 @@ export const Appointment = () => {
           <p>Pet</p>
           <p>Price</p>
           <p>Veterinarian</p>
-          <p>Services</p>
-          <p>Status</p>
+          <p>Services</p>     
           <p>Notes</p>
+          <p>Status</p>
         </div>
         {appointments.map((a) => (
           <div
@@ -63,8 +63,8 @@ export const Appointment = () => {
                 <div key={s.id}>{s.name}</div>
               ))}
             </div>
-            <p>{a.status}</p>
             <p>{a.notes}</p>
+            <p>{a.status}</p>
           </div>
         ))}
       </div>

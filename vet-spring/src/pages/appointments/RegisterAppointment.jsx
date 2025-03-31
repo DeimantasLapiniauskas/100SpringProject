@@ -55,6 +55,7 @@ export const RegisterAppointment = (props) => {
     allPets();
     allVets();
     allServices();
+    document.body.style.overflow = "hidden";
   }, []);
 
   const formSubmitHandler = async (data) => {
@@ -84,7 +85,7 @@ export const RegisterAppointment = (props) => {
 
   return (
     <div className="bg-slate-400/50 h-lvh w-screen absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      {(document.body.style.overflow = "hidden")}
+
       <div className="bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box absolute z-20 w-[600px] h-fit top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black">
         <h1 className="text-center text-2xl p-4">Register to appointment</h1>
         <form
