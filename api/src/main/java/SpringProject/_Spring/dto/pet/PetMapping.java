@@ -53,4 +53,16 @@ public class PetMapping {
 
         return new PageImpl<>(petListResponseDTO, petsPage.getPageable(), petsPage.getTotalElements());
     }
+
+    public static PetPageResponseDTO toPetPageResponseDTO(Page<Pet> petsPage) {
+        List<PetResponseDTO> petResponseListDTO = petsPage.getContent()
+                .stream()
+                .map(PetMapping::toPetResponseDTO)
+                .toList();    return new PetPageResponseDTO(
+                        petResponseListDTO,
+                petsPage.getTotalPages(),
+                (int) petsPage.getTotalElements(),
+                petsPage.getNumber(),
+                petsPage.getSize()
+        );}
 }

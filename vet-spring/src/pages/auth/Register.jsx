@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 
 import RegisterPageDog from "../../assets/pet.png"; // Assuming you want the same image for Register page
 
@@ -185,7 +185,7 @@ export const Register = () => {
                 },
                 pattern: {
                   value:
-                    /^[a-zA-Z0-9._%+-]+(?!(.*[.]{2,}|.*@{2,}))[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}$/,
+                    /^[a-zA-Z0-9]+(?!.*(.*\.{2,}|.*@{2,}))[a-zA-Z0-9.\-]+[a-zA-Z0-9]+@[a-zA-Z0-9.\-]{3,}\.[a-zA-Z]{2,}/,
                   message:
                     "At least 4 symbols before @, 3 after @, the domain must be at least 2 symbols, and no consecutive @'s or .'s.",
                 },

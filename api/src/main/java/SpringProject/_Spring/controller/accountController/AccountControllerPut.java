@@ -5,7 +5,7 @@ import SpringProject._Spring.dto.authentication.client.ClientMapping;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateMapper;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
-import SpringProject._Spring.dto.authentication.vet.VetUpdateDTO;
+import SpringProject._Spring.dto.authentication.vet.VetUpdateRequestDTO;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Client;
 import SpringProject._Spring.model.authentication.Vet;
@@ -45,8 +45,7 @@ public class AccountControllerPut {
     @PutMapping("/account/password")
     public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
-        Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
+        Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId()).get();
 
         PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
 
@@ -61,8 +60,10 @@ public class AccountControllerPut {
     @PutMapping("/account/password/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<?> updateAccountPasswordAdmin(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, @PathVariable long id) {
-        Account accountFromDB = accountService.findAccountById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found!"));
+        if(!accountService.existsAccountById(id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
+        }
+        Account accountFromDB = accountService.findAccountById(id).get();
 
         if (accountFromDB.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().contains("ROLE_ADMIN"))) {
@@ -81,14 +82,14 @@ public class AccountControllerPut {
     @Operation(summary = "Edit vet information", description = "Edit vet information (except password and email")
     @PutMapping("/vet/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> updateVet(@Valid @RequestBody VetUpdateDTO vetUpdateDTO, @PathVariable long id) {
+    public ResponseEntity<?> updateVet(@Valid @RequestBody VetUpdateRequestDTO vetUpdateRequestDTO, @PathVariable long id) {
         if (!vetService.existsVetById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vet account not found!");
         }
 
         Vet vetFromDB = vetService.getVetById(id).get();
 
-        VetMapping.updateVetFromDTO(vetFromDB, vetUpdateDTO);
+        VetMapping.updateVetFromDTO(vetFromDB, vetUpdateRequestDTO);
 
         vetService.updateVet(vetFromDB);
 

@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -60,6 +61,7 @@ public class AccountAdminPUTTest {
 
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
+        when(accountService.existsAccountById(accountId)).thenReturn(true);
         when(accountService.findAccountById(accountId)).thenReturn(Optional.of(account));
         when(passwordEncoder.encode("newPassword")).thenReturn("hashedNewPassword1");
 
@@ -96,6 +98,7 @@ public class AccountAdminPUTTest {
         long accountId = 100L;
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
+        when(vetService.existsVetById(accountId)).thenReturn(false);
         when(accountService.findAccountById(accountId)).thenReturn(Optional.empty());
 
         // when
@@ -119,7 +122,7 @@ public class AccountAdminPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("newPassword").value("Your password is either too short or too long! Min length is 8, max is 50 symbols"));
+                .andExpect(jsonPath("data.newPassword").value("Your password is either too short or too long! Min length is 8, max is 50 symbols"));
 
         passwordUpdateDTO = new PasswordUpdateDTO("aaaaaaaaa");
 
@@ -128,7 +131,7 @@ public class AccountAdminPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("newPassword").value("Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!"));
+                .andExpect(jsonPath("data.newPassword").value("Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!"));
     }
 
     //unhappy path
@@ -159,7 +162,7 @@ public class AccountAdminPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.newPassword").value("Password can not be null!"));
+                .andExpect(jsonPath("data.newPassword").value("Password can not be null!"));
     }
 
     //unhappy path
@@ -171,6 +174,7 @@ public class AccountAdminPUTTest {
 
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
+        when(accountService.existsAccountById(1L)).thenReturn(true);
         when(accountService.findAccountById(1L)).thenReturn(Optional.of(account));
 
         //when

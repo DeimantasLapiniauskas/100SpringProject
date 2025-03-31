@@ -2,25 +2,56 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@theme {
+  --breakpoint-xs: 425.6px
+}
 
 * {
   box-sizing: border-box;
 }
 
+html, body {
+  font-family: 'Kiwi Maru', sans-serif;
+  background-color: #DCDEFE;
+}
 
 @layer components {
-    .form-text-select {
-      @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
-    }
-  
-    .form-text-select:focus {
-      @apply border-b border-white bg-transparent text-white;
-    }
-  
-    .form-text-select option {
-      @apply text-black;
-    }
+  .form-text-select {
+    @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
   }
+
+  .form-text-select:focus {
+    @apply border-b border-white bg-transparent text-white;
+  }
+
+  .form-text-select option {
+    @apply text-black;
+  }
+}
+
+/* .swiper-pagination-bullet {
+  @apply w-4 h-4 bg-white opacity-50 mx-1 rounded-full;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-blue-800 opacity-100 scale-110 transition-transform;
+} */
+
+
+.swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  opacity: 0.5;
+  margin: 0 6px;
+  transition: transform 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #1e40af; 
+  opacity: 1;
+  transform: scale(1.5);
+}
 
   /* RULES FOR USING FIGMA TYPOGRAPHY: */
 

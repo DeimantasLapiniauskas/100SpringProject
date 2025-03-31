@@ -1,26 +1,23 @@
-import { usePagination } from "../../context/PaginationContext.jsx";
+import { useList } from "../../context/ListContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { ServiceCard } from "./ServiceCard.jsx";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 import { NavLink } from "react-router";
-
 import ServiceListPageVetHoldingCat from "../../assets/cart.png";
 import ServiceListPageVetHoldingDog from "../../assets/vet.png";
 import ServiceListPageCatPawBandage from "../../assets/peti.png";
+import { useUI } from "@/context/UIContext.jsx";
+import { PaginationUI } from "@/components/PaginationUI.jsx";
+import { Loading } from "@/components/feedback/Loading.jsx";
+import { SelectUI } from "@/components/SelectUI.jsx";
+import { FilterUI } from "@/components/FilterUI.jsx";
 
 export const ServiceList = () => {
   const { account } = useAuth();
 
-  const {
-    getPage,
-    onPageSizeChange,
-    onPaginate,
-    error,
-    content,
-    currentPage,
-    totalPages,
-    pageSize,
-  } = usePagination();
+  const { getPage, error, message, content, currentPage, pageSize } = useList();
+
+  const { isLoading, isEmpty, isError } = useUI();
 
   const checkRoles = () => {
     //todo: make this better
@@ -37,53 +34,35 @@ export const ServiceList = () => {
   return (
     <>
       <div className="flex flex-col items-center gap-8 p-8 ">
-      <h1 className="figma-headline-2 text-black">
-            Find What Your Pet Needs
-            <br /> Here To Make Your
-            <br /> Pet Happy
-          </h1>
+        <div className="flex w-full justify-between ">
+          <FilterUI />
+          <SelectUI />
+        </div>
+        <h1 className="figma-headline-2 text-black">
+          Find What Your Pet Needs
+          <br /> Here To Make Your
+          <br /> Pet Happy
+        </h1>
         {checkRoles() && (
           <NavLink to={`/services/add`} className="btn btn-primary">
             Add
           </NavLink>
         )}
+        {isEmpty ? <p>{message}</p> : ""}
+        {isLoading ? <Loading /> : ""}
+        {isError ? <Error error={error} isHidden={!error} /> : ""}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {content?.map((service) => (
             <ServiceCard
               key={service.id}
               service={service}
-              getServicePage={getPage}
+              getPage={getPage}
               currentPage={currentPage}
               pageSize={pageSize}
             />
           ))}
         </ul>
-        <div className="join ">
-          <button
-            className="join-item btn "
-            onClick={async () => onPaginate(currentPage - 1)}
-            disabled={currentPage === 0}
-          >
-            «
-          </button>
-          <button className="join-item btn ">Page {currentPage + 1}</button>
-          <button
-            className="join-item btn "
-            onClick={async () => onPaginate(currentPage + 1)}
-            disabled={currentPage === totalPages - 1}
-          >
-            »
-          </button>
-          <select
-            defaultValue="6"
-            className="join-item select ml-4"
-            onChange={onPageSizeChange}
-          >
-            <option value="6">6</option>
-            <option value="9">9</option>
-            <option value="12">12</option>
-          </select>
-        </div>
+        <PaginationUI />
         {/* Centered Text and Horizontal Image Section */}
         <div className="flex flex-col items-center text-center space-y-4">
           {/* Horizontal Image Section */}

@@ -27,12 +27,18 @@ public class ServiceAtClinicMapper {
         return serviceAtClinic;
     }
 
-    public static Page<ServiceAtClinicResponseDTO> toServiceAtClinicListPageDTO(Page<ServiceAtClinic> serviceAtClinicPage) {
+    public static ServiceAtClinicPageResponseDTO toServiceAtClinicListPageDTO(Page<ServiceAtClinic> serviceAtClinicPage) {
         List<ServiceAtClinicResponseDTO> serviceAtClinicResponseListDTO =
                 serviceAtClinicPage.getContent().stream()
-                        .map((serviceAtClinic) -> ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinic))
+                        .map(ServiceAtClinicMapper::toServiceAtClinicDTO)
                         .toList();
 
-        return new PageImpl<>(serviceAtClinicResponseListDTO, serviceAtClinicPage.getPageable(), serviceAtClinicPage.getTotalElements());
+       return new ServiceAtClinicPageResponseDTO(
+               serviceAtClinicResponseListDTO,
+               serviceAtClinicPage.getTotalPages(),
+               (int) serviceAtClinicPage.getTotalElements(),
+               serviceAtClinicPage.getNumber(),
+               serviceAtClinicPage.getSize()
+       );
     }
 }
