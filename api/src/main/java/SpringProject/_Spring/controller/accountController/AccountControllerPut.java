@@ -43,7 +43,6 @@ public class AccountControllerPut {
 
     @Operation(summary = "Change current account password", description = "Changes currently authenticated account password")
     @PutMapping("/account/password")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
         Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId()).get();
