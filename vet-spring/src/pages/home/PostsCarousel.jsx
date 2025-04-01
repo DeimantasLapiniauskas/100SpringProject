@@ -41,7 +41,7 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className=" flex flex-col justify-between bg-[#6A7AFF] p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]">
+            <div className=" flex flex-col justify-between bg-[#6A7AFF] PostCarousel p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]">
               <p>{post.title}</p>
               <p className="font-bold">{post.postType}</p>
               <p className=" leading-[20px] text-sm text-gray-700 overflow-hidden">
