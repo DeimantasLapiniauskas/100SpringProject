@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import ThemeContext from "../utils/helpers/themeContext";
-import { updateVet } from "../utils/helpers/addEditVet";
+import { updateVet } from "../../../utils/helpers/addEditVet";
+import ModalContext from "@/utils/helpers/modalContext";
 
 //not used right now, when will be used needs to be moved in another folder
 const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
-    const { setEditModalID } = useContext(ThemeContext);
+    const { setEditModalID } = useContext(ModalContext);
 
     const {
         register,
@@ -20,7 +20,7 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
             firstName: "",
             lastName: "",
             phoneNumber: "",
-            speciality: "",
+            specialty: "",
             licenseNumber: "",
         },
     });
@@ -30,11 +30,11 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
 
     useEffect(() => {
         if (vet && Object.keys(vet).length > 0) {
-            const { firstName, lastName, phoneNumber, speciality, licenseNumber } = vet;
+            const { firstName, lastName, phoneNumber, specialty, licenseNumber } = vet;
             setValue("firstName", firstName);
             setValue("lastName", lastName);
             setValue("phoneNumber", phoneNumber);
-            setValue("speciality", speciality);
+            setValue("specialty", specialty);
             setValue("licenseNumber", licenseNumber);
         }
     }, [vet, setValue]);
@@ -48,7 +48,7 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             phoneNumber: data.phoneNumber.trim(),
-            speciality: data.speciality.trim(),
+            specialty: data.specialty.trim(),
             licenseNumber: data.licenseNumber.trim(),
         };
 
@@ -164,24 +164,24 @@ const VetEditForm = ({ vet, getPage, currentPage, pageSize }) => {
                 </div>
 
                 <div className="pb-5 text-center">
-                    <label htmlFor="speciality" className="font-bold text-lg text-white">
-                        Speciality:
+                    <label htmlFor="specialty" className="font-bold text-lg text-white">
+                        Specialty:
                     </label>
                     <input
                         type="text"
-                        id="speciality"
+                        id="specialty"
                         className="form-text-select"
-                        {...register("speciality", {
-                            required: "Speciality is required",
+                        {...register("specialty", {
+                            required: "Specialty is required",
                             maxLength: {
                                 value: 100,
-                                message: "Speciality cannot exceed 100 characters",
+                                message: "Specialty cannot exceed 100 characters",
                             },
                         })}
-                        placeholder="Speciality"
+                        placeholder="Specialty"
                     />
                     <div className="text-red-500">
-                        {errors.speciality && <p>{errors.speciality.message}</p>}
+                        {errors.specialty && <p>{errors.specialty.message}</p>}
                     </div>
                 </div>
 

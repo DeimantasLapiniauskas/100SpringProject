@@ -10,6 +10,8 @@ import { NavLink } from "react-router";
 const PostCarousel = () => {
   const { content: posts } = useList();
 
+  console.log("PostCarousel posts:", posts?.map(post => post.id));
+
   return (
     <div className="p-[1rem] bg-amber-300 relative rounded-[10px]">
       <h3 className="text-center">FOLLOW OUR LATEST NEWS</h3>

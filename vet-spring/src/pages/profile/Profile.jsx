@@ -2,6 +2,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 export const Profile = () => {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
@@ -14,6 +15,8 @@ export const Profile = () => {
   } = useForm();
 
   const { account } = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,7 +114,7 @@ export const Profile = () => {
           />
           {checkAdmin() && (
             <button
-              href="/admin"
+            onClick={() => navigate("/adminpage")}
               className="p-1 rounded-lg bg-red-500 hover:bg-red-800"
             >
               Admin Page

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import ThemeContext from "../utils/helpers/themeContext";
-import { addVet } from "../utils/helpers/addEditVet";
+import { addVet } from "@/utils/helpers/addEditVet";
+import ModalContext from "@/utils/helpers/modalContext";
+
 
 //not used right now, when will be used needs to be moved in another folder
-const VetAddForm = ({ getPage, currentPage, pageSize }) => {
-    const { setAddModalID } = useContext(ThemeContext);
+const VetRegisterForm = ({ getPage, currentPage, pageSize }) => {
+    const { setAddModalID } = useContext(ModalContext);
 
     const {
         register,
@@ -20,7 +21,7 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
             firstName: "",
             lastName: "",
             phoneNumber: "",
-            speciality: "",
+            specialty: "",
             licenseNumber: "",
         },
     });
@@ -39,7 +40,7 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             phoneNumber: data.phoneNumber.trim(),
-            speciality: data.speciality.trim(),
+            specialty: data.specialty.trim(),
             licenseNumber: data.licenseNumber.trim(),
         };
 
@@ -215,24 +216,24 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
                 </div>
 
                 <div className="pb-5 text-center">
-                    <label htmlFor="speciality" className="font-bold text-lg text-white">
-                        Speciality:
+                    <label htmlFor="specialty" className="font-bold text-lg text-white">
+                        Specialty:
                     </label>
                     <input
                         type="text"
-                        id="speciality"
+                        id="specialty"
                         className="form-text-select"
-                        {...register("speciality", {
-                            required: "Speciality is required",
+                        {...register("specialty", {
+                            required: "Specialty is required",
                             maxLength: {
                                 value: 100,
-                                message: "Speciality cannot exceed 100 characters",
+                                message: "Specialty cannot exceed 100 characters",
                             },
                         })}
-                        placeholder="Speciality"
+                        placeholder="Specialty"
                     />
                     <div className="text-red-500">
-                        {errors.speciality && <p>{errors.speciality.message}</p>}
+                        {errors.specialty && <p>{errors.specialty.message}</p>}
                     </div>
                 </div>
 
@@ -266,4 +267,4 @@ const VetAddForm = ({ getPage, currentPage, pageSize }) => {
     );
 };
 
-export default VetAddForm;
+export default VetRegisterForm;
