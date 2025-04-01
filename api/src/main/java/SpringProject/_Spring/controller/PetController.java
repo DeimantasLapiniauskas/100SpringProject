@@ -49,6 +49,14 @@ public class PetController extends BaseController {
 //                .toList());
 //    }
 
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<List<PetResponseDTO>> getAllPetsByOwner(Authentication authentication) {
+        return ResponseEntity.ok(petService.getAllPetsByOwnerId(clientService.findClientIdByEmail(authentication.getName())).stream()
+                .map(PetMapping::toPetResponseDTO)
+                .toList());
+    }
+
     @Operation(summary = "Add new pet", description = "Adds a new pet to the database")
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
