@@ -1,4 +1,3 @@
-
 import { useDropzone } from "react-dropzone"
 import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
@@ -33,7 +32,6 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
-      console.log("📥 Dropzone gavo failą:", file);
       if (!file) return;
 
       const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -46,7 +44,6 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
         alert(`File is too large. Max size is ${maxSizeMB}MB.`);
         return;
       }
-      console.log("📤 Iškviečiam props.onDrop su failu:", file);
       onDrop && onDrop(file);
     },
     accept: { 'image/*': [] },
@@ -62,7 +59,15 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
     )}>
       <input {...getInputProps()} />
       {previewUrl ? (
-        <img src={previewUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover rounded-xl" />
+        <img
+        src={previewUrl}
+        alt="Preview"
+        className="absolute inset-0 w-full h-full object-cover rounded-xl"
+        onError={(e) => {
+          e.target.style.border = "2px solid red"; 
+        }}
+      />
+      
       ) : (
         <p>Drag & drop an image here or click to upload</p>
       )}

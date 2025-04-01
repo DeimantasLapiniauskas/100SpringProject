@@ -10,5 +10,6 @@ export const postPost = async (payload) => api.post(url, payload);
 export const updatePost = async (postId, payload) =>
   api.put(`${url}/${postId}`, payload);
 
-export const deletePost = async (postId) =>
-    api.delete(`${url}/${postId}`);
+export const deletePost = async (postId) => api.delete(`${url}/${postId}`);
+
+export const getPostById = async (postId) => api.get(`${url}/${postId}`);

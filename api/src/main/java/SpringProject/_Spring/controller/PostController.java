@@ -70,7 +70,8 @@ public class PostController extends BaseController{
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        String fileUrl = "/images/" + fileName;
+        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        String fileUrl = baseUrl + "/api/images/" + fileName;
 
         return ok(fileUrl, "Image uploaded successfully");
     }

@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 
 public record PostRequestDTO(@NotNull
                              @NotBlank(message = "Title cannot be empty")
-                             @Size(min = 3, max = 100, message = "Title must be at least 3 characters long but not longer than 100 characters" )
+                             @Size(min = 3, max = 60, message = "Title must be at least 3 characters long but not longer than 60 characters" )
                              String title,
 
                              @NotNull

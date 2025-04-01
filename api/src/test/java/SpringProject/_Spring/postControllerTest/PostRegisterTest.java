@@ -26,7 +26,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -42,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = PostController.class)
 @Import(SecurityConfig.class)
-public class PostPostTest {
+public class PostRegisterTest {
     @MockitoBean
     private PostService postService;
 
@@ -167,7 +166,7 @@ public class PostPostTest {
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void postPost_whenInvalidPostRequest_thenReturn400() throws Exception {
         // Given
-        PostRequestDTO invalidPost = new PostRequestDTO("    ", "            ", null, "htt?ps:example.com/image.pnp");
+        PostRequestDTO invalidPost = new PostRequestDTO("    ", "            ", null, "image/example.com/image.pnp");
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts")

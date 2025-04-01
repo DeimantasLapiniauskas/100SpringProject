@@ -1,6 +1,5 @@
-package SpringProject._Spring.controller.accountController;
+package SpringProject._Spring.controller;
 
-import SpringProject._Spring.controller.BaseController;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;

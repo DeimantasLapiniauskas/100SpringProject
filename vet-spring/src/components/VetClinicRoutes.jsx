@@ -19,6 +19,7 @@ import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import { PostRegister } from "@/pages/posts/PostRegister.jsx";
+import { PostEditPage } from "@/pages/posts/PostEditPage.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -52,7 +53,7 @@ const VetClinicRoutes = () => {
                   }
                 />
                 <Route path="/posts/register" element={<PostRegister />} />
-                <Route path="/posts/edit/:id" element={<PostRegister />} />
+                <Route path="/posts/edit/:postId" element={<PostEditPage />} />
                 <Route path="/posts/:postId" element={<ViewPost />} />
                 <Route
                   path="/services"
@@ -64,7 +65,6 @@ const VetClinicRoutes = () => {
                 />
                 <Route path="services/add" element={<ServiceAdd />} />
                 <Route path="services/edit/:id" element={<ServiceUpdate />} />
-                {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
                 <Route path="/design" element={<BandytiDesign />} />
                 <Route path="/designh" element={<BandytiDesignHomePage />} />
                 <Route path="/designh1" element={<BandytiDesignH1 />} />

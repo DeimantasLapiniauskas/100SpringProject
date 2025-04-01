@@ -27,32 +27,38 @@ import { postPost, updatePost, uploadImage } from "@/utils/helpers/posts";
 import { Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 
-
 const postSchema = z.object({
-  title: z.string()
-  .min(3, { message: "Title must be atleast 3 characters long" })
-  .max(100, { message: "Title must not exceed 100 characters"})
-  .refine((val) => val.trim() !== "", {
-    message: "Title cannot be blank",
+  title: z
+    .string()
+    .min(3, { message: "Title must be atleast 3 characters long" })
+    .max(60, { message: "Title must not exceed 60 characters" })
+    .refine((val) => val.trim() !== "", {
+      message: "Title cannot be blank",
+    }),
+  postType: z.enum(["News", "Blog", "Sale"], {
+    message: "Post type is required",
   }),
-  postType: z.enum(["News", "Blog", "Sale"], {message : "Post type is required"}),
-  content: z.string()
-  .min(10, { message: "Content must be at least 10 characters long" })
-  .max(1000, { message: "Content must not exceed 1000 characters" })
-  .refine((val) => val.trim() !== "", {
-    message: "Content cannot be blank",
-  }),
+  content: z
+    .string()
+    .min(10, { message: "Content must be at least 10 characters long" })
+    .max(1000, { message: "Content must not exceed 1000 characters" })
+    .refine((val) => val.trim() !== "", {
+      message: "Content cannot be blank",
+    }),
   imageFile: z.instanceof(File).optional().nullable(),
   imageUrl: z
-  .string()
-  .trim()
-  .regex(/\.(jpg|jpeg|png|webp|gif)$/i, { message: "URL must end with .jpg, .png, .webp or .gif" })
-  .max(255, { message: "URL must not exceed 255 characters" })
-  .optional()
-  .or(z.literal(null)),
+    .string()
+    .trim()
+    .regex(/\.(jpg|jpeg|png|webp|gif)$/i, {
+      message: "URL must end with .jpg, .png, .webp or .gif",
+    })
+    .max(255, { message: "URL must not exceed 255 characters" })
+    .optional()
+    .or(z.literal(null)),
 });
 
-export const PostRegister = ({initialData}) => {
+export const PostRegister = ({ initialData }) => {
+  console.log("Cia initialdata:", initialData);
   const form = useForm({
     resolver: zodResolver(postSchema),
     mode: "onChange",
@@ -64,18 +70,15 @@ export const PostRegister = ({initialData}) => {
       imageUrl: initialData?.imageUrl ?? null,
     },
   });
-
+  
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(initialData?.imageUrl ?? null)
   const { Loading, Success, Error } = UIStatus;
   const { status, setStatus } = useUI();
-
-const isEditMode = !!initialData
-
+  const isEditMode = !!initialData;
   const handleFormSubmit = async (data) => {
-    let imageUrl = null;
+    let imageUrl = initialData?.imageUrl ?? null;
 
     try {
       setStatus(Loading);
@@ -84,32 +87,41 @@ const isEditMode = !!initialData
         formData.append("file", data.imageFile);
         const imageRes = await uploadImage(formData);
         imageUrl = imageRes.data.data;
-        setUploadedImage(imageUrl)
+        setPreviewUrl(imageUrl)
       }
       const payload = {
         title: data.title,
         postType: data.postType,
         content: data.content,
-        imageUrl,
+        imageUrl: imageUrl ?? initialData?.imageUrl ?? null,
       };
-      const response = isEditMode ?
-      await updatePost(initialData.id, payload) :
-      await postPost(payload);
+      const response = isEditMode
+        ? await updatePost(initialData.id, payload)
+        : await postPost(payload);
 
       const { data: data2, message, success } = response.data;
       setStatus(Success);
-console.log(response.data)
       if (data2 && success) {
-        setMessage(message);
-        toast.dismiss();
-        toast.success(message);
-        form.reset();
-        setPreviewUrl(null);
-        setUploadedImage(null)
+        if (isEditMode) {
+          setMessage(message);
+          toast.dismiss();
+          toast.success(message);
+          form.reset({
+            ...data2,
+            imageFile: null,
+            imageUrl: imageUrl ?? initialData.imageUrl ?? null
+          });
+          setPreviewUrl(imageUrl ?? initialData.imageUrl ?? null);
+        } else {
+          setMessage(message);
+          toast.dismiss();
+          toast.success(message);
+          form.reset();
+          setPreviewUrl(null);
+        }
       } else {
         toast.error(message || "Something went wrong");
         setPreviewUrl(null);
-        setUploadedImage(null)
       }
     } catch (error) {
       const errorMessage =
@@ -122,13 +134,11 @@ console.log(response.data)
     }
   };
 
-
-useEffect(() => {
-  if (initialData?.imageUrl) {
-    setPreviewUrl(initialData.imageUrl);
-  }
-}, [initialData]);
-
+  useEffect(() => {
+    if (initialData?.imageUrl) {
+      setPreviewUrl(initialData?.imageUrl);
+    }
+  }, [initialData?.imageUrl]);
 
   return (
     <div className="w-1/2 md:w-2/5 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px]">
@@ -153,8 +163,8 @@ useEffect(() => {
                   />
                 </FormControl>
                 <FormMessage>
-                {form.formState.errors.title?.message}
-                </ FormMessage >
+                  {form.formState.errors.title?.message}
+                </FormMessage>
               </FormItem>
             )}
           />
@@ -188,8 +198,8 @@ useEffect(() => {
                   </SelectContent>
                 </Select>
                 <FormMessage>
-                {form.formState.errors.postType?.message}
-                </ FormMessage >
+                  {form.formState.errors.postType?.message}
+                </FormMessage>
               </FormItem>
             )}
           />
@@ -212,8 +222,8 @@ useEffect(() => {
                   />
                 </FormControl>
                 <FormMessage>
-                {form.formState.errors.content?.message}
-                </ FormMessage >
+                  {form.formState.errors.content?.message}
+                </FormMessage>
               </FormItem>
             )}
           />
@@ -231,14 +241,22 @@ useEffect(() => {
                     reader.onload = () => setPreviewUrl(reader.result);
                     reader.readAsDataURL(file);
                   }}
-                  previewUrl={previewUrl}
+                  previewUrl={
+                    previewUrl
+                  }
                   error={form.formState.errors.imageFile?.message}
                 />
               </FormItem>
             )}
           />
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? isEditMode ? "Updating..." : "Submitting..." : isEditMode ? "Update" : "Submit"}
+            {form.formState.isSubmitting
+              ? isEditMode
+                ? "Updating..."
+                : "Submitting..."
+              : isEditMode
+              ? "Update"
+              : "Submit"}
           </Button>
           {/* <pre className="text-xs text-red-500">
             {JSON.stringify(form.formState.errors, null, 2)}

@@ -89,7 +89,7 @@ const PostCarousel = () => {
               </div>
               <NavLink to={`/posts/${post.id}`}>
                 <p className=" text-white hover:underline text-xs md:text-sm font-medium p-1">
-                  Read more here
+                  <u>Read more here</u>
                 </p>
               </NavLink>
             </div>

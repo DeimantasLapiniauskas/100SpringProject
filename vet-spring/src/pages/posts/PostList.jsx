@@ -1,6 +1,5 @@
 import { PostCard } from "./PostCard";
 import { Error } from "../../components/feedback/Error";
-import { useAuth } from "../../context/AuthContext";
 import { useList } from "../../context/ListContext";
 import { NavLink } from "react-router";
 import { Loading } from "../../components/feedback/Loading";
@@ -9,9 +8,10 @@ import { PaginationUI } from "../../components/PaginationUI";
 import { SelectUI } from "@/components/SelectUI";
 import { FilterUI } from "@/components/FilterUI";
 import { BadRequest } from "@/components/feedback/BadRequest";
+import { useCheckRoles } from "@/hooks/useCheckRoles";
 
 export const PostList = () => {
-  const { account } = useAuth();
+
   const {
     getPage,
     error,
@@ -24,17 +24,7 @@ export const PostList = () => {
 
   const { isLoading, isError, isBadRequest } = useUI();
 
-  const checkRoles = () => {
-    //todo: make this better
-    return (
-      (account !== null &&
-        account.scope !== null &&
-        account.scope.includes("ROLE_VET")) ||
-      (account !== null &&
-        account.scope !== null &&
-        account?.scope.includes("ROLE_ADMIN"))
-    );
-  };
+  const roles = useCheckRoles()
 
   return (
     <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 ">
@@ -54,10 +44,10 @@ export const PostList = () => {
         </article>
       </section>
 
-      {checkRoles() && (
+      {roles && (
         <div className="flex justify-center w-full">
           <NavLink to={`/posts/register`} ><p className="text-xs py-0.5 px-2 sm:text-sm sm:py-1 sm:px-3 md:text-base md:py-1.5 md:px-4 rounded-[5px] bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-700 border-1 border-info">
-         Post</p>
+         Register new Post</p>
           </NavLink>
         </div>
       )}
