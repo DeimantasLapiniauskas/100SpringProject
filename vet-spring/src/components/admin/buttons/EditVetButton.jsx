@@ -22,7 +22,7 @@ function EditVetButton({ vet, getPage, currentPage, pageSize }) {
         <dialog open className="modal bg-[#DCDEFE]">
           <div className="modal-box bg-[#97a0f1] text-center">
             <VetEditForm
-              client={vet}
+              vet={vet}
               getPage={getPage}
               currentPage={currentPage}
               pageSize={pageSize}

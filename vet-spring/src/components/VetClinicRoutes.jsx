@@ -63,9 +63,11 @@ const VetClinicRoutes = () => {
               <Route
                 path="/adminpage"
                 element={
-                  <ListProvider>
-                    <AdminPage />
-                  </ListProvider>
+                  <AuthGuard>
+                    <ListProvider>
+                      <AdminPage />
+                    </ListProvider>
+                  </AuthGuard>
                 }
               >
                 <Route path="vets" element={<AdminPage initialList="vets" />} />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import EditVetButton from "../admin/buttons/EditVetButton";
 
 const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, phoneNumber, specialty, licenseNumber } = vet;
+    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber } = vet;
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -23,6 +23,7 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
 
             {isExpanded && (
                 <div className="px-6 py-4 bg-gray-50 text-gray-700">
+                    <p>E-mail: {email}</p>
                     <p>Phone: {phoneNumber}</p>
                     <p>Specialty: {specialty}</p>
                     <p>License: {licenseNumber}</p>
