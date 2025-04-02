@@ -13,7 +13,7 @@ const PostCarousel = () => {
   console.log("PostCarousel posts:", posts?.map(post => post.id));
 
   return (
-    <div className="p-[1rem] bg-amber-300 relative rounded-[10px]">
+    <div className="p-[1rem] bg-[#97a0f1] relative rounded-[10px]">
       <h3 className="text-center">FOLLOW OUR LATEST NEWS</h3>
       <button className="custom-prev absolute left-0 top-1/2 z-10 bg-white p-2 rounded-full shadow">
         ◀
@@ -41,7 +41,7 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className=" flex flex-col justify-between bg-blue-500 p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]">
+            <div className=" flex flex-col justify-between bg-[#6A7AFF] p-4 rounded shadow  h-[100px] md:h-[150px] lg:h-[200px]">
               <p>{post.title}</p>
               <p className="font-bold">{post.postType}</p>
               <p className=" leading-[20px] text-sm text-gray-700 overflow-hidden">
