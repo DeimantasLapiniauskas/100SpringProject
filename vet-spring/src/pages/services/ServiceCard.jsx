@@ -6,6 +6,9 @@ import { useState } from "react";
 import { RegisterAppointment } from "../appointments/RegisterAppointment.jsx";
 import { useList } from "../../context/ListContext.jsx";
 
+//import StaticServiceImage from "../../assets/default_service_card_image.png";
+import StaticServiceImage from "../../assets/paws.png";
+
 export const ServiceCard = (props) => {
   const { service } = props;
   const { id, name, description, price } = service;
@@ -41,41 +44,61 @@ export const ServiceCard = (props) => {
         account.scope.includes("ROLE_CLIENT"))
   }
 
-  return (<>
-    <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
-      <div className="card-body">
-        <h2 className="card-title block break-all">{name}</h2>
-        <textarea
-          readOnly
-          className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
-        >
-          {description}
-        </textarea>
-        <p>{price} €</p>
-        <div className="card-actions">
-          {checkRoles() && (
-            <button
-              onClick={deleteService}
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
-            >
-              Delete
-            </button>
-          )}
-          {checkRoles() && (
-            <NavLink
-              to={`/services/edit/${service.id}`}
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
-            >
-              Edit
-            </NavLink>
-          )}
-          {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
-          <div>
-            {checkRoleClient() && <button className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]" onClick={()=>setVisible(true)}>Register</button>}
+  return (
+    <>
+      <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
+
+        <figure className="w-48 p-4">
+          <img
+            src={StaticServiceImage}
+            alt="Service visual"
+            className="rounded-xl object-cover h-full w-full"
+          />
+        </figure>
+        
+        <div className="card-body">
+          <h2 className="card-title block break-all">{name}</h2>
+          <textarea
+            readOnly
+            className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
+          >
+            {description}
+          </textarea>
+          <p>{price} €</p>
+          <div className="card-actions">
+            {checkRoles() && (
+              <button
+                onClick={deleteService}
+                className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              >
+                Delete
+              </button>
+            )}
+            {checkRoles() && (
+              <NavLink
+                to={`/services/edit/${service.id}`}
+                className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              >
+                Edit
+              </NavLink>
+            )}
+            {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
+            <div>
+              {checkRoleClient() && (
+                <button
+                  className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+                  onClick={() => setVisible(true)}
+                >
+                  Register
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-      {visible && <RegisterAppointment setVisible={setVisible} serviceId={service.id}/>}</>
+      {visible && (
+        <RegisterAppointment setVisible={setVisible} serviceId={service.id} />
+      )}
+    </>
   );
 };
