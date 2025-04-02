@@ -74,3 +74,5 @@ export default BandytiDesign;
 //          Happy Hearts<br />Welcomes Your Pet!
 //        </h1>
 //      </main>
+
+//Adding comment for initial commit for KOM-119 on 02/04/2025
