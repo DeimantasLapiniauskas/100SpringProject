@@ -20,6 +20,7 @@ export const PostList = () => {
     currentPage,
     pageSize,
     isEmpty,
+    sorted
   } = useList();
 
   const { isLoading, isError, isBadRequest } = useUI();
@@ -55,14 +56,15 @@ export const PostList = () => {
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadRequest ? <BadRequest/> : ""}
-      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 ">
+      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
         {posts.map((post) => (
           <PostCard
             key={post.id}
             post={post}
-            getServicePage={getPage}
+            getPage={getPage}
             currentPage={currentPage}
             pageSize={pageSize}
+            sorted={sorted}
           />
         ))}
       </ul>

@@ -142,7 +142,7 @@ public class ServiceAtClinicController extends BaseController {
         ServiceAtClinic serviceAtClinic = serviceAtClinicService.findServiceAtClinicById(id).get();
         String imageUrl = serviceAtClinic.getImageUrl();
         if (imageUrl != null && !imageUrl.isBlank()) {
-            String fileName = Paths.get(imageUrl).getFileName().toString();
+            String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
             Path path = Paths.get("uploads/images").resolve(fileName);
             if (Files.exists(path)) {
                 Files.delete(path);

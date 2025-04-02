@@ -173,7 +173,7 @@ public class PostController extends BaseController{
         Post post = postOpt.get();
         String imageUrl = post.getImageUrl();
         if (imageUrl != null && !imageUrl.isBlank()) {
-            String filename = Paths.get(imageUrl).getFileName().toString();
+            String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
             Path path = Paths.get("uploads/images").resolve(filename);
             if (Files.exists(path)) {
                 Files.delete(path);

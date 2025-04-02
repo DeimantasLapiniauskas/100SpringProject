@@ -4,7 +4,11 @@ import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 
-const Select = SelectPrimitive.Root;
+const Select = ({ value, onValueChange, children, ...props }) => (
+  <SelectPrimitive.Root value={value} onValueChange={onValueChange} {...props}>
+    {children}
+  </SelectPrimitive.Root>
+);
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 

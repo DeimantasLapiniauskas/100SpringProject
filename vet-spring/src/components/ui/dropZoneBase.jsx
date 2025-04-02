@@ -7,7 +7,7 @@ import { cva } from "class-variance-authority"
   {
     variants: {
       intent: {
-        default: "bg-background border-blue-500",
+        default: "bg-background border-blue-500 focus:ring-blue-500",
         error: "border-red-500 bg-red-50",
         success: "border-green-500 bg-green-50",
       },

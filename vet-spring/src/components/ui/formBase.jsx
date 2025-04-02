@@ -1,4 +1,3 @@
-
 import { useFormContext, Controller } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
@@ -59,6 +58,9 @@ export function FormControl({ className, ...props }) {
 
 const formMessageVariants = cva("text-sm", {
   variants: {
+    size: {
+      default: "text-[10px] sm:text-xs md:text-sm "
+    },
     intent: {
       default: "text-muted-foreground",
       error: "text-red-500",
@@ -68,11 +70,12 @@ const formMessageVariants = cva("text-sm", {
   },
   defaultVariants: {
     intent: "error",
+    size: "default"
   },
 })
 
-export function FormMessage({ children, className, intent = "error" }) {
-  return <p className={cn(formMessageVariants({ intent }), className)}>{children}</p>
+export function FormMessage({ children, className, intent, size }) {
+  return <p className={cn(formMessageVariants({ intent, size }), className)}>{children}</p>
 }
 
 export { formLabelVariants, formMessageVariants}
