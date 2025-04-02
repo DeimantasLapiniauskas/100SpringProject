@@ -38,10 +38,10 @@ export const ServiceList = () => {
           <FilterUI />
           <SelectUI />
         </div>
-        <h1 className="figma-headline-2 text-black">
+        <h1 className=" text-black lg:text-4xl md:text-2xl sm:text-lg text-base text-center">
           Find What Your Pet Needs
-          <br /> Here To Make Your
-          <br /> Pet Happy
+          Here To Make Your
+          Pet Happy
         </h1>
         {checkRoles() && (
           <NavLink to={`/services/add`} className="btn btn-primary">
