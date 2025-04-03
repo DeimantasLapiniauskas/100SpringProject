@@ -6,7 +6,6 @@ import { useState } from "react";
 import { RegisterAppointment } from "../appointments/RegisterAppointment.jsx";
 import { useList } from "../../context/ListContext.jsx";
 
-//import StaticServiceImage from "../../assets/default_service_card_image.png";
 import StaticServiceImage from "../../assets/paws.png";
 
 export const ServiceCard = (props) => {
