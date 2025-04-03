@@ -5,26 +5,46 @@ import { deletePost } from "@/utils/helpers/posts";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { DeletePostModal } from "./DeletePostModal";
+import { UIStatus } from "@/constants/UIStatus";
+import { useUI } from "@/context/UIContext";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import { Pencil } from "lucide-react"
 
 export const PostCard = (props) => {
   const { post, getPage, currentPage, pageSize, sorted } = props;
   const roles = useCheckRoles();
   const { id, postType, content, title, imageUrl } = post;
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {Loading: Fetching, Success, Error: Err, Unusual} = UIStatus
+  const { setStatus} = useUI();
+
+  const isMounted = useIsMounted();
 
   if (!post || !post.content) return null;
 
   const handleDelete = async (id) => {
     try {
+      setStatus(Fetching)
+
+      if (id) {
       await deletePost(id);
       toast.success("Post deleted successfully");
       await getPage(pageSize, currentPage, sorted);
+
+      if (!isMounted.current) return
+      setStatus(Success)
+      } else {
+        if (!isMounted.current) return
+        setStatus(Unusual)
+      }
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
-      setErrorMessage(errorMessage);
-      console.log("getPage error:", error);
+        if (!isMounted.current) return;
+      setError(errorMessage);
+      toast.error(errorMessage)
+      setStatus(Err)
     } finally {
       setIsModalOpen(false);
     }
@@ -75,7 +95,7 @@ export const PostCard = (props) => {
               />
             )}
           </div>
-          {/* <div className={imageUrl ? "grid grid-cols-3 gap-2" : ""}> */}
+          <p></p>
           <p className=" leading-[20px] text-left overflow-hidden min-h-[105px] sm:min-h-[105px] md:min-h-[120px] max-h-[105px] sm:max-h-[105px] md:max-h-[120px] text-xs sm:text-sm md:text-base  col-span-2 break-words p-[4px] sm:p-[6px] md:p-[10px] ">
             {imageUrl
               ? content.length > 225
@@ -91,13 +111,12 @@ export const PostCard = (props) => {
             </p>
           </NavLink>
         </div>
-
-        {/* </div> */}
         {roles && (
           <div className="absolute bottom-[-1px] flex gap-2">
             <NavLink to={`/posts/edit/${id}`}>
-              <button className="text-xs px-2 sm:px-4 md:px-6 sm:text-sm md:text-base rounded-[5px] text-info-content font-semibold border-1 border-blue-200 cursor-pointer">
+              <button type="button" className="text-xs px-2 sm:px-3 md:px-4 sm:text-sm md:text-base rounded-[5px] text-info-content font-semibold border-1 border-blue-200 cursor-pointer inline-flex gap-2 items-center">
                 Update
+                <Pencil className="w-3 h-3 sm:w-4 sm:h-4  md:w-5 md:h-5 text-warning-content"/>
               </button>
             </NavLink>
             <DeletePostModal

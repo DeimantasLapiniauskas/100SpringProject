@@ -1,12 +1,12 @@
 
 import "./App.css";
 import VetClinicRoutes from "./components/VetClinicRoutes";
-import { Toaster } from "react-hot-toast";
+import { CustomToaster } from "@/components/ui/CustomToaster";
 
 const App = () => {
   return (
     <div className="px-5 pb-5">
-        <Toaster position="top-right" reverseOrder={false} />
+        <CustomToaster reverseOrder={false} />
         <VetClinicRoutes />
     </div>
   );

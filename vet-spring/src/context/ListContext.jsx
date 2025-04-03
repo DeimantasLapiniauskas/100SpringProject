@@ -7,7 +7,6 @@ import {
   useRef,
 } from "react";
 import api from "../utils/api";
-// import toast from "react-hot-toast";
 import { useCurrentPath, useRealPath } from "../hooks/usePath";
 import { useIsMounted } from "../hooks/useIsMounted";
 import { useUI } from "./UIContext";
@@ -77,10 +76,6 @@ export const ListProvider = ({ children }) => {
             message: message,
           }));
           setStatus(Success);
-          // if (message && data.length > 0) {
-          //   toast.dismiss();
-          //   toast.success(message);
-          // }
         } else {
           setPagination((prev) => ({
             ...prev,

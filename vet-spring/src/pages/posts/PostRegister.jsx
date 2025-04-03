@@ -26,6 +26,13 @@ import { UIStatus } from "@/constants/UIStatus";
 import { postPost, updatePost, uploadImage } from "@/utils/helpers/posts";
 import { Controller } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import { NavLink } from "react-router";
+import { useMemo } from "react";
+import { useNavigate } from "react-router";
+import { Loading } from "@/components/feedback/Loading";
+import { Error } from "@/components/feedback/Error";
+import { Unusual } from "@/components/feedback/Unusual";
 
 const postSchema = z.object({
   title: z
@@ -58,7 +65,6 @@ const postSchema = z.object({
 });
 
 export const PostRegister = ({ initialData }) => {
-  console.log("Cia initialdata:", initialData);
   const form = useForm({
     resolver: zodResolver(postSchema),
     mode: "onChange",
@@ -74,19 +80,25 @@ export const PostRegister = ({ initialData }) => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { Loading, Success, Error } = UIStatus;
-  const { status, setStatus } = useUI();
-  const isEditMode = !!initialData;
+  const { Loading: Fetching, Success, Error: Err, Unusual } = UIStatus;
+  const { isLoading, isError, isUnusual, setStatus } = useUI();
+
+  const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
+  const isMounted = useIsMounted();
+  const navigate = useNavigate();
+
   const handleFormSubmit = async (data) => {
     let imageUrl = initialData?.imageUrl ?? null;
 
     try {
-      setStatus(Loading);
+      setStatus(Fetching);
       if (data.imageFile) {
         const formData = new FormData();
         formData.append("file", data.imageFile);
         const imageRes = await uploadImage(formData);
         imageUrl = imageRes.data.data;
+
+        if (!isMounted.current) return;
         setPreviewUrl(imageUrl);
       }
       const payload = {
@@ -95,14 +107,21 @@ export const PostRegister = ({ initialData }) => {
         content: data.content,
         imageUrl: imageUrl ?? initialData?.imageUrl ?? null,
       };
-      const response = isEditMode
-        ? await updatePost(initialData.id, payload)
-        : await postPost(payload);
-
+      // console.log(initialData.id)
+      let response;
+      if (isEditMode) {
+        response = await updatePost(initialData.id, payload);
+      } else {
+        response = await postPost(payload);
+      }
       const { data: data2, message, success } = response.data;
+    
+      if (!isMounted.current) return;
       setStatus(Success);
+
       if (data2 && success) {
         if (isEditMode) {
+          if (!isMounted.current) return;
           setMessage(message);
           toast.dismiss();
           toast.success(message);
@@ -112,23 +131,32 @@ export const PostRegister = ({ initialData }) => {
             imageUrl: imageUrl ?? initialData.imageUrl ?? null,
           });
           setPreviewUrl(imageUrl ?? initialData.imageUrl ?? null);
+          setTimeout(() => {
+            navigate("/posts")
+          }, 500)
         } else {
+          if (!isMounted.current) return;
           setMessage(message);
           toast.dismiss();
           toast.success(message);
           form.reset();
           setPreviewUrl(null);
+          setTimeout(() => {
+            navigate("/posts")
+          }, 500)
         }
       } else {
-        toast.error(message || "Something went wrong");
+        if (!isMounted.current) return;
+        setStatus(Unusual)
         setPreviewUrl(null);
       }
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
-      toast.error(errorMessage);
+
+      if (!isMounted.current) return;
       setError(errorMessage);
-      setStatus(Error);
+      setStatus(Err);
     } finally {
       form.setValue("imageFile", null);
     }
@@ -140,11 +168,26 @@ export const PostRegister = ({ initialData }) => {
     }
   }, [initialData?.imageUrl]);
 
+  if (isLoading) {
+    return <Loading/>
+  }
+  if (isUnusual) {
+    return <Unusual/>
+  }
+  if (isError) {
+    return <Error error={error} isHidden={!error}/>
+  }
+
   return (
     <div>
-      <div className="xs:w-3/5 lg:w-2/5 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px]">
+      <div className="xs:w-3/5 lg:w-2/5 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative">
         <FormProvider {...form}>
           <Form onSubmit={form.handleSubmit(handleFormSubmit)}>
+            <NavLink to={"/posts"}>
+              <p className="absolute right-3 top-1.5 text-warning-content text-right text-xs sm:text-sm md:text-base hover:underline">
+                Close
+              </p>
+            </NavLink>
             <FormField
               name="title"
               render={({ field }) => (
@@ -173,14 +216,14 @@ export const PostRegister = ({ initialData }) => {
               control={form.control}
               name="postType"
               render={({ field, fieldState }) => (
-                <FormItem className="w-1/2">
+                <FormItem className="w-1/2 ">
                   <FormLabel>Post Type*</FormLabel>
                   <Select
                     value={field.value}
                     onValueChange={field.onChange}
                     onOpenChange={(isOpen) => {
                       if (!isOpen) {
-                        form.setFocus("postType"); 
+                        form.setFocus("postType");
                         form.trigger("postType");
                       }
                     }}
@@ -196,11 +239,7 @@ export const PostRegister = ({ initialData }) => {
                         }
                         className="w-full"
                       >
-                        <SelectValue placeholder="Select a type">
-                          {field.value || (
-                            <span className="text-muted">Select a type</span>
-                          )}
-                        </SelectValue>
+                        <SelectValue placeholder="Select a type" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -259,16 +298,32 @@ export const PostRegister = ({ initialData }) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting
-                ? isEditMode
-                  ? "Updating..."
-                  : "Submitting..."
-                : isEditMode
-                ? "Update"
-                : "Submit"}
-            </Button>
-            <p className="text-info-content text-right text-[10px] sm:text-xs md:text-sm">* required</p>
+            <div className="flex justify-between items-center">
+              <div className="inline-flex gap-2">
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting
+                    ? isEditMode
+                      ? "Updating..."
+                      : "Submitting..."
+                    : isEditMode
+                    ? "Update"
+                    : "Submit"}
+                </Button>
+                <Button
+                  type="button"
+                  className="text-white/80"
+                  onClick={() => {
+                    form.reset();
+                    setPreviewUrl(initialData?.imageUrl ?? null);
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
+              <p className="text-info-content text-right text-[10px] sm:text-xs md:text-sm">
+                * required
+              </p>
+            </div>
             {/* <pre className="text-xs text-red-500">
               {JSON.stringify(form.formState.errors, null, 2)}
             </pre> */}

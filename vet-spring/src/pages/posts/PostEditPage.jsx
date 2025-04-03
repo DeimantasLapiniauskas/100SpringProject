@@ -4,14 +4,15 @@ import { useParams } from "react-router";
 import { PostRegister } from "./PostRegister";
 import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
-import { Loading } from "@/components/feedback/Loading";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import toast from "daisyui/components/toast";
+
 
 export const PostEditPage = () => {
   const { postId } = useParams();
   const [initialData, setInitialData] = useState(null);
-  const { Loading: Fetching, Success, Error } = UIStatus;
-  const { isLoading, isError, setStatus } = useUI();
+  const { Loading: Fetching, Success, Error: Err, Unusual } = UIStatus;
+  const { setStatus } = useUI();
   const [error, setError] = useState(null);
   const isMounted = useIsMounted();
 
@@ -20,15 +21,17 @@ export const PostEditPage = () => {
       try {
         setStatus(Fetching);
         const response = await getPostById(postId);
-       const {data, success} = response.data
+        const { data, success, message } = response.data;
+   
         if (data && success) {
           if (!isMounted.current) return;
           setInitialData(data);
-          console.log("Ziurek cia",initialData)
           setStatus(Success);
+        
         } else {
           if (!isMounted.current) return;
-          setError("Something went wrong fetching data");
+          setStatus(Unusual)
+          setError(message || "Something went wrong fetching data");
           setInitialData(null);
         }
       } catch (error) {
@@ -36,22 +39,21 @@ export const PostEditPage = () => {
           error.response?.data?.message ?? error.message ?? "Unknown error";
         if (!isMounted.current) return;
         setError(errorMessage);
-        setStatus(Error);
-        setInitialData(null)
+        setStatus(Err);
+        setInitialData(null);
       }
     };
 
     fectchPost();
   }, [postId]);
-
-  if (isLoading) {
-   return <Loading />;
-  }
-  if (isError) {
-   return <Error error={error} isHidden={!error} />;
-  }
+  
+  // useEffect(() => {
+  //   if (initialData) {
+  //     console.log("Kai initialData pasikeičia:", initialData);
+  //   }
+  // }, [initialData]);
+  
   if (!initialData) return null;
-
 
   return (
     <>

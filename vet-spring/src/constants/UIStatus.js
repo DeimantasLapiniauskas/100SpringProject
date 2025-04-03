@@ -3,5 +3,6 @@ export const UIStatus = {
     Loading: "loading",
     Success: "success",
     Error: "error",
-    BadRequest: "badRequest"
+    BadRequest: "badRequest",
+    Unusual: "unusual"
 }

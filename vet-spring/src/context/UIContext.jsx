@@ -8,7 +8,8 @@ const UIContext = createContext({
   isLoading: false,
   isSuccess: false,
   isError: false,
-  isBadRequest: false
+  isBadRequest: false,
+  isUnusual: false
 });
 
 export const UIProvider = ({ children }) => {
@@ -18,9 +19,10 @@ export const UIProvider = ({ children }) => {
   const isSuccess = status === UIStatus.Success
   const isError = status === UIStatus.Error
   const isBadRequest = status === UIStatus.BadRequest
+  const isUnusual = status === UIStatus.Unusual
 
   return (
-    <UIContext.Provider value={{ status, setStatus, isLoading, isSuccess, isError, isBadRequest }}>
+    <UIContext.Provider value={{ status, setStatus, isLoading, isSuccess, isError, isBadRequest, isUnusual }}>
       {children}
     </UIContext.Provider>
   );

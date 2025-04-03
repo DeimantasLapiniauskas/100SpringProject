@@ -18,7 +18,7 @@ const selectTriggerVariants = cva(
     variants: {
       size: {
         responsive:
-          "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-9 md:h-11 text-gray-500 ",
+          "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-9 md:h-11 text-info-content",
       },
       intent: {
         default: "border-blue-500 focus:ring-red-500",
