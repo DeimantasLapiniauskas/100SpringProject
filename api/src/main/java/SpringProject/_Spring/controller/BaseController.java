@@ -30,6 +30,10 @@ public abstract class BaseController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse<>(null, message, false));
     }
 
+    protected <T> ResponseEntity<ApiResponse<T>> unAuthorized(String message) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(null, message, false));
+    }
+
     protected <T> ResponseEntity<ApiResponse<T>> noContent(String message) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiResponse<>(null, message, true));
     }

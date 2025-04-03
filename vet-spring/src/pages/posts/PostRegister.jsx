@@ -92,7 +92,7 @@ export const PostRegister = ({ initialData }) => {
 
     try {
       setStatus(Fetching);
-      if (data.imageFile) {
+      if (data?.imageFile) {
         const formData = new FormData();
         formData.append("file", data.imageFile);
         const imageRes = await uploadImage(formData);
@@ -100,6 +100,10 @@ export const PostRegister = ({ initialData }) => {
 
         if (!isMounted.current) return;
         setPreviewUrl(imageUrl);
+      }
+      else {
+        setStatus(Unusual)
+        toast.error("Error whit uploading image")
       }
       const payload = {
         title: data.title,

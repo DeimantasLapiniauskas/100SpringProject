@@ -17,7 +17,7 @@ export const CustomToaster = () => (
         icon: "✅",
         duration: 2500,
         style: {
-           background: "rgba(0, 204, 0, 0.9)",
+           background: "rgba(0, 204, 0, 0.8)",
           color: "#fff",
         },
       },
@@ -25,7 +25,7 @@ export const CustomToaster = () => (
         icon: "📛",
         duration: 5000,
         style: {
-          background: "rgba(204, 0, 0, 0.9)",
+          background: "rgba(204, 0, 0, 0.8)",
           color: "#fff",
         },
       },

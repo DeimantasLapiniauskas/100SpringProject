@@ -120,8 +120,8 @@ export const PostCard = (props) => {
               </button>
             </NavLink>
             <DeletePostModal
-              title={title}
-              onConfirm={() => handleDelete(id)}
+              postTitle={title}
+              handleDelete={() => handleDelete(id)}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
             />
