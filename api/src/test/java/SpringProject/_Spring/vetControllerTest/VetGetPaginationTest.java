@@ -65,15 +65,15 @@ public class VetGetPaginationTest {
                 //then
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        (jsonPath("$.data.content").isArray()),
-                        (jsonPath("$.data.content", Matchers.hasSize(1))),
-                        (jsonPath("$.data.content[0].id").value(1L)),
-                        (jsonPath("$.data.content[0].firstName").value("John")),
-                        (jsonPath("$.data.totalPages").value(1)),
-                        (jsonPath("$.data.totalElements").value(1)),
-                        (jsonPath("$.data.currentPage").value(0)),
-                        (jsonPath("$.data.pageSize").value(10)),
-                        (jsonPath("$.message").doesNotExist()));
+                        (jsonPath("data.content").isArray()),
+                        (jsonPath("data.content", Matchers.hasSize(1))),
+                        (jsonPath("data.content[0].id").value(1L)),
+                        (jsonPath("data.content[0].firstName").value("John")),
+                        (jsonPath("data.totalPages").value(1)),
+                        (jsonPath("data.totalElements").value(1)),
+                        (jsonPath("data.currentPage").value(0)),
+                        (jsonPath("data.pageSize").value(10)),
+                        (jsonPath("message").doesNotExist()));
 
         Mockito.verify(vetService, times(1)).findAllVetsPage(0, 10, null);
     }
@@ -127,9 +127,9 @@ public class VetGetPaginationTest {
 
         //when
         mockMvc.perform(get("/api/adminpage/vets/pagination")
-                .param("page", "0")
-                .param("size", "10")
-                .param("sort", "firstName"))
+                        .param("page", "0")
+                        .param("size", "10")
+                        .param("sort", "firstName"))
                 //then
                 .andExpect(status().isUnauthorized());
 
