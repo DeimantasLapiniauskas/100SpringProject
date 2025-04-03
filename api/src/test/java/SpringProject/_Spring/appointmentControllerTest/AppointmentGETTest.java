@@ -10,7 +10,7 @@ import SpringProject._Spring.model.pet.Gender;
 import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
-import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ public class AppointmentGETTest {
     private ServiceAtClinicService serviceService; //throws errors if not here
 
     @MockitoBean
-    private AccountService accountService; //throws errors if not here
+    private ClientService clientService;
 
     @MockitoBean
     private AppointmentService appointmentService;
@@ -76,6 +76,7 @@ public class AppointmentGETTest {
     ServiceAtClinic serviceAtClinicFour;
     Appointment appointmentOne;
     Appointment appointmentTwo;
+
 
     @BeforeEach
     public void init() {
@@ -183,7 +184,7 @@ public class AppointmentGETTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getAppointments_whenGetClient_thenRespond200() throws Exception {
 
-        when(accountService.findIdByEmail(any()))
+        when(clientService.findClientIdByEmail(any()))
                 .thenReturn(clientId);
         when(appointmentService.getAllAppointmentsByClientId(clientId))
                 .thenReturn(List.of(appointmentOne, appointmentTwo));

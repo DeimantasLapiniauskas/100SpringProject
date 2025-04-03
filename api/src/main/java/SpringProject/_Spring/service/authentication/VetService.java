@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,6 +41,10 @@ public class VetService {
 
     public Optional<Vet> findVetByAccountEmail(String email) {
         return vetRepository.findByAccount_email(email);
+    }
+
+    public List<Vet> getAllVets() {
+        return vetRepository.findAll();
     }
 
     public boolean existsVetById(long id) {

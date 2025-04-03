@@ -3,6 +3,7 @@ package SpringProject._Spring.dto.appointment;
 import SpringProject._Spring.dto.pet.PetResponseDTO;
 import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
 import SpringProject._Spring.dto.authentication.vet.VetResponseDTO;
+import SpringProject._Spring.model.appointment.Status;
 
 
 import java.math.BigDecimal;
@@ -16,7 +17,7 @@ public record AppointmentResponseDTO(
         List<ServiceAtClinicResponseDTO> services,
         LocalDateTime appointmentDate,
         String notes,
-        BigDecimal price
+        BigDecimal price,
+        Status status
 ) {
-
 }
