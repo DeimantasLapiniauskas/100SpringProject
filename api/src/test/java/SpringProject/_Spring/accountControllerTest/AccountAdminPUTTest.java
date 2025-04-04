@@ -71,7 +71,7 @@ public class AccountAdminPUTTest {
                         .content(new ObjectMapper().writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(content().string("You have successfully updated password for account " + accountId));
+                .andExpect(jsonPath("data").value("You have successfully updated password for account " + accountId));
 
         Mockito.verify(accountService, times(1)).saveAccount(ArgumentMatchers.any(Account.class));
     }
@@ -183,7 +183,7 @@ public class AccountAdminPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").value("You can't change password of another admin!"));
+                .andExpect(jsonPath("message").value("You can't change password of another admin!"));
 
         Mockito.verify(accountService, times(1)).findAccountById(1L);
         Mockito.verify(passwordEncoder, times(0)).encode("newPassword");
