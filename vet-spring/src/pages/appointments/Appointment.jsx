@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { getAppointments } from "../../utils/helpers/appointments";
+import { getAppointments} from "../../utils/helpers/appointments";
 import { RegisterAppointment } from "./RegisterAppointment";
-
+import { UpdateData } from "./UpdateData";
+import api from "../../utils/api";
+import { NavLink } from "react-router";
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
-
   const getAppointment = async () => {
     try {
       const response = await getAppointments();
@@ -19,6 +20,8 @@ export const Appointment = () => {
     getAppointment();
   }, [visible]);
 
+
+
   return (
     <div>
       <div className="flex flex-row justify-start m-6 items-baselin">
@@ -31,8 +34,8 @@ export const Appointment = () => {
         </button>
       </div>
 
-      <div className="bg-white m-8 p-8 rounded-box text-black">
-        <div className="grid grid-cols-7 border-b border-[#97a0f1]">
+      <div className="bg-white m-6 p-6 rounded-box text-black">
+        <div className="grid grid-cols-8 border-b border-[#97a0f1]">
           <p>Appointment Date</p>
           <p>Pet</p>
           <p>Price</p>
@@ -43,7 +46,7 @@ export const Appointment = () => {
         </div>
         {appointments.map((a) => (
           <div
-            className="grid-cols-7 grid border-b border-[#97a0f1]"
+            className="grid-cols-8 grid border-b border-[#97a0f1]"
             key={a.id}
           >
             <p>{a.appointmentDate.replace("T", " ")}</p>
@@ -65,11 +68,19 @@ export const Appointment = () => {
             </div>
             <p>{a.notes}</p>
             <p>{a.status}</p>
-          </div>
+            <div>
+          
+          <NavLink to={`/appointments/update/${a.id}`} className="btn bg-red-500 p-1">pernesti</NavLink>
+          <button className=" btn bg-green-500 p-1">close</button>
+        </div>
+            
+            </div>
+          
         ))}
       </div>
 
       {visible && <RegisterAppointment setVisible={setVisible} serviceId={-1}/>}
+
     </div>
   );
 };

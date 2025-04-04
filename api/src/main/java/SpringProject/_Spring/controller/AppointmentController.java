@@ -117,7 +117,7 @@ public class AppointmentController extends BaseController {
 
     @Operation(summary = "Get appointment by ID (Admin)", description = "Retrieves an appointment by it's unique ID")
     @GetMapping("/appointments/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<List<AppointmentResponseDTO>> getAdminAppointments(@PathVariable long id) {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(id)

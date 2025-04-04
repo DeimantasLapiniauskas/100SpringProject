@@ -22,6 +22,7 @@ import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
+import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
 
 const VetClinicRoutes = () => {
 
@@ -93,6 +94,7 @@ const VetClinicRoutes = () => {
               <Route path="/designh1" element={<BandytiDesignH1 />} />
               <Route path="/designh2" element={<BandytiDesignH2 />} />
               <Route path="/appointments" element={<Appointment/>}/>
+              <Route path="/appointments/update/:id" element={<UpdateData/>}/>
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>
