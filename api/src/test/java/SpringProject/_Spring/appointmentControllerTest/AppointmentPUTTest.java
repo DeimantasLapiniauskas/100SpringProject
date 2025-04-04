@@ -6,6 +6,7 @@ import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Role;
+import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.model.pet.Gender;
 import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.security.SecurityConfig;
@@ -93,7 +94,7 @@ public class AppointmentPUTTest {
         pet.setId(appointment.getPetId());
 
         UserDetails principal = User.withUsername("CLIENT")
-                .password("password")
+                .password(account.getPassword())
                 .roles("CLIENT")
                 .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_CLIENT"))
                 .build();
@@ -128,9 +129,9 @@ public class AppointmentPUTTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void putAppointment_whenInvalidPutClient_thenRespond400and404() throws Exception {
+    void rescheduleAppointment_whenInvalidDateClient_thenRespond400() throws Exception {
 
-        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2002,11,11,11,11));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -138,7 +139,7 @@ public class AppointmentPUTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("message").value("You can't call this endpoint and then not give a date OR status!"));
+                .andExpect(jsonPath("data.newDate").value("Your rescheduled date has to be in the future!"));
 
         Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
 
@@ -146,7 +147,7 @@ public class AppointmentPUTTest {
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(false);
 
-        appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -154,7 +155,7 @@ public class AppointmentPUTTest {
                         )
                 )
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("Appointment not found!"));
+                .andExpect(jsonPath("message").value("Appointment not found!"));
 
         Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
     }
@@ -176,15 +177,23 @@ public class AppointmentPUTTest {
     }
 
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void putAppointment_whenValidPutVet_thenRespond200() throws Exception {
-
-
-        Optional<Status> status = Optional.of(Status.Cancelled);
-        Optional<LocalDateTime> newDate = Optional.of(LocalDateTime.now());
+    void rescheduleAppointment_whenValidRescheduleVet_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
 
+        Account account = new Account("Email@email.email", "password", List.of(new Role("ROLE_CLIENT")));
+        account.setId(69L);
+
+        UserDetails principal = User.withUsername("CLIENT")
+                .password(account.getPassword())
+                .roles("CLIENT")
+                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_CLIENT"))
+                .build();
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
+                account.getPassword(), principal.getAuthorities()));
+        System.out.println(securityContext);
+        SecurityContextHolder.setContext(securityContext);
 
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(true);
@@ -192,69 +201,36 @@ public class AppointmentPUTTest {
         when(appointmentService.getAppointmentById(appointmentId))
                 .thenReturn(Optional.of(appointment));
 
+        Vet vet = new Vet("vetName","vetLName","666-666-666","vetSpecialty","vetLicenseNumber",LocalDate.now());
+        vet.setAccount(account);
+        vet.setId(appointment.getVetId());
+
+        when(vetService.findVetByAccountEmail(account.getEmail()))
+                .thenReturn(Optional.of(vet));
+
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/cancel/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
                         )
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("message").value("Appointment updated its status successfully!"));
+                .andExpect(jsonPath("data").value("Appointment cancelled successfully!"));
 
         Mockito.verify(appointmentService, Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
-
-        appointmentUpdateDTO = new AppointmentRescheduleDTO(newDate.get());
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
-                        )
-                )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Appointment updated its date successfully!"));
-
-        Mockito.verify(appointmentService, Mockito.times(2)).saveAppointment(ArgumentMatchers.any());
-
-        appointmentUpdateDTO = new AppointmentRescheduleDTO(newDate.get());
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
-                        )
-                )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Appointment updated its status and date successfully!"));
-
-        Mockito.verify(appointmentService, Mockito.times(3)).saveAppointment(ArgumentMatchers.any());
-    }
+   }
 
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void putAppointment_whenAppointmentNotFoundVet_thenRespond404() throws Exception {
 
-        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
-
-//        Account account = new Account("Email@email.email", "password", List.of(new Role("ROLE_VET")));
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11,11));
 
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(false);
-//        when(accountService.findByEmail(account.getEmail()))
-//                .thenReturn(Optional.of(account));
-//        when(appointmentService.getAppointmentById(appointmentId))
-//                .thenReturn(Optional.empty());
-//
-//        UserDetails principal = User.withUsername("admin")
-//                .password("password")
-//                .roles("VET")
-//                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_VET"))
-//                .build();
-//        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-//        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
-//                "password", principal.getAuthorities()));
-//        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -271,7 +247,7 @@ public class AppointmentPUTTest {
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void putAppointment_whenPutAdmin_thenRespond403() throws Exception {
 
-        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)

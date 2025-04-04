@@ -90,7 +90,7 @@ public class AppointmentBasicController extends BaseController {
     @PutMapping("/appointments/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<Object>> rescheduleAppointmentClient(@PathVariable long id,
-                                                                           @RequestBody AppointmentRescheduleDTO rescheduleDTO,
+                                                                           @RequestBody @Valid AppointmentRescheduleDTO rescheduleDTO,
                                                                            Authentication authentication) {
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
@@ -123,6 +123,7 @@ public class AppointmentBasicController extends BaseController {
     public ResponseEntity<ApiResponse<Object>> cancelAppointment(@PathVariable long id,
                                                                  Authentication authentication) {
 
+        System.out.println("help");
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
         }
@@ -147,6 +148,7 @@ public class AppointmentBasicController extends BaseController {
                 return wrongAccountCancelResponse();
             }
         }
+        System.out.println("hi help pls");
         appointmentFromDB.setStatus(Status.Cancelled);
         appointmentService.saveAppointment(appointmentFromDB);
         return ok("Appointment cancelled successfully!");
