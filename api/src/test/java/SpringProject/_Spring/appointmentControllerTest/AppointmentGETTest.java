@@ -10,10 +10,12 @@ import SpringProject._Spring.model.pet.Gender;
 import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
+import SpringProject._Spring.service.authentication.AccountService;
 import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -48,6 +51,9 @@ public class AppointmentGETTest {
 
     @MockitoBean
     private VetService vetService;
+
+    @MockitoBean
+    private AccountService accountService;
 
     @MockitoBean
     private ServiceAtClinicService serviceService; //throws errors if not here
@@ -182,7 +188,7 @@ public class AppointmentGETTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getAppointments_whenGetClient_thenRespond200() throws Exception {
+    void getClientAppointments_whenGetClient_thenRespond200() throws Exception {
 
         when(clientService.findClientIdByEmail(any()))
                 .thenReturn(clientId);
@@ -199,7 +205,7 @@ public class AppointmentGETTest {
         when(vetService.getVetById(vetIdTwo))
                 .thenReturn(Optional.of(vetTwo));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client"))
                 .andExpect(status().isOk())
 
                 .andExpect(jsonPath("[0].id").value(appointmentOneId))
@@ -310,32 +316,41 @@ public class AppointmentGETTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void getAppointments_whenGetAdmin_thenRespond200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
+    void getClientAppointments_whenGetAdmin_thenRespond403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client"))
                 .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getAppointmentsById_whenGetClient_thenRespond200() throws Exception {
+    void getAppointmentsById_whenGetClient_thenRespond403() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
     @Test
-    void getAppointments_whenGetUnauthenticated_thenRespond200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
+    void getClientAppointments_whenGetUnauthenticated_thenRespond401() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client"))
                 .andExpect(status().isUnauthorized());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
     @Test
-    void getAppointmentsById_whenGetUnauthenticated_thenRespond200() throws Exception {
+    void getVetAppointments_whenGetUnauthenticated_thenRespond401() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/vet"))
+                .andExpect(status().isUnauthorized());
+
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByVetId(anyLong());
+    }
+
+    @Test
+    void getAppointmentsById_whenGetUnauthenticated_thenRespond401() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isUnauthorized());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
 }
