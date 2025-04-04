@@ -73,11 +73,6 @@ export const RegisterAppointment = (props) => {
       });
       setVisible(false);
     } catch (error) {
-      console.log("error: " + error);
-      console.log(error.response?.data.data);
-      console.log(error.response?.data);
-      console.log(error.message);
-      
       setVisibleError(true); 
       setError(error.response?.data?.message || error.response?.data?.data || error.response?.data || error.message);
     }
