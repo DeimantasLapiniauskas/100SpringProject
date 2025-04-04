@@ -128,7 +128,7 @@ public class AppointmentPOSTTest {
     void addAppointment_whenAddClient_thenRespond201() throws Exception {
 
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdOne))
                 .thenReturn(false);
 
         when(serviceService.findServiceAtClinicById(serviceIdOne))
@@ -137,7 +137,7 @@ public class AppointmentPOSTTest {
         when(serviceService.findServiceAtClinicById(serviceIdTwo))
                 .thenReturn(Optional.of(serviceTwo));
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdTwo))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdTwo))
                 .thenReturn(false);
 
         when(appointmentService.saveAppointment(any()))
@@ -219,7 +219,7 @@ public class AppointmentPOSTTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void addAppointment_whenBadRequest_thenRespond400() throws Exception {
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdOne))
                 .thenReturn(false);
 
         when(serviceService.findServiceAtClinicById(serviceIdOne))
@@ -228,7 +228,7 @@ public class AppointmentPOSTTest {
         when(serviceService.findServiceAtClinicById(serviceIdTwo))
                 .thenReturn(Optional.of(serviceTwo));
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdTwo))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdTwo))
                 .thenReturn(false);
 
         when(appointmentService.saveAppointment(any()))

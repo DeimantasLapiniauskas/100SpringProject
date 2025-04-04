@@ -1,7 +1,7 @@
 package SpringProject._Spring.appointmentControllerTest;
 
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
-import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
+import SpringProject._Spring.dto.appointment.AppointmentRescheduleDTO;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.security.SecurityConfig;
@@ -87,7 +87,7 @@ public class AppointmentPUTTest {
                 .thenReturn(Optional.of(appointment));
 
 
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(status,null);
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +99,7 @@ public class AppointmentPUTTest {
 
         Mockito.verify(appointmentService,Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
 
-        appointmentUpdateDTO = new AppointmentUpdateDTO(null,newDate);
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(newDate.get());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -111,7 +111,7 @@ public class AppointmentPUTTest {
 
         Mockito.verify(appointmentService,Mockito.times(2)).saveAppointment(ArgumentMatchers.any());
 
-        appointmentUpdateDTO = new AppointmentUpdateDTO(status,newDate);
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(newDate.get());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -129,7 +129,7 @@ public class AppointmentPUTTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putAppointment_whenInvalidPutClient_thenRespond400and404() throws Exception {
 
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,null);
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +145,7 @@ public class AppointmentPUTTest {
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(false);
 
-        appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -161,7 +161,7 @@ public class AppointmentPUTTest {
     @Test
     void putAppointment_whenPutUnauthenticated_thenRespond401() throws Exception {
 
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -192,7 +192,7 @@ public class AppointmentPUTTest {
                 .thenReturn(Optional.of(appointment));
 
 
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(status,null);
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -204,7 +204,7 @@ public class AppointmentPUTTest {
 
         Mockito.verify(appointmentService,Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
 
-        appointmentUpdateDTO = new AppointmentUpdateDTO(null,newDate);
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(newDate.get());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -216,7 +216,7 @@ public class AppointmentPUTTest {
 
         Mockito.verify(appointmentService,Mockito.times(2)).saveAppointment(ArgumentMatchers.any());
 
-        appointmentUpdateDTO = new AppointmentUpdateDTO(status,newDate);
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(newDate.get());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -234,7 +234,7 @@ public class AppointmentPUTTest {
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void putAppointment_whenInvalidPutVet_thenRespond400and404() throws Exception {
 
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,null);
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -250,7 +250,7 @@ public class AppointmentPUTTest {
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(false);
 
-        appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
+        appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -267,7 +267,7 @@ public class AppointmentPUTTest {
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void putAppointment_whenPutAdmin_thenRespond403() throws Exception {
 
-        AppointmentUpdateDTO appointmentUpdateDTO = new AppointmentUpdateDTO(null,Optional.of(LocalDateTime.now()));
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
