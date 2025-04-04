@@ -12,4 +12,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
 
     List<Appointment> findAllByPet_ownerId(Long id);
+
+    List<Appointment> findAllByPetId(Long id);
 }

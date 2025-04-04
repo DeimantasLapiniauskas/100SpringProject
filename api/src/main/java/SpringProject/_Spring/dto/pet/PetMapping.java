@@ -58,11 +58,14 @@ public class PetMapping {
         List<PetResponseDTO> petResponseListDTO = petsPage.getContent()
                 .stream()
                 .map(PetMapping::toPetResponseDTO)
-                .toList();    return new PetPageResponseDTO(
-                        petResponseListDTO,
+                .toList();
+
+        return new PetPageResponseDTO(
+                petResponseListDTO,
                 petsPage.getTotalPages(),
                 (int) petsPage.getTotalElements(),
                 petsPage.getNumber(),
                 petsPage.getSize()
-        );}
+        );
+    }
 }

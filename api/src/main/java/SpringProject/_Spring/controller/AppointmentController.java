@@ -5,12 +5,14 @@ import SpringProject._Spring.dto.appointment.AppointmentMapping;
 import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.dto.appointment.AppointmentResponseDTO;
 import SpringProject._Spring.dto.appointment.AppointmentUpdateDTO;
+import SpringProject._Spring.dto.appointment.vet.VetAppointmentMapping;
+import SpringProject._Spring.dto.appointment.vet.VetAppointmentResponseDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.service.*;
-import SpringProject._Spring.service.authentication.AccountService;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -30,15 +32,15 @@ public class AppointmentController extends BaseController {
     private final PetService petService;
     private final ServiceAtClinicService serviceService;
     private final VetService vetService;
-    private final AccountService accountService;
+    private final ClientService clientService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService, AccountService accountService) {
+    public AppointmentController(AppointmentService appointmentService, PetService petService, ServiceAtClinicService serviceService, VetService vetService, ClientService clientService) {
         this.appointmentService = appointmentService;
         this.petService = petService;
         this.serviceService = serviceService;
         this.vetService = vetService;
-        this.accountService = accountService;
+        this.clientService = clientService;
     }
 
     @Operation(summary = "Create new appointment", description = "Creates an appointment for a pet with selected vet")
@@ -69,7 +71,8 @@ public class AppointmentController extends BaseController {
                         savedAppointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                         savedAppointment.getAppointmentDate(),
                         savedAppointment.getNotes(),
-                        savedAppointment.getTotalServicesSum())
+                        savedAppointment.getTotalServicesSum(),
+                        savedAppointment.getStatus())
         );
     }
 
@@ -99,7 +102,7 @@ public class AppointmentController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<List<AppointmentResponseDTO>> getOwnAppointments(Authentication authentication) {
         return ResponseEntity.ok(
-                appointmentService.getAllAppointmentsByClientId(accountService.findIdByEmail(authentication.getName()))
+                appointmentService.getAllAppointmentsByClientId(clientService.findClientIdByEmail(authentication.getName()))
                         .stream().map(appointment -> new AppointmentResponseDTO(
                                 appointment.getId(),
                                 PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
@@ -107,7 +110,8 @@ public class AppointmentController extends BaseController {
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
-                                appointment.getTotalServicesSum()))
+                                appointment.getTotalServicesSum(),
+                                appointment.getStatus()))
                         .toList());
     }
 
@@ -124,7 +128,16 @@ public class AppointmentController extends BaseController {
                                 appointment.getServices().stream().map(ServiceAtClinicMapper::toServiceAtClinicDTO).toList(),
                                 appointment.getAppointmentDate(),
                                 appointment.getNotes(),
-                                appointment.getTotalServicesSum()))
+                                appointment.getTotalServicesSum(),
+                                appointment.getStatus()))
                         .toList());
+    }
+
+    @Operation(summary = "Get vets list", description = "Retrieves a vet list (names, specialty)")
+    @GetMapping("/vets")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<List<VetAppointmentResponseDTO>> getVeterinarians(){
+        List<VetAppointmentResponseDTO> vetsDTO = vetService.getAllVets().stream().map(VetAppointmentMapping::toVetDTO).toList();
+        return ResponseEntity.ok(vetsDTO);
     }
 }

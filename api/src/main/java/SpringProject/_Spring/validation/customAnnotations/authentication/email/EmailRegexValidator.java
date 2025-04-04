@@ -3,7 +3,7 @@ package SpringProject._Spring.validation.customAnnotations.authentication.email;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class EmailRegexValidator implements ConstraintValidator<EmailRegex,String> {
+public class EmailRegexValidator implements ConstraintValidator<EmailRegex, String> {
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {

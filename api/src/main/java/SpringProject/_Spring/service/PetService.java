@@ -2,6 +2,7 @@ package SpringProject._Spring.service;
 
 
 import SpringProject._Spring.model.pet.Pet;
+import SpringProject._Spring.model.post.PostType;
 import SpringProject._Spring.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -65,6 +66,7 @@ public class PetService {
             Pageable pageable = PageRequest.of(page, size);
             return petRepository.findAllByOwnerId(ownerAccountId, pageable);
         }
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         return petRepository.findAllByOwnerId(ownerAccountId, pageable);
     }
