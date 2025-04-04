@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public record AppointmentRescheduleDTO(
-        @NotNull(message = "You have to tell us to when you're rescheduling!")
-        @NotBlank(message = "You have to tell us to when you're rescheduling!")
         @Future(message = "Your rescheduled date has to be in the future!")
         LocalDateTime newDate
 ) {

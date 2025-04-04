@@ -92,14 +92,14 @@ public class AppointmentBasicController extends BaseController {
     public ResponseEntity<ApiResponse<Object>> rescheduleAppointmentClient(@PathVariable long id,
                                                                            @RequestBody AppointmentRescheduleDTO rescheduleDTO,
                                                                            Authentication authentication) {
-
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
         }
 
         Account currentAccount = accountService.findByEmail(authentication.getName()).get();
+        System.out.println("help3");
         Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
-
+        System.out.println("help4");
         appointmentFromDB.setAppointmentDate(rescheduleDTO.newDate());
 
         if (currentAccount.getRoles().stream()
