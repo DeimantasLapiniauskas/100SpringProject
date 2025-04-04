@@ -1,9 +1,8 @@
-package SpringProject._Spring.appointmentControllerTest;
+package SpringProject._Spring.appointmentControllerTest.appointmentBasicController;
 
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
 import SpringProject._Spring.dto.appointment.AppointmentRescheduleDTO;
 import SpringProject._Spring.model.appointment.Appointment;
-import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Role;
 import SpringProject._Spring.model.authentication.Vet;
@@ -81,7 +80,6 @@ public class AppointmentPUTTest {
         objectMapper.registerModule(new JavaTimeModule());
         appointmentId = 1;
     }
-// todo: successful rescheduling for client and vet, unsuccessful cancelling for admin and unauthenticated
     @Test
     void cancelAppointment_whenValidCancelClient_thenRespond200() throws Exception {
 
