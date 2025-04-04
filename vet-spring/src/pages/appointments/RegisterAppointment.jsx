@@ -73,8 +73,13 @@ export const RegisterAppointment = (props) => {
       });
       setVisible(false);
     } catch (error) {
+      console.log("error: " + error);
+      console.log(error.response?.data.data);
+      console.log(error.response?.data);
+      console.log(error.message);
+      
       setVisibleError(true); 
-      setError(error.response?.data.data || error.response?.data || error.message);
+      setError(error.response?.data?.message || error.response?.data?.data || error.response?.data || error.message);
     }
   };
 
@@ -126,7 +131,7 @@ export const RegisterAppointment = (props) => {
               className="select autofill:shadow-[inset_0_0_0px_1000px_rgb(250,250,250)"
             >
               <option value=""></option>
-              {pets?.map((pet) => (
+              {pets.data?.map((pet) => (
                 <option key={pet.id} value={pet.id}>
                   {pet.name}
                 </option>
