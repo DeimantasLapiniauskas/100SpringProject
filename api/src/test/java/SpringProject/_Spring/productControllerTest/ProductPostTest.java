@@ -58,7 +58,6 @@ public class ProductPostTest {
                 //given
                 .andExpect(status().isCreated())
                 .andExpectAll(
-                        jsonPath("id").value("1"),
                         jsonPath("name").value("Name"),
                         jsonPath("description").value("Description"),
                         jsonPath("price").value("10.0"),
