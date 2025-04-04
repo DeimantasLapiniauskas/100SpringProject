@@ -69,9 +69,9 @@ public class AccountUpdateClientTest {
                         .content(objectMapper.writeValueAsString(clientUpdateDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpectAll((jsonPath("firstName").value("UpdatedName")),
-                        (jsonPath("lastName").value("UpdatedLastName")),
-                        (jsonPath("phoneNumber").value("123456")));
+                .andExpectAll((jsonPath("data.firstName").value("UpdatedName")),
+                        (jsonPath("data.lastName").value("UpdatedLastName")),
+                        (jsonPath("data.phoneNumber").value("123456")));
 
         Mockito.verify(clientService, times(1)).updateClient(existingClient);
     }
@@ -91,7 +91,7 @@ public class AccountUpdateClientTest {
                         .content(objectMapper.writeValueAsString(clientUpdateDTO)))
                 //then
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("Client account not found!"));
+                .andExpect(jsonPath("message").value("Client account not found!"));
 
         Mockito.verify(clientService, times(0)).updateClient(any());
     }
