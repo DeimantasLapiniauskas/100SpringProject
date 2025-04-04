@@ -7,4 +7,6 @@ public record PetPageResponseDTO(
         int totalPages,
         int totalElements,
         int currentPage,
-        int pageSize) {}
+        int pageSize
+) {
+}

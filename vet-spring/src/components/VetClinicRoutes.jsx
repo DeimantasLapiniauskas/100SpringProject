@@ -13,15 +13,18 @@ import { HomePage } from "../pages/home/HomePage.jsx";
 import { ListProvider } from "../context/ListContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
+import { Appointment } from "../pages/appointments/Appointment.jsx";
 import { PostList } from "../pages/posts/PostList.jsx";
 import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
+import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
+
 const VetClinicRoutes = () => {
-  
+
   return (
     <BrowserRouter>
       <UIProvider>
@@ -61,6 +64,22 @@ const VetClinicRoutes = () => {
                   </ListProvider>
                 }
               />
+              <Route
+                path="/adminpage"
+                element={
+                  <AuthGuard>
+                    <ListProvider>
+                      <AdminPage />
+                    </ListProvider>
+                  </AuthGuard>
+                }
+              >
+                <Route path="vets" element={<AdminPage initialList="vets" />} />
+                <Route
+                  path="clients"
+                  element={<AdminPage initialList="clients" />}
+                />
+              </Route>
               <Route path="services/add" element={<ServiceAdd />} />
               <Route path="services/edit/:id" element={<ServiceUpdate />} />
               {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
@@ -73,6 +92,7 @@ const VetClinicRoutes = () => {
               <Route path="/designh" element={<BandytiDesignHomePage />} />
               <Route path="/designh1" element={<BandytiDesignH1 />} />
               <Route path="/designh2" element={<BandytiDesignH2 />} />
+              <Route path="/appointments" element={<Appointment/>}/>
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>
