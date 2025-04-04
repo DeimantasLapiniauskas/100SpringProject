@@ -81,7 +81,7 @@ public class AppointmentPUTTest {
         objectMapper.registerModule(new JavaTimeModule());
         appointmentId = 1;
     }
-
+// todo: successful rescheduling for client and vet, unsuccessful cancelling for admin and unauthenticated
     @Test
     void cancelAppointment_whenValidCancelClient_thenRespond200() throws Exception {
 
@@ -126,58 +126,8 @@ public class AppointmentPUTTest {
 
     }
 
-
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void rescheduleAppointment_whenInvalidDateClient_thenRespond400() throws Exception {
-
-        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2002,11,11,11,11));
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
-                        )
-                )
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("data.newDate").value("Your rescheduled date has to be in the future!"));
-
-        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
-
-
-        when(appointmentService.existsAppointmentById(appointmentId))
-                .thenReturn(false);
-
-        appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11));
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
-                        )
-                )
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("message").value("Appointment not found!"));
-
-        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
-    }
-
-    @Test
-    void putAppointment_whenPutUnauthenticated_thenRespond401() throws Exception {
-
-        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
-                        )
-                )
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$").doesNotExist());
-
-        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
-    }
-
-    @Test
-    void rescheduleAppointment_whenValidRescheduleVet_thenRespond200() throws Exception {
+    void cancelAppointment_whenValidCancelVet_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
 
@@ -220,12 +170,77 @@ public class AppointmentPUTTest {
                 .andExpect(jsonPath("data").value("Appointment cancelled successfully!"));
 
         Mockito.verify(appointmentService, Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
-   }
+    }
 
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void rescheduleAppointment_whenInvalidDateClient_thenRespond400() throws Exception {
+
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2002,11,11,11,11));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("data.newDate").value("Your rescheduled date has to be in the future!"));
+
+        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+    }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
-    void putAppointment_whenAppointmentNotFoundVet_thenRespond404() throws Exception {
+    void rescheduleAppointment_whenInvalidDateVet_thenRespond400() throws Exception {
+
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2002,11,11,11,11));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("data.newDate").value("Your rescheduled date has to be in the future!"));
+
+        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void RescheduleAppointment_whenRescheduleAdmin_thenRespond403() throws Exception {
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("message").value("Access Denied"));
+
+        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+    }
+
+    @Test
+    void RescheduleAppointment_whenRescheduleUnauthenticated_thenRespond401() throws Exception {
+
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.now());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
+                        )
+                )
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void RescheduleAppointment_whenAppointmentNotFoundVet_thenRespond404() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11,11));
 
@@ -244,20 +259,22 @@ public class AppointmentPUTTest {
     }
 
     @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void putAppointment_whenPutAdmin_thenRespond403() throws Exception {
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void RescheduleAppointment_whenAppointmentNotFoundClient_thenRespond404() throws Exception {
 
-        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11));
+        AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222,11,11,11,11,11));
+
+        when(appointmentService.existsAppointmentById(appointmentId))
+                .thenReturn(false);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
                         )
                 )
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("message").value("Access Denied"));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Appointment not found!"));
 
         Mockito.verify(appointmentService, Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
     }
-
 }
