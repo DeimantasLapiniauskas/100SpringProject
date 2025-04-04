@@ -14,17 +14,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = ProductController.class)
 @Import(SecurityConfig.class)
@@ -87,5 +88,67 @@ public class ProductPostTest {
                 );
 
         Mockito.verify(productService, times(1)).addNewProduct(productRequestDTO);
+    }
+
+    //unhappy path
+    @Test
+    void addProduct_whenInvalidRequest_thenReturnAnd400() throws Exception {
+        //given
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Nameупвып", "", BigDecimal.valueOf(-1.0), -1);
+
+        //when
+        mockMvc.perform(post("/api/products/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productRequestDTO)))
+                //given
+                .andExpect(status().isBadRequest())
+                .andExpectAll(
+                        jsonPath("message").exists(),
+                        jsonPath("success").value(false),
+                        content().string(containsString("Name can only contain letters")),
+                        content().string(containsString("Description can't be empty!")),
+                        content().string(containsString("Price must be zero or positive")),
+                        content().string(containsString("Stock quantity must be zero or greater!"))
+                );
+
+        Mockito.verify(productService, times(0)).addNewProduct(productRequestDTO);
+    }
+
+    //unhappy path
+    @Test
+    @WithAnonymousUser
+    void addProduct_whenUnauthorized_thenReturnAnd401() throws Exception {
+        //given
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10);
+        //when
+        mockMvc.perform(post("/api/products/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productRequestDTO)))
+                //then
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(productService, times(0)).addNewProduct(productRequestDTO);
+    }
+
+    //unhappy path
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
+    void addProducts_whenClient_thenReturnAnd403() throws Exception {
+        //given
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10);
+        //when
+        mockMvc.perform(post("/api/products/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productRequestDTO)))
+                //then
+                .andExpect(status().isForbidden())
+                .andExpectAll(
+                        jsonPath("data").isEmpty(),
+                        jsonPath("message").value("Access Denied"),
+                        jsonPath("success").value(false)
+                );
+
+        Mockito.verify(productService, times(0)).addNewProduct(productRequestDTO);
     }
 }
