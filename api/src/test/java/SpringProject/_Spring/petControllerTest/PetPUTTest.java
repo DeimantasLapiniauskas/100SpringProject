@@ -119,11 +119,11 @@ public class PetPUTTest {
                         )
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("name").value("Little Bastard"))
-                .andExpect(jsonPath("species").value("Catto"))
-                .andExpect(jsonPath("breed").value("Yes"))
+                .andExpect(jsonPath("data.name").value("Little Bastard"))
+                .andExpect(jsonPath("data.species").value("Catto"))
+                .andExpect(jsonPath("data.breed").value("Yes"))
                 //we don't check LocalDate
-                .andExpect(jsonPath("gender").value(Gender.Female.name()));
+                .andExpect(jsonPath("data.gender").value(Gender.Female.name()));
 
         Mockito.verify(petService, times(1)).savePet(ArgumentMatchers.any(Pet.class));
     }
@@ -200,11 +200,11 @@ public class PetPUTTest {
                         )
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("name").value("Little Bastard"))
-                .andExpect(jsonPath("species").value("Catto"))
-                .andExpect(jsonPath("breed").value("Yes"))
+                .andExpect(jsonPath("data.name").value("Little Bastard"))
+                .andExpect(jsonPath("data.species").value("Catto"))
+                .andExpect(jsonPath("data.breed").value("Yes"))
                 //we don't check LocalDate
-                .andExpect(jsonPath("gender").value(Gender.Female.name()));
+                .andExpect(jsonPath("data.gender").value(Gender.Female.name()));
 
         Mockito.verify(petService, times(1)).savePet(ArgumentMatchers.any(Pet.class));
     }
@@ -261,7 +261,7 @@ public class PetPUTTest {
                         )
                 )
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").value("You can't edit someone else's pet!"));
+                .andExpect(jsonPath("message").value("You can't edit someone else's pet!"));
 
 
         Mockito.verify(petService, times(0)).savePet(ArgumentMatchers.any(Pet.class));

@@ -95,7 +95,7 @@ public class AppointmentPUTTest {
                 )
         )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Appointment updated its status successfully!"));
+                .andExpect(jsonPath("message").value("Appointment updated its status successfully!"));
 
         Mockito.verify(appointmentService,Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
 
@@ -137,7 +137,7 @@ public class AppointmentPUTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").value("You can't call this endpoint and then not give a date OR status!"));
+                .andExpect(jsonPath("message").value("You can't call this endpoint and then not give a date OR status!"));
 
         Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
 
@@ -200,7 +200,7 @@ public class AppointmentPUTTest {
                         )
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Appointment updated its status successfully!"));
+                .andExpect(jsonPath("message").value("Appointment updated its status successfully!"));
 
         Mockito.verify(appointmentService,Mockito.times(1)).saveAppointment(ArgumentMatchers.any());
 
@@ -242,7 +242,7 @@ public class AppointmentPUTTest {
                         )
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").value("You can't call this endpoint and then not give a date OR status!"));
+                .andExpect(jsonPath("message").value("You can't call this endpoint and then not give a date OR status!"));
 
         Mockito.verify(appointmentService,Mockito.times(0)).saveAppointment(ArgumentMatchers.any());
 
