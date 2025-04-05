@@ -21,7 +21,7 @@ const selectTriggerVariants = cva(
           "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-9 md:h-11 text-info-content",
       },
       intent: {
-        default: "border-blue-500 focus:ring-red-500",
+        default: "border-blue-500 focus:ring-blue-500",
         error: "border-red-500 focus:ring-red-500",
         success: "border-green-500 focus:ring-green-500",
       },

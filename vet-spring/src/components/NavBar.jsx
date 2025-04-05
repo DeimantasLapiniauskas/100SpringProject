@@ -5,18 +5,22 @@ export const Navbar = () => {
   const { account, logout } = useAuth();
   return (
     <div>
-      <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-gradient-to-br from-blue-400 to-indigo-600 px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5]">
-        <NavLink to={"/home"}>
-          <p className="text-white">Home</p>
+      <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-gradient-to-br from-blue-400 to-indigo-600 px-[1rem] sm:px-[3rem] md:px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-white shadow-lg shadow-white">
+        <NavLink to={"/home"}
+         className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">Home</p>
         </NavLink>
-        <NavLink to={"/pets"}>
-          <p className="text-white">Your Pets</p>
+        <NavLink to={"/posts"}
+        className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">News</p>
         </NavLink>
-        <NavLink to={"/services"}>
-          <p className="text-white">Service list</p>
+        <NavLink to={"/services"}
+         className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">Service List</p>
         </NavLink>
-        <NavLink to={"/posts"}>
-          <p className="text-white">News</p>
+        <NavLink 
+         className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">Products</p>
         </NavLink>
         {account ? (
           <button

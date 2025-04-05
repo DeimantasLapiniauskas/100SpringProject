@@ -13,6 +13,6 @@ export const updatePost = async (postId, payload) =>
 
 export const deletePost = async (postId) => api.delete(`${url}/${postId}`);
 
-export const verifyPaswword = async (password) => api.post(`${urlPassword}`, password)
+export const verifyPaswword = async (password) => api.post(`${urlPassword}`, { newPassword: password })
 
 export const getPostById = async (postId) => api.get(`${url}/${postId}`);

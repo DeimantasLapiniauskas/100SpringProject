@@ -12,14 +12,14 @@ const PostCarousel = () => {
 
   return (
     <div className="px-[1rem] bg-[#6A7AFF] relative rounded-[10px]">
-      <div className="flex items-center  justify-between py-2 px-[6rem]">
-        <h2 className="text-info-content font-semibold text-xl">
+      <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-[2rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">
+        <h2 className="text-info-content font-semibold text-sm sm:text-base md:text-lg">
           FOLLOW OUR LATEST NEWS
         </h2>
         <div className="flex items-center gap-2">
-          <button className="custom-prev z-10 custom-paw-left-btn">◀</button>
-          <p className="text-info-content font-semibold">View More</p>
-          <button className="custom-next z-10 custom-paw-right-btn">▶</button>
+          <button className="custom-prev z-10 custom-paw-left-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">◀</button>
+          <p className="text-info-content font-semibold text-xs sm:text-md md:text-base">View More</p>
+          <button className="custom-next z-10 custom-paw-right-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">▶</button>
         </div>
       </div>
       <Swiper
@@ -46,10 +46,10 @@ const PostCarousel = () => {
               <h2
                 className={`card-title block break-all min-h-[50px] ${
                   post.postType === "Sale"
-                    ? `text-red-500`
+                    ? `text-red-700`
                     : post.postType === "Blog"
-                    ? `text-purple-800`
-                    : `text-info-content`
+                    ? `text-[#006666]`
+                    : `text-[#004C99]`
                 }`}
               >
                 {post.title}
@@ -57,10 +57,10 @@ const PostCarousel = () => {
               <h3
                 className={`py-1 font-semibold text-left ${
                   post.postType === "Sale"
-                    ? `text-red-500 animate-pulse`
+                    ? `text-red-700 animate-pulse`
                     : post.postType === "Blog"
-                    ? `text-purple-800`
-                    : `text-info-content`
+                    ? `text-[#006666]`
+                    : `text-[#004C99]`
                 }`}
               >
                 {post.postType === "Sale" ? post.postType + "!" : post.postType}
@@ -89,7 +89,7 @@ const PostCarousel = () => {
               </div>
               <NavLink to={`/posts/${post.id}`}>
                 <p className=" text-white hover:underline text-xs md:text-sm font-medium p-1">
-                  <u>Read more here</u>
+                  Read more here
                 </p>
               </NavLink>
             </div>

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
 
 const inputVariants = cva(
-  "flex w-full rounded border px-3 py-2 shadow-lg  placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "flex w-full rounded border px-3 py-2 shadow-lg  placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2",
   {
     variants: {
       size: {
@@ -17,6 +17,9 @@ const inputVariants = cva(
         error: "border-red-500 focus:ring-red-500",
         success: "border-green-500 focus:ring-green-500",
       },
+      variant: {
+        default: "bg-white/80"
+      }
     },
     defaultVariants: {
       size: "responsive",
@@ -25,10 +28,10 @@ const inputVariants = cva(
   }
 )
 
-export const Input = React.forwardRef(({ className, size, intent, ...props }, ref) => {
+export const Input = React.forwardRef(({ className, size, intent, variant, ...props }, ref) => {
   return (
     <input
-      className={cn(inputVariants({ size, intent }), className)}
+      className={cn(inputVariants({ size, intent, variant }), className)}
       ref={ref}
       {...props}
     />

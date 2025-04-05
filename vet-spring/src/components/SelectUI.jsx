@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/selectPageSize";
+} from "@/components/uiBase/selectPageSize";
 import { useList } from "@/context/ListContext";
 
 export const SelectUI = () => {
@@ -26,9 +26,8 @@ export const SelectUI = () => {
             sm:text-[10px] sm:px-2.5 sm:py-1.25
             md:text-xs md:px-3 md:py-1.5
             lg:px-4 lg:py-1.75
-            border text-info-content font-semibold border-blue-500
-            hover:bg-blue-200 focus:ring-1 focus:ring-blue-400
-            transition duration-150 ease-in-out
+            border-white text-white  bg-gradient-to-br from-blue-400 to-indigo-600 focus:ring-1 focus:ring-blue-500
+            transition duration-1000 ease-in-out hover:bg-gradient-to-tl hover:from-indigo-600 hover:to-blue-400 
           "
         >
           <SelectValue placeholder="Per page" />

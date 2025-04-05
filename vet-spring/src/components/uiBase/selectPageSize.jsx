@@ -24,7 +24,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
       {open ? (
         <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
       ) : (
-        <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
+        <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white" />
       )}
     </SelectPrimitive.Trigger>
   );

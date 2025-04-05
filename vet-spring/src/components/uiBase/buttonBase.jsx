@@ -6,7 +6,7 @@ const buttonVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 px-3",
+        sm: "h-5 sm: h-6 md:h-8 px-3 sm:px-4 md:px-6 text-[10px] sm:text-xs md:text-sm",
         md: "h-10 px-4",
         lg: "h-12 px-6",
         responsive : "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-8 md:h-10",
@@ -16,7 +16,9 @@ const buttonVariants = cva(
         default: "bg-primary text-white",
         outline: "border border-input text-foreground bg-transparent",
         primary: "bg-gradient-to-br from-blue-400 to-indigo-600 hover:scale-105 transform transition duration-500 text-info-content",
-        permanent: "border-1 border-blue-200 rounded-[5px] cursor-pointer"
+        permanent: "border-1 border-blue-200 rounded-[5px] cursor-pointer",
+        cancel: "text-white border hover:text-info hover:border-info bg-info hover:bg-white",
+        danger: "w-full text-black text-red-600 border-1 bg-black"
       },
     },
     defaultVariants: {

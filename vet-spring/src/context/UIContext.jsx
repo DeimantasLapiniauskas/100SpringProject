@@ -9,7 +9,8 @@ const UIContext = createContext({
   isSuccess: false,
   isError: false,
   isBadRequest: false,
-  isUnusual: false
+  isUnusual: false,
+  isRedirecting: false
 });
 
 export const UIProvider = ({ children }) => {
@@ -20,9 +21,10 @@ export const UIProvider = ({ children }) => {
   const isError = status === UIStatus.Error
   const isBadRequest = status === UIStatus.BadRequest
   const isUnusual = status === UIStatus.Unusual
+  const isRedirecting = status === UIStatus.Redirecting
 
   return (
-    <UIContext.Provider value={{ status, setStatus, isLoading, isSuccess, isError, isBadRequest, isUnusual }}>
+    <UIContext.Provider value={{ status, setStatus, isLoading, isSuccess, isError, isBadRequest, isUnusual, isRedirecting }}>
       {children}
     </UIContext.Provider>
   );

@@ -4,5 +4,6 @@ export const UIStatus = {
     Success: "success",
     Error: "error",
     BadRequest: "badRequest",
-    Unusual: "unusual"
+    Unusual: "unusual",
+    Redirecting: "redirecting"
 }

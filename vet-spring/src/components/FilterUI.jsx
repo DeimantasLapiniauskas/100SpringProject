@@ -3,7 +3,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@/components/ui/filtering";
+} from "@/components/uiBase/filtering";
 import { useList } from "@/context/ListContext";
 import { FilterIcon } from "@/assets/icons/FilterIcon";
 
@@ -16,11 +16,11 @@ export const FilterUI = () => {
         value={sorted}
         onValueChange={(value) => onSortBy({ target: { value } })}
       >
-        <SelectTrigger>
-          <div className="flex items-center gap-1 md:gap-2">
-            <p className="text-[8px] sm:text-[10px] md:text-xs text-info-content">Filter:</p>
-                <FilterIcon />
-          </div>
+        <p className="text-[8px] sm:text-[10px] md:text-xs text-info-content">
+          Filter:
+        </p>
+        <SelectTrigger className="focus:ring-1 focus:ring-blue-500 rounded-full">
+          <FilterIcon />
         </SelectTrigger>
         <SelectContent>
           {["Content", "News", "Sale", "Blog"].map((postType) => (

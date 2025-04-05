@@ -1,16 +1,16 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/inputBase";
-import { Textarea } from "@/components/ui/textareaBase";
+import { Input } from "@/components/uiBase/inputBase";
+import { Textarea } from "@/components/uiBase/textareaBase";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/selectBase";
-import { Button } from "@/components/ui/buttonBase";
+} from "@/components/uiBase/selectBase";
+import { Button } from "@/components/uiBase/buttonBase";
 import {
   Form,
   FormField,
@@ -18,8 +18,8 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/formBase";
-import { Dropzone } from "@/components/ui/dropZoneBase";
+} from "@/components/uiBase/formBase";
+import { Dropzone } from "@/components/uiBase/dropZoneBase";
 import { useState, useEffect } from "react";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
@@ -33,12 +33,13 @@ import { useNavigate } from "react-router";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
+// import { Redirecting } from "@/components/feedback/Redirecting";
 
 const postSchema = z.object({
   title: z
     .string()
     .min(3, { message: "Title must be atleast 3 characters long" })
-    .max(60, { message: "Title must not exceed 60 characters" })
+    .max(50, { message: "Title must not exceed 50 characters" })
     .refine((val) => val.trim() !== "", {
       message: "Title cannot be blank",
     }),
@@ -48,7 +49,7 @@ const postSchema = z.object({
   content: z
     .string()
     .min(10, { message: "Content must be at least 10 characters long" })
-    .max(1000, { message: "Content must not exceed 1000 characters" })
+    .max(2000, { message: "Content must not exceed 2000 characters" })
     .refine((val) => val.trim() !== "", {
       message: "Content cannot be blank",
     }),
@@ -80,8 +81,8 @@ export const PostRegister = ({ initialData }) => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual } = UIStatus;
-  const { isLoading, isError, isUnusual, setStatus } = useUI();
+  const { Loading: Fetching, Success, Error: Err, Unusual: Strange, Redirecting: Navigating } = UIStatus;
+  const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
   const isMounted = useIsMounted();
@@ -96,15 +97,12 @@ export const PostRegister = ({ initialData }) => {
         const formData = new FormData();
         formData.append("file", data.imageFile);
         const imageRes = await uploadImage(formData);
-        imageUrl = imageRes.data.data;
-
         if (!isMounted.current) return;
+  
+        imageUrl = imageRes.data.data;
         setPreviewUrl(imageUrl);
       }
-      else {
-        setStatus(Unusual)
-        toast.error("Error whit uploading image")
-      }
+   
       const payload = {
         title: data.title,
         postType: data.postType,
@@ -118,14 +116,14 @@ export const PostRegister = ({ initialData }) => {
       } else {
         response = await postPost(payload);
       }
+      if (!isMounted.current) return;
+
       const { data: data2, message, success } = response.data;
     
-      if (!isMounted.current) return;
-      setStatus(Success);
-
       if (data2 && success) {
+        setStatus(Success);
+        
         if (isEditMode) {
-          if (!isMounted.current) return;
           setMessage(message);
           toast.dismiss();
           toast.success(message);
@@ -135,23 +133,23 @@ export const PostRegister = ({ initialData }) => {
             imageUrl: imageUrl ?? initialData.imageUrl ?? null,
           });
           setPreviewUrl(imageUrl ?? initialData.imageUrl ?? null);
+          // setStatus(Navigating)
           setTimeout(() => {
             navigate("/posts")
           }, 500)
         } else {
-          if (!isMounted.current) return;
           setMessage(message);
           toast.dismiss();
           toast.success(message);
           form.reset();
           setPreviewUrl(null);
+          // setStatus(Navigating)
           setTimeout(() => {
             navigate("/posts")
           }, 500)
         }
       } else {
-        if (!isMounted.current) return;
-        setStatus(Unusual)
+        setStatus(Strange)
         setPreviewUrl(null);
       }
     } catch (error) {
@@ -159,8 +157,8 @@ export const PostRegister = ({ initialData }) => {
         error.response?.data?.message ?? error.message ?? "Unknown error";
 
       if (!isMounted.current) return;
-      setError(errorMessage);
       setStatus(Err);
+      setError(errorMessage);
     } finally {
       form.setValue("imageFile", null);
     }
@@ -175,8 +173,11 @@ export const PostRegister = ({ initialData }) => {
   if (isLoading) {
     return <Loading/>
   }
+//  if (isRedirecting) {
+//     return <Redirecting />;
+//   }
   if (isUnusual) {
-    return <Unusual/>
+    return <Unusual error={error}/>
   }
   if (isError) {
     return <Error error={error} isHidden={!error}/>

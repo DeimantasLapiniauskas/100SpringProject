@@ -6,7 +6,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-} from "@/components/ui/pagination";
+} from "@/components/uiBase/pagination";
 import { useList } from "@/context/ListContext";
 
 export const PaginationUI = () => {

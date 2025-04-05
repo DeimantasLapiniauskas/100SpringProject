@@ -1,7 +1,7 @@
 
 import "./App.css";
 import VetClinicRoutes from "./components/VetClinicRoutes";
-import { CustomToaster } from "@/components/ui/CustomToaster";
+import { CustomToaster } from "@/components/uiBase/CustomToaster";
 
 const App = () => {
   return (

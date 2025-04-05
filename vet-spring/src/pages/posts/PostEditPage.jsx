@@ -5,13 +5,11 @@ import { PostRegister } from "./PostRegister";
 import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import toast from "daisyui/components/toast";
-
 
 export const PostEditPage = () => {
   const { postId } = useParams();
   const [initialData, setInitialData] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual } = UIStatus;
+  const { Loading, Success, Error, Unusual } = UIStatus;
   const { setStatus } = useUI();
   const [error, setError] = useState(null);
   const isMounted = useIsMounted();
@@ -19,27 +17,27 @@ export const PostEditPage = () => {
   useEffect(() => {
     const fectchPost = async () => {
       try {
-        setStatus(Fetching);
+        setStatus(Loading);
         const response = await getPostById(postId);
-        const { data, success, message } = response.data;
+        if (!isMounted.current ) return;
+
+        const { data, success } = response.data;
    
         if (data && success) {
-          if (!isMounted.current) return;
-          setInitialData(data);
           setStatus(Success);
-        
+          setInitialData(data);
+          
         } else {
-          if (!isMounted.current) return;
           setStatus(Unusual)
-          setError(message || "Something went wrong fetching data");
           setInitialData(null);
         }
       } catch (error) {
         const errorMessage =
           error.response?.data?.message ?? error.message ?? "Unknown error";
+          
         if (!isMounted.current) return;
+        setStatus(Error);
         setError(errorMessage);
-        setStatus(Err);
         setInitialData(null);
       }
     };
