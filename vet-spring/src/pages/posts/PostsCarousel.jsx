@@ -11,14 +11,14 @@ const PostCarousel = () => {
   const { content: posts } = useList();
 
   return (
-    <div className="px-[1rem] bg-[#6A7AFF] relative rounded-[10px]">
+    <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px]">
       <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-[2rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">
         <h2 className="text-info-content font-semibold text-sm sm:text-base md:text-lg">
           FOLLOW OUR LATEST NEWS
         </h2>
         <div className="flex items-center gap-2">
           <button className="custom-prev z-10 custom-paw-left-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">◀</button>
-          <p className="text-info-content font-semibold text-xs sm:text-md md:text-base">View More</p>
+          <p className="text-white text-xs sm:text-md md:text-base">View More</p>
           <button className="custom-next z-10 custom-paw-right-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">▶</button>
         </div>
       </div>
@@ -35,14 +35,15 @@ const PostCarousel = () => {
         pagination={{ clickable: true, el: ".custom-pagination" }}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         breakpoints={{
-          640: { slidesPerView: 3 },
-          768: { slidesPerView: 3 },
+          0: { slidesPerView: 1 },
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 2 },
           1024: { slidesPerView: 3 },
         }}
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[15rem] p-5 border-1 border-blue-400">
+            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[15rem] p-5 border-1 border-white ">
               <h2
                 className={`card-title block break-all min-h-[50px] ${
                   post.postType === "Sale"

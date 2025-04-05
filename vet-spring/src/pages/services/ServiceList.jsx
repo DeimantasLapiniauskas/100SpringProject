@@ -9,7 +9,7 @@ import ServiceListPageCatPawBandage from "../../assets/peti.png";
 import { useUI } from "@/context/UIContext.jsx";
 import { PaginationUI } from "@/components/PaginationUI.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
-import { SelectUI } from "@/components/SelectUI.jsx";
+import { SelectUI } from "@/components/SelectPagesUI.jsx";
 import { FilterUI } from "@/components/FilterUI.jsx";
 
 export const ServiceList = () => {

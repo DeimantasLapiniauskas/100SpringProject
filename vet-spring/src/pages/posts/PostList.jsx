@@ -5,7 +5,7 @@ import { NavLink } from "react-router";
 import { Loading } from "../../components/feedback/Loading";
 import { useUI } from "../../context/UIContext";
 import { PaginationUI } from "../../components/PaginationUI";
-import { SelectUI } from "@/components/SelectUI";
+import { SelectUI } from "@/components/SelectPagesUI";
 import { FilterUI } from "@/components/FilterUI";
 import { BadRequest } from "@/components/feedback/BadRequest";
 import { useCheckRoles } from "@/hooks/useCheckRoles";

@@ -32,12 +32,12 @@ export const HomePage = () => {
           </div>
 
           <div className="grid grid-cols-3">
-              <p className=" lg:text-lg md:text-base sm:text-sm text-xs text-info-content col-span-3 px-5 sm:ps-0 md:pe-8 sm:col-span-2">
+              <p className=" lg:text-lg md:text-base sm:text-sm text-xs text-info-content col-span-3 px-10 sm:px-5 sm:ps-0 md:pe-8 sm:col-span-2">
                 As Lithuania’s leading animal health company, Happy Hearts is driven
                 by a singular purpose: to nurture Lithuania and humankind by
                 advancing care for animals.
               </p>
-              <div className="absolute bottom-90 left-20 sm:static">
+              <div className="absolute bottom-93 left-15 sm:static">
                 <Reviews/>
               </div>
           </div>
