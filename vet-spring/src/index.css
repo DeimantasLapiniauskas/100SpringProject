@@ -3,8 +3,11 @@
 @plugin "daisyui";
 
 @theme {
-  --breakpoint-xs: 500 px
-  --breakpoint-xl: 1425 px
+  --breakpoint-xs: 485px
+}
+
+@theme {
+  --breakpoint-xl: 1285px
 }
 
 * {

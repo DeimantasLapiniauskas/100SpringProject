@@ -17,9 +17,15 @@ const PostCarousel = () => {
           FOLLOW OUR LATEST NEWS
         </h2>
         <div className="flex items-center gap-2">
-          <button className="custom-prev z-10 custom-paw-left-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">◀</button>
-          <p className="text-white text-xs sm:text-md md:text-base">View More</p>
-          <button className="custom-next z-10 custom-paw-right-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">▶</button>
+          <button className="custom-prev z-10 custom-paw-left-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">
+            ◀
+          </button>
+          <p className="text-white text-xs sm:text-md md:text-base">
+            View More
+          </p>
+          <button className="custom-next z-10 custom-paw-right-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">
+            ▶
+          </button>
         </div>
       </div>
       <Swiper
@@ -43,9 +49,9 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[15rem] p-5 border-1 border-white ">
+            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 px-4 border-2 border-white ">
               <h2
-                className={`card-title block break-all min-h-[50px] ${
+                className={`text-base md:px-2 block leading-[22px] font-semibold break-all min-h-[48px] max-h-[48px] overflow-hidden ${
                   post.postType === "Sale"
                     ? `text-red-700`
                     : post.postType === "Blog"
@@ -56,7 +62,7 @@ const PostCarousel = () => {
                 {post.title}
               </h2>
               <h3
-                className={`py-1 font-semibold text-left ${
+                className={`font-semibold text-left text-sm ${
                   post.postType === "Sale"
                     ? `text-red-700 animate-pulse`
                     : post.postType === "Blog"
@@ -67,24 +73,20 @@ const PostCarousel = () => {
                 {post.postType === "Sale" ? post.postType + "!" : post.postType}
               </h3>
               <div className={post.imageUrl ? "grid grid-cols-3 gap-2" : ""}>
-                <p className=" leading-[20px] text-left overflow-hidden min-h-[100px] text-sm col-span-2 break-words">
+                <p className=" leading-[18px] text-left overflow-hidden min-h-[115px] max-h-[115px] text-sm col-span-2 break-words p-1">
                   {post.imageUrl
-                    ? post.content.length > 120
-                      ? post.content.slice(0, 117) + "..."
+                    ? post.content.length > 170
+                      ? post.content.slice(0, 167) + "..."
                       : post.content
-                    : post.content.length > 170
-                    ? post.content.slice(0, 167)
+                    : post.content.length > 290
+                    ? post.content.slice(0, 287) + "..."
                     : post.content}
                 </p>
                 {post.imageUrl && (
                   <img
-                    src={
-                      post.imageUrl.startsWith("http")
-                        ? post.imageUrl
-                        : import.meta.env.VITE_API_URL + post.imageUrl
-                    }
+                    src={post.imageUrl}
                     alt={post.title}
-                    className="object-cover h-25 rounded-[10px] border-1 border-blue-400 w-full"
+                    className="object-cover h-[115px] rounded-[10px] border-1 border-blue-400 w-full"
                   />
                 )}
               </div>
