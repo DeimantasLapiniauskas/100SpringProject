@@ -7,10 +7,10 @@ import ServiceListPageVetHoldingCat from "../../assets/cart.png";
 import ServiceListPageVetHoldingDog from "../../assets/vet.png";
 import ServiceListPageCatPawBandage from "../../assets/peti.png";
 import { useUI } from "@/context/UIContext.jsx";
-import { PaginationUI } from "@/components/PaginationUI.jsx";
+import { PaginationUI } from "@/components/features/PaginationPanel.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
-import { SelectUI } from "@/components/SelectPagesUI.jsx";
-import { FilterUI } from "@/components/FilterUI.jsx";
+import { SelectUI } from "@/components/features/SelectPagesPanel.jsx";
+import { FilterUI } from "@/components/features/FilterPanel.jsx";
 
 export const ServiceList = () => {
   const { account } = useAuth();
@@ -40,7 +40,7 @@ export const ServiceList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 ">
+      <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
         <div className="flex w-full justify-end gap-5">
           <FilterUI />
           <SelectUI />

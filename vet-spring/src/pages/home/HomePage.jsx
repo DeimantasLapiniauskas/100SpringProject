@@ -2,13 +2,13 @@ import HomePageDog from "../../assets/dog.png";
 import { ListProvider } from "../../context/ListContext";
 import PostCarousel from "../posts/PostsCarousel";
 import happyHeart from "../../assets/icons/happyHeart.svg";
-import { Reviews } from "../../components/ReviewsUI";
+import { Reviews } from "../../components/features/ReviewsPanel";
 import "../../index.css"
 
 
 export const HomePage = () => {
   return (
-    <div className=" pt-1 md:pt-2">
+    <div className=" pt-1 md:pt-2 max-w-[1500px] mx-auto">
       {/* Top Section - Dog Image & Text */}
       <main className="flex sm:flex-row-reverse flex-col items-end sm:items-start md:items-start lg:items-start">
         {/* Text Section */}

@@ -4,11 +4,12 @@ import { useList } from "../../context/ListContext";
 import { NavLink } from "react-router";
 import { Loading } from "../../components/feedback/Loading";
 import { useUI } from "../../context/UIContext";
-import { PaginationUI } from "../../components/PaginationUI";
-import { SelectUI } from "@/components/SelectPagesUI";
-import { FilterUI } from "@/components/FilterUI";
-import { BadRequest } from "@/components/feedback/BadRequest";
+import { PaginationUI } from "../../components/features/PaginationPanel";
+import { SelectUI } from "@/components/features/SelectPagesPanel";
+import { FilterUI } from "@/components/features/FilterPanel";
+import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
+import { Unusual } from "@/components/feedback/Unusual";
 
 export const PostList = () => {
 
@@ -23,12 +24,12 @@ export const PostList = () => {
     sorted
   } = useList();
 
-  const { isLoading, isError, isBadRequest } = useUI();
+  const { isLoading, isError, isBadPageRequest, isUnusual } = useUI();
 
   const roles = useCheckRoles()
 
   return (
-    <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 ">
+    <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
       <div className="flex w-full justify-end gap-5">
           <FilterUI />
         <SelectUI />
@@ -55,7 +56,8 @@ export const PostList = () => {
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
-      {isBadRequest ? <BadRequest/> : ""}
+      {isBadPageRequest ? <BadPageRequest/> : ""}
+      {isUnusual ? <Unusual error={error}/> : ""}
       <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
         {posts.map((post) => (
           <PostCard

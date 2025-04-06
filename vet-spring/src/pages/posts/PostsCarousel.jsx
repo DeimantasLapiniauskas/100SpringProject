@@ -11,7 +11,7 @@ const PostCarousel = () => {
   const { content: posts } = useList();
 
   return (
-    <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px]">
+    <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px] shadow-md shadow-info-content">
       <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-[2rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">
         <h2 className="text-info-content font-semibold text-sm sm:text-base md:text-lg">
           FOLLOW OUR LATEST NEWS
@@ -49,7 +49,7 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 px-4 border-2 border-white ">
+            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
               <h2
                 className={`text-base md:px-2 block leading-[22px] font-semibold break-all min-h-[48px] max-h-[48px] overflow-hidden ${
                   post.postType === "Sale"
@@ -72,14 +72,14 @@ const PostCarousel = () => {
               >
                 {post.postType === "Sale" ? post.postType + "!" : post.postType}
               </h3>
-              <div className={post.imageUrl ? "grid grid-cols-3 gap-2" : ""}>
+              <div className={post.imageUrl ? "grid grid-cols-3" : ""}>
                 <p className=" leading-[18px] text-left overflow-hidden min-h-[115px] max-h-[115px] text-sm col-span-2 break-words p-1">
                   {post.imageUrl
-                    ? post.content.length > 170
-                      ? post.content.slice(0, 167) + "..."
+                    ? post.content.length > 150
+                      ? post.content.slice(0, 147) + "..."
                       : post.content
-                    : post.content.length > 290
-                    ? post.content.slice(0, 287) + "..."
+                    : post.content.length > 240
+                    ? post.content.slice(0, 237) + "..."
                     : post.content}
                 </p>
                 {post.imageUrl && (
@@ -90,7 +90,7 @@ const PostCarousel = () => {
                   />
                 )}
               </div>
-              <NavLink to={`/posts/${post.id}`}>
+              <NavLink to={`/posts/view/${post.id}`}>
                 <p className=" text-white hover:underline text-xs md:text-sm font-medium p-1">
                   Read more here
                 </p>

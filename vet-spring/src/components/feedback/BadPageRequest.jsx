@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router"
 
-export const BadRequest = () => {
+export const BadPageRequest = () => {
 
 const navigate = useNavigate();
 
@@ -9,7 +9,7 @@ const navigate = useNavigate();
             <p>400</p>
             <p>BAD REQUEST !</p>
             <p className="pb-1">Page does not exist...</p>
-            <button type="button" className="py-0.5 px-5 rounded-[10px] bg- text-sm sm:text-base md:text-lg border-1 border-purple-800 text-purple-800 bg-pink-100" onClick={() => {
+            <button type="button" className="py-0.5 px-5 rounded-[10px] bg- text-sm sm:text-base md:text-lg border-1 border-purple-800 text-purple-800 bg-pink-100 hover:bg-purple-300 mt-4" onClick={() => {
                 navigate(-1)
                }}>🔙 Go Back</button>
         </div>

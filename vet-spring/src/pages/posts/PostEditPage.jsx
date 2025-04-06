@@ -32,10 +32,10 @@ export const PostEditPage = () => {
           setInitialData(null);
         }
       } catch (error) {
+        if (!isMounted.current) return;
+
         const errorMessage =
           error.response?.data?.message ?? error.message ?? "Unknown error";
-          
-        if (!isMounted.current) return;
         setStatus(Error);
         setError(errorMessage);
         setInitialData(null);

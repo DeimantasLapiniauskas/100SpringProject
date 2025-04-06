@@ -47,7 +47,7 @@ export const ListProvider = ({ children }) => {
 
   const [pagination, setPagination] = useState(initialPagination);
   const { status, setStatus } = useUI();
-  const { Loading, Success, Error, BadRequest } = UIStatus;
+  const { Loading, Success, Error, BadPageRequest, Unusual } = UIStatus;
   const isEmpty = status === Success && pagination.content.length === 0;
 
   const getPage = useCallback(
@@ -64,7 +64,7 @@ export const ListProvider = ({ children }) => {
         
         if (!isMounted.current) return;
         if (page >= data.totalPages) {
-         setStatus(BadRequest)
+         setStatus(BadPageRequest)
          return
         }
         if (success && data) {
@@ -79,11 +79,10 @@ export const ListProvider = ({ children }) => {
         } else {
           setPagination((prev) => ({
             ...prev,
-            error: message || "Something went wrong fetching data.",
             content: [],
             totalPages: 0,
           }));
-          setStatus(Error);
+          setStatus(Unusual);
         }
       } catch (error) {
         if (!isMounted.current) return;
@@ -110,7 +109,9 @@ export const ListProvider = ({ children }) => {
   };
 
   const onPaginate = (page) => {
+
     if (page < 0 || page >= pagination.totalPages) return;
+
     searchParams.set("page", page);
     setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: page }));
@@ -119,6 +120,7 @@ export const ListProvider = ({ children }) => {
 
   const onSortBy = (e) => {
     let sortBy = e.target.value;
+    
     if (sortBy === "Content") {
       searchParams.delete("sort");
       searchParams.delete("page")
@@ -161,6 +163,7 @@ export const ListProvider = ({ children }) => {
       return;
     }
     getPage(pagination.pageSize, pagination.currentPage, pagination.sorted);
+    window.scrollTo({ top: 0, behavior: "smooth"})
   }, [
     pagination.pageSize,
     pagination.currentPage,

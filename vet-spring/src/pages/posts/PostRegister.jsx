@@ -81,7 +81,7 @@ export const PostRegister = ({ initialData }) => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual: Strange, Redirecting: Navigating } = UIStatus;
+  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown, Redirecting: Navigating } = UIStatus;
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
@@ -149,14 +149,14 @@ export const PostRegister = ({ initialData }) => {
           }, 500)
         }
       } else {
-        setStatus(Strange)
+        setStatus(Unknown)
         setPreviewUrl(null);
       }
     } catch (error) {
+      if (!isMounted.current) return;
+
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
-
-      if (!isMounted.current) return;
       setStatus(Err);
       setError(errorMessage);
     } finally {

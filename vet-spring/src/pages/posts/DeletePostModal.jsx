@@ -47,10 +47,11 @@ export const DeletePostModal = ({
         setStatus(Unusual);
       }
     } catch (error) {
+      if (!isMounted.current) return;
+
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
       const fieldErrors = error.response?.data?.data;
-      if (!isMounted.current) return;
       setStatus(Error);
 
       if (errorMessage === "Validation failed" && fieldErrors) {

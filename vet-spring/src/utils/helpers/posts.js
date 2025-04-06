@@ -2,7 +2,7 @@ import api from "../api";
 
 const urlUpload = "http://localhost:8080/api/posts/upload";
 const urlPassword = "http://localhost:8080/api/auth/verify-password";
-const url = "http://localhost:8080/api/posts";
+const url = "http://localhost:8080/api/posts/view";
 
 export const uploadImage = async (data) => api.post(urlUpload, data);
 

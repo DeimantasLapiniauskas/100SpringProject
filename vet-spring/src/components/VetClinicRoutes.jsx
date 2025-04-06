@@ -14,12 +14,12 @@ import { ListProvider } from "../context/ListContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 import { PostList } from "../pages/posts/PostList.jsx";
-import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import { PostRegister } from "@/pages/posts/PostRegister.jsx";
 import { PostEditPage } from "@/pages/posts/PostEditPage.jsx";
+import { PostView } from "@/pages/posts/PostView.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -54,7 +54,7 @@ const VetClinicRoutes = () => {
                 />
                 <Route path="/posts/register" element={<PostRegister />} />
                 <Route path="/posts/edit/:postId" element={<PostEditPage />} />
-                <Route path="/posts/:postId" element={<ViewPost />} />
+                <Route path="/posts/view/:postId" element={<PostView/>} />
                 <Route
                   path="/services"
                   element={

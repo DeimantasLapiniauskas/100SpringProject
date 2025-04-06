@@ -3,7 +3,7 @@ export const UIStatus = {
     Loading: "loading",
     Success: "success",
     Error: "error",
-    BadRequest: "badRequest",
+    BadPageRequest: "badPageRequest",
     Unusual: "unusual",
     Redirecting: "redirecting"
 }

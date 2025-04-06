@@ -38,10 +38,11 @@ export const PostCard = (props) => {
         setStatus(Unusual);
       }
     } catch (error) {
+      
+      if (!isMounted.current) return;
+      
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
-
-      if (!isMounted.current) return;
       setStatus(Error);
       setError(errorMessage);
       toast.error(errorMessage);
@@ -61,7 +62,7 @@ export const PostCard = (props) => {
       >
         <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[19rem] sm:h-[24.5rem] md:h-[30rem] p-1.5 sm:p-2.25 md:p-3 shadow-lg shadow-info w-full border-1 border-info">
           <h2
-            className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] px-10 sm:px-15 md:px-30 lg:px-5 xl:px-20 text-sm sm:text-lg md:text-xl ${
+            className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] max-h-[40px] sm:max-h-[55px] md:max-h-[60px] px-10 sm:px-15 md:px-15 lg:px-5 xl:px-15 text-sm sm:text-lg md:text-xl overflow-hidden ${
               postType === "Sale"
                 ? `text-red-700`
                 : postType === "Blog"
@@ -110,7 +111,7 @@ export const PostCard = (props) => {
               ? content.slice(0, 947) + "..."
               : content}
           </p>
-          <NavLink to={`/posts/${id}`}>
+          <NavLink to={`/posts/view/${id}`}>
             <p className=" text-white hover:underline text-xs sm:text-sm md:text-base font-medium p-1 ">
               Read more here
             </p>
