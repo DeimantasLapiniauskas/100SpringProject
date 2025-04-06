@@ -60,7 +60,7 @@ public class PostController extends BaseController{
             return badRequest(null, "File too large. Max allowed size is 5MB.");
         }
 
-        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename); // Unikalus vardas
+        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename);
         Path uploadPath = Paths.get("uploads/images");
 
         if (!Files.exists(uploadPath)) {
@@ -116,7 +116,7 @@ public class PostController extends BaseController{
         return ok(responseDTO, message);
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/posts/view/{postId}")
     public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
