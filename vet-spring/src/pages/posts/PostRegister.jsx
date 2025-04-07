@@ -33,6 +33,8 @@ import { useNavigate } from "react-router";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
+import catSilhouette from "../../assets/icons/catSilhouette.svg";
+import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient";
 // import { Redirecting } from "@/components/feedback/Redirecting";
 
 const postSchema = z.object({
@@ -81,7 +83,13 @@ export const PostRegister = ({ initialData }) => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown, Redirecting: Navigating } = UIStatus;
+  const {
+    Loading: Fetching,
+    Success,
+    Error: Err,
+    Unusual: Unknown,
+    Redirecting: Navigating,
+  } = UIStatus;
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
@@ -98,11 +106,11 @@ export const PostRegister = ({ initialData }) => {
         formData.append("file", data.imageFile);
         const imageRes = await uploadImage(formData);
         if (!isMounted.current) return;
-  
+
         imageUrl = imageRes.data.data;
         setPreviewUrl(imageUrl);
       }
-   
+
       const payload = {
         title: data.title,
         postType: data.postType,
@@ -119,10 +127,10 @@ export const PostRegister = ({ initialData }) => {
       if (!isMounted.current) return;
 
       const { data: data2, message, success } = response.data;
-    
+
       if (data2 && success) {
         setStatus(Success);
-        
+
         if (isEditMode) {
           setMessage(message);
           toast.dismiss();
@@ -135,8 +143,8 @@ export const PostRegister = ({ initialData }) => {
           setPreviewUrl(imageUrl ?? initialData.imageUrl ?? null);
           // setStatus(Navigating)
           setTimeout(() => {
-            navigate("/posts")
-          }, 500)
+            navigate("/posts");
+          }, 500);
         } else {
           setMessage(message);
           toast.dismiss();
@@ -145,11 +153,11 @@ export const PostRegister = ({ initialData }) => {
           setPreviewUrl(null);
           // setStatus(Navigating)
           setTimeout(() => {
-            navigate("/posts")
-          }, 500)
+            navigate("/posts");
+          }, 500);
         }
       } else {
-        setStatus(Unknown)
+        setStatus(Unknown);
         setPreviewUrl(null);
       }
     } catch (error) {
@@ -171,23 +179,32 @@ export const PostRegister = ({ initialData }) => {
   }, [initialData?.imageUrl]);
 
   if (isLoading) {
-    return <Loading/>
+    return <Loading />;
   }
-//  if (isRedirecting) {
-//     return <Redirecting />;
-//   }
+  //  if (isRedirecting) {
+  //     return <Redirecting />;
+  //   }
   if (isUnusual) {
-    return <Unusual error={error}/>
+    return <Unusual error={error} />;
   }
   if (isError) {
-    return <Error error={error} isHidden={!error}/>
+    return <Error error={error} isHidden={!error} />;
   }
 
   return (
-    <div>
-      <div className="xs:w-3/5 lg:w-2/5 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative">
+    <div className="max-w-[1500px] mx-auto flex flex-col-reverse sm:flex sm:flex-row ">
+      <div className="flex flex-col justify-center items-center xs:min-w-2/5 lg:min-w-1/2 mt-3">
+        <h1 className="text-center text-info-content text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] ">
+          REGISTER NEW POST HERE
+        </h1>
+        <CatSilhouetteGradient />
+      </div>
+      <div className="xs:min-w-3/5 lg:min-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative mt-3 flex">
         <FormProvider {...form}>
-          <Form onSubmit={form.handleSubmit(handleFormSubmit)}>
+          <Form
+            onSubmit={form.handleSubmit(handleFormSubmit)}
+            className="w-full"
+          >
             <NavLink to={"/posts"}>
               <p className="absolute right-3 top-1.5 text-warning-content text-right text-xs sm:text-sm md:text-base hover:underline">
                 Close

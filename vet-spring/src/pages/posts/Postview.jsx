@@ -7,6 +7,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
+import catSilhouette from "../../assets/icons/catSilhouette.svg"
 
 export const PostView = () => {
   const { postId } = useParams();
@@ -59,11 +60,38 @@ export const PostView = () => {
   }
 
   return (
-    <div>
-      <p>{post.title}</p>
-      <p>{post.postType}</p>
-      <p>{post.content}</p>
-      <img src={post.imageUrl} alt="postImage" />
+    <div className="max-w-[1500px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px]">
+      <div className="flex">
+        <img src={catSilhouette} alt="catSilhouette" className="w-10 bg-blue-100"/>
+        <h2
+          className={`w-full text-center text-xl font-semibold ${
+            post.postType === "Sale"
+              ? `text-red-700`
+              : post.postType === "Blog"
+              ? `text-[#006666]`
+              : `text-[#004C99]`
+          }`}
+        >
+          {post.postType}
+        </h2>
+      </div>
+      <div className="grid grid-cols-3 p-4">
+        <div className="col-span-2">
+          <h1
+            className={`font-semibold break-words text-lg px-5 text-center ${
+              post.postType === "Sale"
+                ? `text-red-700`
+                : post.postType === "Blog"
+                ? `text-[#006666]`
+                : `text-[#004C99]`
+            }`}
+          >
+            {post.title}
+          </h1>
+          <p className="break-words break-all p-3">{post.content}</p>
+        </div>
+        {post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px]"/> : ""}
+      </div>
     </div>
   );
 };
