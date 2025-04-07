@@ -146,6 +146,7 @@ public class ProductGetPaginationTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getProductsPage_whenInvalidPageSize_thenReturnAnd400() throws Exception {
         //given
+        
         //when
         mockMvc.perform(get("/api/products/pagination")
                         .param("page", "-1")

@@ -2,6 +2,7 @@ package SpringProject._Spring.validation;
 
 import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.ApiResponse;
+import SpringProject._Spring.exceptions.EntityIdNotFoundException;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +54,10 @@ public class GlobalExceptionHandler extends BaseController {
     @ExceptionHandler(NameAlreadyExistsException.class)
     public ResponseEntity<ApiResponse<String>> handleNameAlreadyExistsException(NameAlreadyExistsException ex) {
         return badRequest(null, ex.getMessage());
+    }
+
+    @ExceptionHandler(EntityIdNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleEntityIdNotFoundException(EntityIdNotFoundException ex) {
+        return notFound(ex.getMessage());
     }
 }

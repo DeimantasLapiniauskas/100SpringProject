@@ -39,11 +39,24 @@ public class ProductController extends BaseController {
 
     @Operation(summary = "Get product page", description = "Get all products and split them by pages")
     @GetMapping("/products/pagination")
-    public ResponseEntity<ApiResponse<ProductPageResponseDTO>> getProductsPage(@RequestParam int page,
-                                                                               @RequestParam int size,
-                                                                               @RequestParam(required = false) String sort) {
+    public ResponseEntity<ApiResponse<ProductPageResponseDTO>> getProductsPage(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam(required = false) String sort
+    ) {
         ProductPageResult result = productService.findAllProductsPage(page, size, sort);
         return ok(result.data(), result.message());
     }
 
+    @Operation(summary = "Update product information", description = "Updates product information by its unique ID")
+    @PutMapping("/products/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_VET')")
+    public ResponseEntity<ApiResponse<ProductResponseDTO>> updateProduct(
+            @PathVariable long id,
+            @Valid @RequestBody ProductRequestDTO productRequestDTO
+    ) {
+        Product updatedProduct = productService.updateProduct(id, productRequestDTO);
+
+        return ok(ProductMapping.toProductResponseDTO(updatedProduct), "Product updated successfully");
+    }
 }

@@ -4,6 +4,7 @@ import SpringProject._Spring.dto.product.ProductMapping;
 import SpringProject._Spring.dto.product.ProductPageResponseDTO;
 import SpringProject._Spring.dto.product.ProductPageResult;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
+import SpringProject._Spring.exceptions.EntityIdNotFoundException;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
 import SpringProject._Spring.model.Product;
 import SpringProject._Spring.repository.ProductRepository;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -63,5 +66,25 @@ public class ProductService {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
         return productRepository.findAll(pageable);
+    }
+
+    public Product updateProduct(long id, ProductRequestDTO productRequestDTO) {
+        if (!existsProductById(id)) {
+            throw new EntityIdNotFoundException(id);
+        }
+
+        Product product = findProductById(id).get();
+
+        ProductMapping.updateProductFromDTO(product, productRequestDTO);
+
+        return saveProduct(product);
+    }
+
+    public Boolean existsProductById(long id) {
+        return productRepository.existsById(id);
+    }
+
+    public Optional<Product> findProductById(long id) {
+        return productRepository.findById(id);
     }
 }

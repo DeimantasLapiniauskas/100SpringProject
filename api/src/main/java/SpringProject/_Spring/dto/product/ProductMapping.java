@@ -8,7 +8,7 @@ import java.util.List;
 public class ProductMapping {
 
     public static ProductResponseDTO toProductResponseDTO(Product product) {
-        return new ProductResponseDTO(product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity());
+        return new ProductResponseDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity());
     }
 
     public static Product toProduct(ProductRequestDTO productRequestDTO) {
@@ -28,5 +28,12 @@ public class ProductMapping {
                 productsPage.getNumber(),
                 productsPage.getSize()
         );
+    }
+
+    public static void updateProductFromDTO(Product product, ProductRequestDTO productRequestDTO) {
+        product.setName(productRequestDTO.name());
+        product.setDescription(productRequestDTO.description());
+        product.setPrice(productRequestDTO.price());
+        product.setStockQuantity(product.getStockQuantity());
     }
 }
