@@ -18,17 +18,17 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @WebMvcTest(controllers = ProductController.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
-@WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-public class ProductGetByIdTest {
+@WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+public class ProductDeleteTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,58 +37,51 @@ public class ProductGetByIdTest {
 
     //happy path
     @Test
-    void getProductById_whenValid_thenReturnAnd200() throws Exception {
+    void deleteProduct_whenValid_thenReturnAnd204() throws Exception {
         //given
-        Product product = new Product("test", "testDescr", BigDecimal.valueOf(10.0), 12);
-        product.setId(1L);
-
-        when(productService.findProductById(1L)).thenReturn(product);
+        doNothing().when(productService).deleteProduct(1L);
         //when
-        mockMvc.perform(get("/api/products/{id}", 1L))
-                //given
-                .andExpect(status().isOk())
+        mockMvc.perform(delete("/api/products/{id}", 1L))
+                //then
+                .andExpect(status().isNoContent())
                 .andExpectAll(
-                        jsonPath("data").exists(),
-                        jsonPath("data.name").value("test"),
-                        jsonPath("data.description").value("testDescr"),
-                        jsonPath("data.price").value("10.0"),
-                        jsonPath("data.stockQuantity").value(12),
+                        jsonPath("data").doesNotExist(),
                         jsonPath("message").isEmpty(),
                         jsonPath("success").value(true)
                 );
 
-        Mockito.verify(productService, times(1)).findProductById(1L);
+        Mockito.verify(productService, times(1)).deleteProduct(1L);
     }
 
     //unhappy path
     @Test
-    void getProductById_whenNoProductFound_thenReturnAnd404() throws Exception {
+    void deleteProduct_whenNoProductFound_thenReturnAnd404() throws Exception {
         //given
-        when(productService.findProductById(1L)).thenThrow(new NotFoundException("Product not found!"));
+        doThrow(new NotFoundException("Product with id '1' not found")).when(productService).deleteProduct(1L);
         //when
-        mockMvc.perform(get("/api/products/{id}", 1L))
+        mockMvc.perform(delete("/api/products/{id}", 1L))
                 //then
                 .andExpect(status().isNotFound())
                 .andExpectAll(
                         jsonPath("data").doesNotExist(),
-                        jsonPath("message").value("Product not found!"),
+                        jsonPath("message").value("Product with id '1' not found"),
                         jsonPath("success").value(false)
                 );
 
-        Mockito.verify(productService, times(1)).findProductById(1L);
+        Mockito.verify(productService, times(1)).deleteProduct(1L);
     }
 
     //unhappy path
     @Test
     @WithAnonymousUser
-    void getProductById_whenUnauthenticated_thenReturnAnd401() throws Exception {
+    void deleteProduct_whenUnauthorized_thenReturnAnd401() throws Exception {
         //given
         //when
-        mockMvc.perform(get("/api/products/{id}", 1L))
+        mockMvc.perform(delete("/api/products/1"))
                 //then
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
 
-        Mockito.verify(productService, times(0)).findProductById(1L);
+        Mockito.verify(productService, times(0)).deleteProduct(1L);
     }
 }
