@@ -32,9 +32,7 @@ public class ProductService {
             throw new NameAlreadyExistsException("Product", productRequestDTO.name());
         }
 
-        Product product = ProductMapping.toProduct(productRequestDTO);
-
-        return saveProduct(product);
+        return saveProduct(ProductMapping.toProduct(productRequestDTO));
     }
 
     public boolean existsProductByName(String name) {
@@ -50,20 +48,16 @@ public class ProductService {
             throw new IllegalArgumentException("Invalid page or size parameters");
         }
         Page<Product> pagedProducts = getProductPages(page, size, sort);
-        String message = pagedProducts.isEmpty() ? "Product list is empty" : null;
-        ProductPageResponseDTO responseDTO = ProductMapping.toProductPageResponseDTO(pagedProducts);
 
-        return new ProductPageResult(responseDTO, message);
+        return new ProductPageResult(ProductMapping.toProductPageResponseDTO(pagedProducts), pagedProducts.isEmpty() ? "Product list is empty" : null);
     }
 
     public Page<Product> getProductPages(int page, int size, String sort) {
         if (sort == null) {
-            Pageable pageable = PageRequest.of(page, size);
-            return productRepository.findAll(pageable);
+            return productRepository.findAll(PageRequest.of(page, size));
         }
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        return productRepository.findAll(pageable);
+        
+        return productRepository.findAll(PageRequest.of(page, size, Sort.by(sort)));
     }
 
     public Product updateProduct(long id, ProductRequestDTO productRequestDTO) {
