@@ -74,3 +74,5 @@ export default BandytiDesign;
 //          Happy Hearts<br />Welcomes Your Pet!
 //        </h1>
 //      </main>
+
+//About to do merge tes main with KOM-125_Product Andrej branch. Using 61.2 as a way to simulate main branch. 15:52 2025-04-07. Use this as an idicator I returned before unsuccesfull commit.
