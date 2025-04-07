@@ -5,18 +5,23 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useList } from "../../context/ListContext";
 import "../../index.css";
-import { NavLink } from "react-router";
+import { useNavigate } from "react-router";
+import { UIStatus } from "@/constants/UIStatus";
+import { useUI } from "@/context/UIContext";
 
 const PostCarousel = () => {
   const { content: posts } = useList();
+  const { Redirecting } = UIStatus;
+  const { setStatus } = useUI();
+  const navigate = useNavigate();
 
   return (
     <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px] shadow-md shadow-info-content">
-      <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-[2rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">
+      <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-1 xs:px-[1.5rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">
         <h2 className="text-info-content font-semibold text-sm sm:text-base md:text-lg">
           FOLLOW OUR LATEST NEWS
         </h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 xs:gap-2 sm:gap-3 md:gap-4">
           <button className="custom-prev z-10 custom-paw-left-btn w-[25px] h-[25px] sm:w-[35px] h-sm:[35px] md:w-[45px] md:h-[45px]">
             ◀
           </button>
@@ -90,11 +95,19 @@ const PostCarousel = () => {
                   />
                 )}
               </div>
-              <NavLink to={`/posts/view/${post.id}`}>
-                <p className=" text-white hover:underline text-xs md:text-sm font-medium p-1">
-                  Read more here
-                </p>
-              </NavLink>
+
+              <button
+                type="button"
+                className=" text-white hover:underline text-xs md:text-sm font-medium p-1 cursor-pointer"
+                onClick={() => {
+                  setStatus(Redirecting);
+                  setTimeout(() => {
+                    navigate(`/posts/view/${post.id}`);
+                  }, 1000);
+                }}
+              >
+                Read more here
+              </button>
             </div>
           </SwiperSlide>
         ))}

@@ -9,6 +9,7 @@ import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { Pencil } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export const PostCard = (props) => {
   const { post, getPage, currentPage, pageSize, sorted } = props;
@@ -16,8 +17,9 @@ export const PostCard = (props) => {
   const { id, postType, content, title, imageUrl } = post;
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { Loading, Success, Error, Unusual } = UIStatus;
+  const { Loading, Success, Error, Unusual, Redirecting } = UIStatus;
   const { setStatus } = useUI();
+  const navigate = useNavigate();
 
   const isMounted = useIsMounted();
 
@@ -38,9 +40,8 @@ export const PostCard = (props) => {
         setStatus(Unusual);
       }
     } catch (error) {
-      
       if (!isMounted.current) return;
-      
+
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
       setStatus(Error);
@@ -111,11 +112,18 @@ export const PostCard = (props) => {
               ? content.slice(0, 947) + "..."
               : content}
           </p>
-          <NavLink to={`/posts/view/${id}`}>
-            <p className=" text-white hover:underline text-xs sm:text-sm md:text-base font-medium p-1 ">
-              Read more here
-            </p>
-          </NavLink>
+          <button
+            type="button"
+            className=" text-white hover:underline text-xs sm:text-sm md:text-base font-medium p-1 cursor-pointer"
+            onClick={() => {
+              setStatus(Redirecting);
+              setTimeout(() => {
+                navigate(`/posts/view/${id}`);
+              }, 1000);
+            }}
+          >
+            Read more here
+          </button>
         </div>
         {roles && (
           <div className="absolute bottom-[-1px] flex gap-2">

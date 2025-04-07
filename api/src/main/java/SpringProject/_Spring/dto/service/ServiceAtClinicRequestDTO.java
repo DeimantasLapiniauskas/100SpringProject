@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public record ServiceAtClinicRequestDTO(
-        //@NotBlank is not needed when we've got a minimum size already.
+        @NotBlank(message = "Service name must not be blank")
         @Size(min = 3, max = 150, message = "Name must be between 3 and 150 characters long!")
         @Pattern(regexp = "^[A-Za-z0-9\\s-]*$", message = "Name must contain only letters, spaces, numbers and dashes!")
         String name,

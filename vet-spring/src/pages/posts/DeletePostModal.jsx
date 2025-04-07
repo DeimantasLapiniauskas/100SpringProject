@@ -52,13 +52,15 @@ export const DeletePostModal = ({
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
       const fieldErrors = error.response?.data?.data;
-      setStatus(Error);
 
+      console.log(fieldErrors)
+     
       if (errorMessage === "Validation failed" && fieldErrors) {
         setFieldErrors(fieldErrors);
       } else {
         setError(errorMessage);
       }
+      setStatus(Error);
     }
   };
 
@@ -109,7 +111,7 @@ export const DeletePostModal = ({
             {error && (
               <p className="text:xs sm:text-sm md:text-base">{error}</p>
             )}
-            {Array.isArray(fieldErrors.newPassword) ? (
+            { Array.isArray(fieldErrors.newPassword) ? (
               fieldErrors.newPassword.map((message, idx) => (
                 <p
                   key={idx}
@@ -139,9 +141,9 @@ export const DeletePostModal = ({
               size="sm"
               onClick={() => {
                 setIsModalOpen(false);
-                setPassword(null);
+                setPassword("");
                 setError(null);
-                setFieldErrors("");
+                setFieldErrors({});
               }}
             >
               Cancel !

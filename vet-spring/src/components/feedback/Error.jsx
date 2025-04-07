@@ -2,11 +2,11 @@ export const Error = (props) => {
 
   const {error, setVisible} = props;
 
-  if(typeof error === "undefined"){
-    return
-  }
- 
-  const errorMessages = Object.values(error);
+ if (!error) return null;
+
+const errorMessages = typeof error === "object" && !Array.isArray(error)
+  ? Object.values(error)
+  : [error];
 
   const hide = () => {
     setVisible(false);

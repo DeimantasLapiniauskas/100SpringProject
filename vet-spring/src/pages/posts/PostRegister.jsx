@@ -1,5 +1,4 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/uiBase/inputBase";
 import { Textarea } from "@/components/uiBase/textareaBase";
@@ -33,43 +32,13 @@ import { useNavigate } from "react-router";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
-import catSilhouette from "../../assets/icons/catSilhouette.svg";
-import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient";
-// import { Redirecting } from "@/components/feedback/Redirecting";
-
-const postSchema = z.object({
-  title: z
-    .string()
-    .min(3, { message: "Title must be atleast 3 characters long" })
-    .max(50, { message: "Title must not exceed 50 characters" })
-    .refine((val) => val.trim() !== "", {
-      message: "Title cannot be blank",
-    }),
-  postType: z.enum(["News", "Blog", "Sale"], {
-    message: "Post type is required",
-  }),
-  content: z
-    .string()
-    .min(10, { message: "Content must be at least 10 characters long" })
-    .max(2000, { message: "Content must not exceed 2000 characters" })
-    .refine((val) => val.trim() !== "", {
-      message: "Content cannot be blank",
-    }),
-  imageFile: z.instanceof(File).optional().nullable(),
-  imageUrl: z
-    .string()
-    .trim()
-    .regex(/\.(jpg|jpeg|png|webp|gif)$/i, {
-      message: "URL must end with .jpg, .png, .webp or .gif",
-    })
-    .max(255, { message: "URL must not exceed 255 characters" })
-    .optional()
-    .or(z.literal(null)),
-});
+import { PostRegisterSchema } from "@/schemas/PostRegisterScheme";
+import pencil from "../../assets/icons/pencil.png";
+import "../../index.css";
 
 export const PostRegister = ({ initialData }) => {
   const form = useForm({
-    resolver: zodResolver(postSchema),
+    resolver: zodResolver(PostRegisterSchema),
     mode: "onChange",
     defaultValues: {
       title: initialData?.title ?? "",
@@ -88,9 +57,8 @@ export const PostRegister = ({ initialData }) => {
     Success,
     Error: Err,
     Unusual: Unknown,
-    Redirecting: Navigating,
   } = UIStatus;
-  const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
+  const { isLoading, isError, isUnusual, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
   const isMounted = useIsMounted();
@@ -181,9 +149,7 @@ export const PostRegister = ({ initialData }) => {
   if (isLoading) {
     return <Loading />;
   }
-  //  if (isRedirecting) {
-  //     return <Redirecting />;
-  //   }
+ 
   if (isUnusual) {
     return <Unusual error={error} />;
   }
@@ -192,14 +158,14 @@ export const PostRegister = ({ initialData }) => {
   }
 
   return (
-    <div className="max-w-[1500px] mx-auto flex flex-col-reverse sm:flex sm:flex-row ">
-      <div className="flex flex-col justify-center items-center xs:min-w-2/5 lg:min-w-1/2 mt-3">
-        <h1 className="text-center text-info-content text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] ">
+    <div className="max-w-[1500px] mx-auto flex flex-col-reverse xs:flex xs:flex-row justify-center gap-2">
+      <div className="flex flex-col gap-4 items-center mt-2 sm:mt-3 md:mt-4 lg:mt-5">
+        <h1 className="text-center text-info-content text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] bg-gradient-to-l from-red-500 via-white to-blue-500">
           REGISTER NEW POST HERE
         </h1>
-        <CatSilhouetteGradient />
+        <img src={pencil} alt="pencil" className="w-40 sm:w-full" />
       </div>
-      <div className="xs:min-w-3/5 lg:min-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative mt-3 flex">
+      <div className="xs:max-w-3/5 xs:min-w-3/5 lg:min-w-1/2 lg:max-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative mt-2 sm:mt-3 md:mt-4 lg:mt-5 flex">
         <FormProvider {...form}>
           <Form
             onSubmit={form.handleSubmit(handleFormSubmit)}
@@ -304,7 +270,7 @@ export const PostRegister = ({ initialData }) => {
               control={form.control}
               name="imageFile"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-2/3">
                   <FormLabel>Image</FormLabel>
                   <Dropzone
                     onDrop={async (file) => {
@@ -321,7 +287,7 @@ export const PostRegister = ({ initialData }) => {
               )}
             />
             <div className="flex justify-between items-center">
-              <div className="inline-flex gap-2">
+              <div className="inline-flex pt-2 gap-2">
                 <Button type="submit" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting
                     ? isEditMode

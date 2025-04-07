@@ -4,9 +4,17 @@ import PostCarousel from "../posts/PostsCarousel";
 import happyHeart from "../../assets/icons/happyHeart.svg";
 import { Reviews } from "../../components/features/ReviewsPanel";
 import "../../index.css"
-
+import { useUI } from "@/context/UIContext";
+import { Redirecting } from "@/components/feedback/Redirecting";
 
 export const HomePage = () => {
+
+  const { isRedirecting } = useUI();
+
+ if (isRedirecting) {
+      return <Redirecting />;
+    }
+
   return (
     <div className=" pt-1 md:pt-2 max-w-[1500px] mx-auto">
       {/* Top Section - Dog Image & Text */}

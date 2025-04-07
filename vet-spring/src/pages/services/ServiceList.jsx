@@ -1,5 +1,4 @@
 import { useList } from "../../context/ListContext.jsx";
-import { useAuth } from "../../context/AuthContext.jsx";
 import { ServiceCard } from "./ServiceCard.jsx";
 import { Error } from "../../components/feedback/Error.jsx";
 import { NavLink } from "react-router";
@@ -11,9 +10,10 @@ import { PaginationUI } from "@/components/features/PaginationPanel.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
 import { SelectUI } from "@/components/features/SelectPagesPanel.jsx";
 import { FilterUI } from "@/components/features/FilterPanel.jsx";
+import { useCheckRoles } from "@/hooks/useCheckRoles.js";
+import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient.jsx";
 
 export const ServiceList = () => {
-  const { account } = useAuth();
 
   const {
     getPage,
@@ -25,18 +25,7 @@ export const ServiceList = () => {
   } = useList();
 
   const { isLoading, isEmpty, isError } = useUI();
-
-  const checkRoles = () => {
-    //todo: make this better
-    return (
-      (account !== null &&
-        account.scope !== null &&
-        account.scope.includes("ROLE_VET")) ||
-      (account !== null &&
-        account.scope !== null &&
-        account?.scope.includes("ROLE_ADMIN"))
-    );
-  };
+  const roles = useCheckRoles();
 
   return (
     <>
@@ -47,12 +36,12 @@ export const ServiceList = () => {
         </div>
         <div className="flex w-full items-center">
           <div className="flex gap-1 bottom-[60%]">
-            {/* Ensures horizontal scroll if needed */}
+           
             <figure className="w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2 flex items-center justify-center overflow-hidden">
               <img
                 src={ServiceListPageVetHoldingCat}
                 alt="Vet holding gray cat"
-                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+                className="w-full h-full object-contain rounded-[30px]" 
               />
             </figure>
             <figure
@@ -62,7 +51,7 @@ export const ServiceList = () => {
               <img
                 src={ServiceListPageVetHoldingDog}
                 alt="Vet holding black and white puppy"
-                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+                className="w-full h-full object-contain rounded-[30px]" 
               />
             </figure>
             <figure
@@ -72,7 +61,7 @@ export const ServiceList = () => {
               <img
                 src={ServiceListPageCatPawBandage}
                 alt="Vet holding brown cat"
-                className="w-full h-full object-contain rounded-[30px]" /* Rounded corners for the image */
+                className="w-full h-full object-contain rounded-[30px]" 
               />
             </figure>
           </div>
@@ -82,7 +71,7 @@ export const ServiceList = () => {
              Pet Happy
           </h1>
         </div>
-        {checkRoles() && (
+        {roles && (
           <div className="w-full flex justify-center ">
             <NavLink
               to={`/services/add`}

@@ -7,7 +7,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
-import catSilhouette from "../../assets/icons/catSilhouette.svg"
+import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient";
 
 export const PostView = () => {
   const { postId } = useParams();
@@ -62,7 +62,6 @@ export const PostView = () => {
   return (
     <div className="max-w-[1500px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px]">
       <div className="flex">
-        <img src={catSilhouette} alt="catSilhouette" className="w-10 bg-blue-100"/>
         <h2
           className={`w-full text-center text-xl font-semibold ${
             post.postType === "Sale"

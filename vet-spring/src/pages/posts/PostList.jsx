@@ -10,6 +10,7 @@ import { FilterUI } from "@/components/features/FilterPanel";
 import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
 import { Unusual } from "@/components/feedback/Unusual";
+import { Redirecting } from "@/components/feedback/Redirecting";
 
 export const PostList = () => {
 
@@ -24,9 +25,13 @@ export const PostList = () => {
     sorted
   } = useList();
 
-  const { isLoading, isError, isBadPageRequest, isUnusual } = useUI();
+  const { isLoading, isError, isBadPageRequest, isUnusual, isRedirecting } = useUI();
 
   const roles = useCheckRoles()
+
+  if (isRedirecting) {
+      return <Redirecting />;
+    }
 
   return (
     <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
