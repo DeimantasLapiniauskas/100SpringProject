@@ -4,8 +4,8 @@ import SpringProject._Spring.dto.product.ProductMapping;
 import SpringProject._Spring.dto.product.ProductPageResponseDTO;
 import SpringProject._Spring.dto.product.ProductPageResult;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
-import SpringProject._Spring.exceptions.EntityIdNotFoundException;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
+import SpringProject._Spring.exceptions.NotFoundException;
 import SpringProject._Spring.model.Product;
 import SpringProject._Spring.repository.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -15,8 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -70,10 +68,10 @@ public class ProductService {
 
     public Product updateProduct(long id, ProductRequestDTO productRequestDTO) {
         if (!existsProductById(id)) {
-            throw new EntityIdNotFoundException(id);
+            throw new NotFoundException("Product with id '" + id + "' not found");
         }
 
-        Product product = findProductById(id).get();
+        Product product = findProductById(id);
 
         ProductMapping.updateProductFromDTO(product, productRequestDTO);
 
@@ -84,7 +82,15 @@ public class ProductService {
         return productRepository.existsById(id);
     }
 
-    public Optional<Product> findProductById(long id) {
-        return productRepository.findById(id);
+    public Product findProductById(long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+    }
+
+    public void deleteProduct(long id) {
+        if (!existsProductById(id)) {
+            throw new NotFoundException("Product with id '" + id + "' not found");
+        }
+        productRepository.deleteById(id);
     }
 }

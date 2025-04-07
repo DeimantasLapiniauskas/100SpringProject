@@ -59,4 +59,19 @@ public class ProductController extends BaseController {
 
         return ok(ProductMapping.toProductResponseDTO(updatedProduct), "Product updated successfully");
     }
+
+    @Operation(summary = "Get product by ID", description = "Retrieves a product by its unique ID")
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ApiResponse<ProductResponseDTO>> getProductById(@PathVariable long id) {
+        return ok(ProductMapping.toProductResponseDTO(productService.findProductById(id)));
+    }
+
+    @Operation(summary = "Delete product by ID", description = "Deletes product by it's unique ID")
+    @DeleteMapping("/products/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable long id) {
+        productService.deleteProduct(id);
+        
+        return noContent();
+    }
 }

@@ -2,8 +2,8 @@ package SpringProject._Spring.validation;
 
 import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.ApiResponse;
-import SpringProject._Spring.exceptions.EntityIdNotFoundException;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
+import SpringProject._Spring.exceptions.NotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -56,8 +56,8 @@ public class GlobalExceptionHandler extends BaseController {
         return badRequest(null, ex.getMessage());
     }
 
-    @ExceptionHandler(EntityIdNotFoundException.class)
-    public ResponseEntity<ApiResponse<String>> handleEntityIdNotFoundException(EntityIdNotFoundException ex) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleNotFoundException(NotFoundException ex) {
         return notFound(ex.getMessage());
     }
 }
