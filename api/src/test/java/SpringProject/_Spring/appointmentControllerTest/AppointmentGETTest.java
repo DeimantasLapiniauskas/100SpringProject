@@ -1,6 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest;
 
-import SpringProject._Spring.controller.AppointmentController;
+import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
 import SpringProject._Spring.model.*;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.authentication.Account;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AppointmentController.class)
+@WebMvcTest(controllers = AppointmentBasicController.class)
 @Import(SecurityConfig.class)
 public class AppointmentGETTest {
 

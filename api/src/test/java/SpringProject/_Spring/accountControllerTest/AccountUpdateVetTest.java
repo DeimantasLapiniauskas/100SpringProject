@@ -67,11 +67,11 @@ public class AccountUpdateVetTest {
                         .content(objectMapper.writeValueAsString(vetUpdateRequestDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpectAll((jsonPath("firstName").value("UpdatedName")),
-                        (jsonPath("lastName").value("UpdatedLastName")),
-                        (jsonPath("phoneNumber").value("123456")),
-                        (jsonPath("specialty").value("Professional")),
-                        (jsonPath("licenseNumber").value("123456")));
+                .andExpectAll((jsonPath("data.firstName").value("UpdatedName")),
+                        (jsonPath("data.lastName").value("UpdatedLastName")),
+                        (jsonPath("data.phoneNumber").value("123456")),
+                        (jsonPath("data.specialty").value("Professional")),
+                        (jsonPath("data.licenseNumber").value("123456")));
 
         Mockito.verify(vetService, times(1)).updateVet(existingVet);
     }
@@ -91,7 +91,7 @@ public class AccountUpdateVetTest {
                         .content(objectMapper.writeValueAsString(vetUpdateRequestDTO)))
                 //then
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("Vet account not found!"));
+                .andExpect(jsonPath("message").value("Vet account not found!"));
 
         Mockito.verify(vetService, times(0)).updateVet(any());
     }

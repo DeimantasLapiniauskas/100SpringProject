@@ -89,7 +89,7 @@ public class AccountAuthenticatedPUTTest {
                         .content(new ObjectMapper().writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(content().string("You have successfully updated your password!"));
+                .andExpect(jsonPath("data").value("You have successfully updated your password!"));
 
         Mockito.verify(accountService, times(1)).saveAccount(ArgumentMatchers.any(Account.class));
     }
@@ -139,7 +139,7 @@ public class AccountAuthenticatedPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("Account not found!"));
+                .andExpect(jsonPath("message").value("Account not found!"));
 
         Mockito.verify(accountService, times(0)).saveAccount(ArgumentMatchers.any(Account.class));
     }
