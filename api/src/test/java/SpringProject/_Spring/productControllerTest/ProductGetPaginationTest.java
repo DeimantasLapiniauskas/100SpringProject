@@ -48,7 +48,7 @@ public class ProductGetPaginationTest {
     void getProductsPage_whenValid_thenReturnAnd200() throws Exception {
         //given
         ProductPageResponseDTO productPageResponseDTO = new ProductPageResponseDTO(
-                List.of(new ProductResponseDTO("Name", "Description", BigDecimal.valueOf(10.0), 10)),
+                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10)),
                 1,
                 6,
                 0,
@@ -89,7 +89,7 @@ public class ProductGetPaginationTest {
     void getProductsPage_whenValidWithSort_thenReturnAnd200() throws Exception {
         // given
         ProductPageResponseDTO productPageResponseDTO = new ProductPageResponseDTO(
-                List.of(new ProductResponseDTO("Name", "Description", BigDecimal.valueOf(10.0), 10)),
+                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10)),
                 1,
                 6,
                 0,
@@ -146,7 +146,7 @@ public class ProductGetPaginationTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getProductsPage_whenInvalidPageSize_thenReturnAnd400() throws Exception {
         //given
-        
+        when(productService.findAllProductsPage(-1, 10, null)).thenThrow(new IllegalArgumentException("Invalid page or size parameters"));
         //when
         mockMvc.perform(get("/api/products/pagination")
                         .param("page", "-1")
@@ -158,6 +158,6 @@ public class ProductGetPaginationTest {
                 .andExpect(jsonPath("message").exists())
                 .andExpect(jsonPath("data").doesNotExist());
 
-        Mockito.verify(productService, times(0)).findAllProductsPage(-1, 10, null);
+        Mockito.verify(productService, times(1)).findAllProductsPage(-1, 10, null);
     }
 }
