@@ -105,7 +105,7 @@ public class AppointmentConfirmGETTest {
 
         when(appointmentService.getAllUnconfirmedByClientAppointmentsByEmail(account.getEmail()))
                 .thenReturn(List.of(appointmentTwo));
-
+ // todo: Confirmation controller appointment service gets mad, but actually reaches first line. Find out what's wrong and fix it.
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client/confirm")
                 .contentType(MediaType.APPLICATION_JSON)
         )
