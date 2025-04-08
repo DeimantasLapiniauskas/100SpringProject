@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import pawssAdminPageImage from '/src/assets/pawss_for_admin.png';
+//import happyHeart from "../../assets/icons/happyHeart.svg";
 
 const AdminPage = ({ initialList }) => {
     const [activeList, setActiveList] = useState(initialList || '');
@@ -29,55 +30,94 @@ const AdminPage = ({ initialList }) => {
           setAddModalID,
         }}
       >
-        <div className="admin-page items-center px-10">
+        <div className="admin-page flex flex-col items-center gap-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-4 top-40 w-[3rem] sm:w-[4rem] md:w-[5rem] lg:w-[6rem] opacity-20 rotate-[53deg] pointer-events-none"
+            className="absolute left-10 top-40 max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
-          <img
-            src={pawssAdminPageImage}
-            alt="Paw print"
-            className="absolute right-4 top-40 w-[3rem] sm:w-[4rem] md:w-[5rem] lg:w-[6rem] opacity-20 rotate-[53deg] pointer-events-none"
-          />
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[538px] top-[223px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
 
-          <img
-            src={pawssAdminPageImage}
-            alt="Paw print"
-            className="absolute left-4 top-70 w-[3rem] sm:w-[4rem] md:w-[5rem] lg:w-[6rem] opacity-20 rotate-[53deg] pointer-events-none"
-          />
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[112px] top-[264px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
 
-          <img
-            src={pawssAdminPageImage}
-            alt="Paw print"
-            className="absolute right-4 top-70 w-[3rem] sm:w-[4rem] md:w-[5rem] lg:w-[6rem] opacity-20 rotate-[53deg] pointer-events-none"
-          />
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[405px] top-[194px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
 
-          <img
-            src={pawssAdminPageImage}
-            alt="Paw print"
-            className="absolute left-22 top-70 w-[8rem] sm:w-[9rem] md:w-[10rem] lg:w-[19rem] opacity-20 rotate-[53deg] pointer-events-none"
-          />
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[331px] top-[85px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
 
-          <img
-            src={pawssAdminPageImage}
-            alt="Paw print"
-            className="absolute right-22 top-70 w-[8rem] sm:w-[9rem] md:w-[10rem] lg:w-[11rem] opacity-20 rotate-[53deg] pointer-events-none"
-          />
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[176px] top-[260px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
 
-          <h1 className=" text-black lg:text-4xl md:text-2xl sm:text-lg text-base text-center py-8 mb-4 mt-12">
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[597px] top-[148px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
+
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[453px] top-[62px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
+
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[214px] top-[117px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
+
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[344px] top-[279px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
+
+<img
+  src={pawssAdminPageImage}
+  alt="Paw print"
+  className="absolute left-[56px] top-[197px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+/>
+
+
+
+
+
+
+          <h1 className=" text-black lg:text-2xl md:text-xl sm:text-lg text-base font-semibold text-center py-8 mb-4 mt-12">
             Admin Panel
           </h1>
           <div className="tabs flex gap-4 justify-center mt-4">
             <button
-              className={`btn ${activeList === "vets" ? "active" : ""}`}
+              className={`btn lg:text-lg md:text-base sm:text-sm text-xs ${
+                activeList === "vets" ? "active" : ""
+              }`}
               onClick={() => handleTabChange("vets")}
             >
               Vets
             </button>
             <button
-              className={`btn ${activeList === "clients" ? "active" : ""}`}
+              className={`btn lg:text-lg md:text-base sm:text-sm text-xs ${
+                activeList === "clients" ? "active" : ""
+              }`}
               onClick={() => handleTabChange("clients")}
             >
               Clients

@@ -20,7 +20,7 @@ const ClientList = () => {
   const { isLoading, isError, isBadRequest } = useUI();
 
   return (
-    <div className="flex flex-col items-center gap-8 py-8">
+    <div className="flex flex-col items-center gap-9 py-8">
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
