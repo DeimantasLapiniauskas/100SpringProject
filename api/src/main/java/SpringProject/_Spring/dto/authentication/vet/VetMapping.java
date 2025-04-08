@@ -1,8 +1,10 @@
 package SpringProject._Spring.dto.authentication.vet;
 
 import SpringProject._Spring.model.authentication.Vet;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class VetMapping {
 
@@ -40,5 +42,20 @@ public class VetMapping {
 
     public static VetUpdateResponseDTO toVetUpdateResponseDTO(Vet vet) {
         return new VetUpdateResponseDTO(vet.getFirstName(), vet.getLastName(), vet.getPhoneNumber(), vet.getSpecialty(), vet.getLicenseNumber());
+    }
+
+    public static VetPageResponseDTO toVetPageResponseDTO(Page<Vet> vetsPage) {
+        List<VetResponseDTO> vetResponseListDTO = vetsPage.getContent()
+                .stream()
+                .map(VetMapping::toVetResponseDTO)
+                .toList();
+
+        return new VetPageResponseDTO(
+                vetResponseListDTO,
+                vetsPage.getTotalPages(),
+                (int) vetsPage.getTotalElements(),
+                vetsPage.getNumber(),
+                vetsPage.getSize()
+        );
     }
 }
