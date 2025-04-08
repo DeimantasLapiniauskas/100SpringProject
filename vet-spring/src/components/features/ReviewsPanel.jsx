@@ -1,7 +1,7 @@
 import reviewers from "../../assets/icons/reviewers.png";
-import pawss from "../../assets/icons/pawss.png";
+import pawss from "../../assets/icons/pawssSmall.png";
 
-export const Reviews = () => {
+export const ReviewsPanel = () => {
   return (
     <div className="rounded-[15px] px-4 py-2 sm:py-4 md:py-6 lg:py-8  max-w-[300px] max-h-[200px] relative">
       <div className="bg-gradient-to-b from-blue-500 via-info to-blue-500 fade fade-out rounded-[15px]"></div>

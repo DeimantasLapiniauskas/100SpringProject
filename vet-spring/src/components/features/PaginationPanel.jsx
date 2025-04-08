@@ -9,7 +9,7 @@ import {
 } from "@/components/uiBase/pagination";
 import { useList } from "@/context/ListContext";
 
-export const PaginationUI = () => {
+export const PaginationPanel = () => {
   const { currentPage, totalPages, onPaginate } = useList();
 
   const getPages = () => {

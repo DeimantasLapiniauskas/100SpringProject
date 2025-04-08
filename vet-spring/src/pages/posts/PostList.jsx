@@ -4,9 +4,9 @@ import { useList } from "../../context/ListContext";
 import { NavLink } from "react-router";
 import { Loading } from "../../components/feedback/Loading";
 import { useUI } from "../../context/UIContext";
-import { PaginationUI } from "../../components/features/PaginationPanel";
-import { SelectUI } from "@/components/features/SelectPagesPanel";
-import { FilterUI } from "@/components/features/FilterPanel";
+import { PaginationPanel } from "../../components/features/PaginationPanel";
+import { SelectPanel } from "@/components/features/SelectPagesPanel";
+import { FilterPanel } from "@/components/features/FilterPanel";
 import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
 import { Unusual } from "@/components/feedback/Unusual";
@@ -28,6 +28,7 @@ export const PostList = () => {
   const { isLoading, isError, isBadPageRequest, isUnusual, isRedirecting } = useUI();
 
   const roles = useCheckRoles()
+  const sortFields = ["Content", "News", "Sale", "Blog"]
 
   if (isRedirecting) {
       return <Redirecting />;
@@ -36,8 +37,8 @@ export const PostList = () => {
   return (
     <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
       <div className="flex w-full justify-end gap-5">
-          <FilterUI />
-        <SelectUI />
+          <FilterPanel sortFields={sortFields}/>
+        <SelectPanel />
       </div>
       <section className="px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-6 text-center ">
         <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
@@ -76,7 +77,7 @@ export const PostList = () => {
         ))}
       </ul>
       <div className="p-3">
-        <PaginationUI />
+        <PaginationPanel />
       </div>
     </div>
   );

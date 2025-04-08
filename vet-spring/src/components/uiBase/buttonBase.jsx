@@ -38,3 +38,4 @@ export const Button = ({ className, size, variant, ...props }) => {
 };
 Button.displayName = "Button"
 
+export {buttonVariants}

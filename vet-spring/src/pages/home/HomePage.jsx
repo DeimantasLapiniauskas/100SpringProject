@@ -2,7 +2,7 @@ import HomePageDog from "../../assets/dog.png";
 import { ListProvider } from "../../context/ListContext";
 import PostCarousel from "../posts/PostsCarousel";
 import happyHeart from "../../assets/icons/happyHeart.svg";
-import { Reviews } from "../../components/features/ReviewsPanel";
+import { ReviewsPanel } from "../../components/features/ReviewsPanel";
 import "../../index.css"
 import { useUI } from "@/context/UIContext";
 import { Redirecting } from "@/components/feedback/Redirecting";
@@ -48,7 +48,7 @@ export const HomePage = () => {
                 advancing care for animals.
               </p>
               <div className="absolute top-47 xs:top-43 left-15 sm:static">
-                <Reviews/>
+                <ReviewsPanel/>
               </div>
           </div>
         </div>

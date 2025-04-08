@@ -7,9 +7,9 @@ import {
 import { useList } from "@/context/ListContext";
 import { FilterIcon } from "@/assets/icons/FilterIcon";
 
-export const FilterUI = () => {
+export const FilterPanel = ({sortFields}) => {
   const { sorted, onSortBy } = useList();
-
+console.log(typeof sortFields)
   return (
     <div className="flex items-center gap-1 md:gap-2">
       <Select
@@ -23,7 +23,7 @@ export const FilterUI = () => {
           <FilterIcon />
         </SelectTrigger>
         <SelectContent>
-          {["Content", "News", "Sale", "Blog"].map((postType) => (
+          {sortFields.map((postType) => (
             <SelectItem
               key={postType}
               value={postType}

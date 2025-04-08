@@ -7,7 +7,7 @@ import {
 } from "@/components/uiBase/selectPageSize";
 import { useList } from "@/context/ListContext";
 
-export const SelectUI = () => {
+export const SelectPanel = () => {
   const { pageSize, onPageSizeChange } = useList();
 
   return (

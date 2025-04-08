@@ -7,7 +7,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
-import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient";
+import "../../index.css"
 
 export const PostView = () => {
   const { postId } = useParams();
@@ -63,7 +63,7 @@ export const PostView = () => {
     <div className="max-w-[1500px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px]">
       <div className="flex">
         <h2
-          className={`w-full text-center text-xl font-semibold ${
+          className={`w-full text-center text-base sm:text-lg md:text-xl font-semibold ${
             post.postType === "Sale"
               ? `text-red-700`
               : post.postType === "Blog"
@@ -74,10 +74,10 @@ export const PostView = () => {
           {post.postType}
         </h2>
       </div>
-      <div className="grid grid-cols-3 p-4">
+      <div className="p-4">
         <div className="col-span-2">
           <h1
-            className={`font-semibold break-words text-lg px-5 text-center ${
+            className={`font-semibold break-words text-base sm:text-lg md:text-xl px-5 text-center ${
               post.postType === "Sale"
                 ? `text-red-700`
                 : post.postType === "Blog"
@@ -87,9 +87,8 @@ export const PostView = () => {
           >
             {post.title}
           </h1>
-          <p className="break-words break-all p-3">{post.content}</p>
+          <p className="break-words break-all py-3 ms:py-4 md:py-5 px-3 sm:px-6 md:px-12 lg:px-15 text-xs sm:text-sm md:text-base">{post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px] float-right w-full h-[10rem] xs:h-[12rem] md:h-[15rem] lg:h-[20rem] xs:w-2/3 md:w-1/2 mb-1 ms-2 object-cover"/> : ""}{post.content}</p>
         </div>
-        {post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px]"/> : ""}
       </div>
     </div>
   );
