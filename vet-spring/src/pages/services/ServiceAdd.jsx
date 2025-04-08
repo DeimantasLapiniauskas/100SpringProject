@@ -35,6 +35,7 @@ export const ServiceAdd = ({ service }) => {
     const trimmedData = {
       ...data,
       name: data.name.trim(),
+      
     };
 
     const payload = { ...trimmedData };

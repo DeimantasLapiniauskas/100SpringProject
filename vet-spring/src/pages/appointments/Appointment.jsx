@@ -3,16 +3,28 @@ import { getClientAppointments } from "../../utils/helpers/appointments";
 import { getVetAppointments } from "../../utils/helpers/appointments";
 import { RegisterAppointment } from "./RegisterAppointment";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { NavLink } from "react-router";
+import api from "@/utils/api";
+import { UpdateData } from "./UpdateData";
+import { useNavigate } from "react-router";
+import { useList } from "@/context/ListContext";
+
 
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
   const { account } = useAuth();
 
+  const navigate = useNavigate();
+if (!appointments) return 
+
+
   const getAppointment = async () => {
     try {
       if (account.scope == "ROLE_CLIENT") {
         const response = await getClientAppointments();
+        console.log(response.data);
+        
         setAppointments(response.data);
       } else {
         const response = await getVetAppointments();
@@ -25,7 +37,21 @@ export const Appointment = () => {
 
   useEffect(() => {
     getAppointment();
-  }, [visible]);
+  }, []);
+
+  const close = async (id) => {
+    try{
+    await api.put(`/appointments/cancel/${id}`)
+    navigate("/appointments")
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  }
+
+  
+
+
 
   return (
     <div>
@@ -38,6 +64,8 @@ export const Appointment = () => {
           New Appointment
         </button>
       </div>
+
+
 
       <div className="bg-white m-6 p-6 rounded-box text-black">
         <div className="grid grid-cols-8 border-b border-[#97a0f1]">
@@ -73,16 +101,19 @@ export const Appointment = () => {
             </div>
             <p>{a.notes}</p>
             <p>{a.status}</p>
-            <div>
+           
 
-          <NavLink to={`/appointments/update/${a.id}`} className="btn bg-red-500 p-1">pernesti</NavLink>
-          <button className=" btn bg-green-500 p-1">close</button>
-        </div>
+        <NavLink to={`/appointments/client/${a.id}`} className="btn bg-red-500 p-1">pernesti</NavLink>
+          
+          
+                    <button onClick={() => close(a.id)} className=" btn bg-green-500 p-1">close</button>
 
             </div>
 
         ))}
       </div>
+
+      
 
       {visible && (
         <RegisterAppointment setVisible={setVisible} serviceId={-1} />

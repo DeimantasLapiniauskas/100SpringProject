@@ -94,7 +94,7 @@ const VetClinicRoutes = () => {
               <Route path="/designh1" element={<BandytiDesignH1 />} />
               <Route path="/designh2" element={<BandytiDesignH2 />} />
               <Route path="/appointments" element={<Appointment/>}/>
-              <Route path="/appointments/update/:id" element={<UpdateData/>}/>
+              <Route path="/appointments/client/:id" element={<UpdateData/>}/>
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>

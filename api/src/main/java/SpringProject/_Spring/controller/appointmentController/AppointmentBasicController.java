@@ -11,6 +11,9 @@ import SpringProject._Spring.dto.appointment.vet.VetAppointmentMapping;
 import SpringProject._Spring.dto.appointment.vet.VetAppointmentResponseDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
+import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
+import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
+import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.model.authentication.Account;
@@ -165,6 +168,20 @@ public class AppointmentBasicController extends BaseController {
     public ResponseEntity<List<AppointmentResponseDTO>> getOwnClientAppointments(Authentication authentication) {
         return ResponseEntity.ok(
                 appointmentService.getAllAppointmentsByClientId(clientService.findClientIdByEmail(authentication.getName()))
+                        .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
+                                appointment,
+                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
+                                VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
+                        ))
+                        .toList());
+    }
+
+    @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
+    @GetMapping("/appointments/client/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<List<AppointmentResponseDTO>> getAppointment(@PathVariable long id) {
+        return ResponseEntity.ok(
+                appointmentService.getAppointmentById(id)
                         .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
                                 appointment,
                                 PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
