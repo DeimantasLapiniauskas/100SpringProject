@@ -61,12 +61,12 @@ export const ServiceCard = (props) => {
     animate={{ opacity: 1, y: 0 }}
     whileHover={{ scale: 1.03 }}
     transition={{ duration: 0.5, delay: 0.2 }}
-    className="card card-side will-change-transform bg-purple-300/20 backdrop-blur-lg p-6 rounded-xl shadow-lg ">
+    className=" card-side will-change-transform bg-purple-300/20 backdrop-blur-lg p-5 rounded-xl shadow-lg ">
 
       <div className="card-body shadow-lg shadow-[#854685] rounded-[10px] bg-gradient-to-tr backdrop-blur-[100px] to-indigo-600 text-[#FFFFFF] ">
         <h2 className="card-title block break-all">{name}</h2>
         <p
-          className=" caret-transparent h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
+          className=" caret-transparent h-full min-h-[75px] w-full resize-none text-sm focus:outline-[0px]"
         >
           {description}
         </p>
@@ -75,7 +75,7 @@ export const ServiceCard = (props) => {
           {checkRoles() && (
             <button
               onClick={deleteService}
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#CBC5C5] text-error-content font-semibold rounded shadow-sm shadow-pink-400"
             >
               Delete
             </button>
@@ -83,7 +83,7 @@ export const ServiceCard = (props) => {
           {checkRoles() && (
             <NavLink
               to={`/services/edit/${service.id}`}
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#CBC5C5] text-error-content font-semibold rounded shadow-sm shadow-pink-400"
             >
               Edit
             </NavLink>

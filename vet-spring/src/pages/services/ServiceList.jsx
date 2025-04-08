@@ -12,6 +12,7 @@ import { SelectUI } from "@/components/features/SelectPagesPanel.jsx";
 import { FilterUI } from "@/components/features/FilterPanel.jsx";
 import { useCheckRoles } from "@/hooks/useCheckRoles.js";
 import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient.jsx";
+import vetServiceIcon from "../../assets/icons/vetServiceIcon.svg"
 
 export const ServiceList = () => {
 
@@ -29,13 +30,13 @@ export const ServiceList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
+      <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
         <div className="flex w-full justify-end gap-5">
           <FilterUI />
           <SelectUI />
         </div>
-        <div className="flex w-full items-center">
-          <div className="flex gap-1 bottom-[60%]">
+        <div className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}>
+          {/* <div className="flex gap-1 bottom-[60%]">
            
             <figure className="w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2 flex items-center justify-center overflow-hidden">
               <img
@@ -64,15 +65,17 @@ export const ServiceList = () => {
                 className="w-full h-full object-contain rounded-[30px]" 
               />
             </figure>
+          </div> */}
+          <div className="flex me-30 p-5">
+            <h1 className="text-fuchsia-950 font-semibold text-md sm:text-lg md:text-xl lg:text-2xl text-center " >
+              Find What Your Pet Needs Here To Make Your Pet Happy
+            </h1>
+            <img src={vetServiceIcon} alt="vetServiceIcon" className="w-30"/>
           </div>
-          <h1 className="text-info-content text-md sm:text-lg md:text-xl lg:text-2xl text-center px-[8rem]">
-            Find What Your Pet Needs
-             Here To Make Your
-             Pet Happy
-          </h1>
         </div>
         {roles && (
-          <div className="w-full flex justify-center ">
+          <div className="w-full flex justify-center py-2 ">
+            <CatSilhouetteGradient className="w-40 absolute z-10 bottom-[15px]" />
             <NavLink
               to={`/services/add`}
               className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 transform transition duration-700 text-info-content border-1 border-[#854685]"
@@ -84,17 +87,22 @@ export const ServiceList = () => {
         {isEmpty ? <p>{message}</p> : ""}
         {isLoading ? <Loading /> : ""}
         {isError ? <Error error={error} isHidden={!error} /> : ""}
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {servises?.map((service) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              getPage={getPage}
-              currentPage={currentPage}
-              pageSize={pageSize}
-            />
-          ))}
-        </ul>
+        <div className="flex justify-end w-full">
+          <div className="relative">
+            <CatSilhouetteGradient className="w-50 absolute z-10 top-[-160px] right-[-250px] ] "/>
+          </div>
+          <ul className="flex flex-col w-3/5">
+            {servises?.map((service) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                getPage={getPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
+            ))}
+          </ul>
+        </div>
         <div className="p-3">
           <PaginationUI />
         </div>

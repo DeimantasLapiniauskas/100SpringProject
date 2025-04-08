@@ -4,9 +4,11 @@ export const Error = (props) => {
 
  if (!error) return null;
 
-const errorMessages = typeof error === "object" && !Array.isArray(error)
-  ? Object.values(error)
-  : [error];
+ const errorMessages = Array.isArray(error)
+ ? error
+ : typeof error === "object"
+ ? Object.values(error)
+ : [error];
 
   const hide = () => {
     setVisible(false);
