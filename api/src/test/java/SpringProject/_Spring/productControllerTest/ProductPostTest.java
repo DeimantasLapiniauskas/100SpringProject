@@ -104,10 +104,10 @@ public class ProductPostTest {
                 .andExpectAll(
                         jsonPath("message").exists(),
                         jsonPath("success").value(false),
-                        content().string(containsString("Name can only contain letters")),
-                        content().string(containsString("Description can't be empty!")),
-                        content().string(containsString("Price must be zero or positive")),
-                        content().string(containsString("Stock quantity must be zero or greater!"))
+                        jsonPath("data.name").value("Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"),
+                        jsonPath("data.description").value("Description can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"),
+                        jsonPath("data.price").value("Price must be zero or positive!"),
+                        jsonPath("data.stockQuantity").value("Stock quantity must be zero or greater!")
                 );
 
         Mockito.verify(productService, times(0)).addNewProduct(productRequestDTO);

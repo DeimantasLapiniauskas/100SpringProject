@@ -1,7 +1,6 @@
 package SpringProject._Spring.service;
 
 import SpringProject._Spring.dto.product.ProductMapping;
-import SpringProject._Spring.dto.product.ProductPageResponseDTO;
 import SpringProject._Spring.dto.product.ProductPageResult;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
@@ -12,7 +11,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -53,11 +51,7 @@ public class ProductService {
     }
 
     public Page<Product> getProductPages(int page, int size, String sort) {
-        if (sort == null) {
-            return productRepository.findAll(PageRequest.of(page, size));
-        }
-        
-        return productRepository.findAll(PageRequest.of(page, size, Sort.by(sort)));
+        return sort == null ? productRepository.findAll(PageRequest.of(page, size)) : productRepository.findAll(PageRequest.of(page, size, Sort.by(sort)));
     }
 
     public Product updateProduct(long id, ProductRequestDTO productRequestDTO) {
