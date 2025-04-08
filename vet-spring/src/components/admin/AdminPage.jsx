@@ -31,76 +31,71 @@ const AdminPage = ({ initialList }) => {
         }}
       >
         <div className="admin-page flex flex-col items-center gap-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
-          <img
+          {/* <img
             src={pawssAdminPageImage}
             alt="Paw print"
             className="absolute left-10 top-40 max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          /> */}
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[66rem] top-[14rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[538px] top-[223px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[39rem] top-[17rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[112px] top-[264px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[86rem] top-[12rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[405px] top-[194px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[21rem] top-[5rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[331px] top-[85px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[16rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[176px] top-[260px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[37rem] top-[9rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[597px] top-[148px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[75rem] top-[4rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[453px] top-[62px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[2rem] top-[7rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[214px] top-[117px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[22rem] top-[17rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[344px] top-[279px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
-
-<img
-  src={pawssAdminPageImage}
-  alt="Paw print"
-  className="absolute left-[56px] top-[197px] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
-/>
-
-
-
-
-
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[43rem] top-[12rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
 
           <h1 className=" text-black lg:text-2xl md:text-xl sm:text-lg text-base font-semibold text-center py-8 mb-4 mt-12">
             Admin Panel
