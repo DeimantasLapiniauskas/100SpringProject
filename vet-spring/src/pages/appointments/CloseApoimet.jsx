@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { useParams, useNavigate } from "react-router";
-export const UpdateData = () => {
+export const CloseApoiment = () => {
   const { id } = useParams();
   const [error, setError] = useState();
   const {

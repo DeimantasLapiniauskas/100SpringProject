@@ -5,17 +5,13 @@ import { RegisterAppointment } from "./RegisterAppointment";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { NavLink } from "react-router";
 import api from "@/utils/api";
-import { UpdateData } from "./UpdateData";
-import { useNavigate } from "react-router";
-import { useList } from "@/context/ListContext";
+
 
 
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
   const { account } = useAuth();
-
-  const navigate = useNavigate();
 if (!appointments) return 
 
 
@@ -23,8 +19,6 @@ if (!appointments) return
     try {
       if (account.scope == "ROLE_CLIENT") {
         const response = await getClientAppointments();
-        console.log(response.data);
-        
         setAppointments(response.data);
       } else {
         const response = await getVetAppointments();
@@ -41,14 +35,15 @@ if (!appointments) return
 
   const close = async (id) => {
     try{
-    await api.put(`/appointments/cancel/${id}`)
-    navigate("/appointments")
+   const response = await api.put(`/appointments/cancel/${id}`)
+    setAppointments(response.data);
     } catch (error) {
       console.log(error.message);
     }
-
   }
-
+  useEffect(() => {
+    close();
+  }, []);
   
 
 
