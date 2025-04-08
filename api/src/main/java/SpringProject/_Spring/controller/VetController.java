@@ -2,7 +2,7 @@ package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.ApiResponse;
 import SpringProject._Spring.dto.authentication.vet.VetPageResponseDTO;
-import SpringProject._Spring.dto.vet.VetMapping;
+import SpringProject._Spring.dto.authentication.vet.VetMapping;
 import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.service.authentication.VetService;
 import io.swagger.v3.oas.annotations.Operation;
