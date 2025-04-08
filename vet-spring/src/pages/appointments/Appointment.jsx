@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
-import { getAppointments } from "../../utils/helpers/appointments";
+import { getClientAppointments } from "../../utils/helpers/appointments";
+import { getVetAppointments } from "../../utils/helpers/appointments";
 import { RegisterAppointment } from "./RegisterAppointment";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
+  const { account } = useAuth();
 
   const getAppointment = async () => {
-    try {
-      const response = await getAppointments();
-      setAppointments(response.data);
+    try {      
+      if (account.scope == "ROLE_CLIENT") {
+        const response = await getClientAppointments();
+        setAppointments(response.data);
+      } else {
+        const response = await getVetAppointments();
+        setAppointments(response.data);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -37,7 +45,7 @@ export const Appointment = () => {
           <p>Pet</p>
           <p>Price</p>
           <p>Veterinarian</p>
-          <p>Services</p>     
+          <p>Services</p>
           <p>Notes</p>
           <p>Status</p>
         </div>
@@ -69,7 +77,9 @@ export const Appointment = () => {
         ))}
       </div>
 
-      {visible && <RegisterAppointment setVisible={setVisible} serviceId={-1}/>}
+      {visible && (
+        <RegisterAppointment setVisible={setVisible} serviceId={-1} />
+      )}
     </div>
   );
 };

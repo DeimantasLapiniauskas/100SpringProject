@@ -45,7 +45,7 @@ public class Appointment {
     private String clinicAddress;
 
     @Enumerated(EnumType.STRING)
-    private Status status = Status.Scheduled;
+    private Status status;
     private String notes;
     private BigDecimal totalServicesSum;
     private Timestamp createdAt;
@@ -61,6 +61,7 @@ public class Appointment {
         this.services = services;
         this.appointmentDate = appointmentDate;
         clinicAddress = "Here.";
+        status = Status.ScheduledUnconfirmedByVet;
         this.notes = notes;
         totalServicesSum = services.stream().map(ServiceAtClinic::getPrice).reduce(BigDecimal.valueOf(0), BigDecimal::add);
         this.createdAt = createdAt;

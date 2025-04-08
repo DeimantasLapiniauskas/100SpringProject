@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -51,8 +50,8 @@ public class PetController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<List<PetResponseDTO>> getAllPetsByOwner(Authentication authentication) {
-        return ResponseEntity.ok(petService.getAllPetsByOwnerId(clientService.findClientIdByEmail(authentication.getName())).stream()
+    public ResponseEntity<ApiResponse<List<PetResponseDTO>>> getAllPetsByOwner(Authentication authentication) {
+        return ok(petService.getAllPetsByOwnerId(clientService.findClientIdByEmail(authentication.getName())).stream()
                 .map(PetMapping::toPetResponseDTO)
                 .toList());
     }
@@ -60,34 +59,31 @@ public class PetController extends BaseController {
     @Operation(summary = "Add new pet", description = "Adds a new pet to the database")
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> addPet(
+    public ResponseEntity<ApiResponse<PetResponseDTO>> addPet(
             @Valid @RequestBody PetRequestDTO petRequestDTO,
             Authentication authentication) {
 
         long id = clientService.findClientIdByEmail(authentication.getName());
 
         if (!clientService.existsClientById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Owner does not exist!");
+            return notFound("Owner does not exist!");
         }
 
         Pet pet = PetMapping.toPet(petRequestDTO, id);
         pet.setOwnerId(id);
         Pet createdPet = petService.savePet(pet);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(PetMapping.toPetResponseDTO(createdPet));
+        return created(PetMapping.toPetResponseDTO(createdPet),"Pet created successfully!");
     }
 
     @Operation(summary = "Update pet by ID (Client and Admin)", description = "Updates a pet by it's unique ID")
     @PutMapping("/{petId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> updatePet(@PathVariable long petId,
-                                       @Valid @RequestBody PetRequestDTO petRequestDTO,
-                                       Authentication authentication
+    public ResponseEntity<ApiResponse<PetResponseDTO>> updatePet(@PathVariable long petId,
+                                                                 @Valid @RequestBody PetRequestDTO petRequestDTO,
+                                                                 Authentication authentication
     ) {
         if (!petService.existsById(petId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Pet does not exist!");
+            return notFound("Pet does not exist!");
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
@@ -104,8 +100,7 @@ public class PetController extends BaseController {
                                         )
                         )
         ) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("You can't edit someone else's pet!");
+            return forbidden("You can't edit someone else's pet!");
         }
 
         Pet petFromDB = petService.getPetById(petId).get();
@@ -115,18 +110,18 @@ public class PetController extends BaseController {
         petFromDB.setBirthdate(petRequestDTO.birthdate());
         petFromDB.setGender(petRequestDTO.gender());
         petService.savePet(petFromDB);
-        return ResponseEntity.ok(PetMapping.toPetResponseDTO(petFromDB));
+        return ok(PetMapping.toPetResponseDTO(petFromDB));
     }
 
     @Operation(summary = "Delete pet by ID (Client and Admin)", description = "Deletes a pet by it's unique ID")
     @DeleteMapping("/{petId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<?> deletePet(
+    public ResponseEntity<ApiResponse<Object>> deletePet(
             @PathVariable long petId,
             Authentication authentication) {
 
         if (!petService.existsById(petId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet does not exist!");
+            return notFound("Pet does not exist!");
         }
 
         final Account currentAccount = accountService.findByEmail(authentication.getName()).get();
@@ -141,11 +136,11 @@ public class PetController extends BaseController {
                                 )
                         )
         ) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't delete someone else's pet!");
+            return forbidden("You can't delete someone else's pet!");
         }
 
         petService.deletePetById(petId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return noContent();
     }
 
     @Operation(summary = "Get pets by owner ID and split them by pages (Client and Admin)", description = "Retrieves all pets owned by client by his ID and splits the list by pages")

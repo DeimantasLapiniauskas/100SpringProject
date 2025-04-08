@@ -1,7 +1,7 @@
 package SpringProject._Spring.appointmentControllerTest;
 
 
-import SpringProject._Spring.controller.AppointmentController;
+import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
 import SpringProject._Spring.dto.appointment.AppointmentRequestDTO;
 import SpringProject._Spring.model.*;
 import SpringProject._Spring.model.appointment.Appointment;
@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AppointmentController.class)
+@WebMvcTest(controllers = AppointmentBasicController.class)
 @Import(SecurityConfig.class)
 public class AppointmentPOSTTest {
 
@@ -128,7 +128,7 @@ public class AppointmentPOSTTest {
     void addAppointment_whenAddClient_thenRespond201() throws Exception {
 
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdOne))
                 .thenReturn(false);
 
         when(serviceService.findServiceAtClinicById(serviceIdOne))
@@ -137,7 +137,7 @@ public class AppointmentPOSTTest {
         when(serviceService.findServiceAtClinicById(serviceIdTwo))
                 .thenReturn(Optional.of(serviceTwo));
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdTwo))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdTwo))
                 .thenReturn(false);
 
         when(appointmentService.saveAppointment(any()))
@@ -173,23 +173,23 @@ public class AppointmentPOSTTest {
                         )
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").value("0"))
-                .andExpect(jsonPath("petDTO.name").value(pet.getName()))
-                .andExpect(jsonPath("petDTO.species").value(pet.getSpecies()))
-                .andExpect(jsonPath("petDTO.breed").value(pet.getBreed()))
-                .andExpect(jsonPath("petDTO.gender").value(pet.getGender().name()))
-                .andExpect(jsonPath("vetDTO.email").value(vet.getAccount().getEmail()))
-                .andExpect(jsonPath("vetDTO.firstName").value(vet.getFirstName()))
-                .andExpect(jsonPath("vetDTO.lastName").value(vet.getLastName()))
-                .andExpect(jsonPath("vetDTO.specialty").value(vet.getSpecialty()))
-                .andExpect(jsonPath("services[0].name").value(serviceOne.getName()))
-                .andExpect(jsonPath("services[0].description").value(serviceOne.getDescription()))
-                .andExpect(jsonPath("services[0].price").value(serviceOne.getPrice()))
-                .andExpect(jsonPath("services[1].name").value(serviceTwo.getName()))
-                .andExpect(jsonPath("services[1].description").value(serviceTwo.getDescription()))
-                .andExpect(jsonPath("services[1].price").value(serviceTwo.getPrice()))
-                .andExpect(jsonPath("notes").value(note))
-                .andExpect(jsonPath("price").value(serviceOne.getPrice().add(serviceTwo.getPrice())));
+                .andExpect(jsonPath("data.id").value("0"))
+                .andExpect(jsonPath("data.petDTO.name").value(pet.getName()))
+                .andExpect(jsonPath("data.petDTO.species").value(pet.getSpecies()))
+                .andExpect(jsonPath("data.petDTO.breed").value(pet.getBreed()))
+                .andExpect(jsonPath("data.petDTO.gender").value(pet.getGender().name()))
+                .andExpect(jsonPath("data.vetDTO.email").value(vet.getAccount().getEmail()))
+                .andExpect(jsonPath("data.vetDTO.firstName").value(vet.getFirstName()))
+                .andExpect(jsonPath("data.vetDTO.lastName").value(vet.getLastName()))
+                .andExpect(jsonPath("data.vetDTO.specialty").value(vet.getSpecialty()))
+                .andExpect(jsonPath("data.services[0].name").value(serviceOne.getName()))
+                .andExpect(jsonPath("data.services[0].description").value(serviceOne.getDescription()))
+                .andExpect(jsonPath("data.services[0].price").value(serviceOne.getPrice()))
+                .andExpect(jsonPath("data.services[1].name").value(serviceTwo.getName()))
+                .andExpect(jsonPath("data.services[1].description").value(serviceTwo.getDescription()))
+                .andExpect(jsonPath("data.services[1].price").value(serviceTwo.getPrice()))
+                .andExpect(jsonPath("data.notes").value(note))
+                .andExpect(jsonPath("data.price").value(serviceOne.getPrice().add(serviceTwo.getPrice())));
 
         Mockito.verify(appointmentService, times(1)).saveAppointment(ArgumentMatchers.any());
     }
@@ -219,7 +219,7 @@ public class AppointmentPOSTTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void addAppointment_whenBadRequest_thenRespond400() throws Exception {
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdOne))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdOne))
                 .thenReturn(false);
 
         when(serviceService.findServiceAtClinicById(serviceIdOne))
@@ -228,7 +228,7 @@ public class AppointmentPOSTTest {
         when(serviceService.findServiceAtClinicById(serviceIdTwo))
                 .thenReturn(Optional.of(serviceTwo));
 
-        when(appointmentService.existsByPetIdAndServiceId(petId, serviceIdTwo))
+        when(appointmentService.existsByPetIdAndServiceIdAndIsScheduled(petId, serviceIdTwo))
                 .thenReturn(false);
 
         when(appointmentService.saveAppointment(any()))
