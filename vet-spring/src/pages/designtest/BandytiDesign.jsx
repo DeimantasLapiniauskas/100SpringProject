@@ -75,4 +75,4 @@ export default BandytiDesign;
 //        </h1>
 //      </main>
 
-//About to do merge tes main with KOM-125_Product Andrej branch. Using 61.2 as a way to simulate main branch. 15:52 2025-04-07. Use this as an idicator I returned before unsuccesfull commit.
+//About to do merge tes main with BUGFIX pull request #69 Deimantas branch. Using 61.2 as a way to simulate main branch. 08:43 2025-04-08. Use this as an idicator I returned before unsuccesfull commit.
