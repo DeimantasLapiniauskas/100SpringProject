@@ -17,7 +17,7 @@ export const UpdateData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`/appointments/client/${id}`);
+        const response = await api.get(`/appointments/${id}`);
         const data = response.data[0];
         const { appointmentDate } = data;
 

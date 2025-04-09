@@ -135,12 +135,12 @@ public class AppointmentBasicController extends BaseController {
             try { // breaks if pet or vet that was registered has been deleted.
                 Email email = DefaultEmail.builder()
                         .from(new InternetAddress("spring100project@gmail.com"))
-                        .to(Lists.newArrayList(new InternetAddress(clientService.findClientByAccountId(petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()).getAccount().getEmail())))
+                        .to(Lists.newArrayList(new InternetAddress(clientService.findClientById(petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()).get().getAccount().getEmail())))
                         .subject("New appointment scheduled")
                         .body("The veterinarian you were registered to for " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) at " + appointmentFromDB.getAppointmentDate() + " has rescheduled the appointment., please log in and confirm!").build();
                 emailService.send(email);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
 
@@ -213,8 +213,8 @@ public class AppointmentBasicController extends BaseController {
     }
 
     @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
-    @GetMapping("/appointments/client/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    @GetMapping("/appointments/{id}")
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<List<AppointmentResponseDTO>> getAppointment(@PathVariable long id) {
         return ResponseEntity.ok(
                 appointmentService.getAppointmentById(id)
@@ -239,18 +239,18 @@ public class AppointmentBasicController extends BaseController {
                 .toList());
     }
 
-    @Operation(summary = "Get appointment by ID (Admin)", description = "Retrieves all appointment by it's unique ID")
-    @GetMapping("/appointments/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getAdminAppointments(@PathVariable long id) {
-        return ok(appointmentService.getAllAppointmentsByClientId(id)
-                .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
-                        appointment,
-                        PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
-                        VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
-                ))
-                .toList());
-    }
+//    @Operation(summary = "Get appointment by ID (Admin)", description = "Retrieves all appointment by it's unique ID")
+//    @GetMapping("/appointments/{id}")
+//    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+//    public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getAdminAppointments(@PathVariable long id) {
+//        return ok(appointmentService.getAllAppointmentsByClientId(id)
+//                .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
+//                        appointment,
+//                        PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
+//                        VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
+//                ))
+//                .toList());
+//    }
 
     //Why is this in this controller? -DL
     @Operation(summary = "Get vets list", description = "Retrieves a vet list (names, specialty)")
