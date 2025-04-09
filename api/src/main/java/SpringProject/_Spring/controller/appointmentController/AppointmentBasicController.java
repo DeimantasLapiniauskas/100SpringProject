@@ -132,12 +132,12 @@ public class AppointmentBasicController extends BaseController {
             emailService.send(email);
         } else {
             appointmentFromDB.setStatus(Status.ScheduledUnconfirmedByClient);
-            try { // breaks if pet that was registered has been deleted.
+            try { // breaks if pet or vet that was registered has been deleted.
                 Email email = DefaultEmail.builder()
                         .from(new InternetAddress("spring100project@gmail.com"))
                         .to(Lists.newArrayList(new InternetAddress(clientService.findClientByAccountId(petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()).getAccount().getEmail())))
                         .subject("New appointment scheduled")
-                        .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) for " + appointmentFromDB.getAppointmentDate() + ", please log in and confirm!").build();
+                        .body("The veterinarian you were registered to for " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) at " + appointmentFromDB.getAppointmentDate() + " has rescheduled the appointment., please log in and confirm!").build();
                 emailService.send(email);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
