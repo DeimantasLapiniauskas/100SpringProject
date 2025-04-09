@@ -16,7 +16,7 @@ export const HomePage = () => {
     }
 
   return (
-    <div className=" pt-1 md:pt-2 max-w-[1500px] mx-auto">
+    <div className=" pt-1 md:pt-2 max-w-[1400px] mx-auto">
       {/* Top Section - Dog Image & Text */}
       <main className="flex sm:flex-row-reverse flex-col items-end sm:items-start md:items-start lg:items-start">
         {/* Text Section */}

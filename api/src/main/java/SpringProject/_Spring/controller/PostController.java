@@ -98,7 +98,8 @@ public class PostController extends BaseController{
     @GetMapping("/posts/pagination")
     public ResponseEntity<ApiResponse<PostPageResponseDTO>> getAllPostsPage(@RequestParam int page,
                                                                             @RequestParam int size,
-                                                                            @RequestParam(required = false) String sort) {
+                                                                            @RequestParam(required = false) String sort,
+                                                                            @RequestParam(required = false) String search) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -108,7 +109,20 @@ public class PostController extends BaseController{
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort);
+        System.out.println("Checking search: [" + search + "]");
+
+        if (search != null) {
+            search = search.trim();
+            if (search.length() > 50) {
+                throw new IllegalArgumentException("Search query is too long");
+            }
+
+            if (search.matches("^[%_]+$")) {
+                throw new IllegalArgumentException("Search query cannot contain only wildcards");
+            }
+        }
+
+        Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort, search);
         String message = pagedPosts.isEmpty() ? "Posts list is empty" : null;
         PostPageResponseDTO responseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
 

@@ -2,9 +2,9 @@ import { useList } from "../../context/ListContext.jsx";
 import { ServiceCard } from "./ServiceCard.jsx";
 import { Error } from "../../components/feedback/Error.jsx";
 import { NavLink } from "react-router";
-import ServiceListPageVetHoldingCat from "../../assets/cart.png";
-import ServiceListPageVetHoldingDog from "../../assets/vet.png";
-import ServiceListPageCatPawBandage from "../../assets/peti.png";
+// import ServiceListPageVetHoldingCat from "../../assets/cart.png";
+// import ServiceListPageVetHoldingDog from "../../assets/vet.png";
+// import ServiceListPageCatPawBandage from "../../assets/peti.png";
 import { useUI } from "@/context/UIContext.jsx";
 import { PaginationPanel } from "@/components/features/PaginationPanel.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
@@ -30,9 +30,9 @@ export const ServiceList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
+      <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto">
         <div className="flex w-full justify-end gap-5">
-          <FilterPanel />
+          {/* <FilterPanel /> */}
           <SelectPanel />
         </div>
         <div className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}>

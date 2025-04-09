@@ -13,7 +13,7 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const selectTriggerVariants = cva(
-  "flex items-center justify-between shadow-lg rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition",
+  "flex items-center justify-between shadow-lg rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 transition",
   {
     variants: {
       size: {

@@ -11,11 +11,13 @@ import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
 import { Unusual } from "@/components/feedback/Unusual";
 import { Redirecting } from "@/components/feedback/Redirecting";
+import { SearchBarPanel } from "@/components/features/SearchBarPanel"
 
 export const PostList = () => {
 
   const {
     getPage,
+    clearAll,
     error,
     message,
     content: posts,
@@ -35,9 +37,10 @@ export const PostList = () => {
     }
 
   return (
-    <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
+    <div className="flex flex-col items-center gap-2 px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto">
       <div className="flex w-full justify-end gap-5">
           <FilterPanel sortFields={sortFields}/>
+          <SearchBarPanel className="w-full"/>
         <SelectPanel />
       </div>
       <section className="px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-6 text-center ">
@@ -64,21 +67,23 @@ export const PostList = () => {
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadPageRequest ? <BadPageRequest/> : ""}
       {isUnusual ? <Unusual error={error}/> : ""}
-      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
-        {posts.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            getPage={getPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            sorted={sorted}
-          />
-        ))}
-      </ul>
-      <div className="p-3">
-        <PaginationPanel />
-      </div>
+      {isEmpty || isLoading || isError || isBadPageRequest || isUnusual ? "" : <div>
+        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
+          {posts.map((post) => (
+            <PostCard
+              key={post.id}
+              post={post}
+              getPage={getPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              sorted={sorted}
+            />
+          ))}
+        </ul>
+        <div className="p-3">
+          <PaginationPanel />
+        </div>
+      </div>}
     </div>
   );
 };

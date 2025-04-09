@@ -3,18 +3,18 @@ import { cva } from "class-variance-authority";
 import { Search } from "lucide-react";
 
 const searchBarVariants = cva(
-  "flex items-center w-full rounded-xl transition-all border shadow-sm",
+  "flex items-center w-full transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2",
   {
     variants: {
       intent: {
-        default: "border-gray-300 bg-white",
+        default: " border border-blue-500 focus:ring-blue-500 bg-white",
         filled: "border-none bg-gray-100",
         subtle: "border-transparent bg-transparent",
         info: "border-blue-500 bg-blue-50",
       },
       size: {
         sm: "text-sm px-3 py-1.5",
-        md: "text-base px-4 py-2",
+        md: "text-base px-4 py-2 w-full",
         lg: "text-lg px-5 py-3",
       },
       radius: {

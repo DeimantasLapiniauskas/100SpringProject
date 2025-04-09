@@ -9,7 +9,7 @@ import { FilterIcon } from "@/assets/icons/FilterIcon";
 
 export const FilterPanel = ({sortFields}) => {
   const { sorted, onSortBy } = useList();
-console.log(typeof sortFields)
+
   return (
     <div className="flex items-center gap-1 md:gap-2">
       <Select

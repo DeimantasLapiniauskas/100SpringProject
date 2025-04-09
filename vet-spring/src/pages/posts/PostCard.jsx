@@ -12,7 +12,7 @@ import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export const PostCard = (props) => {
-  const { post, getPage, currentPage, pageSize, sorted } = props;
+  const { post, getPage, currentPage, pageSize, sorted, searchValue } = props;
   const roles = useCheckRoles();
   const { id, postType, content, title, imageUrl } = post;
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ export const PostCard = (props) => {
       if (id) {
         await deletePost(id);
         toast.success("Post deleted successfully");
-        await getPage(pageSize, currentPage, sorted);
+        await getPage(pageSize, currentPage, sorted, searchValue);
 
         if (!isMounted.current) return;
         setStatus(Success);
