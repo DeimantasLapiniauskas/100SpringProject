@@ -6,14 +6,11 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { NavLink } from "react-router";
 import api from "@/utils/api";
 
-
-
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
   const { account } = useAuth();
-if (!appointments) return 
-
+  if (!appointments) return;
 
   const getAppointment = async () => {
     try {
@@ -34,17 +31,15 @@ if (!appointments) return
   }, []);
 
   const closeapoiment = async (id) => {
-    try{
-    await api.put(`/appointments/cancel/${id}`)
-    const response = await getClientAppointments();
-    
-    
-    setAppointments(response.data);
-    
+    try {
+      await api.put(`/appointments/cancel/${id}`);
+      const response = await getClientAppointments();
+
+      setAppointments(response.data);
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   return (
     <div>
@@ -57,8 +52,6 @@ if (!appointments) return
           New Appointment
         </button>
       </div>
-
-
 
       <div className="bg-white m-6 p-6 rounded-box text-black">
         <div className="grid grid-cols-8 border-b border-[#97a0f1]">
@@ -94,17 +87,24 @@ if (!appointments) return
             </div>
             <p>{a.notes}</p>
             <p>{a.status}</p>
-           
-           <div className="flex flex-row">
-                    <NavLink to={`/appointments/client/${a.id}`} className="btn bg-red-500 w-20">Change Data</NavLink>
-                    <button onClick={() => closeapoiment(a.id)} className=" btn bg-green-500 w-20 ">Cancel</button>
-</div>
-            </div>
 
+            <div className="flex flex-row">
+              <NavLink
+                to={`/appointments/client/${a.id}`}
+                className="btn bg-red-500 w-20"
+              >
+                Change Data
+              </NavLink>
+              <button
+                onClick={() => closeapoiment(a.id)}
+                className=" btn bg-green-500 w-20 "
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         ))}
       </div>
-
-      
 
       {visible && (
         <RegisterAppointment setVisible={setVisible} serviceId={-1} />
