@@ -1,10 +1,11 @@
-package SpringProject._Spring.clientControllerTest;
+package SpringProject._Spring.adminpageControllerTest;
 
-import SpringProject._Spring.controller.ClientController;
+import SpringProject._Spring.controller.AdminpageController;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Client;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.authentication.ClientService;
+import SpringProject._Spring.service.authentication.VetService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = ClientController.class)
+@WebMvcTest(controllers = AdminpageController.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
@@ -42,6 +43,8 @@ public class ClientGetPaginationTest {
 
     @MockitoBean
     private ClientService clientService;
+    @MockitoBean
+    private VetService vetService;
 
     //happy path
     @Test

@@ -32,6 +32,10 @@ export const Appointment = () => {
     }
   };
 
+  useEffect(() => {
+    getAppointment();
+  }, []);
+
   const closeAppointment = async (id) => {
     try {
       await api.put(`/appointments/cancel/${id}`);

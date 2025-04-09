@@ -2,12 +2,15 @@ package SpringProject._Spring.validation;
 
 import SpringProject._Spring.controller.BaseController;
 import SpringProject._Spring.dto.ApiResponse;
+import SpringProject._Spring.exceptions.NameAlreadyExistsException;
+import SpringProject._Spring.exceptions.NotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +49,15 @@ public class GlobalExceptionHandler extends BaseController {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse<String>> handleAccessDeniedException(AccessDeniedException ex) {
         return forbidden("Access Denied");
+    }
+
+    @ExceptionHandler(NameAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse<String>> handleNameAlreadyExistsException(NameAlreadyExistsException ex) {
+        return badRequest(null, ex.getMessage());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleNotFoundException(NotFoundException ex) {
+        return notFound(ex.getMessage());
     }
 }
