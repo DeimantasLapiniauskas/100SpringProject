@@ -33,20 +33,18 @@ if (!appointments) return
     getAppointment();
   }, []);
 
-  const close = async (id) => {
+  const closeapoiment = async (id) => {
     try{
-   const response = await api.put(`/appointments/cancel/${id}`)
+    await api.put(`/appointments/cancel/${id}`)
+    const response = await getClientAppointments();
+    
+    
     setAppointments(response.data);
+    
     } catch (error) {
       console.log(error.message);
     }
   }
-  useEffect(() => {
-    close();
-  }, []);
-  
-
-
 
   return (
     <div>
@@ -97,12 +95,10 @@ if (!appointments) return
             <p>{a.notes}</p>
             <p>{a.status}</p>
            
-
-        <NavLink to={`/appointments/client/${a.id}`} className="btn bg-red-500 p-1">pernesti</NavLink>
-          
-          
-                    <button onClick={() => close(a.id)} className=" btn bg-green-500 p-1">close</button>
-
+           <div className="flex flex-row">
+                    <NavLink to={`/appointments/client/${a.id}`} className="btn bg-red-500 w-20">pernesti</NavLink>
+                    <button onClick={() => closeapoiment(a.id)} className=" btn bg-green-500 w-20 ">Cancel</button>
+</div>
             </div>
 
         ))}
