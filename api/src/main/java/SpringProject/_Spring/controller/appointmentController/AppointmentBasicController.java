@@ -97,9 +97,7 @@ public class AppointmentBasicController extends BaseController {
         }
 
         Account currentAccount = accountService.findByEmail(authentication.getName()).get();
-        System.out.println("help3");
         Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
-        System.out.println("help4");
         appointmentFromDB.setAppointmentDate(rescheduleDTO.newDate());
 
         if (currentAccount.getRoles().stream()

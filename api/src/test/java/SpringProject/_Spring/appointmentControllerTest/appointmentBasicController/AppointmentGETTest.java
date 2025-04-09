@@ -10,10 +10,12 @@ import SpringProject._Spring.model.pet.Gender;
 import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.*;
+import SpringProject._Spring.service.authentication.AccountService;
 import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -48,6 +51,9 @@ public class AppointmentGETTest {
 
     @MockitoBean
     private VetService vetService;
+
+    @MockitoBean
+    private AccountService accountService;
 
     @MockitoBean
     private ServiceAtClinicService serviceService; //throws errors if not here
@@ -182,7 +188,7 @@ public class AppointmentGETTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getAppointments_whenGetClient_thenRespond200() throws Exception {
+    void getClientAppointments_whenGetClient_thenRespond200() throws Exception {
 
         when(clientService.findClientIdByEmail(any()))
                 .thenReturn(clientId);
@@ -199,7 +205,7 @@ public class AppointmentGETTest {
         when(vetService.getVetById(vetIdTwo))
                 .thenReturn(Optional.of(vetTwo));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client"))
                 .andExpect(status().isOk())
 
                 .andExpect(jsonPath("[0].id").value(appointmentOneId))
@@ -243,6 +249,72 @@ public class AppointmentGETTest {
                 .andExpect(jsonPath("[1].price").value(appointmentTwo.getTotalServicesSum()));
 
         Mockito.verify(appointmentService, times(1)).getAllAppointmentsByClientId(clientId);
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
+    void getVetAppointments_whenGetVet_thenRespond200() throws Exception {
+
+        when(vetService.findVetByAccountEmail(any()))
+                .thenReturn(Optional.of(vetOne));
+
+        when(appointmentService.getAllAppointmentsByVetId(vetIdOne))
+                .thenReturn(List.of(appointmentOne, appointmentTwo));
+
+        when(petService.getPetById(petIdOne))
+                .thenReturn(Optional.of(petOne));
+        when(petService.getPetById(petIdTwo))
+                .thenReturn(Optional.of(petTwo));
+
+        when(vetService.getVetById(vetIdOne))
+                .thenReturn(Optional.of(vetOne));
+        when(vetService.getVetById(vetIdTwo))
+                .thenReturn(Optional.of(vetTwo));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/vet"))
+                .andExpect(status().isOk())
+
+                .andExpect(jsonPath("[0].id").value(appointmentOneId))
+                .andExpect(jsonPath("[1].id").value(appointmentTwoId))
+
+                .andExpect(jsonPath("[0].petDTO.name").value(petOne.getName()))
+                .andExpect(jsonPath("[1].petDTO.name").value(petTwo.getName()))
+                .andExpect(jsonPath("[0].petDTO.species").value(petOne.getSpecies()))
+                .andExpect(jsonPath("[1].petDTO.species").value(petTwo.getSpecies()))
+                .andExpect(jsonPath("[0].petDTO.breed").value(petOne.getBreed()))
+                .andExpect(jsonPath("[1].petDTO.breed").value(petTwo.getBreed()))
+                .andExpect(jsonPath("[0].petDTO.gender").value(petOne.getGender().name()))
+                .andExpect(jsonPath("[1].petDTO.gender").value(petTwo.getGender().name()))
+
+                .andExpect(jsonPath("[0].vetDTO.email").value(vetOne.getAccount().getEmail()))
+                .andExpect(jsonPath("[1].vetDTO.email").value(vetTwo.getAccount().getEmail()))
+                .andExpect(jsonPath("[0].vetDTO.firstName").value(vetOne.getFirstName()))
+                .andExpect(jsonPath("[1].vetDTO.firstName").value(vetTwo.getFirstName()))
+                .andExpect(jsonPath("[0].vetDTO.lastName").value(vetOne.getLastName()))
+                .andExpect(jsonPath("[1].vetDTO.lastName").value(vetTwo.getLastName()))
+                .andExpect(jsonPath("[0].vetDTO.specialty").value(vetOne.getSpecialty()))
+                .andExpect(jsonPath("[1].vetDTO.specialty").value(vetTwo.getSpecialty()))
+
+                .andExpect(jsonPath("[0].services[0].name").value(serviceAtClinicOne.getName()))
+                .andExpect(jsonPath("[1].services[0].name").value(serviceAtClinicThree.getName()))
+                .andExpect(jsonPath("[0].services[0].description").value(serviceAtClinicOne.getDescription()))
+                .andExpect(jsonPath("[1].services[0].description").value(serviceAtClinicThree.getDescription()))
+                .andExpect(jsonPath("[0].services[0].price").value(serviceAtClinicOne.getPrice()))
+                .andExpect(jsonPath("[1].services[0].price").value(serviceAtClinicThree.getPrice()))
+                .andExpect(jsonPath("[0].services[1].name").value(serviceAtClinicTwo.getName()))
+                .andExpect(jsonPath("[1].services[1].name").value(serviceAtClinicFour.getName()))
+                .andExpect(jsonPath("[0].services[1].description").value(serviceAtClinicTwo.getDescription()))
+                .andExpect(jsonPath("[1].services[1].description").value(serviceAtClinicFour.getDescription()))
+                .andExpect(jsonPath("[0].services[1].price").value(serviceAtClinicTwo.getPrice()))
+                .andExpect(jsonPath("[1].services[1].price").value(serviceAtClinicFour.getPrice()))
+
+                .andExpect(jsonPath("[0].notes").value(appointmentOne.getNotes()))
+                .andExpect(jsonPath("[1].notes").value(appointmentTwo.getNotes()))
+
+                .andExpect(jsonPath("[0].price").value(appointmentOne.getTotalServicesSum()))
+                .andExpect(jsonPath("[1].price").value(appointmentTwo.getTotalServicesSum()));
+
+        Mockito.verify(appointmentService, times(1)).getAllAppointmentsByVetId(vetIdOne);
     }
 
     @Test
@@ -310,32 +382,57 @@ public class AppointmentGETTest {
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void getAppointments_whenGetAdmin_thenRespond200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
+    void getClientAppointments_whenGetAdmin_thenRespond403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client"))
                 .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
+    }
+
+    @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+    void getVetAppointments_whenGetAdmin_thenRespond403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/vet"))
+                .andExpect(status().isForbidden());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getAppointmentsById_whenGetClient_thenRespond200() throws Exception {
+    void getAppointmentsById_whenGetClient_thenRespond403() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
     @Test
-    void getAppointments_whenGetUnauthenticated_thenRespond200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments"))
+    @WithMockUser(authorities = "SCOPE_ROLE_VE")
+    void getAppointmentsById_whenGetVet_thenRespond403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
+                .andExpect(status().isForbidden());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
+    }
+
+    @Test
+    void getClientAppointments_whenGetUnauthenticated_thenRespond401() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/client"))
                 .andExpect(status().isUnauthorized());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
     @Test
-    void getAppointmentsById_whenGetUnauthenticated_thenRespond200() throws Exception {
+    void getVetAppointments_whenGetUnauthenticated_thenRespond401() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/vet"))
+                .andExpect(status().isUnauthorized());
+
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByVetId(anyLong());
+    }
+
+    @Test
+    void getAppointmentsById_whenGetUnauthenticated_thenRespond401() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isUnauthorized());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(any());
+        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }
 
 }
