@@ -19,7 +19,7 @@ export const FilterPanel = ({sortFields}) => {
         <p className="text-[8px] sm:text-[10px] md:text-xs text-info-content">
           Filter:
         </p>
-        <SelectTrigger className="focus:ring-1 focus:ring-blue-500 rounded-full">
+        <SelectTrigger className="focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-blue-500 rounded-full">
           <FilterIcon />
         </SelectTrigger>
         <SelectContent>

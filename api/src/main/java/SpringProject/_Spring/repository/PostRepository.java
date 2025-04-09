@@ -17,6 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
         WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))
            OR LOWER(p.content) LIKE LOWER(CONCAT('%', :search, '%'))
            OR LOWER(p.postType) LIKE LOWER(CONCAT('%', :search, '%'))
+           OR str(p.createdAt) LIKE CONCAT('%', :search, '%')
         ORDER BY p.createdAt DESC
     """,
             countQuery = """
@@ -24,6 +25,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
         WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))
            OR LOWER(p.content) LIKE LOWER(CONCAT('%', :search, '%'))
            OR LOWER(p.postType) LIKE LOWER(CONCAT('%', :search, '%'))
+           OR str(p.createdAt) LIKE CONCAT('%', :search, '%')
     """
     )
     Page<Post> searchAllFields(@Param("search") String search, Pageable pageable);
@@ -35,6 +37,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))
             OR LOWER(p.content) LIKE LOWER(CONCAT('%', :search, '%'))
             OR LOWER(p.postType) LIKE LOWER(CONCAT('%', :search, '%'))
+            OR str(p.createdAt) LIKE CONCAT('%', :search, '%')
         )
         AND p.postType = :postType
         ORDER BY p.createdAt DESC
@@ -45,6 +48,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))
             OR LOWER(p.content) LIKE LOWER(CONCAT('%', :search, '%'))
             OR LOWER(p.postType) LIKE LOWER(CONCAT('%', :search, '%'))
+            OR str(p.createdAt) LIKE CONCAT('%', :search, '%')
         )
         AND p.postType = :postType
     """

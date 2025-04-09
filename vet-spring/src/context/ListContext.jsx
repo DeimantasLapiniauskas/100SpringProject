@@ -75,7 +75,7 @@ export const ListProvider = ({ children }) => {
         console.log(response.data);
 
         if (!isMounted.current) return;
-        if (page >= data.totalPages && data.totalPages !== 0) {
+        if (page >= data.totalPages && data.totalPages > 0) {
           setStatus(BadPageRequest);
           return;
         }

@@ -10,6 +10,9 @@ import { useUI } from "@/context/UIContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router";
+import { ChevronsRight } from "lucide-react";
+import "../../index.css"
+import dayjs from "dayjs";
 
 export const PostCard = (props) => {
   const { post, getPage, currentPage, pageSize, sorted, searchValue } = props;
@@ -61,7 +64,7 @@ export const PostCard = (props) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="card card-side will-change-transform bg-blue-300/15 backdrop-blur-lg p-4 sm:p-5 md:p-6 rounded-xl shadow-lg"
       >
-        <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[19rem] sm:h-[24.5rem] md:h-[30rem] p-1.5 sm:p-2.25 md:p-3 shadow-lg shadow-info w-full border-1 border-info">
+        <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[20.5rem] sm:h-[25.5rem] md:h-[31.5rem] p-1.5 sm:p-2.25 md:p-3 shadow-lg shadow-info w-full border-1 border-info">
           <h2
             className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] max-h-[40px] sm:max-h-[55px] md:max-h-[60px] px-10 sm:px-15 md:px-15 lg:px-5 xl:px-15 text-sm sm:text-lg md:text-xl overflow-hidden ${
               postType === "Sale"
@@ -97,8 +100,15 @@ export const PostCard = (props) => {
               />
             )}
           </div>
+          <p className={`text-[10px] sm:text-xs md:text-sm p-1 md:p-1.5 ${
+              postType === "Sale"
+                ? `text-red-700`
+                : postType === "Blog"
+                ? `text-[#006666]`
+                : `text-[#004C99]`
+            }`}>{dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')}</p>
           <p
-            className={`leading-[20px] text-left overflow-hidden text-xs sm:text-sm md:text-base break-words p-[4px] sm:p-[6px] md:p-[10px] ${
+            className={`leading-[20px] text-left overflow-hidden text-xs sm:text-sm md:text-base break-words px-[4px] sm:px-[6px] md:px-[10px] pt-0 ${
               imageUrl
                 ? "min-h-[105px] sm:min-h-[105px] md:min-h-[120px] max-h-[105px] sm:max-h-[105px] md:max-h-[120px]"
                 : "min-h-[205px] sm:min-h-[255px] md:min-h-[320px] max-h-[205px] sm:max-h-[255px] md:max-h-[320px]"
@@ -112,18 +122,21 @@ export const PostCard = (props) => {
               ? content.slice(0, 947) + "..."
               : content}
           </p>
-          <button
-            type="button"
-            className=" text-white hover:underline text-xs sm:text-sm md:text-base font-medium p-1 cursor-pointer"
-            onClick={() => {
-              setStatus(Redirecting);
-              setTimeout(() => {
-                navigate(`/posts/view/${id}`);
-              }, 1000);
-            }}
-          >
-            Read more here
-          </button>
+          <div className="flex justify-center items-center">
+            <span><ChevronsRight className=" w-4 sm:w-5 md:w-6 text-white slow-pulse"/></span>
+            <button
+              type="button"
+              className=" text-white hover:underline text-xs sm:text-sm md:text-base font-medium p-1 cursor-pointer slow-pulse"
+              onClick={() => {
+                setStatus(Redirecting);
+                setTimeout(() => {
+                  navigate(`/posts/view/${id}`);
+                }, 1000);
+              }}
+            >
+              Read more here
+            </button>
+          </div>
         </div>
         {roles && (
           <div className="absolute bottom-[-1px] flex gap-2">

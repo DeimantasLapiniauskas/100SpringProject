@@ -7,15 +7,16 @@ const searchBarVariants = cva(
   {
     variants: {
       intent: {
-        default: " border border-blue-500 focus:ring-blue-500 bg-white",
+        default: " border border-info focus:ring-blue-500 bg-white",
         filled: "border-none bg-gray-100",
         subtle: "border-transparent bg-transparent",
         info: "border-blue-500 bg-blue-50",
       },
       size: {
         sm: "text-sm px-3 py-1.5",
-        md: "text-base px-4 py-2 w-full",
+        md: "text-base px-4 py-2 ",
         lg: "text-lg px-5 py-3",
+        responsive: "text-[8px] sm:text-[10px] md:text-xs lg:text-sm px-6 md:px-7 lg:px-8 py-1 sm:py-1.25 md:py-1.5 lg:py-1.75"
       },
       radius: {
         default: "rounded-xl",
@@ -25,7 +26,7 @@ const searchBarVariants = cva(
     },
     defaultVariants: {
       intent: "default",
-      size: "md",
+      size: "responsive",
       radius: "default",
     },
   }

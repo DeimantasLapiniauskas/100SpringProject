@@ -15,7 +15,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
       ref={ref}
       onClick={() => setOpen(!open)}
       className={cn(
-        "flex w-full items-center gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+        "flex w-full items-center gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-offset-2disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}

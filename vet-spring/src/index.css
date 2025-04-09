@@ -32,6 +32,11 @@ html, body {
   }
 }
 
+.animate-gradient {
+  animation: animatedGradient 6s ease infinite;
+  background-size: 200% 200%;
+}
+
 @keyframes fadeSwap {
   0%, 100% {
     opacity: 1;
@@ -39,11 +44,6 @@ html, body {
   50% {
     opacity: 0;
   }
-}
-
-.animate-gradient {
-  animation: animatedGradient 6s ease infinite;
-  background-size: 200% 200%;
 }
 
 .fade {
@@ -56,6 +56,21 @@ html, body {
 .fade-in {
   animation-delay: 3s;
 }
+
+@keyframes slow-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.slow-pulse {
+  @apply animate-none;
+  animation: slow-pulse 3s ease-in-out infinite;
+}
+
 
 
 @layer components {

@@ -8,6 +8,8 @@ import "../../index.css";
 import { useNavigate } from "react-router";
 import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
+import { ChevronsRight } from "lucide-react";
+
 
 const PostCarousel = () => {
   const { content: posts } = useList();
@@ -95,19 +97,21 @@ const PostCarousel = () => {
                   />
                 )}
               </div>
-
-              <button
-                type="button"
-                className=" text-white hover:underline text-xs md:text-sm font-medium p-1 cursor-pointer"
-                onClick={() => {
-                  setStatus(Redirecting);
-                  setTimeout(() => {
-                    navigate(`/posts/view/${post.id}`);
-                  }, 1000);
-                }}
-              >
-                Read more here
-              </button>
+              <div className="flex justify-center items-center">
+                <ChevronsRight className=" w-[18px] md:w-[22px] text-white slow-pulse"/>
+                <button
+                  type="button"
+                  className=" text-white hover:underline text-xs md:text-sm font-medium p-1 ps-0 cursor-pointer slow-pulse"
+                  onClick={() => {
+                    setStatus(Redirecting);
+                    setTimeout(() => {
+                      navigate(`/posts/view/${post.id}`);
+                    }, 1000);
+                  }}
+                >
+                  Read more here
+                </button>
+              </div>
             </div>
           </SwiperSlide>
         ))}
