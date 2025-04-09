@@ -1,20 +1,22 @@
 import { useState } from "react";
-import EditVetButton from "../admin/buttons/EditVetButton";
+import EditClientButton from "../buttons/EditClientButton";
 
-const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber } = vet;
+
+const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
+    const { firstName, lastName, phoneNumber } = client;
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div
+        <li
             className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
-            onClick={() => setIsExpanded(!isExpanded)}>
+            onClick={() => setIsExpanded(!isExpanded)}
+        >
             <div className="flex justify-between items-center py-4 px-6 md:px-4 md:py-2">
                 <div className="text-lg md:text-base font-medium">
                     {firstName} {lastName}
                 </div>
-                <EditVetButton
-                    vet={vet}
+                <EditClientButton
+                    client={client}
                     getPage={getPage}
                     currentPage={currentPage}
                     pageSize={pageSize}
@@ -23,14 +25,11 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
 
             {isExpanded && (
                 <div className="px-6 py-4 bg-gray-50 text-gray-700">
-                    <p>E-mail: {email}</p>
                     <p>Phone: {phoneNumber}</p>
-                    <p>Specialty: {specialty}</p>
-                    <p>License: {licenseNumber}</p>
                 </div>
             )}
-        </div>
+        </li>
     )
 }
 
-export default VetCard;
+export default ClientCard;

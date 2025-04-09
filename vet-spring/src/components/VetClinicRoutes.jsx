@@ -22,6 +22,7 @@ import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
+import ProductList from "@/pages/products/ProductList.jsx";
 
 const VetClinicRoutes = () => {
 
@@ -80,19 +81,30 @@ const VetClinicRoutes = () => {
                   element={<AdminPage initialList="clients" />}
                 />
               </Route>
+              <Route
+                path="/products"
+                element={
+                  <AuthGuard>
+                    <ListProvider>
+                      <ProductList />
+                    </ListProvider>
+                  </AuthGuard>
+                }
+              >
+              </Route>
               <Route path="services/add" element={<ServiceAdd />} />
               <Route path="services/edit/:id" element={<ServiceUpdate />} />
               {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
               <Route path="/profile" element={
                 <AuthGuard>
-                <Profile />
+                  <Profile />
                 </AuthGuard>
               } />
               <Route path="/design" element={<BandytiDesign />} />
               <Route path="/designh" element={<BandytiDesignHomePage />} />
               <Route path="/designh1" element={<BandytiDesignH1 />} />
               <Route path="/designh2" element={<BandytiDesignH2 />} />
-              <Route path="/appointments" element={<Appointment/>}/>
+              <Route path="/appointments" element={<Appointment />} />
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>

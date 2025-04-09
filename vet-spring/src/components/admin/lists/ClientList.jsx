@@ -1,5 +1,5 @@
 import { PaginationUI } from "@/components/PaginationUI";
-import ClientCard from "../../cards/ClientCard";
+import ClientCard from "../cards/ClientCard";
 import { useList } from "@/context/ListContext";
 import { useUI } from "@/context/UIContext";
 import { Error } from "@/components/feedback/Error";
