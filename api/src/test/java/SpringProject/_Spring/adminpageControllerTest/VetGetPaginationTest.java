@@ -1,9 +1,10 @@
-package SpringProject._Spring.vetControllerTest;
+package SpringProject._Spring.adminpageControllerTest;
 
-import SpringProject._Spring.controller.VetController;
+import SpringProject._Spring.controller.AdminpageController;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.security.SecurityConfig;
+import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = VetController.class)
+@WebMvcTest(controllers = AdminpageController.class)
 @Import(SecurityConfig.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
@@ -39,6 +40,8 @@ public class VetGetPaginationTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @MockitoBean
+    private ClientService clientService;
     @MockitoBean
     private VetService vetService;
 
