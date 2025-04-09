@@ -96,7 +96,7 @@ if (!appointments) return
             <p>{a.status}</p>
            
            <div className="flex flex-row">
-                    <NavLink to={`/appointments/client/${a.id}`} className="btn bg-red-500 w-20">pernesti</NavLink>
+                    <NavLink to={`/appointments/client/${a.id}`} className="btn bg-red-500 w-20">Change Data</NavLink>
                     <button onClick={() => closeapoiment(a.id)} className=" btn bg-green-500 w-20 ">Cancel</button>
 </div>
             </div>
