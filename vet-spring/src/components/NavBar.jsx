@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { DropdownMenu } from "../pages/profile/DropdownMenu";
-import menu from "../assets/icons/menu.svg";
+import menu from "../assets/pawsNav.png";
 export const Navbar = () => {
   const { account, logout } = useAuth();
   return (
@@ -10,16 +10,13 @@ export const Navbar = () => {
         <NavLink to={"/home"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Home</p>
         </NavLink>
-        <NavLink to={"/pets"}>
-          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Your Pets</p>
-        </NavLink>
+        
         <NavLink to={"/services"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Service list</p>
         </NavLink>
         <NavLink to={"/posts"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">News</p>
         </NavLink>
-        {account && <NavLink to={"/appointments"}><p className=" text-white lg:text-lg md:text-base sm:text-sm text-xs">Appointments History</p></NavLink>}
         <div className="dropdown">
           <button className="dropbtn btn bg-[#97a0f1] w-12">
             <img src={menu} alt="" className="w-10 absolute" />
