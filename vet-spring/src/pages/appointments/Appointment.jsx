@@ -30,7 +30,7 @@ export const Appointment = () => {
     getAppointment();
   }, []);
 
-  const closeapoiment = async (id) => {
+  const closeAppointment = async (id) => {
     try {
       await api.put(`/appointments/cancel/${id}`);
       const response = await getClientAppointments();
@@ -96,7 +96,7 @@ export const Appointment = () => {
                 Change Data
               </NavLink>
               <button
-                onClick={() => closeapoiment(a.id)}
+                onClick={() => closeAppointment(a.id)}
                 className=" btn bg-green-500 w-20 "
               >
                 Cancel
