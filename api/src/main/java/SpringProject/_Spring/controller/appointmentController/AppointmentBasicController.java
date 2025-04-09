@@ -11,8 +11,6 @@ import SpringProject._Spring.dto.appointment.vet.VetAppointmentMapping;
 import SpringProject._Spring.dto.appointment.vet.VetAppointmentResponseDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
-import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
-import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
@@ -126,18 +124,28 @@ public class AppointmentBasicController extends BaseController {
                 )
         ) {
             appointmentFromDB.setStatus(Status.ScheduledUnconfirmedByVet);
+            Email email = DefaultEmail.builder()
+                    .from(new InternetAddress("spring100project@gmail.com"))
+                    .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
+                    .subject("New appointment scheduled")
+                    .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) for " + appointmentFromDB.getAppointmentDate() + ", please log in and confirm!").build();
+            emailService.send(email);
         } else {
             appointmentFromDB.setStatus(Status.ScheduledUnconfirmedByClient);
+            try { // breaks if pet that was registered has been deleted.
+                Email email = DefaultEmail.builder()
+                        .from(new InternetAddress("spring100project@gmail.com"))
+                        .to(Lists.newArrayList(new InternetAddress(clientService.findClientByAccountId(petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()).getAccount().getEmail())))
+                        .subject("New appointment scheduled")
+                        .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) for " + appointmentFromDB.getAppointmentDate() + ", please log in and confirm!").build();
+                emailService.send(email);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         appointmentService.saveAppointment(appointmentFromDB);
 
-        Email email = DefaultEmail.builder()
-                .from(new InternetAddress("spring100project@gmail.com"))
-                .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
-                .subject("New appointment scheduled")
-                .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) for " + appointmentFromDB.getAppointmentDate() + ", please log in and confirm!").build();
-        emailService.send(email);
         return ok("Appointment updated its date successfully! Now please wait for confirmation.");
     }
 
