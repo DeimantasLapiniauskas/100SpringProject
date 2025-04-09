@@ -8,6 +8,8 @@ export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
   const { account } = useAuth();
+  if (!appointments) return
+  
 
   const getAppointment = async () => {
     try {      

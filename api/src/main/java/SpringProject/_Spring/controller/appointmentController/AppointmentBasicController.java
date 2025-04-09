@@ -19,7 +19,13 @@ import SpringProject._Spring.service.*;
 import SpringProject._Spring.service.authentication.AccountService;
 import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
+import com.google.common.collect.Lists;
 import io.swagger.v3.oas.annotations.Operation;
+import it.ozimov.springboot.mail.model.Email;
+import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
+import it.ozimov.springboot.mail.service.EmailService;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +47,7 @@ public class AppointmentBasicController extends BaseController {
     private final VetService vetService;
     private final ClientService clientService;
     private final AccountService accountService;
+    private final EmailService emailService;
 
     @Autowired
     public AppointmentBasicController(AppointmentService appointmentService,
@@ -48,19 +55,22 @@ public class AppointmentBasicController extends BaseController {
                                       ServiceAtClinicService serviceService,
                                       VetService vetService,
                                       ClientService clientService,
-                                      AccountService accountService) {
+                                      AccountService accountService,
+                                      EmailService emailService) {
         this.appointmentService = appointmentService;
         this.petService = petService;
         this.serviceService = serviceService;
         this.vetService = vetService;
         this.clientService = clientService;
         this.accountService = accountService;
+        this.emailService = emailService;
     }
+
 
     @Operation(summary = "Create new appointment", description = "Creates an appointment for a pet with selected vet")
     @PostMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO) {
+    public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO, Authentication authentication) throws AddressException {
         if (appointmentDTO.serviceIds().stream()
                 .anyMatch(appointmentId -> appointmentService.existsByPetIdAndServiceIdAndIsScheduled(
                                 appointmentDTO.petId(), appointmentId
@@ -76,6 +86,12 @@ public class AppointmentBasicController extends BaseController {
                 )
         );
 
+        Email email = DefaultEmail.builder()
+                .from(new InternetAddress("deimislapinas@gmail.com"))
+                .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(savedAppointment.getVetId()).get().getAccount().getEmail())))
+                .subject("New appointment scheduled")
+                .body("Did you know that in terms of pokemon and human(...)\n also this was sent by " + authentication.getName()).build();
+        emailService.send(email);
 
         return created(
                 AppointmentMapping.toAppointmentDTO(
@@ -127,7 +143,7 @@ public class AppointmentBasicController extends BaseController {
 
         Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
 
-        if (appointmentFromDB.getStatus().name().equals(Status.Cancelled.name())){
+        if (appointmentFromDB.getStatus().name().equals(Status.Cancelled.name())) {
             return badRequest(id, "This appointment is already cancelled!");
         }
 
@@ -174,12 +190,12 @@ public class AppointmentBasicController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getOwnVetAppointments(Authentication authentication) {
         return ok(appointmentService.getAllAppointmentsByVetId(vetService.findVetByAccountEmail(authentication.getName()).get().getId())
-                        .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
-                                appointment,
-                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
-                                VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
-                        ))
-                        .toList());
+                .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
+                        appointment,
+                        PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
+                        VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
+                ))
+                .toList());
     }
 
     @Operation(summary = "Get appointment by ID (Admin)", description = "Retrieves all appointment by it's unique ID")
@@ -187,12 +203,12 @@ public class AppointmentBasicController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getAdminAppointments(@PathVariable long id) {
         return ok(appointmentService.getAllAppointmentsByClientId(id)
-                        .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
-                                appointment,
-                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
-                                VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
-                        ))
-                        .toList());
+                .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
+                        appointment,
+                        PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
+                        VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
+                ))
+                .toList());
     }
 
     //Why is this in this controller? -DL
