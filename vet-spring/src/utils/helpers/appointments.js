@@ -8,5 +8,3 @@ export const getVetAppointments = () => api.get(`${url}/vet`)
 
 export const postAppointment = (data) => api.post(`${url}`, data);
 
-export const putAppointment = (data) => api.put(`${url}/${id}`, data);
-
