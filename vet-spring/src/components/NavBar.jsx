@@ -10,16 +10,13 @@ export const Navbar = () => {
         <NavLink to={"/home"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Home</p>
         </NavLink>
-        <NavLink to={"/pets"}>
-          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Your Pets</p>
-        </NavLink>
+        
         <NavLink to={"/services"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Service list</p>
         </NavLink>
         <NavLink to={"/posts"}>
           <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">News</p>
         </NavLink>
-        {account && <NavLink to={"/appointments"}><p className=" text-white md:text-base sm:text-sm text-xs">Appointments history</p></NavLink>}
         <div className="dropdown">
           <button className="dropbtn btn bg-[#97a0f1] w-12">
             <img src={menu} alt="" className="w-10 absolute" />
