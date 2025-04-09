@@ -11,6 +11,9 @@ import SpringProject._Spring.dto.appointment.vet.VetAppointmentMapping;
 import SpringProject._Spring.dto.appointment.vet.VetAppointmentResponseDTO;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.authentication.vet.VetMapping;
+import SpringProject._Spring.dto.service.ServiceAtClinicMapper;
+import SpringProject._Spring.dto.service.ServiceAtClinicResponseDTO;
+import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.model.authentication.Account;
@@ -80,6 +83,7 @@ public class AppointmentBasicController extends BaseController {
             return badRequest(appointmentDTO, "Your pet is already registered to at least one of these services!");
         }
 
+
         Appointment savedAppointment = appointmentService.saveAppointment(
                 AppointmentMapping.toAppointment(appointmentDTO,
                         appointmentDTO.serviceIds().stream().map(id -> serviceService.findServiceAtClinicById(id).get()).toList()
@@ -87,10 +91,10 @@ public class AppointmentBasicController extends BaseController {
         );
 
         Email email = DefaultEmail.builder()
-                .from(new InternetAddress("deimislapinas@gmail.com"))
+                .from(new InternetAddress("spring100project@gmail.com"))
                 .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(savedAppointment.getVetId()).get().getAccount().getEmail())))
                 .subject("New appointment scheduled")
-                .body("Did you know that in terms of pokemon and human(...)\n also this was sent by " + authentication.getName()).build();
+                .body("A user by the email of " + authentication.getName() + " has scheduled an appointment to your " + String.join(", ", savedAppointment.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), please log in and confirm!").build();
         emailService.send(email);
 
         return created(
@@ -107,7 +111,7 @@ public class AppointmentBasicController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<Object>> rescheduleAppointmentClient(@PathVariable long id,
                                                                            @RequestBody @Valid AppointmentRescheduleDTO rescheduleDTO,
-                                                                           Authentication authentication) {
+                                                                           Authentication authentication) throws AddressException {
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
         }
@@ -127,6 +131,13 @@ public class AppointmentBasicController extends BaseController {
         }
 
         appointmentService.saveAppointment(appointmentFromDB);
+
+        Email email = DefaultEmail.builder()
+                .from(new InternetAddress("spring100project@gmail.com"))
+                .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
+                .subject("New appointment scheduled")
+                .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), please log in and confirm!").build();
+        emailService.send(email);
         return ok("Appointment updated its date successfully! Now please wait for confirmation.");
     }
 
@@ -135,7 +146,7 @@ public class AppointmentBasicController extends BaseController {
     @PutMapping("/appointments/cancel/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<Object>> cancelAppointment(@PathVariable long id,
-                                                                 Authentication authentication) {
+                                                                 Authentication authentication) throws AddressException {
 
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
@@ -163,6 +174,14 @@ public class AppointmentBasicController extends BaseController {
         }
         appointmentFromDB.setStatus(Status.Cancelled);
         appointmentService.saveAppointment(appointmentFromDB);
+
+        Email email = DefaultEmail.builder()
+                .from(new InternetAddress("spring100project@gmail.com"))
+                .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
+                .subject("New appointment scheduled")
+                .body("A user by the email of " + authentication.getName() + " has cancelled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), enjoy your now-free time!").build();
+        emailService.send(email);
+
         return ok("Appointment cancelled successfully!");
     }
 
@@ -177,6 +196,20 @@ public class AppointmentBasicController extends BaseController {
     public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getOwnClientAppointments(Authentication authentication) {
         return ok(
                 appointmentService.getAllAppointmentsByClientId(clientService.findClientIdByEmail(authentication.getName()))
+                        .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
+                                appointment,
+                                PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
+                                VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
+                        ))
+                        .toList());
+    }
+
+    @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
+    @GetMapping("/appointments/client/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<List<AppointmentResponseDTO>> getAppointment(@PathVariable long id) {
+        return ResponseEntity.ok(
+                appointmentService.getAppointmentById(id)
                         .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
                                 appointment,
                                 PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
