@@ -53,7 +53,7 @@ public class AppointmentConfirmationController extends BaseController {
 
         appointmentFromDB.setStatus(Status.Scheduled);
         appointmentService.saveAppointment(appointmentFromDB);
-        return ok("Appointment updated its date successfully! Now please wait for confirmation!");
+        return ok("Appointment confirmed successfully!");
     }
 
     @Operation(summary = "Get all unconfirmed appointments or reschedulings as a vet", description = "Gets all appointment or appointment reschedulings pending approval by vet by authenticated vet email")
@@ -73,15 +73,15 @@ public class AppointmentConfirmationController extends BaseController {
             return notFound("Appointment not found!");
         }
 
-        if (!petService.existsById(id)) {
+        Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
+
+        if (!petService.existsById(appointmentFromDB.getPetId())) {
             return notFound("This pet no longer exists in our database!");
         }
 
-        Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
-
-        if (!appointmentFromDB.getStatus().name().equals(
-                Status.ScheduledUnconfirmedByClient.name()) ||
-                petService.findById(appointmentFromDB.getPetId()).get().getId() !=
+        if (!appointmentFromDB.getStatus().equals(
+                Status.ScheduledUnconfirmedByClient) ||
+                petService.findById(appointmentFromDB.getPetId()).get().getOwnerId() !=
                         clientService.findClientIdByEmail(authentication.getName())
         ) {
             return forbidden("This appointment isn't waiting for your approval!");
@@ -89,7 +89,7 @@ public class AppointmentConfirmationController extends BaseController {
 
         appointmentFromDB.setStatus(Status.Scheduled);
         appointmentService.saveAppointment(appointmentFromDB);
-        return ok("Appointment updated its date successfully! Now please wait for confirmation!");
+        return ok("Appointment confirmed successfully!");
     }
 
     @Operation(summary = "Get all unconfirmed reschedulings as a client", description = "Gets all appointment reschedulings pending approval by client by authenticated client email")

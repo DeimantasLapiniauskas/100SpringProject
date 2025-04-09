@@ -158,8 +158,8 @@ public class AppointmentBasicController extends BaseController {
     @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
     @GetMapping("/appointments/client")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<List<AppointmentResponseDTO>> getOwnClientAppointments(Authentication authentication) {
-        return ResponseEntity.ok(
+    public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getOwnClientAppointments(Authentication authentication) {
+        return ok(
                 appointmentService.getAllAppointmentsByClientId(clientService.findClientIdByEmail(authentication.getName()))
                         .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
                                 appointment,
@@ -172,9 +172,8 @@ public class AppointmentBasicController extends BaseController {
     @Operation(summary = "Get all appointments for current vet", description = "Retrieves all appointments for currently authenticated vet")
     @GetMapping("/appointments/vet")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
-    public ResponseEntity<List<AppointmentResponseDTO>> getOwnVetAppointments(Authentication authentication) {
-        return ResponseEntity.ok(
-                appointmentService.getAllAppointmentsByVetId(vetService.findVetByAccountEmail(authentication.getName()).get().getId())
+    public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getOwnVetAppointments(Authentication authentication) {
+        return ok(appointmentService.getAllAppointmentsByVetId(vetService.findVetByAccountEmail(authentication.getName()).get().getId())
                         .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
                                 appointment,
                                 PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
@@ -186,9 +185,8 @@ public class AppointmentBasicController extends BaseController {
     @Operation(summary = "Get appointment by ID (Admin)", description = "Retrieves all appointment by it's unique ID")
     @GetMapping("/appointments/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<List<AppointmentResponseDTO>> getAdminAppointments(@PathVariable long id) {
-        return ResponseEntity.ok(
-                appointmentService.getAllAppointmentsByClientId(id)
+    public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getAdminAppointments(@PathVariable long id) {
+        return ok(appointmentService.getAllAppointmentsByClientId(id)
                         .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
                                 appointment,
                                 PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
@@ -201,8 +199,8 @@ public class AppointmentBasicController extends BaseController {
     @Operation(summary = "Get vets list", description = "Retrieves a vet list (names, specialty)")
     @GetMapping("/vets")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<List<VetAppointmentResponseDTO>> getVeterinarians() {
+    public ResponseEntity<ApiResponse<List<VetAppointmentResponseDTO>>> getVeterinarians() {
         List<VetAppointmentResponseDTO> vetsDTO = vetService.getAllVets().stream().map(VetAppointmentMapping::toVetDTO).toList();
-        return ResponseEntity.ok(vetsDTO);
+        return ok(vetsDTO);
     }
 }
