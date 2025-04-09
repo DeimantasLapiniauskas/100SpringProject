@@ -2,7 +2,6 @@ package SpringProject._Spring.productControllerTest;
 
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.exceptions.NotFoundException;
-import SpringProject._Spring.model.Product;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ProductService;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,6 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.math.BigDecimal;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;

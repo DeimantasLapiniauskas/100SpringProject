@@ -1,8 +1,10 @@
 package SpringProject._Spring.dto.product;
 
+import SpringProject._Spring.dto.product.category.CategoryDTO;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public record ProductRequestDTO(@NotBlank(message = "Name can't be empty!")
                                 @Pattern(
@@ -31,5 +33,7 @@ public record ProductRequestDTO(@NotBlank(message = "Name can't be empty!")
                                         value = 0,
                                         message = "Stock quantity must be zero or greater!"
                                 )
-                                int stockQuantity) {
+                                int stockQuantity,
+                                @NotNull(message = "Product should have at least 1 category!")
+                                List<CategoryDTO> categories) {
 }

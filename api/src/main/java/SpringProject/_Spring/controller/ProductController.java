@@ -2,7 +2,7 @@ package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.ApiResponse;
 import SpringProject._Spring.dto.product.*;
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -71,7 +71,7 @@ public class ProductController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
-        
+
         return noContent();
     }
 }

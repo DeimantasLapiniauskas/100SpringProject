@@ -2,7 +2,8 @@ package SpringProject._Spring.productControllerTest;
 
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.exceptions.NotFoundException;
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Category;
+import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ProductService;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -39,7 +41,7 @@ public class ProductGetByIdTest {
     @Test
     void getProductById_whenValid_thenReturnAnd200() throws Exception {
         //given
-        Product product = new Product("test", "testDescr", BigDecimal.valueOf(10.0), 12);
+        Product product = new Product("test", "testDescr", BigDecimal.valueOf(10.0), 12, List.of(new Category("TestCategory")));
         product.setId(1L);
 
         when(productService.findProductById(1L)).thenReturn(product);

@@ -2,13 +2,14 @@ package SpringProject._Spring.productControllerTest;
 
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
+import SpringProject._Spring.dto.product.category.CategoryDTO;
 import SpringProject._Spring.exceptions.NotFoundException;
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Category;
+import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,6 +21,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -43,9 +45,9 @@ public class ProductUpdateTest {
     @Test
     void updateProduct_whenValid_thenReturnAnd200() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15);
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new CategoryDTO(1L)));
 
-        Product product = new Product("Test", "TestDescr", BigDecimal.valueOf(10.0), 15);
+        Product product = new Product("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new Category("String")));
         product.setId(1L);
 
         when(productService.updateProduct(1L, productRequestDTO)).thenReturn(product);
@@ -72,7 +74,7 @@ public class ProductUpdateTest {
     @Test
     void updateProduct_whenInvalidRequest_thenReturnAnd400() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Testвыапып", "TestDescrпфвпы", BigDecimal.valueOf(-1), -10);
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Testвыапып", "TestDescrпфвпы", BigDecimal.valueOf(-1), -10, List.of(new CategoryDTO(1L)));
 
         //when
         mockMvc.perform(put("/api/products/{id}", 1L)
@@ -110,7 +112,7 @@ public class ProductUpdateTest {
     @Test
     void updateProduct_whenProductNotFound_thenReturnAnd404() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15);
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new CategoryDTO(1L)));
 
         when(productService.updateProduct(1L, productRequestDTO)).thenThrow(new NotFoundException("Product with id '1' not found"));
         //when

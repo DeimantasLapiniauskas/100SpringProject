@@ -1,8 +1,10 @@
-package SpringProject._Spring.model;
+package SpringProject._Spring.model.product;
 
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -17,14 +19,24 @@ public class Product {
     private BigDecimal price;
     private int stockQuantity;
 
-    public Product(String name, String description, BigDecimal price, int stockQuantity) {
+    @ManyToMany
+    @JoinTable(
+            name = "products_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
+
+    public Product(String name, String description, BigDecimal price, int stockQuantity, List<Category> categories) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.categories = categories != null ? new ArrayList<>(categories) : new ArrayList<>();
     }
 
     public Product() {
+        this.categories = new ArrayList<>();
     }
 
     public long getId() {
@@ -65,5 +77,13 @@ public class Product {
 
     public void setStockQuantity(int stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public List<Category> getCategories() {
+        return categories != null ? categories : List.of();
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories != null ? new ArrayList<>(categories) : new ArrayList<>();
     }
 }
