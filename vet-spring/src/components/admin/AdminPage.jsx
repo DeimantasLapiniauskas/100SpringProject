@@ -30,71 +30,226 @@ const AdminPage = ({ initialList }) => {
           setAddModalID,
         }}
       >
-        <div className="admin-page flex flex-col items-center gap-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
+        <div className="admin-page flex flex-col items-center gap-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto overflow-x-hidden">
           {/* <img
             src={pawssAdminPageImage}
             alt="Paw print"
             className="absolute left-10 top-40 max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           /> */}
-
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[66rem] top-[14rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[0rem] top-[6rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[39rem] top-[17rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[20rem] top-[6rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[86rem] top-[12rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[40rem] top-[6rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[21rem] top-[5rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[60rem] top-[6rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[16rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[80rem] top-[6rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[37rem] top-[9rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[100rem] top-[6rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[75rem] top-[4rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[10rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[2rem] top-[7rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[30rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[22rem] top-[17rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[50rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <img
             src={pawssAdminPageImage}
             alt="Paw print"
-            className="absolute left-[43rem] top-[12rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+            className="absolute left-[70rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[90rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[110rem] top-[16rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[0rem] top-[26rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[20rem] top-[26rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[40rem] top-[26rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[60rem] top-[26rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[80rem] top-[26rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[100rem] top-[26rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[10rem] top-[36rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[30rem] top-[36rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[50rem] top-[36rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[70rem] top-[36rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[90rem] top-[36rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[110rem] top-[36rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[0rem] top-[46rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[20rem] top-[46rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[40rem] top-[46rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[60rem] top-[46rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[80rem] top-[46rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[100rem] top-[46rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[10rem] top-[56rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[30rem] top-[56rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[50rem] top-[56rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[70rem] top-[56rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[90rem] top-[56rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
+          />
+
+          <img
+            src={pawssAdminPageImage}
+            alt="Paw print"
+            className="absolute left-[110rem] top-[56rem] max-w-[3rem] sm:max-w-[4rem] md:max-w-[5rem] lg:max-w-[6rem] object-contain me-10 sm:m-0 opacity-6 rotate-[53deg] pointer-events-none"
           />
 
           <h1 className=" text-black lg:text-2xl md:text-xl sm:text-lg text-base font-semibold text-center py-8 mb-4 mt-12">

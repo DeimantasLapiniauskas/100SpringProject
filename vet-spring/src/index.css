@@ -15,6 +15,10 @@ html, body {
   background-color: #DCDEFE;
 }
 
+/* body {
+  overflow-x: hidden;
+} */
+
 @layer components {
   .form-text-select {
     @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;
