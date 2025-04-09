@@ -94,7 +94,7 @@ public class AppointmentBasicController extends BaseController {
                 .from(new InternetAddress("spring100project@gmail.com"))
                 .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(savedAppointment.getVetId()).get().getAccount().getEmail())))
                 .subject("New appointment scheduled")
-                .body("A user by the email of " + authentication.getName() + " has scheduled an appointment to your " + String.join(", ", savedAppointment.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), please log in and confirm!").build();
+                .body("A user by the email of " + authentication.getName() + " has scheduled an appointment to your " + String.join(", ", savedAppointment.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), " + savedAppointment.getAppointmentDate() + ". Please log in and confirm!").build();
         emailService.send(email);
 
         return created(
@@ -136,7 +136,7 @@ public class AppointmentBasicController extends BaseController {
                 .from(new InternetAddress("spring100project@gmail.com"))
                 .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
                 .subject("New appointment scheduled")
-                .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), please log in and confirm!").build();
+                .body("A user by the email of " + authentication.getName() + " has rescheduled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) for " + appointmentFromDB.getAppointmentDate() + ", please log in and confirm!").build();
         emailService.send(email);
         return ok("Appointment updated its date successfully! Now please wait for confirmation.");
     }
