@@ -171,6 +171,12 @@ public class AppointmentBasicController extends BaseController {
             if (vetUser.get().getId() != appointmentFromDB.getVetId()) {
                 return wrongAccountCancelResponse();
             }
+            Email email = DefaultEmail.builder()
+                    .from(new InternetAddress("spring100project@gmail.com"))
+                    .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
+                    .subject("New appointment cancelled")
+                    .body("A user by the email of " + authentication.getName() + " has cancelled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), enjoy your now-free time!").build();
+            emailService.send(email);
         } else { // if client:
             /*todo: This breaks if you try to cancel after deleting your pet. Find a way to check if
                the client asking to cancel the appointment is the one associated with said appointment
@@ -179,16 +185,15 @@ public class AppointmentBasicController extends BaseController {
                     petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()) {
                 return wrongAccountCancelResponse();
             }
+            Email email = DefaultEmail.builder()
+                    .from(new InternetAddress("spring100project@gmail.com"))
+                    .to(Lists.newArrayList(new InternetAddress(clientService.findClientById(petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()).get().getAccount().getEmail())))
+                    .subject("New appointment cancelled")
+                    .body("Your appointment to " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s) has been cancelled by the vet. We hope this doesn't result in any inconveniences!").build();
+            emailService.send(email);
         }
         appointmentFromDB.setStatus(Status.Cancelled);
         appointmentService.saveAppointment(appointmentFromDB);
-
-        Email email = DefaultEmail.builder()
-                .from(new InternetAddress("spring100project@gmail.com"))
-                .to(Lists.newArrayList(new InternetAddress(vetService.getVetById(appointmentFromDB.getVetId()).get().getAccount().getEmail())))
-                .subject("New appointment scheduled")
-                .body("A user by the email of " + authentication.getName() + " has cancelled an appointment to your " + String.join(", ", appointmentFromDB.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), enjoy your now-free time!").build();
-        emailService.send(email);
 
         return ok("Appointment cancelled successfully!");
     }
