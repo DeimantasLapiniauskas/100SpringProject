@@ -15,7 +15,6 @@ import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.model.authentication.Account;
-import SpringProject._Spring.model.authentication.Role;
 import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.service.*;
 import SpringProject._Spring.service.authentication.AccountService;
