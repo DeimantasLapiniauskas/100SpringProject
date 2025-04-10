@@ -4,8 +4,6 @@ import ModalContext from '../../utils/helpers/modalContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-//import pawssAdminPageImage from '/src/assets/pawss_for_admin.png';
-//import pawssAdminPageImage from '/src/assets/pawss_for_admin_spaced_out.png';
 import pawssAdminPageImage from '/src/assets/pawss_for_admin_spaced_out_rotated_1536px.png';
 
 const AdminPage = ({ initialList }) => {
@@ -35,7 +33,7 @@ const AdminPage = ({ initialList }) => {
         <div className="relative w-full min-h-screen">
           {/* Paws background inside wrapper, starts after navbar naturally */}
           <div
-            className="absolute inset-0 bg-repeat bg-[length:6rem_6rem] bg-center opacity-5 pointer-events-none z-0"
+            className="absolute inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-center opacity-5 pointer-events-none z-0"
             style={{ backgroundImage: `url(${pawssAdminPageImage})` }}
           ></div>
 
@@ -72,3 +70,5 @@ const AdminPage = ({ initialList }) => {
 };
 
 export default AdminPage;
+
+//bg-[length:6rem_6rem]
