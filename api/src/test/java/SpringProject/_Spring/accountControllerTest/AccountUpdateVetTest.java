@@ -1,7 +1,7 @@
 package SpringProject._Spring.accountControllerTest;
 
 import SpringProject._Spring.controller.accountController.AccountControllerPut;
-import SpringProject._Spring.dto.authentication.vet.VetUpdateDTO;
+import SpringProject._Spring.dto.authentication.vet.VetUpdateRequestDTO;
 import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.authentication.AccountService;
@@ -52,7 +52,7 @@ public class AccountUpdateVetTest {
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateVet_whenValid_thenReturnAnd200() throws Exception {
         //given
-        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
+        VetUpdateRequestDTO vetUpdateRequestDTO = new VetUpdateRequestDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
 
         Vet existingVet = new Vet("FirstName", "LastName", "12345", "NotProfessional", "12345", LocalDate.of(2024, 4, 10));
         existingVet.setId(1L);
@@ -64,14 +64,14 @@ public class AccountUpdateVetTest {
         //when
         mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateRequestDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpectAll((jsonPath("firstName").value("UpdatedName")),
-                        (jsonPath("lastName").value("UpdatedLastName")),
-                        (jsonPath("phoneNumber").value("123456")),
-                        (jsonPath("specialty").value("Professional")),
-                        (jsonPath("licenseNumber").value("123456")));
+                .andExpectAll((jsonPath("data.firstName").value("UpdatedName")),
+                        (jsonPath("data.lastName").value("UpdatedLastName")),
+                        (jsonPath("data.phoneNumber").value("123456")),
+                        (jsonPath("data.specialty").value("Professional")),
+                        (jsonPath("data.licenseNumber").value("123456")));
 
         Mockito.verify(vetService, times(1)).updateVet(existingVet);
     }
@@ -81,17 +81,17 @@ public class AccountUpdateVetTest {
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateVet_whenVetDoesntExist_thenReturnAnd404() throws Exception {
         //given
-        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
+        VetUpdateRequestDTO vetUpdateRequestDTO = new VetUpdateRequestDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
 
         given(vetService.existsVetById(1L)).willReturn(false);
 
         //when
         mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateRequestDTO)))
                 //then
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("Vet account not found!"));
+                .andExpect(jsonPath("message").value("Vet account not found!"));
 
         Mockito.verify(vetService, times(0)).updateVet(any());
     }
@@ -100,12 +100,12 @@ public class AccountUpdateVetTest {
     @Test
     void updateVet_whenUnauthenticated_thenReturnAnd401() throws Exception {
         //given
-        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
+        VetUpdateRequestDTO vetUpdateRequestDTO = new VetUpdateRequestDTO("UpdatedName", "UpdatedLastName", "123456", "Professional", "123456");
 
         //when
         mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateRequestDTO)))
                 //then
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -116,12 +116,12 @@ public class AccountUpdateVetTest {
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateVet_whenNotValidRequest_thenReturnAnd400() throws Exception {
         //given
-        VetUpdateDTO vetUpdateDTO = new VetUpdateDTO("12", "UpdatedLastName", "12345-acgg6", "Professional", "123456");
+        VetUpdateRequestDTO vetUpdateRequestDTO = new VetUpdateRequestDTO("12", "UpdatedLastName", "12345-acgg6", "Professional", "123456");
 
         //when
         mockMvc.perform(put("/api/vet/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vetUpdateDTO)))
+                        .content(objectMapper.writeValueAsString(vetUpdateRequestDTO)))
                 //then
                 .andExpect(status().isBadRequest());
     }

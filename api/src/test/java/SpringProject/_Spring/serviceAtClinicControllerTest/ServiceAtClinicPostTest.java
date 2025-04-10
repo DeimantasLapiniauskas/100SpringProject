@@ -1,6 +1,5 @@
 package SpringProject._Spring.serviceAtClinicControllerTest;
 
-
 import SpringProject._Spring.controller.ServiceAtClinicController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
@@ -26,7 +25,6 @@ import java.math.BigDecimal;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @WebMvcTest(controllers = ServiceAtClinicController.class)
 @Import(SecurityConfig.class)
 public class ServiceAtClinicPostTest {
@@ -35,7 +33,6 @@ public class ServiceAtClinicPostTest {
 
     @Autowired
     private MockMvc mockMvc;
-
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_VET")
@@ -50,15 +47,15 @@ public class ServiceAtClinicPostTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinic)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").exists())
-                .andExpect(jsonPath("name").value("some"));
+                .andExpect(jsonPath("$.data.id").exists())
+                .andExpect(jsonPath("$.data.name").value("some"));
 
         Mockito.verify(service, Mockito.times(1)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
     }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void postService_whenSaveClient_thenReturn403() throws Exception {
+    void postService_whenClient_thenReturn403() throws Exception {
         ServiceAtClinic serviceAtClinic = new ServiceAtClinic("named service", "good service", new BigDecimal("10.5"));
 
         BDDMockito.given(service.saveService(ArgumentMatchers.any(ServiceAtClinic.class))).willReturn(serviceAtClinic);
@@ -69,7 +66,10 @@ public class ServiceAtClinicPostTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinic)))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.message").value("Access Denied"))
+                .andExpect(jsonPath("$.data").doesNotExist());
+
 
         Mockito.verify(service, Mockito.times(0)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
     }
@@ -87,7 +87,7 @@ public class ServiceAtClinicPostTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinic)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("name").value("Name must be between 3 and 150 characters long!"));
+                .andExpect(jsonPath("data.name").value("Name must be between 3 and 150 characters long!"));
 
         Mockito.verify(service, Mockito.times(0)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
     }
@@ -105,7 +105,7 @@ public class ServiceAtClinicPostTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinic)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("name").value("Name must contain only letters, spaces, numbers and dashes!"));
+                .andExpect(jsonPath("data.name").value("Name must contain only letters, spaces, numbers and dashes!"));
 
         Mockito.verify(service, Mockito.times(0)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
     }
@@ -163,7 +163,7 @@ public class ServiceAtClinicPostTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinic)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("description").value("Description too long! Please limit it to a max of 255 characters!"));
+                .andExpect(jsonPath("data.description").value("Description too long! Please limit it to a max of 255 characters!"));
 
         Mockito.verify(service, Mockito.times(0)).saveService(ArgumentMatchers.any(ServiceAtClinic.class));
     }

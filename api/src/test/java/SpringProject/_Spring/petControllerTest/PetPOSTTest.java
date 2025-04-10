@@ -103,11 +103,11 @@ public class PetPOSTTest {
                         )
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("name").value("Maja"))
-                .andExpect(jsonPath("species").value("Egyptian"))
-                .andExpect(jsonPath("breed").value("cat"))
+                .andExpect(jsonPath("data.name").value("Maja"))
+                .andExpect(jsonPath("data.species").value("Egyptian"))
+                .andExpect(jsonPath("data.breed").value("cat"))
                 //can't check birthdate because DateTime is bullshit
-                .andExpect(jsonPath("gender").value(gender.name())); //.name is necessary, otherwise it'll assume the identical value is, for some reason, different.
+                .andExpect(jsonPath("data.gender").value(gender.name())); //.name is necessary, otherwise it'll assume the identical value is, for some reason, different.
 
         Mockito.verify(petService, times(1)).savePet(ArgumentMatchers.any(Pet.class));
     }
@@ -132,7 +132,7 @@ public class PetPOSTTest {
                         )
                 )
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("message").value("Access Denied"));
 
         Mockito.verify(petService, times(0)).savePet(any());
     }

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { addService } from "../../utils/helpers/serviceService.js";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { Error } from "../../components/Error.jsx";
+import { Error } from "../../components/feedback/Error.jsx";
 export const ServiceAdd = ({ service }) => {
   const navigate = useNavigate();
   const [error, setError] = useState();

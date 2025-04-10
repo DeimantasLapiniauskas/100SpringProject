@@ -74,9 +74,9 @@ public class AccountPublicPOSTTest {
                         .content(objectMapper.writeValueAsString(clientRequestDTO)))
                 //then
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("email").value("test@example.com"))
-                .andExpect(jsonPath("firstName").value("firstName"))
-                .andExpect(jsonPath("lastName").value("lastName"));
+                .andExpect(jsonPath("data.email").value("test@example.com"))
+                .andExpect(jsonPath("data.firstName").value("firstName"))
+                .andExpect(jsonPath("data.lastName").value("lastName"));
 
         Mockito.verify(clientService, times(1)).saveClient(ArgumentMatchers.any(Account.class), ArgumentMatchers.any(Client.class));
     }
@@ -110,7 +110,7 @@ public class AccountPublicPOSTTest {
                         .content(objectMapper.writeValueAsString(clientRequestDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").value("This email is already registered. Please try logging in."));
+                .andExpect(jsonPath("message").value("This email is already registered. Please try logging in."));
         Mockito.verify(clientService, times(0))
                 .saveClient(ArgumentMatchers.any(Account.class), ArgumentMatchers.any(Client.class));
 

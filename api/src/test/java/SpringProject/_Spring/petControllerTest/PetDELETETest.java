@@ -90,7 +90,7 @@ public class PetDELETETest {
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isNoContent())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("data").doesNotExist());
 
         Mockito.verify(petService, times(1)).deletePetById(petId);
     }
@@ -120,7 +120,7 @@ public class PetDELETETest {
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").value("You can't delete someone else's pet!"));
+                .andExpect(jsonPath("message").value("You can't delete someone else's pet!"));
 
         Mockito.verify(petService, times(0)).deletePetById(petId);
     }
@@ -145,7 +145,7 @@ public class PetDELETETest {
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("message").value("Access Denied"));
 
         Mockito.verify(petService, times(0)).deletePetById(petId);
     }
@@ -175,6 +175,6 @@ public class PetDELETETest {
 
         mockMvc.perform(delete("/api/pets/" + petId))
                 .andExpect(status().isNoContent())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("data").doesNotExist());
     }
 }
