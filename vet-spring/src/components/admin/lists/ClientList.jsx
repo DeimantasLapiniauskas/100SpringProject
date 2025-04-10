@@ -25,7 +25,7 @@ const ClientList = () => {
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadRequest ? <BadRequest /> : ""}
-      <ul className="w-full divide-y divide-gray-200">
+      <ul className="w-full divide-y divide-gray-200 z-50">
         {clients.map((client) => (
 
           <ClientCard

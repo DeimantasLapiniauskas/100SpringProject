@@ -15,9 +15,9 @@ html, body {
   background-color: #DCDEFE;
 }
 
-body {
+/* body {
   overflow-x: hidden;
-}
+} */
 
 @layer components {
   .form-text-select {
