@@ -72,7 +72,6 @@ export const ListProvider = ({ children }) => {
           }${search ? `&search=${search}` : ""}`
         );
         const { data, message, success } = response.data;
-        console.log(response.data);
 
         if (!isMounted.current) return;
         if (page >= data.totalPages && data.totalPages > 0) {

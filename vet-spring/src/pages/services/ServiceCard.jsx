@@ -1,8 +1,8 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
-import { Error } from "../../components/feedback/Error.jsx";
 import { useState } from "react";
+import { RegisterAppointment } from "../appointments/RegisterAppointment.jsx";
 import { useList } from "../../context/ListContext.jsx";
 import { motion } from "framer-motion";
 
@@ -11,6 +11,7 @@ export const ServiceCard = (props) => {
   const { id, name, description, price } = service;
   const [error, setError] = useState("");
   const { account } = useAuth();
+  const [visible, setVisible] = useState(false);
   const { getPage, currentPage, pageSize } = useList();
 
   const deleteService = async () => {
@@ -21,29 +22,7 @@ export const ServiceCard = (props) => {
       setError(error.response?.message || error.message);
     }
   };
-  const editService = async () => {
-    try {
-      await api.put(`/services/${id}`);
-    getPage(pageSize, currentPage);
-    } catch (error) {
-      setError(error.response?.message || error.message);
-    }
-  };
 
-  // const registrApoiment = async(data) => {
-  //     const trimmedData = {
-  //         ...data,
-  //         name: data.id.trim(),
-  //       }
-  //       const payload = { ...trimmedData};
-  //       console.log(payload);
-
-  //     try{
-  //         await api.post("/appointments", payload);
-  //     } catch (error) {
-  //         setError(error.response?.message || error.message);
-  //     }
-  //}
   const checkRoles = () => {
     //todo: make this better
     return (
@@ -55,6 +34,13 @@ export const ServiceCard = (props) => {
         account?.scope.includes("ROLE_ADMIN"))
     );
   };
+
+  const checkRoleClient = () => {
+    return (account !== null &&
+        account.scope !== null &&
+        account.scope.includes("ROLE_CLIENT"))
+  }
+ 
   return (
     <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -89,7 +75,11 @@ export const ServiceCard = (props) => {
             </NavLink>
           )}
         </div>
+        <div>
+            {checkRoleClient() && <button className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]" onClick={()=>setVisible(true)}>Register</button>}
+          </div>
       </div>
-    </motion.div>
+      {visible && <RegisterAppointment setVisible={setVisible} serviceId={service.id}/>}
+    </motion.div>          
   );
 };

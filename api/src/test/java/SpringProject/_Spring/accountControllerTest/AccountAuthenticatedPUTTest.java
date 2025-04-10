@@ -27,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -88,7 +89,7 @@ public class AccountAuthenticatedPUTTest {
                         .content(new ObjectMapper().writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(content().string("You have successfully updated your password!"));
+                .andExpect(jsonPath("data").value("You have successfully updated your password!"));
 
         Mockito.verify(accountService, times(1)).saveAccount(ArgumentMatchers.any(Account.class));
     }
@@ -119,6 +120,7 @@ public class AccountAuthenticatedPUTTest {
 
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
+        when(accountService.existsAccountById(account.getId())).thenReturn(false);
         when(accountService.findAccountById(1L)).thenReturn(Optional.empty());
 
         UserDetails principal = User.withUsername("admin")
@@ -132,12 +134,12 @@ public class AccountAuthenticatedPUTTest {
         SecurityContextHolder.setContext(securityContext);
 
         //when
-        mockMvc.perform(put("/api/account/password")
+        mockMvc.perform(put("/api/account/password/"+account.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("message").value("Account not found!"));
 
         Mockito.verify(accountService, times(0)).saveAccount(ArgumentMatchers.any(Account.class));
     }
@@ -162,7 +164,7 @@ public class AccountAuthenticatedPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("newPassword").value("Your password is either too" +
+                .andExpect(jsonPath("data.newPassword").value("Your password is either too" +
                         " short or too long! Min length is 8, max is 50 symbols"));
 
         passwordUpdateDTO = new PasswordUpdateDTO("aaaaaaaaaa");
@@ -172,7 +174,7 @@ public class AccountAuthenticatedPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("newPassword").value("Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!"));
+                .andExpect(jsonPath("data.newPassword").value("Your password must contain at least one number, one letter, and it only accepts those and the regular qwerty keyboard symbols!"));
 
     }
 
@@ -196,6 +198,6 @@ public class AccountAuthenticatedPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("newPassword").value("Password can not be null!"));
+                .andExpect(jsonPath("data.newPassword").value("Password can not be null!"));
     }
 }

@@ -9,21 +9,14 @@ import { useUI } from "@/context/UIContext.jsx";
 import { PaginationPanel } from "@/components/features/PaginationPanel.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
 import { SelectPanel } from "@/components/features/SelectPagesPanel.jsx";
-import { FilterPanel } from "@/components/features/FilterPanel.jsx";
+// import { FilterPanel } from "@/components/features/FilterPanel.jsx";
 import { useCheckRoles } from "@/hooks/useCheckRoles.js";
 import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient.jsx";
 import vetServiceIcon from "../../assets/icons/vetServiceIcon.svg"
 
 export const ServiceList = () => {
 
-  const {
-    getPage,
-    error,
-    message,
-    content: servises,
-    currentPage,
-    pageSize,
-  } = useList();
+  const { getPage, error, message, content: services, currentPage, pageSize } = useList();
 
   const { isLoading, isEmpty, isError } = useUI();
   const roles = useCheckRoles();
@@ -33,7 +26,7 @@ export const ServiceList = () => {
       <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto">
         <div className="flex w-full justify-end gap-5">
           {/* <FilterPanel /> */}
-          <SelectPanel />
+          {/* <SelectPanel /> */}
         </div>
         <div className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}>
           {/* <div className="flex gap-1 bottom-[60%]">
@@ -92,7 +85,7 @@ export const ServiceList = () => {
            {roles ? "" : <CatSilhouetteGradient className="w-50 absolute z-10 top-[-160px] right-[-250px] ] "/>}
           </div>
           <ul className="flex flex-col w-3/5">
-            {servises?.map((service) => (
+            {services?.map((service) => (
               <ServiceCard
                 key={service.id}
                 service={service}

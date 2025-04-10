@@ -41,7 +41,6 @@
 
 /*FOR ALL PAGES//////////////////////////////////////////////////////// */
 
-
 /* Black button located in Login Page and Register Page */
 .custom-black-btn {
   background-color: #000000;
@@ -50,7 +49,7 @@
   width: 100%;
   border-radius: 1.5rem;
   transition: background-color 0.3s ease;
-
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +78,22 @@
   background-color: #C7A4D6;
 }
 
+.custom-red-btn {
+  background-color: #fb2c36;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem; /* Adjusted width */
+  height: 2.9375rem; /* Adjusted height */
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-red-btn:hover {
+  background-color: #ffabb0;
+}
 /* White button to be used inside boxes in the future */
 .custom-white-btn {
   background-color: #FFFFFF;
@@ -98,6 +113,7 @@
   background-color: #C7A4D6;
 }
 
+/* Put on Home PAGE; */
 .pawss-for-background-medium {
   /* position: absolute; */
   width: clamp(20px, 5%, 50px);
@@ -108,6 +124,118 @@
   background-size: contain;
   opacity: 1;
   transform: rotate(53.04deg);
+}
+
+@media (min-width: 1970px) {
+  .pawss-paw1-3xl-custom-breakpoint-override {
+    left: 60.1%; /* Was written[74rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem]; */
+  }
+}
+
+@media (min-width: 1970px) {
+  .pawss-paw2-3xl-custom-breakpoint-override {
+    left: 63.35%; /* Was written[78rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 1970px) {
+  .pawss-paw3-3xl-custom-breakpoint-override {
+    left: 58.48%; /* Was written[72rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 1970px) { 
+  .pawss-paw4-3xl-custom-breakpoint-override {
+    left: 61.73%; /* Was written[76rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw1-4xl-custom-breakpoint-override {
+    left: 60.6%; /* Was written[82rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw2-4xl-custom-breakpoint-override {
+    left: 63.56%; /* Was written[86rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw3-4xl-custom-breakpoint-override {
+    left: 59.12%; /* Was written[80rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[6rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss-paw4-4xl-custom-breakpoint-override {
+    left: 62.08%; /* Was written[84rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw1-5xl-custom-breakpoint-override {
+    left: 68.29%; /* Was written[98rem]; Increase previous Paw 1 (left: value) by 16rem */
+    top: 20px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw2-5xl-custom-breakpoint-override {
+    left: 71.08%; /* Was written[102rem]; Increase previous Paw 2 (left: value) by 16rem */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw3-5xl-custom-breakpoint-override {
+    left: 66.9%; /* Was written[96rem]; Increase previous Paw 3 (left: value) by 16rem */
+    top: 82px; /* Was written[6rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss-paw4-5xl-custom-breakpoint-override {
+    left: 69.72%; /* Was written[100rem]; Increase previous Paw 4 (left: value) by 16rem */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw1-6xl-custom-breakpoint-override {
+    left: 66.46%; /* Was written[106rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw2-6xl-custom-breakpoint-override {
+    left: 68.97%; /* Was written[110rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw3-6xl-custom-breakpoint-override {
+    left: 65.2%; /* Was written[104rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[6rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss-paw4-6xl-custom-breakpoint-override {
+    left: 67.71%; /* Was written[108rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
+  }
 }
 
 /* .pawss-for-background-small { */
@@ -121,6 +249,130 @@
   background-image: url("/src/assets/pawss_for_background.png");
   transform: rotate(53.04deg); */
 /* } */
+
+.pawss1-for-background-medium {
+  /* Put on Your Pets PAGE; */
+  width: clamp(20px, 5%, 50px);
+  height: clamp(30px, 5%, 50px);
+  background-image: url("/src/assets/pawss_for_background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  transform: rotate(53.04deg);
+}
+
+@media (min-width: 1970px) {
+  .pawss1-paw1-3xl-custom-breakpoint-override {
+    left: 70.1%; /* Was written[74rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem]; */
+  }
+}
+
+@media (min-width: 1970px) {
+  .pawss1-paw2-3xl-custom-breakpoint-override {
+    left: 73.35%; /* Was written[78rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 1970px) {
+  .pawss1-paw3-3xl-custom-breakpoint-override {
+    left: 68.48%; /* Was written[72rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 1970px) { 
+  .pawss1-paw4-3xl-custom-breakpoint-override {
+    left: 71.73%; /* Was written[76rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss1-paw1-4xl-custom-breakpoint-override {
+    left: 70.6%; /* Was written[82rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss1-paw2-4xl-custom-breakpoint-override {
+    left: 73.56%; /* Was written[86rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss1-paw3-4xl-custom-breakpoint-override {
+    left: 69.12%; /* Was written[80rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[6rem];  */
+  }
+}
+
+@media (min-width: 2165px) {
+  .pawss1-paw4-4xl-custom-breakpoint-override {
+    left: 72.08%; /* Was written[84rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss1-paw1-5xl-custom-breakpoint-override {
+    left: 68.29%; /* Was written[98rem]; Increase previous Paw 1 (left: value) by 16rem */
+    top: 20px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss1-paw2-5xl-custom-breakpoint-override {
+    left: 71.08%; /* Was written[102rem]; Increase previous Paw 2 (left: value) by 16rem */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss1-paw3-5xl-custom-breakpoint-override {
+    left: 66.9%; /* Was written[96rem]; Increase previous Paw 3 (left: value) by 16rem */
+    top: 82px; /* Was written[6rem];  */
+  }
+}
+
+@media (min-width: 2296px) {
+  .pawss1-paw4-5xl-custom-breakpoint-override {
+    left: 69.72%; /* Was written[100rem]; Increase previous Paw 4 (left: value) by 16rem */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss1-paw1-6xl-custom-breakpoint-override {
+    left: 66.46%; /* Was written[106rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
+    top: 20px; /* Was written[1rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss1-paw2-6xl-custom-breakpoint-override {
+    left: 68.97%; /* Was written[110rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
+    top: 77px; /* Was written[5rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss1-paw3-6xl-custom-breakpoint-override {
+    left: 65.2%; /* Was written[104rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
+    top: 82px; /* Was written[6rem];  */
+  }
+}
+
+@media (min-width: 2552px) {
+  .pawss1-paw4-6xl-custom-breakpoint-override {
+    left: 67.71%; /* Was written[108rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
+    top: 92px; /* Was written[7rem];  */
+  }
+}
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 

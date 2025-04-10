@@ -1,6 +1,6 @@
 import HomePageDog from "../../assets/dog.png";
 import { ListProvider } from "../../context/ListContext";
-import PostCarousel from "../posts/PostsCarousel";
+import PostCarousel from "./PostsCarousel";
 import happyHeart from "../../assets/icons/happyHeart.svg";
 import { ReviewsPanel } from "../../components/features/ReviewsPanel";
 import "../../index.css"
@@ -40,7 +40,6 @@ export const HomePage = () => {
                 Twenty-four hours a day
               </p>
           </div>
-
           <div className="grid grid-cols-3">
               <p className=" lg:text-lg md:text-base sm:text-sm text-xs text-info-content col-span-3 px-5 xs:px-8 sm:ps-0 md:pe-8 sm:col-span-2">
                 As Lithuania’s leading animal health company, Happy Hearts is driven

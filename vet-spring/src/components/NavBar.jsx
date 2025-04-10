@@ -1,8 +1,8 @@
 import { NavLink } from "react-router";
-import { useAuth } from "../context/AuthContext";
-
+import { DropdownMenu } from "../pages/profile/DropdownMenu";
+import menu from "../assets/pawsNav.png";
 export const Navbar = () => {
-  const { account, logout } = useAuth();
+  
   return (
     <div>
       <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-gradient-to-br from-blue-400 to-indigo-600 px-[1rem] sm:px-[3rem] md:px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-white shadow-lg shadow-white max-w-[1500px] mx-auto">
@@ -22,25 +22,18 @@ export const Navbar = () => {
          className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
           <p className="text-xs sm:text-sm md:text-base">Products</p>
         </NavLink>
-        {account ? (
-          <button
-            type="button"
-            value="logout"
-            onClick={logout}
-            className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold"
-          >
-            Log Out
+        <div className="dropdown">
+          <button className="dropbtn btn bg-[#97a0f1] w-12">
+            <img src={menu} alt="" className="w-10 absolute" />
+            <i className="fa fa-caret-down mb-10"></i>
           </button>
-        ) : (
-          <NavLink to={"/login"}>
-            <p>
-              <button className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold">
-                Log In
-              </button>
-            </p>
-          </NavLink>
-        )}
+          <div className="dropdown-content flex flex-col ml-[-30px]">
+            <DropdownMenu />
+          </div>
+        </div>
       </nav>
     </div>
   );
 };
+
+

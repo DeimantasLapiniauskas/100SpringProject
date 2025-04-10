@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +42,7 @@ public class PostController extends BaseController{
         this.postService = postService;
     }
 
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/posts/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
@@ -194,6 +195,7 @@ public class PostController extends BaseController{
         }
 
         postService.deletePostById(postId);
-        return noContent("Post deleted successfully");
+//        return noContent("Post deleted successfully");
+        return noContent();
     }
 }

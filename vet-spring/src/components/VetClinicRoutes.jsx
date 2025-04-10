@@ -13,6 +13,7 @@ import { HomePage } from "../pages/home/HomePage.jsx";
 import { ListProvider } from "../context/ListContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
+import { Appointment } from "../pages/appointments/Appointment.jsx";
 import { PostList } from "../pages/posts/PostList.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
@@ -20,57 +21,89 @@ import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import { PostRegister } from "@/pages/posts/PostRegister.jsx";
 import { PostEditPage } from "@/pages/posts/PostEditPage.jsx";
 import { PostView } from "@/pages/posts/PostView.jsx";
+import AdminPage from "./admin/AdminPage.jsx";
+import { Profile } from "@/pages/profile/Profile.jsx";
+import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
+import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
 
 const VetClinicRoutes = () => {
   return (
     <BrowserRouter>
       <UIProvider>
         <AuthProvider>
-            <Routes>
-              <Route path={"/login"} element={<Login />} />
-              <Route path={"/register"} element={<Register />} />
-              <Route path={"/"} element={<MainLayout />}>
-                <Route index element={<Navigate to="home" replace />} />
-                <Route path="home" element={<HomePage />} />
-                <Route
-                  path="/pets"
-                  element={
-                    <AuthGuard>
-                      <ListProvider>
-                        <PetList />
-                      </ListProvider>
-                    </AuthGuard>
-                  }
-                />
-                <Route path="pets/add" element={<PetForm />} />
-                {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-                <Route
-                  path="/posts"
-                  element={
+          <Routes>
+            <Route path={"/login"} element={<Login />} />
+            <Route path={"/register"} element={<Register />} />
+            <Route path={"/"} element={<MainLayout />}>
+              <Route index element={<Navigate to="home" replace />} />
+              <Route path="home" element={<HomePage />} />
+              <Route
+                path="/pets"
+                element={
+                  <AuthGuard>
                     <ListProvider>
-                      <PostList />
+                      <PetList />
                     </ListProvider>
-                  }
-                />
-                <Route path="/posts/register" element={<PostRegister />} />
-                <Route path="/posts/edit/:postId" element={<PostEditPage />} />
-                <Route path="/posts/view/:postId" element={<PostView/>} />
-                <Route
-                  path="/services"
-                  element={
+                  </AuthGuard>
+                }
+              />
+              <Route path="pets/add" element={<PetForm />} />
+              {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+              <Route
+                path="/posts"
+                element={
+                  <ListProvider>
+                    <PostList />
+                  </ListProvider>
+                }
+              />
+              <Route path="/posts/register" element={<PostRegister />} />
+              <Route path="/posts/edit/:postId" element={<PostEditPage />} />
+              <Route path="/posts/view/:postId" element={<PostView />} />
+              <Route
+                path="/adminpage"
+                element={
+                  <AuthGuard>
                     <ListProvider>
-                      <ServiceList />
+                      <AdminPage />
                     </ListProvider>
-                  }
+                  </AuthGuard>
+                }
+              >
+                <Route path="vets" element={<AdminPage initialList="vets" />} />
+                <Route
+                  path="clients"
+                  element={<AdminPage initialList="clients" />}
                 />
-                <Route path="services/add" element={<ServiceAdd />} />
-                <Route path="services/edit/:id" element={<ServiceUpdate />} />
-                <Route path="/design" element={<BandytiDesign />} />
-                <Route path="/designh" element={<BandytiDesignHomePage />} />
-                <Route path="/designh1" element={<BandytiDesignH1 />} />
               </Route>
-              <Route path={"*"} element={<NotFound />} />
-            </Routes>
+              <Route
+                path="/services"
+                element={
+                  <ListProvider>
+                    <ServiceList />
+                  </ListProvider>
+                }
+              />
+              <Route path="services/add" element={<ServiceAdd />} />
+              <Route path="services/edit/:id" element={<ServiceUpdate />} />
+              {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+              <Route
+                path="/profile"
+                element={
+                  <AuthGuard>
+                    <Profile />
+                  </AuthGuard>
+                }
+              />
+              <Route path="/design" element={<BandytiDesign />} />
+              <Route path="/designh" element={<BandytiDesignHomePage />} />
+              <Route path="/designh1" element={<BandytiDesignH1 />} />
+              <Route path="/designh2" element={<BandytiDesignH2 />} />
+              <Route path="/appointments" element={<Appointment />} />
+              <Route path="/appointments/client/:id" element={<UpdateData />} />
+            </Route>
+            <Route path={"*"} element={<NotFound />} />
+          </Routes>
         </AuthProvider>
       </UIProvider>
     </BrowserRouter>
