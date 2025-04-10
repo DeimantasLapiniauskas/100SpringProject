@@ -10,16 +10,22 @@ export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
   const { account } = useAuth();
-  if (!appointments) return;
+  
 
+  useEffect(() => {
+
+    getAppointment();
+  }, []);
+  
   const getAppointment = async () => {
+
     try {
       if (account.scope == "ROLE_CLIENT") {
         const response = await getClientAppointments();
-        setAppointments(response.data);
-      } else {
+        setAppointments(response.data.data);
+      } else {      
         const response = await getVetAppointments();
-        setAppointments(response.data);
+        setAppointments(response.data.data);
       }
     } catch (error) {
       console.log(error.message);
@@ -34,11 +40,11 @@ export const Appointment = () => {
     try {
       await api.put(`/appointments/cancel/${id}`);
       const response = await getClientAppointments();
-
-      setAppointments(response.data);
+      setAppointments(response.data.data);
     } catch (error) {
       console.log(error.message);
     }
+
   };
 
   return (

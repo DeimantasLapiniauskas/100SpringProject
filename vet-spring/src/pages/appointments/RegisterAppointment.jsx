@@ -34,7 +34,7 @@ export const RegisterAppointment = (props) => {
   const allVets = async () => {
     try {
       const response = await getAllVets();
-      setVets(response.data);
+      setVets(response.data.data);
     } catch (error) {
       setError(error.response?.message || error.message);
       setVisibleError(true);
