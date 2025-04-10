@@ -7,7 +7,7 @@ const searchBarVariants = cva(
   {
     variants: {
       intent: {
-        default: " border border-info focus:ring-blue-500 bg-white",
+        default: " border border-info focus:ring-blue-500 bg-white shadow-lg",
         filled: "border-none bg-gray-100",
         subtle: "border-transparent bg-transparent",
         info: "border-blue-500 bg-blue-50",
