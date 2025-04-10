@@ -64,7 +64,7 @@ export const PostCard = (props) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="card card-side will-change-transform bg-blue-300/15 backdrop-blur-lg p-4 sm:p-5 md:p-6 rounded-xl shadow-lg"
       >
-        <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[20.5rem] sm:h-[25.5rem] md:h-[31.5rem] p-1.5 sm:p-2.25 md:p-3 shadow-lg shadow-info w-full border-1 border-info">
+        <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[20.55rem] sm:h-[25.75rem] md:h-[32rem] p-1.5 sm:p-2.25 md:p-3  shadow-lg shadow-info w-full border-1 border-info">
           <h2
             className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] max-h-[40px] sm:max-h-[55px] md:max-h-[60px] px-10 sm:px-15 md:px-15 lg:px-5 xl:px-15 text-sm sm:text-lg md:text-xl overflow-hidden ${
               postType === "Sale"
