@@ -5,7 +5,6 @@ const api = axios.create({
 })
 
 
-
 export const setAuth = (jwt) => {
     api.defaults.headers = {
        'Authorization': `Bearer ${jwt}`

@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -54,26 +55,29 @@ public class ServiceAtClinicPutTest {
     }
 
     private void performGoodServiceUpdate() throws Exception {
-        //given
-        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
+        //Given
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00), "https://example.com/new.jpg");
         serviceAtClinic.setId(1);
 
-        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00));
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00), "https://example.com/new.jpg");
 
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
 
-        //when
+        //When
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
-                //then
+//                .andDo(MockMvcResultHandlers.print())
+
+                //Then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.name").value("X-Ray"))
                 .andExpect(jsonPath("$.data.description").value("X-ray imaging to diagnose bone fractures and internal health issues."))
-                .andExpect(jsonPath("$.data.price").value("110.0"));
+                .andExpect(jsonPath("$.data.price").value("110.0"))
+                .andExpect(jsonPath("$.data.imageUrl").value("https://example.com/new.jpg"));
 
         Mockito.verify(serviceAtClinicService, times(1)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(1)).saveService(Mockito.any());
@@ -93,24 +97,27 @@ public class ServiceAtClinicPutTest {
     }
 
     private void updateServiceFailValidSize() throws Exception {
-        //given
-        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
+        //Given
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00), "https://example.com/new.jpg");
         serviceAtClinic.setId(1L);
 
-        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO(" ", "", BigDecimal.valueOf(-0.01));
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO(" ", "", BigDecimal.valueOf(-0.01), "/images/testing.map");
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
 
-        //when
+        //When
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
-                //then
+//                .andDo(MockMvcResultHandlers.print())
+
+                //Then
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data.name").value("Name must be between 3 and 150 characters long!"))
                 .andExpect(jsonPath("$.data.description").value("must not be blank"))
-                .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"));
+                .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"))
+                .andExpect(jsonPath("$.data.imageUrl").value("Image URL must end with .jpg, .png, .webp or .gif"));
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
@@ -129,24 +136,27 @@ public class ServiceAtClinicPutTest {
     }
 
     private void updateServiceFailValidRegex() throws Exception {
-        //given
-        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
+        //Given
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00), "https://example.com/new.jpg");
         serviceAtClinic.setId(1L);
 
-        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("$$$$", "", BigDecimal.valueOf(-0.01));
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("$$$$", "", BigDecimal.valueOf(-0.01), "https://example.com/new.map");
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
 
-        //when
+        //When
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
-                //then
+//                .andDo(MockMvcResultHandlers.print())
+
+                //Then
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data.name").value("Name must contain only letters, spaces, numbers and dashes!"))
                 .andExpect(jsonPath("$.data.description").value("must not be blank"))
-                .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"));
+                .andExpect(jsonPath("$.data.price").value("must be greater than or equal to 0"))
+                .andExpect(jsonPath("$.data.imageUrl").value("Image URL must end with .jpg, .png, .webp or .gif"));
 
         Mockito.verify(serviceAtClinicService, times(0)).findServiceAtClinicById(1);
         Mockito.verify(serviceAtClinicService, times(0)).saveService(Mockito.any());
@@ -156,18 +166,22 @@ public class ServiceAtClinicPutTest {
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void updateService_whenUpdateClient_thenReturn403() throws Exception {
-        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00));
+        //Given
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("X-Ray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(100.00), "https://example.com/new.jpg");
         serviceAtClinic.setId(1L);
 
-        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("xdray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00));
+        ServiceAtClinicRequestDTO serviceAtClinicRequestDTO = new ServiceAtClinicRequestDTO("xdray", "X-ray imaging to diagnose bone fractures and internal health issues.", BigDecimal.valueOf(110.00), "https://example.com/new.jpg");
 
         given(serviceAtClinicService.findServiceAtClinicById(1L)).willReturn(Optional.of(serviceAtClinic));
 
+        //When
         mockMvc.perform(MockMvcRequestBuilders.put("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(serviceAtClinicRequestDTO)))
-                .andExpect(status().isForbidden())
+//                .andDo(MockMvcResultHandlers.print())
 
+                //Then
+                .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.message").value("Access Denied"))
                 .andExpect(jsonPath("$.data").doesNotExist());

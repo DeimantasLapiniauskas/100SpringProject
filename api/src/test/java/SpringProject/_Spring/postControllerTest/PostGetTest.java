@@ -114,13 +114,13 @@ public class PostGetTest {
         List<Post> posts = List.of(post1, post2);
         Page<Post> pagedPosts = new PageImpl<>(posts);
 
-        BDDMockito.given(postService.findAllPostsPage(0, 2, null)).willReturn(pagedPosts);
+        BDDMockito.given(postService.findAllPostsPage(0, 2, null, null)).willReturn(pagedPosts);
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "2"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isOk())
@@ -130,7 +130,7 @@ public class PostGetTest {
                 .andExpect(jsonPath("$.data.content[1].title").value("Title 2"))
                 .andExpect(jsonPath("$.data.totalElements").value(2));
 
-        Mockito.verify(postService, times(1)).findAllPostsPage(0, 2, null);
+        Mockito.verify(postService, times(1)).findAllPostsPage(0, 2, null, null);
     }
 
     //Unhappy Path
@@ -140,7 +140,7 @@ public class PostGetTest {
         //Given
         Page<Post> emptyPage = Page.empty();
 
-        BDDMockito.given(postService.findAllPostsPage(0, 10, null)).willReturn(emptyPage);
+        BDDMockito.given(postService.findAllPostsPage(0, 10, null, null)).willReturn(emptyPage);
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
@@ -152,7 +152,7 @@ public class PostGetTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Posts list is empty"));
 
-        Mockito.verify(postService, times(1)).findAllPostsPage(0, 10, null);
+        Mockito.verify(postService, times(1)).findAllPostsPage(0, 10, null, null);
     }
 
     //unhappy path
@@ -172,12 +172,12 @@ public class PostGetTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/pagination")
                         .param("page", "0")
                         .param("size", "0"))
-                .andDo(MockMvcResultHandlers.print())
+//                .andDo(MockMvcResultHandlers.print())
 
                 //Then
                 .andExpect(status().isBadRequest());
 
-        Mockito.verify(postService, times(0)).findAllPostsPage(anyInt(), anyInt(), any());
+        Mockito.verify(postService, times(0)).findAllPostsPage(anyInt(), anyInt(), any(), any());
     }
 
     //Unhappy path
@@ -197,7 +197,7 @@ public class PostGetTest {
                 //Then
                 .andExpect(status().isBadRequest());
 
-        Mockito.verify(postService, times(0)).findAllPostsPage(anyInt(), anyInt(), anyString());
+        Mockito.verify(postService, times(0)).findAllPostsPage(anyInt(), anyInt(), anyString(), anyString());
     }
 
 }
