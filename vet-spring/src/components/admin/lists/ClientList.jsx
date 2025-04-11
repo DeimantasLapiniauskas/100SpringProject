@@ -1,9 +1,9 @@
-import { PaginationUI } from "@/components/PaginationUI";
+import { PaginationPanel } from "@/components/features/PaginationPanel";
 import ClientCard from "../../cards/ClientCard";
 import { useList } from "@/context/ListContext";
 import { useUI } from "@/context/UIContext";
 import { Error } from "@/components/feedback/Error";
-import { BadRequest } from "@/components/feedback/BadRequest";
+import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { Loading } from "@/components/feedback/Loading";
 
 const ClientList = () => {
@@ -24,7 +24,7 @@ const ClientList = () => {
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
-      {isBadRequest ? <BadRequest /> : ""}
+      {isBadRequest ? <BadPageRequest /> : ""}
       <ul className="w-full divide-y divide-gray-200">
         {clients.map((client) => (
 
@@ -37,7 +37,7 @@ const ClientList = () => {
           />
         ))}
       </ul>
-      <PaginationUI />
+      <PaginationPanel />
       
     </div>
   );

@@ -3,6 +3,7 @@ package SpringProject._Spring.service.authentication;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.repository.authentication.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,10 +11,12 @@ import java.util.Optional;
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Optional<Account> findByEmail(String email) {
@@ -39,5 +42,9 @@ public class AccountService {
     public Long findIdByEmail(String email) {
         return accountRepository.findByEmail(email).get().getId();
         //warning: not Optional<>
+    }
+
+    public Boolean verifyAccountPassword(Account account, String password){
+        return passwordEncoder.matches(password, account.getPassword());
     }
 }

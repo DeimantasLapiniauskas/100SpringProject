@@ -10,7 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +51,12 @@ public class GlobalExceptionHandler extends BaseController {
         return forbidden("Access Denied");
     }
 
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ApiResponse<String>> handleIOException(IOException ex) {
+        return badRequest(null, "Upload failed" + ex.getMessage());
+    }
+
     @ExceptionHandler(NameAlreadyExistsException.class)
     public ResponseEntity<ApiResponse<String>> handleNameAlreadyExistsException(NameAlreadyExistsException ex) {
         return badRequest(null, ex.getMessage());
@@ -59,5 +65,6 @@ public class GlobalExceptionHandler extends BaseController {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiResponse<String>> handleNotFoundException(NotFoundException ex) {
         return notFound(ex.getMessage());
+
     }
 }

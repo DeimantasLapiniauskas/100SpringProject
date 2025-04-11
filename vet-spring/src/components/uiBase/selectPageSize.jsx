@@ -11,26 +11,22 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="relative">
-      <SelectPrimitive.Trigger
-        ref={ref}
-        onClick={() => setOpen(!open)}
-        className={cn(
-      "outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:outline-none focus-visible:ring-0",
-      className
-        )}
-        {...props}
-      >
-        {children}
-        {open ? (
-          <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
-        ) : (
-          <span className={`${open ? "hidden" : "absolute left-[8px] bottom-0 sm:bottom-[-1.5px] md:bottom-[-2.5px]"}`} >
-            <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white font-semibold" />
-          </span>
-        )}
-      </SelectPrimitive.Trigger>
-    </div>
+    <SelectPrimitive.Trigger
+      ref={ref}
+      onClick={() => setOpen(!open)}
+      className={cn(
+        "flex w-full items-center gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-offset-2disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      {open ? (
+        <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-info-content" />
+      ) : (
+        <ChevronDown className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 opacity-80 text-white" />
+      )}
+    </SelectPrimitive.Trigger>
   );
 });
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
@@ -42,7 +38,7 @@ const SelectContent = React.forwardRef(({ className, children, ...props }, ref) 
   position="popper"
   sideOffset={5}
   className={cn(
-    "z-50 w-[55px] sm:w-[75px] md:w-[90px] lg:w-[100px] overflow-auto rounded-md border border-blue-500 hover:bg-blue-200 shadow-lg", className
+    "z-50 w-[80px] sm:w-[100px] md:w-[120px] lg:w-[130px] overflow-auto rounded-md border border-blue-500 bg-blue-200 shadow-lg", className
   )}
   {...props}
 >

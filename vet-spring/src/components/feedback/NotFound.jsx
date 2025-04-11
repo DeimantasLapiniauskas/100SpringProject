@@ -10,7 +10,7 @@ export const NotFound = () => {
     >
       <div className="flex justify-center items-center gap-1 px-[5rem] lg:text-[10rem] lg:h-[10rem] md:text-[8rem] md:h-[10rem] sm:text-[7rem] sm:h-[9rem] text-[5rem] h-[7rem]">
         <span className="text-info-content">4</span>
-        <img src={handHeart}  className="lg:w-[128px] md:w-[102px] sm:w-[78px] w-[64px]"/>
+        <img src={handHeart} alt="handHeart" className="lg:w-[128px] md:w-[102px] sm:w-[78px] w-[64px]"/>
         <span className="text-info-content">4</span>
       </div>
       <div className="flex items-center flex-col">
