@@ -44,16 +44,22 @@ public class PostService {
         post.setTitle(postRequestDTO.title());
         post.setContent(postRequestDTO.content());
         post.setPostType(postRequestDTO.postType());
-        post.setImageUrl(postRequestDTO.imgUrl());
+        post.setImageUrl(postRequestDTO.imageUrl());
         savePost(post);
 
         return post;
     }
 
-    public Page<Post> findAllPostsPage(int page, int size, String sort) {
-        if (sort == null) {
-            Pageable pageable = PageRequest.of(page, size);
-            return  postRepository.findAll(pageable);
+    public Page<Post> findAllPostsPage(int page, int size, String sort, String search) {
+        if (sort == null ) {
+
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+            if (search == null ) {
+                return postRepository.findAll(pageable);
+            }
+
+            return postRepository.searchAllFields(search.toLowerCase(), pageable);
         }
 
         if (sort.equals("createdAt")) {
@@ -63,7 +69,11 @@ public class PostService {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         PostType postType = PostType.valueOf(sort);
-       return postRepository.findByPostType(postType, pageable);
+
+        if (search == null) {
+            return postRepository.findByPostType(postType, pageable);
+        }
+        return postRepository.searchInPostType(search.toLowerCase(), postType ,pageable);
     }
 
     public boolean isNotValidSortField(String sort) {

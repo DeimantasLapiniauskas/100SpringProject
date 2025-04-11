@@ -1,10 +1,10 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 import api from "../../utils/api.js";
-import { Error } from "../../components/feedback/Error.jsx";
 import { useState } from "react";
 import { RegisterAppointment } from "../appointments/RegisterAppointment.jsx";
 import { useList } from "../../context/ListContext.jsx";
+import { motion } from "framer-motion";
 
 export const ServiceCard = (props) => {
   const { service } = props;
@@ -40,23 +40,28 @@ export const ServiceCard = (props) => {
         account.scope !== null &&
         account.scope.includes("ROLE_CLIENT"))
   }
+ 
+  return (
+    <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.03 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+    className=" card-side will-change-transform bg-purple-300/20 backdrop-blur-lg p-5 rounded-xl shadow-lg ">
 
-  return (<>
-    <div className="card card-side shadow-sm bg-[#6A7AFF] text-[#FFFFFF]">
-      <div className="card-body">
+      <div className="card-body shadow-lg shadow-[#854685] rounded-[10px] bg-gradient-to-tr backdrop-blur-[100px] to-indigo-600 text-[#FFFFFF] ">
         <h2 className="card-title block break-all">{name}</h2>
-        <textarea
-          readOnly
-          className=" caret-transparent peer h-full min-h-[100px] w-full resize-none text-sm focus:outline-[0px]"
+        <p
+          className=" caret-transparent h-full min-h-[75px] w-full resize-none text-sm focus:outline-[0px]"
         >
           {description}
-        </textarea>
-        <p>{price} €</p>
+        </p>
+        <p className="text-[#854685]">{price} €</p>
         <div className="card-actions">
           {checkRoles() && (
             <button
               onClick={deleteService}
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#CBC5C5] text-error-content font-semibold rounded shadow-sm shadow-pink-400"
             >
               Delete
             </button>
@@ -64,18 +69,17 @@ export const ServiceCard = (props) => {
           {checkRoles() && (
             <NavLink
               to={`/services/edit/${service.id}`}
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#CBC5C5] text-error-content font-semibold rounded shadow-sm shadow-pink-400"
             >
               Edit
             </NavLink>
           )}
-          {/* <button onClick={registrApoiment} className="btn btn-error bg-[#FFFFFF] border-0">reg</button>     */}
-          <div>
+        </div>
+        <div>
             {checkRoleClient() && <button className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]" onClick={()=>setVisible(true)}>Register</button>}
           </div>
-        </div>
       </div>
-    </div>
-      {visible && <RegisterAppointment setVisible={setVisible} serviceId={service.id}/>}</>
+      {visible && <RegisterAppointment setVisible={setVisible} serviceId={service.id}/>}
+    </motion.div>          
   );
 };

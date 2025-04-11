@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import api, { setAuth, clearAuth } from "../utils/api.js";
 import { jwtDecode } from "jwt-decode";
 
+
 const AuthContext = createContext({
   account: {},
   login: () => {},
@@ -12,6 +13,7 @@ const AuthContext = createContext({
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+
   const [account, setAccount] = useState(() => {
     const maybeJwt = localStorage.getItem("jwt");
 
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         if (decodedJwt.exp * 1000 < Date.now()) {
           localStorage.removeItem("jwt");
           setAccount(null);
+          // navigate("/home")
         }
       }
     };
