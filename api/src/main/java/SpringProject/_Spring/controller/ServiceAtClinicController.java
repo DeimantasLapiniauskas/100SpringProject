@@ -13,8 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +53,40 @@ public class ServiceAtClinicController extends BaseController {
 
         return created(newService, "Service created successfully");
 
+    }
+
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
+    @PostMapping("/services/upload")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isBlank()) {
+            return badRequest(null, "File must have a valid name");
+        }
+
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            return badRequest(null, "Only image files are allowed");
+        }
+
+        long maxFileSize = 5 * 1024 * 1024;
+        if (file.getSize() > maxFileSize) {
+            return badRequest(null, "File too large. Max allowed size is 5MB.");
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename); // Unikalus vardas
+        Path uploadPath = Paths.get("uploads/images");
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        Path filePath = uploadPath.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        String fileUrl = baseUrl + "/api/images/" + fileName;
+
+        return ok(fileUrl, "Image uploaded successfully");
     }
 
     @Operation(summary = "Get all services", description = "Retrieves a list of all services")
@@ -106,10 +147,21 @@ public class ServiceAtClinicController extends BaseController {
     @DeleteMapping("/services/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
 
-    public ResponseEntity<ApiResponse<String>> deleteService(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<String>> deleteService(@PathVariable long id) throws IOException {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return notFound("Service not found");
         }
+
+        ServiceAtClinic serviceAtClinic = serviceAtClinicService.findServiceAtClinicById(id).get();
+        String imageUrl = serviceAtClinic.getImageUrl();
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+            Path path = Paths.get("uploads/images").resolve(fileName);
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+        }
+
         serviceAtClinicService.deleteServiceById(id);
 //        return noContent("service deleted successfully");
         return noContent();

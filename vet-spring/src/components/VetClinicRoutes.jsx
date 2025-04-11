@@ -15,10 +15,12 @@ import PetForm from "../pages/pets/PetForm.jsx";
 import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 import { Appointment } from "../pages/appointments/Appointment.jsx";
 import { PostList } from "../pages/posts/PostList.jsx";
-import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
 import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
 import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
+import { PostRegister } from "@/pages/posts/PostRegister.jsx";
+import { PostEditPage } from "@/pages/posts/PostEditPage.jsx";
+import { PostView } from "@/pages/posts/PostView.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
@@ -57,15 +59,9 @@ const VetClinicRoutes = () => {
                   </ListProvider>
                 }
               />
-              <Route path="/posts/:postId" element={<ViewPost />} />
-              <Route
-                path="/services"
-                element={
-                  <ListProvider>
-                    <ServiceList />
-                  </ListProvider>
-                }
-              />
+              <Route path="/posts/register" element={<PostRegister />} />
+              <Route path="/posts/edit/:postId" element={<PostEditPage />} />
+              <Route path="/posts/view/:postId" element={<PostView />} />
               <Route
                 path="/adminpage"
                 element={
@@ -93,20 +89,31 @@ const VetClinicRoutes = () => {
                 }
               >
               </Route>
+              <Route
+                path="/services"
+                element={
+                  <ListProvider>
+                    <ServiceList />
+                  </ListProvider>
+                }
+              />
               <Route path="services/add" element={<ServiceAdd />} />
               <Route path="services/edit/:id" element={<ServiceUpdate />} />
               {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-              <Route path="/profile" element={
-                <AuthGuard>
-                  <Profile />
-                </AuthGuard>
-              } />
+              <Route
+                path="/profile"
+                element={
+                  <AuthGuard>
+                    <Profile />
+                  </AuthGuard>
+                }
+              />
               <Route path="/design" element={<BandytiDesign />} />
               <Route path="/designh" element={<BandytiDesignHomePage />} />
               <Route path="/designh1" element={<BandytiDesignH1 />} />
               <Route path="/designh2" element={<BandytiDesignH2 />} />
-              <Route path="/appointments" element={<Appointment/>}/>
-              <Route path="/appointments/client/:id" element={<UpdateData/>}/>
+              <Route path="/appointments" element={<Appointment />} />
+              <Route path="/appointments/client/:id" element={<UpdateData />} />
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>

@@ -1,9 +1,9 @@
-import { PaginationUI } from "@/components/PaginationUI";
+import { PaginationPanel } from "@/components/features/PaginationPanel";
 import ClientCard from "../cards/ClientCard";
 import { useList } from "@/context/ListContext";
 import { useUI } from "@/context/UIContext";
 import { Error } from "@/components/feedback/Error";
-import { BadRequest } from "@/components/feedback/BadRequest";
+import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { Loading } from "@/components/feedback/Loading";
 
 const ClientList = () => {
@@ -24,7 +24,7 @@ const ClientList = () => {
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
-      {isBadRequest ? <BadRequest /> : ""}
+      {isBadRequest ? <BadPageRequest /> : ""}
       <ul className="w-full divide-y divide-gray-200">
         {clients.map((client) => (
 
@@ -37,39 +37,10 @@ const ClientList = () => {
           />
         ))}
       </ul>
-      <PaginationUI />
+      <PaginationPanel />
       
     </div>
   );
 };
 
 export default ClientList;
-
-
-{/* <div className="join">
-        <button
-          className="join-item btn"
-          onClick={async () => onPaginate(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          «
-        </button>
-        <button className="join-item btn">Page {currentPage + 1}</button>
-        <button
-          className="join-item btn"
-          onClick={async () => onPaginate(currentPage + 1)}
-          disabled={currentPage === totalPages - 1}
-        >
-          »
-        </button>
-        <select
-          defaultValue="6"
-          className="join-item select ml-4"
-          onChange={onPageSizeChange}
-        >
-          <option value="6">6</option>
-          <option value="9">9</option>
-          <option value="12">12</option>
-        </select>
-      </div>
-      <Error error={error} isHidden={!error} /> */}

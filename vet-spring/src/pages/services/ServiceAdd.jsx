@@ -40,8 +40,7 @@ export const ServiceAdd = ({ service }) => {
     const payload = { ...trimmedData };
 
     try {
-      let response1;
-      response1 = await addService(payload);
+    await addService(payload);
       console.log("Resetting form...");
       reset({
         name: "",

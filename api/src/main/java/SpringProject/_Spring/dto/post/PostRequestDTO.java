@@ -10,22 +10,23 @@ import org.hibernate.validator.constraints.Length;
 
 public record PostRequestDTO(@NotNull
                              @NotBlank(message = "Title cannot be empty")
-                             @Size(max = 100, message = "Title must be not longer than 100 characters" )
+                             @Size(min = 3, max = 50, message = "Title must be at least 3 characters long but not longer than 50 characters" )
                              String title,
 
                              @NotNull
                              @NotBlank(message = "Content cannot be empty")
-                             @Size(max = 10000)
+                             @Size(min = 10, max = 20000, message = "Content must be at least 10 characters long but not longer than 2000 characters")
                              String content,
 
                              @NotNull(message = "Post type is required")
                              PostType postType,
 
                              @Pattern(
-                                     regexp = "^(https?://)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d+)?(/[^\s]*)?$",
-                                     message = "Invalid URL format"
+                                     regexp = ".*\\.(jpg|jpeg|png|webp|gif)$",
+                                     message = "Image URL must end with .jpg, .png, .webp or .gif"
                              )
                              @Size(max = 255, message = "URL must not exceed 255 characters")
-                             String imgUrl
+                             String imageUrl
+
 ) {
 }
