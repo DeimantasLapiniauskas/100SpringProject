@@ -1,5 +1,6 @@
 package SpringProject._Spring.accountControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.accountController.AccountControllerPut;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.authentication.Account;
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 
 @WebMvcTest(controllers = AccountControllerPut.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 public class AccountAuthenticatedPUTTest {
 

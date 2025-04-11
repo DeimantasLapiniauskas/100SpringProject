@@ -1,5 +1,6 @@
 package SpringProject._Spring.accountControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.accountController.AccountControllerPut;
 import SpringProject._Spring.dto.authentication.vet.VetUpdateRequestDTO;
 import SpringProject._Spring.model.authentication.Vet;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = AccountControllerPut.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 public class AccountUpdateVetTest {
 

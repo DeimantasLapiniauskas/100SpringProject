@@ -1,5 +1,6 @@
 package SpringProject._Spring.postControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.PostController;
 import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.model.post.PostType;
@@ -37,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PostController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class PostGetTest {
     @MockitoBean
     private PostService postService;

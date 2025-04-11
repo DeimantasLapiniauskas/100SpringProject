@@ -1,5 +1,6 @@
 package SpringProject._Spring.adminpageControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.AdminpageController;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.model.authentication.Vet;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AdminpageController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
 public class VetGetPaginationTest {

@@ -1,5 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest.appointmentConfirmationController;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentConfirmationController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
@@ -40,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentConfirmationController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class AppointmentConfirmGETTest {
 
     @Autowired

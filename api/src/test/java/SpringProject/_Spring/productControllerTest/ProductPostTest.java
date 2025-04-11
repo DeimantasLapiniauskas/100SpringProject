@@ -1,5 +1,6 @@
 package SpringProject._Spring.productControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = ProductController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
 public class ProductPostTest {

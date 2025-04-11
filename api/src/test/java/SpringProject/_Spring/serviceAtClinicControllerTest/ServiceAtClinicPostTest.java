@@ -1,5 +1,6 @@
 package SpringProject._Spring.serviceAtClinicControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.ServiceAtClinicController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.security.SecurityConfig;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ServiceAtClinicController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class ServiceAtClinicPostTest {
     @MockitoBean
     private ServiceAtClinicService service;

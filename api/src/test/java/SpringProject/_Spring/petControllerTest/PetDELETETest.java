@@ -1,5 +1,6 @@
 package SpringProject._Spring.petControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.PetController;
 import SpringProject._Spring.model.pet.Gender;
 import SpringProject._Spring.model.pet.Pet;
@@ -36,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PetController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class PetDELETETest {
 
     @Autowired
