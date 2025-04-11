@@ -81,7 +81,7 @@ public class AppointmentPUTTest {
         objectMapper.registerModule(new JavaTimeModule());
         appointmentId = 1;
     }
-    
+
     @Test
     void cancelAppointment_whenValidCancelClient_thenRespond200() throws Exception {
 
