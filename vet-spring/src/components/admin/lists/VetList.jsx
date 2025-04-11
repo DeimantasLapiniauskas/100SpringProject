@@ -3,8 +3,8 @@ import VetCard from "../../cards/VetCard";
 import AddVetButton from "../buttons/AddVetButton";
 import { useList } from "@/context/ListContext";
 import { useUI } from "@/context/UIContext";
-import { PaginationUI } from "@/components/PaginationUI";
-import { BadRequest } from "@/components/feedback/BadRequest";
+import { PaginationPanel } from "@/components/features/PaginationPanel";
+import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { Loading } from "@/components/feedback/Loading";
 
 const VetList = () => {
@@ -33,7 +33,7 @@ const VetList = () => {
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
-      {isBadRequest ? <BadRequest /> : ""}
+      {isBadRequest ? <BadPageRequest /> : ""}
       <ul className="w-full divide-y divide-gray-200 z-50">
         {vets.map((vet) => (
           <VetCard
@@ -45,7 +45,7 @@ const VetList = () => {
           />
         ))}
       </ul>
-      <PaginationUI />
+      <PaginationPanel />
     </div>
   );
 };

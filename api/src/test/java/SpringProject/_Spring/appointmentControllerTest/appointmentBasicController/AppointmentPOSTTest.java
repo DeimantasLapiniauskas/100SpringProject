@@ -1,4 +1,4 @@
-package SpringProject._Spring.appointmentControllerTest;
+package SpringProject._Spring.appointmentControllerTest.appointmentBasicController;
 
 
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
@@ -111,14 +111,16 @@ public class AppointmentPOSTTest {
         serviceOne = new ServiceAtClinic(
                 "Service one",
                 "Service Description One",
-                BigDecimal.valueOf(10.1)
+                BigDecimal.valueOf(10.1),
+                "https://example.com/new.jpg"
         );
         serviceOne.setId(serviceIdOne);
 
         serviceTwo = new ServiceAtClinic(
                 "Service two",
                 "Service Description Two",
-                BigDecimal.valueOf(20.2)
+                BigDecimal.valueOf(20.2),
+                "https://example.com/new.jpg"
         );
         serviceTwo.setId(serviceIdTwo);
     }

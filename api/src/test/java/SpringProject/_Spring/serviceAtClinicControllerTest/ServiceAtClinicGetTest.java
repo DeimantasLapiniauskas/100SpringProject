@@ -51,7 +51,7 @@ public class ServiceAtClinicGetTest {
     @Test
     void getService_whenAnyUserGetService_thenReturnServiceAnd200() throws Exception {
         //given
-        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00));
+        ServiceAtClinic serviceAtClinic = new ServiceAtClinic("Blood Test", "Laboratory blood tests to assess your pet's internal health.", BigDecimal.valueOf(60.00), "https://example.com/new.jpg");
         serviceAtClinic.setId(1);
 
         BDDMockito.given(serviceAtClinicService.findServiceAtClinicById(1)).willReturn(Optional.of(serviceAtClinic));
@@ -65,7 +65,8 @@ public class ServiceAtClinicGetTest {
                 .andExpect(jsonPath("$.data.id").value("1"))
                 .andExpect(jsonPath("$.data.name").value("Blood Test"))
                 .andExpect(jsonPath("$.data.description").value("Laboratory blood tests to assess your pet's internal health."))
-                .andExpect(jsonPath("$.data.price").value("60.0"));
+                .andExpect(jsonPath("$.data.price").value("60.0"))
+                .andExpect(jsonPath("$.data.imageUrl").value("https://example.com/new.jpg"));
 
         Mockito.verify(serviceAtClinicService, times(1)).findServiceAtClinicById(1);
     }
@@ -74,10 +75,10 @@ public class ServiceAtClinicGetTest {
     @Test
     void getAllServicesPage_whenValidPageRequest_thenReturn200() throws Exception {
         //Given
-        ServiceAtClinic s1 = new ServiceAtClinic("Consultation", "Vet consultation.", BigDecimal.valueOf(30.00));
+        ServiceAtClinic s1 = new ServiceAtClinic("Consultation", "Vet consultation.", BigDecimal.valueOf(30.00), "https://example.com/new.jpg");
         s1.setId(1);
 
-        ServiceAtClinic s2 = new ServiceAtClinic("Vaccination", "Pet vaccination.", BigDecimal.valueOf(45.00));
+        ServiceAtClinic s2 = new ServiceAtClinic("Vaccination", "Pet vaccination.", BigDecimal.valueOf(45.00), "https://example.com/new.jpg");
         s2.setId(2);
 
         List<ServiceAtClinic> services = List.of(s1, s2);

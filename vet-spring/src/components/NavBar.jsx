@@ -1,21 +1,26 @@
 import { NavLink } from "react-router";
-import { useAuth } from "../context/AuthContext";
 import { DropdownMenu } from "../pages/profile/DropdownMenu";
 import menu from "../assets/pawsNav.png";
 export const Navbar = () => {
-  const { account, logout } = useAuth();
+  
   return (
     <div>
-      <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-[#6A7AFF] px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-[#CBC5C5] max-w-[1500px] mx-auto">
-        <NavLink to={"/home"}>
-          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Home</p>
+      <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-gradient-to-br from-blue-400 to-indigo-600 px-[1rem] sm:px-[3rem] md:px-[5rem] flex justify-between items-center rounded-[10px] border-2 border-white shadow-lg shadow-white max-w-[1500px] mx-auto">
+        <NavLink to={"/home"}
+         className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">Home</p>
         </NavLink>
-        
-        <NavLink to={"/services"}>
-          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">Service list</p>
+        <NavLink to={"/posts"}
+        className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">News</p>
         </NavLink>
-        <NavLink to={"/posts"}>
-          <p className="text-white lg:text-lg md:text-base sm:text-sm text-xs">News</p>
+        <NavLink to={"/services"}
+         className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">Service List</p>
+        </NavLink>
+        <NavLink 
+         className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
+          <p className="text-xs sm:text-sm md:text-base">Products</p>
         </NavLink>
         <div className="dropdown">
           <button className="dropbtn btn bg-[#97a0f1] w-12">

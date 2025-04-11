@@ -16,8 +16,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 @RestController
@@ -31,6 +40,40 @@ public class PostController extends BaseController{
     public PostController(VetService vetService, PostService postService) {
         this.vetService = vetService;
         this.postService = postService;
+    }
+
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PostMapping("/posts/upload")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isBlank()) {
+            return badRequest(null, "File must have a valid name");
+        }
+
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            return badRequest(null, "Only image files are allowed");
+        }
+
+        long maxFileSize = 5 * 1024 * 1024;
+        if (file.getSize() > maxFileSize) {
+            return badRequest(null, "File too large. Max allowed size is 5MB.");
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename);
+        Path uploadPath = Paths.get("uploads/images");
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        Path filePath = uploadPath.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        String fileUrl = baseUrl + "/api/images/" + fileName;
+
+        return ok(fileUrl, "Image uploaded successfully");
     }
 
     @PostMapping("/posts")
@@ -56,7 +99,8 @@ public class PostController extends BaseController{
     @GetMapping("/posts/pagination")
     public ResponseEntity<ApiResponse<PostPageResponseDTO>> getAllPostsPage(@RequestParam int page,
                                                                             @RequestParam int size,
-                                                                            @RequestParam(required = false) String sort) {
+                                                                            @RequestParam(required = false) String sort,
+                                                                            @RequestParam(required = false) String search) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -66,14 +110,27 @@ public class PostController extends BaseController{
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort);
+        System.out.println("Checking search: [" + search + "]");
+
+        if (search != null) {
+            search = search.trim();
+            if (search.length() > 50) {
+                throw new IllegalArgumentException("Search query is too long");
+            }
+
+            if (search.matches("^[%_]+$")) {
+                throw new IllegalArgumentException("Search query cannot contain only wildcards");
+            }
+        }
+
+        Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort, search);
         String message = pagedPosts.isEmpty() ? "Posts list is empty" : null;
         PostPageResponseDTO responseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
 
         return ok(responseDTO, message);
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/posts/view/{postId}")
     public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
@@ -120,11 +177,21 @@ public class PostController extends BaseController{
 
     @DeleteMapping("/posts/{postId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) {
+    public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) throws IOException {
 
-        Optional<Post> post = postService.findPostById(postId);
-        if (post.isEmpty()) {
+        Optional<Post> postOpt = postService.findPostById(postId);
+        if (postOpt.isEmpty()) {
             return notFound("Post does not exist");
+        }
+
+        Post post = postOpt.get();
+        String imageUrl = post.getImageUrl();
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+            Path path = Paths.get("uploads/images").resolve(filename);
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
         }
 
         postService.deletePostById(postId);

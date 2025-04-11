@@ -6,10 +6,10 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-} from "@/components/ui/pagination";
+} from "@/components/uiBase/pagination";
 import { useList } from "@/context/ListContext";
 
-export const PaginationUI = () => {
+export const PaginationPanel = () => {
   const { currentPage, totalPages, onPaginate } = useList();
 
   const getPages = () => {
@@ -71,7 +71,7 @@ export const PaginationUI = () => {
               <PaginationEllipsis
                 className="text-xs font-bold text-info-content 
                             sm:text-sm 
-                            md:text-base 
+                            md:text-base
                              "
               />
             </PaginationItem>

@@ -6,7 +6,8 @@ public record ServiceAtClinicResponseDTO(
         long id,
         String name,
         String description,
-        BigDecimal price
+        BigDecimal price,
+        String imageUrl
 ) {
 
 }

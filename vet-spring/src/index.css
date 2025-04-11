@@ -3,7 +3,11 @@
 @plugin "daisyui";
 
 @theme {
-  --breakpoint-xs: 425.6px
+  --breakpoint-xs: 485px
+}
+
+@theme {
+  --breakpoint-xl: 1285px
 }
 
 * {
@@ -12,12 +16,62 @@
 
 html, body {
   font-family: 'Kiwi Maru', sans-serif;
-  background-color: #DCDEFE;
+  background-color: #DBEAFE;
+
 }
 
-/* body {
-  overflow-x: hidden;
-} */
+@keyframes animatedGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: animatedGradient 6s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes fadeSwap {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  animation: fadeSwap 6s ease-in-out infinite;
+  transition: opacity 1s ease;
+}
+
+.fade-in {
+  animation-delay: 3s;
+}
+
+@keyframes slow-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.slow-pulse {
+  @apply animate-none;
+  animation: slow-pulse 3s ease-in-out infinite;
+}
+
+
 
 @layer components {
   .form-text-select {
