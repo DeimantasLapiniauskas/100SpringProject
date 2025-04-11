@@ -224,15 +224,16 @@ public class AppointmentBasicController extends BaseController {
     @Operation(summary = "Get all appointments for current client", description = "Retrieves all appointments for currently authenticated client")
     @GetMapping("/appointments/{id}")
 //    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<List<AppointmentResponseDTO>> getAppointment(@PathVariable long id) {
-        return ResponseEntity.ok(
+    public ResponseEntity<ApiResponse<List<AppointmentResponseDTO>>> getAppointment(@PathVariable long id) {
+        return ok(
                 appointmentService.getAppointmentById(id)
                         .stream().map(appointment -> AppointmentMapping.toAppointmentDTO(
                                 appointment,
                                 PetMapping.toPetResponseDTO(petService.getPetById(appointment.getPetId()).get()),
                                 VetMapping.toVetResponseDTO(vetService.getVetById(appointment.getVetId()).get())
                         ))
-                        .toList());
+                        .toList()
+        );
     }
 
     @Operation(summary = "Get all appointments for current vet", description = "Retrieves all appointments for currently authenticated vet")

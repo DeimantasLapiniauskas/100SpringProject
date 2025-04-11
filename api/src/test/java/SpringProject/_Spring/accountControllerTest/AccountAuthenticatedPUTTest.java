@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -57,6 +58,7 @@ public class AccountAuthenticatedPUTTest {
 
     //happy path
     @Test
+    @WithMockUser
     void updateAccountPassword_whenValidRequest_thenReturnAnd200() throws Exception {
         //given
         Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_CLIENT")));
@@ -114,6 +116,7 @@ public class AccountAuthenticatedPUTTest {
 
     //unhappy path
     @Test
+    @WithMockUser
     void updateAccountPassword_whenAccountIdNotFound_thenReturn404() throws Exception {
         //given
         Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_CLIENT")));

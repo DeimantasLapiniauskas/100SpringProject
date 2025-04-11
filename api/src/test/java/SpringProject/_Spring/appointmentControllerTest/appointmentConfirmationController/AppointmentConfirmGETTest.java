@@ -26,6 +26,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -90,6 +91,7 @@ public class AppointmentConfirmGETTest {
     }
 
     @Test
+    @WithMockUser
     void getUnconfirmedAppointments_whenGetClient_thenRespond200() throws Exception {
 
         Account account = new Account("email","password",List.of(new Role("ROLE_CLIENT")));

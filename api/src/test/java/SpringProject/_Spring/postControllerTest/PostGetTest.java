@@ -78,7 +78,7 @@ public class PostGetTest {
         BDDMockito.given(postService.findPostById(postId)).willReturn(Optional.of(mockPost));
 
         //When
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/{postId}", postId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/view/{postId}", postId)
                         .contentType(MediaType.APPLICATION_JSON))
 //                .andDo(MockMvcResultHandlers.print())
 

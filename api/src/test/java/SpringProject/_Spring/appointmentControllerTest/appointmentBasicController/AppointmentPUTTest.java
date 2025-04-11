@@ -84,6 +84,7 @@ public class AppointmentPUTTest {
     }
     
     @Test
+    @WithMockUser
     void cancelAppointment_whenValidCancelClient_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
@@ -128,6 +129,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
+    @WithMockUser
     void cancelAppointment_whenValidCancelVet_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
@@ -195,6 +197,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
+    @WithMockUser
     void rescheduleAppointment_whenRescheduleClient_thenRespond200() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222, 11, 11, 11, 11));
@@ -245,6 +248,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
+    @WithMockUser
     void rescheduleAppointment_whenRescheduleVet_thenRespond200() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222, 11, 11, 11, 11));
