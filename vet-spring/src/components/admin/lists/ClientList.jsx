@@ -20,12 +20,12 @@ const ClientList = () => {
   const { isLoading, isError, isBadRequest } = useUI();
 
   return (
-    <div className="flex flex-col items-center gap-8 py-8">
+    <div className="flex flex-col items-center gap-9 py-8">
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadRequest ? <BadPageRequest /> : ""}
-      <ul className="w-full divide-y divide-gray-200">
+      <ul className="w-full divide-y divide-gray-200 z-50">
         {clients.map((client) => (
 
           <ClientCard

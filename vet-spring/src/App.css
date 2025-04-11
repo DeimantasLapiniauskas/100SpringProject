@@ -471,3 +471,25 @@
 
 
 /* /////////////////////////////////////////////////////////////////////// */
+
+/*FOR ADMIN PAGE //////////////////////////////////////////////////////// */
+
+.custom-admin-panel-btn {
+  background-color: #ac64b4;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem; /* Adjusted width */
+  height: 2.9375rem; /* Adjusted height */
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.custom-admin-panel-btn:hover {
+  background-color: #C7A4D6;
+}
