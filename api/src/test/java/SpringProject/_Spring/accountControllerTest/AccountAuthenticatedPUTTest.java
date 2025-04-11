@@ -66,7 +66,7 @@ public class AccountAuthenticatedPUTTest {
 
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
-        when(accountService.findAccountById(1L)).thenReturn(Optional.of(account));
+        when(accountService.findByEmail(any())).thenReturn(Optional.of(account));
         when(passwordEncoder.encode("newPassword")).thenReturn("hashedNewPassword1");
 
         //context: since this endpoint uses Authentication getPrinciple() it needs authentication to exist to convert
@@ -116,7 +116,7 @@ public class AccountAuthenticatedPUTTest {
 
     //unhappy path
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateAccountPassword_whenAccountIdNotFound_thenReturn404() throws Exception {
         //given
         Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_CLIENT")));
@@ -138,7 +138,7 @@ public class AccountAuthenticatedPUTTest {
         SecurityContextHolder.setContext(securityContext);
 
         //when
-        mockMvc.perform(put("/api/account/password/"+account.getId())
+        mockMvc.perform(put("/api/account/password/" + account.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
