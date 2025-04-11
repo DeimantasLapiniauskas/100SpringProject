@@ -56,7 +56,7 @@ public class ProductPostTest {
         when(productService.addNewProduct(productRequestDTO)).thenReturn(product);
 
         //when
-        mockMvc.perform(post("/api/products/add")
+        mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequestDTO)))
                 //given
@@ -79,7 +79,7 @@ public class ProductPostTest {
 
         when(productService.addNewProduct(productRequestDTO)).thenThrow(new NameAlreadyExistsException("Product", productRequestDTO.name()));
         //when
-        mockMvc.perform(post("/api/products/add")
+        mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequestDTO)))
                 //given
@@ -100,7 +100,7 @@ public class ProductPostTest {
         ProductRequestDTO productRequestDTO = new ProductRequestDTO("Nameупвып", "", BigDecimal.valueOf(-1.0), -1, List.of(new CategoryDTO(1L)));
 
         //when
-        mockMvc.perform(post("/api/products/add")
+        mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequestDTO)))
                 //given
@@ -127,7 +127,7 @@ public class ProductPostTest {
         //given
         ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)));
         //when
-        mockMvc.perform(post("/api/products/add")
+        mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequestDTO)))
                 //then
@@ -144,7 +144,7 @@ public class ProductPostTest {
         //given
         ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)));
         //when
-        mockMvc.perform(post("/api/products/add")
+        mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequestDTO)))
                 //then

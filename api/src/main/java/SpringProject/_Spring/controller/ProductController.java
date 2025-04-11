@@ -24,7 +24,7 @@ public class ProductController extends BaseController {
     }
 
     @Operation(summary = "Add new product", description = "Adds new product to the DB")
-    @PostMapping("/products/add")
+    @PostMapping("/products")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ProductResponseDTO> addProduct(@Valid @RequestBody ProductRequestDTO productRequestDTO) {
         Product product = productService.addNewProduct(productRequestDTO);
