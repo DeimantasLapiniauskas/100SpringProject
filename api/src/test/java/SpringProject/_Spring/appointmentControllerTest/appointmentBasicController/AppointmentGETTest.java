@@ -143,25 +143,29 @@ public class AppointmentGETTest {
         serviceAtClinicOne = new ServiceAtClinic(
                 "ServiceOneName",
                 "ServiceOneDescription",
-                BigDecimal.valueOf(111)
+                BigDecimal.valueOf(111),
+                "https://example.com/new.jpg"
         );
 
         serviceAtClinicTwo = new ServiceAtClinic(
                 "ServiceTwoName",
                 "ServiceTwoDescription",
-                BigDecimal.valueOf(222)
+                BigDecimal.valueOf(222),
+                "https://example.com/new.jpg"
         );
 
         serviceAtClinicThree = new ServiceAtClinic(
                 "ServiceThreeName",
                 "ServiceThreeDescription",
-                BigDecimal.valueOf(333)
+                BigDecimal.valueOf(333),
+                "https://example.com/new.jpg"
         );
 
         serviceAtClinicFour = new ServiceAtClinic(
                 "ServiceFourName",
                 "ServiceFourDescription",
-                BigDecimal.valueOf(444)
+                BigDecimal.valueOf(444),
+                "https://example.com/new.jpg"
         );
 
         appointmentOne = new Appointment(

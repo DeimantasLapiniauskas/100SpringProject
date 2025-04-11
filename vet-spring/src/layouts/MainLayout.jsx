@@ -1,5 +1,6 @@
 import {Outlet} from "react-router";
 import { Navbar } from "../components/NavBar.jsx";
+import { DeletePostModal } from "@/pages/posts/DeleteModal.jsx";
 
 export const MainLayout = () => {
     
@@ -12,6 +13,7 @@ export const MainLayout = () => {
             <main className="border-0 border-[#5e6ce4] rounded-[10px]">
                 {/* gal geriau kad */}
                 <Outlet />
+                <DeletePostModal/>
             </main>
         </div>
     )

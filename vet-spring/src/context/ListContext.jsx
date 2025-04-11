@@ -19,7 +19,7 @@ const ListContext = createContext({
   onPaginate: () => {},
   onSortBy: () => {},
   handleSearch: () => {},
-  clearAll: () => {}
+  clearAll: () => {},
 });
 
 export const ListProvider = ({ children }) => {
@@ -71,9 +71,11 @@ export const ListProvider = ({ children }) => {
             sort ? `&sort=${sort}` : ""
           }${search ? `&search=${search}` : ""}`
         );
-        const { data, message, success } = response.data;
-
         if (!isMounted.current) return;
+
+        const { data, message, success } = response.data;
+        console.log(response.data);
+
         if (page >= data.totalPages && data.totalPages > 0) {
           setStatus(BadPageRequest);
           return;
@@ -97,6 +99,7 @@ export const ListProvider = ({ children }) => {
         }
       } catch (error) {
         if (!isMounted.current) return;
+
         const errorMessage =
           error.response?.data?.message ?? error.message ?? "Unknown error";
         setPagination((prev) => ({
@@ -153,13 +156,23 @@ export const ListProvider = ({ children }) => {
     localStorage.setItem(`${localStoragePath} - searchValue`, searchValue);
   };
 
+  const [clearSearchBar, setClearSearchBar] = useState(0)
+
   const clearAll = () => {
     localStorage.removeItem(`${localStoragePath} - pageSize`);
     localStorage.removeItem(`${localStoragePath} - currentPage`);
     localStorage.removeItem(`${localStoragePath} - sorted`);
     localStorage.removeItem(`${localStoragePath} - searchValue`);
     setSearchParams({});
-    setPagination(initialPagination);
+    setClearSearchBar((prev) => prev + 1 )
+
+    setPagination({
+      ...initialPagination,
+      currentPage: 0,
+      pageSize: 6,
+      sorted: null,
+      searchValue: "",
+    });
   };
 
   useEffect(() => {
@@ -205,8 +218,10 @@ export const ListProvider = ({ children }) => {
         onSortBy,
         handleSearch,
         clearAll,
+        setPagination,
         ...pagination,
         isEmpty,
+        clearSearchBar
       }}
     >
       {children}

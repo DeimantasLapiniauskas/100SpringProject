@@ -1,59 +1,28 @@
 import { NavLink } from "react-router";
 import { motion } from "framer-motion";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
-import { deletePost } from "@/utils/helpers/posts";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { DeletePostModal } from "./DeletePostModal";
-import { UIStatus } from "@/constants/UIStatus";
-import { useUI } from "@/context/UIContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router";
 import { ChevronsRight } from "lucide-react";
 import "../../index.css"
 import dayjs from "dayjs";
+import { useUI } from "@/context/UIContext";
+import { UIStatus } from "@/constants/UIStatus";
+import { Trash2Icon } from "lucide-react";
+import { useDeleteModal } from "@/context/DeleteModalContext";
 
 export const PostCard = (props) => {
-  const { post, getPage, currentPage, pageSize, sorted, searchValue } = props;
+
+  const { post } = props;
   const roles = useCheckRoles();
   const { id, postType, content, title, imageUrl } = post;
-  const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { Loading, Success, Error, Unusual, Redirecting } = UIStatus;
+  const { Redirecting } = UIStatus;
   const { setStatus } = useUI();
   const navigate = useNavigate();
-
-  const isMounted = useIsMounted();
+  const { openDeleteModal } = useDeleteModal();
 
   if (!post || !post.content) return null;
 
-  const handleDelete = async (id) => {
-    try {
-      setStatus(Loading);
-
-      if (id) {
-        await deletePost(id);
-        toast.success("Post deleted successfully");
-        await getPage(pageSize, currentPage, sorted, searchValue);
-
-        if (!isMounted.current) return;
-        setStatus(Success);
-      } else {
-        setStatus(Unusual);
-      }
-    } catch (error) {
-      if (!isMounted.current) return;
-
-      const errorMessage =
-        error.response?.data?.message ?? error.message ?? "Unknown error";
-      setStatus(Error);
-      setError(errorMessage);
-      toast.error(errorMessage);
-    } finally {
-      setIsModalOpen(false);
-    }
-  };
 
   return (
     <div>
@@ -149,12 +118,16 @@ export const PostCard = (props) => {
                 <Pencil className="w-3 h-3 sm:w-4 sm:h-4  md:w-5 md:h-5 text-warning-content" />
               </button>
             </NavLink>
-            <DeletePostModal
-              postTitle={title}
-              handleDelete={() => handleDelete(id)}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-            />
+             <button
+                type="button"
+                className="text-xs px-2 sm:px-3 md:px-4 sm:text-sm md:text-base rounded-[5px] text-info-content font-semibold border-1 border-blue-200 cursor-pointer inline-flex gap-2 items-center"
+                onClick={() => {
+                 openDeleteModal(post)
+                }}
+              >
+                Delete
+                <Trash2Icon className="w-3 h-3 sm:w-4 sm:h-4  md:w-5 md:h-5 text-red-500" />
+              </button>
           </div>
         )}
       </motion.div>

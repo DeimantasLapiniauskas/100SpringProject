@@ -17,8 +17,6 @@ const PostCarousel = () => {
   const { setStatus } = useUI();
   const navigate = useNavigate();
 
-  console.log("PostCarousel posts:", posts?.map(post => post.id));
-
   return (
     <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px] shadow-md shadow-info-content">
       <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-1 xs:px-[1.5rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">

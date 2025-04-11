@@ -202,7 +202,7 @@ public class AppointmentPUTTest {
                 5,
                 6,
                 List.of(new ServiceAtClinic(
-                                "serviceName", "serviceDescription", BigDecimal.valueOf(10.1)
+                                "serviceName", "serviceDescription", BigDecimal.valueOf(10.1), "https://example.com/new.jpg"
                         )
                 ),
                 LocalDateTime.of(2222,10,11,11,11),
@@ -252,7 +252,7 @@ public class AppointmentPUTTest {
                 5,
                 6,
                 List.of(new ServiceAtClinic(
-                                "serviceName", "serviceDescription", BigDecimal.valueOf(10.1)
+                                "serviceName", "serviceDescription", BigDecimal.valueOf(10.1), "https://example.com/new.jpg"
                         )
                 ),
                 LocalDateTime.of(2222,10,11,11,11),
