@@ -4,7 +4,7 @@ import ModalContext from '../../utils/helpers/modalContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import pawssAdminPageImage from '/src/assets/pawss_for_admin_spaced_out_rotated_1536px.png';
+import pawssAdminPageImage from '/src/assets/icons/pawss_for_admin_spaced_out_rotated_1536px.png';
 
 const AdminPage = ({ initialList }) => {
     const [activeList, setActiveList] = useState(initialList || '');
