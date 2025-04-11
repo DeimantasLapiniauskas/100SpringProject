@@ -22,6 +22,18 @@ export const DropdownMenu = () => {
         >
           Profile
         </NavLink>
+        <NavLink to={"/pets"}>
+          <p className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1">
+            Your Pets
+          </p>
+        </NavLink>
+        {account && (
+          <NavLink to={"/appointments"}>
+            <p className=" custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center">
+              Appointments history
+            </p>
+          </NavLink>
+        )}
         {account ? (
           <button
             type="button"
