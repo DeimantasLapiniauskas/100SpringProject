@@ -10,6 +10,7 @@ export const SearchBarPanel = ({ delay = 1000, ...props }) => {
     searchValue: contextSearchValue,
     clearSearchBar,
   } = useList();
+  
   const [searchValue, setSearchValue] = useState(contextSearchValue);
   const lastSentValue = useRef(contextSearchValue);
 
@@ -40,6 +41,7 @@ const previousClear = useRef(clearSearchBar)
     if (previousClear.current !== clearSearchBar) {
     setSearchValue("");
     previousClear.current = clearSearchBar
+    lastSentValue.current = ""
     }
   }, [clearSearchBar]);
 

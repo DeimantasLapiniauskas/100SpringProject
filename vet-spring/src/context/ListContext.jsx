@@ -172,7 +172,7 @@ export const ListProvider = ({ children }) => {
     localStorage.removeItem(`${localStoragePath} - currentPage`);
     localStorage.removeItem(`${localStoragePath} - sorted`);
     localStorage.removeItem(`${localStoragePath} - searchValue`);
-    setSearchParams({});
+   
     setClearSearchBar((prev) => prev + 1);
 
     setPagination({
@@ -182,6 +182,7 @@ export const ListProvider = ({ children }) => {
       sorted: null,
       searchValue: "",
     });
+    setSearchParams({});
   };
 
   const isFirstLoad = useRef(true);
