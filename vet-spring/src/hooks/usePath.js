@@ -5,8 +5,10 @@ export const useCurrentPath = () => {
     const location = useLocation()
     const path = location.pathname.split("/").filter(Boolean).pop()
 
+    if (!isNaN(path)) return;
+
     //I'm using this for adminpage because its path is more complicated
-    const segments = location.pathname.split("/").filter(Boolean);
+    const segments = location.pathname.split("/").filter(Boolean); // <--- Andrej, primink man apie sita, as padesiu tau ji siek tiek sutrumpinti
     const lastSegment = segments[segments.length - 1];
     if (segments[0] === "adminpage") {
         if (lastSegment === "vet" || lastSegment === "vets") return "adminpage/vets";

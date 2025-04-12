@@ -35,7 +35,7 @@ export const PostCard = (props) => {
       >
         <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[20.55rem] sm:h-[25.75rem] md:h-[32rem] p-1.5 sm:p-2.25 md:p-3  shadow-lg shadow-info w-full border-1 border-info">
           <h2
-            className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] max-h-[40px] sm:max-h-[55px] md:max-h-[60px] px-10 sm:px-15 md:px-15 lg:px-5 xl:px-15 text-sm sm:text-lg md:text-xl overflow-hidden ${
+            className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] max-h-[40px] sm:max-h-[55px] md:max-h-[60px] px-10 sm:px-15 md:px-15 lg:px-5 xl:px-15 text-sm sm:text-lg md:text-xl overflow-hidden break-words ${
               postType === "Sale"
                 ? `text-red-700`
                 : postType === "Blog"
@@ -43,7 +43,9 @@ export const PostCard = (props) => {
                 : `text-[#004C99]`
             }`}
           >
-            {title}
+            {title.length > 55 ?
+            title.slice(0, 52) + "..." 
+            : title}
           </h2>
           <h3
             className={`p-0.5 sm:p-1 md:p-2 font-semibold text-left text-sm sm:text-base md:text-lg ${
@@ -54,7 +56,7 @@ export const PostCard = (props) => {
                 : `text-[#004C99]`
             }`}
           >
-            {postType === "Sale" ? postType + "!" : postType}
+            {postType === "Sale" ? postType + " !" : postType}
           </h3>
           <div className="w-full flex justify-center">
             {post.imageUrl && (

@@ -34,8 +34,13 @@ export const SearchBarPanel = ({ delay = 1000, ...props }) => {
     lastSentValue.current = "";
   };
 
+const previousClear = useRef(clearSearchBar)
+
   useEffect(() => {
+    if (previousClear.current !== clearSearchBar) {
     setSearchValue("");
+    previousClear.current = clearSearchBar
+    }
   }, [clearSearchBar]);
 
   return (

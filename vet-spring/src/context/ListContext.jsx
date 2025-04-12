@@ -24,11 +24,10 @@ const ListContext = createContext({
 
 export const ListProvider = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams("");
-  const isFirstLoad = useRef(true);
   const isMounted = useIsMounted();
   const currentPath = useCurrentPath();
   const realPath = useRealPath();
-  const localStoragePath = realPath.replace(/\//g, "");
+  const localStoragePath = (realPath || "").replace(/\//g, "");
 
   const defaultPageSize =
     parseInt(searchParams.get("size")) ||
@@ -66,29 +65,32 @@ export const ListProvider = ({ children }) => {
     async (size, page, sort, search) => {
       try {
         setStatus(Loading);
-        const response = await api.get(
-          `/${currentPath}/pagination?page=${page}&size=${size}${
-            sort ? `&sort=${sort}` : ""
-          }${search ? `&search=${search}` : ""}`
-        );
-        if (!isMounted.current) return;
 
-        const { data, message, success } = response.data;
-        console.log(response.data);
+        if (currentPath) {
+          const response = await api.get(
+            `/${currentPath}/pagination?page=${page}&size=${size}${
+              sort ? `&sort=${sort}` : ""
+            }${search ? `&search=${search}` : ""}`
+          );
+          if (!isMounted.current) return;
 
-        if (page >= data.totalPages && data.totalPages > 0) {
-          setStatus(BadPageRequest);
-          return;
-        }
-        if (success && data) {
-          setPagination((prev) => ({
-            ...prev,
-            content: data.content || [],
-            totalPages: data.totalPages ?? 0,
-            error: null,
-            message: message,
-          }));
-          setStatus(Success);
+          const { data, message, success } = response.data;
+          console.log(response.data);
+
+          if (page >= data.totalPages && data.totalPages > 0) {
+            setStatus(BadPageRequest);
+            return;
+          }
+          if (success && data) {
+            setPagination((prev) => ({
+              ...prev,
+              content: data.content || [],
+              totalPages: data.totalPages ?? 0,
+              error: null,
+              message: message,
+            }));
+            setStatus(Success);
+          }
         } else {
           setPagination((prev) => ({
             ...prev,
@@ -156,15 +158,22 @@ export const ListProvider = ({ children }) => {
     localStorage.setItem(`${localStoragePath} - searchValue`, searchValue);
   };
 
-  const [clearSearchBar, setClearSearchBar] = useState(0)
+  const [clearSearchBar, setClearSearchBar] = useState(0);
 
   const clearAll = () => {
+    if (
+      localStorage.getItem(`${localStoragePath} - sorted`) === null &&
+      localStorage.getItem(`${localStoragePath} - pageSize`) === null &&
+      localStorage.getItem(`${localStoragePath} - currentPage`) === null &&
+      localStorage.getItem(`${localStoragePath} - searchValue`) === null
+    ) return;
+
     localStorage.removeItem(`${localStoragePath} - pageSize`);
     localStorage.removeItem(`${localStoragePath} - currentPage`);
     localStorage.removeItem(`${localStoragePath} - sorted`);
     localStorage.removeItem(`${localStoragePath} - searchValue`);
     setSearchParams({});
-    setClearSearchBar((prev) => prev + 1 )
+    setClearSearchBar((prev) => prev + 1);
 
     setPagination({
       ...initialPagination,
@@ -175,20 +184,33 @@ export const ListProvider = ({ children }) => {
     });
   };
 
+  const isFirstLoad = useRef(true);
+
   useEffect(() => {
     if (isFirstLoad.current && realPath === "home") {
       isFirstLoad.current = false;
-      // const newPageSize = 8;
-      // const newSort = "createdAt";
-      // const newPage = 0
+
+      const homePagepageSize = 8;
+      const homePageSorted = "createdAt";
 
       setPagination((prev) => ({
         ...prev,
-        pageSize: 8,
-        sorted: "createdAt",
-        // currentPage: newPage,
+        pageSize: homePagepageSize,
+        sorted: homePageSorted,
       }));
-      // getPage(newPageSize, newPage, newSort);
+      localStorage.setItem(`${localStoragePath} - pageSize`, homePagepageSize);
+      localStorage.setItem(`${localStoragePath} - sorted`, homePageSorted);
+
+      return;
+    } else if (realPath === currentPath) {
+      setPagination(initialPagination);
+
+      getPage(
+        initialPagination.pageSize,
+        initialPagination.currentPage,
+        initialPagination.sorted,
+        initialPagination.searchValue
+      );
       return;
     }
     getPage(
@@ -209,6 +231,8 @@ export const ListProvider = ({ children }) => {
     searchParams,
   ]);
 
+  console.log(defaultPageSize);
+
   return (
     <ListContext.Provider
       value={{
@@ -221,7 +245,7 @@ export const ListProvider = ({ children }) => {
         setPagination,
         ...pagination,
         isEmpty,
-        clearSearchBar
+        clearSearchBar,
       }}
     >
       {children}

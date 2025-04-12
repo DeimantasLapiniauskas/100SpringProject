@@ -1,8 +1,6 @@
 package SpringProject._Spring.model.authentication;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
