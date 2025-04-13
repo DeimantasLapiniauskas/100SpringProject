@@ -48,9 +48,9 @@ public class ProductPostTest {
     @Test
     void addProduct_whenValid_thenReturnAnd201() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)), "url");
 
-        Product product = new Product("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new Category("TestCategory")));
+        Product product = new Product("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new Category("TestCategory")), "url");
         product.setId(1L);
 
         when(productService.addNewProduct(productRequestDTO)).thenReturn(product);
@@ -75,7 +75,7 @@ public class ProductPostTest {
     @Test
     void addProduct_whenNameAlreadyExists_thenReturnAnd400() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)), "url");
 
         when(productService.addNewProduct(productRequestDTO)).thenThrow(new NameAlreadyExistsException("Product", productRequestDTO.name()));
         //when
@@ -97,7 +97,7 @@ public class ProductPostTest {
     @Test
     void addProduct_whenInvalidRequest_thenReturnAnd400() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Nameупвып", "", BigDecimal.valueOf(-1.0), -1, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Nameупвып", "", BigDecimal.valueOf(-1.0), -1, List.of(new CategoryDTO(1L)), "url");
 
         //when
         mockMvc.perform(post("/api/products")
@@ -125,7 +125,7 @@ public class ProductPostTest {
     @WithAnonymousUser
     void addProduct_whenUnauthorized_thenReturnAnd401() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)), "url");
         //when
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -142,7 +142,7 @@ public class ProductPostTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void addProducts_whenClient_thenReturnAnd403() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO(1L)), "url");
         //when
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)

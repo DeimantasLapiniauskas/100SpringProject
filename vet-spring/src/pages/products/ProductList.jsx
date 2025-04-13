@@ -1,12 +1,12 @@
-import { BadRequest } from "@/components/feedback/BadRequest";
 import { Error } from "@/components/feedback/Error";
 import { Loading } from "@/components/feedback/Loading";
-import { PaginationUI } from "@/components/PaginationUI";
 import { useList } from "@/context/ListContext";
 import { useUI } from "@/context/UIContext";
 import ProductCard from "./ProductCard";
 import ModalContext from "@/utils/helpers/modalContext";
 import { useState } from "react";
+import { BadPageRequest } from "@/components/feedback/BadPageRequest";
+import { PaginationPanel } from "@/components/features/PaginationPanel";
 
 const ProductList = () => {
     const {
@@ -33,7 +33,7 @@ const ProductList = () => {
                 {isEmpty ? <p>{message}</p> : ""}
                 {isLoading ? <Loading /> : ""}
                 {isError ? <Error error={error} isHidden={!error} /> : ""}
-                {isBadRequest ? <BadRequest /> : ""}
+                {isBadRequest ? <BadPageRequest /> : ""}
                 <ul className="w-full grid grid-cols-5 gap-4 p-4 divide-gray-200">
                     {products.map((product) => (
                         <ProductCard
@@ -47,7 +47,7 @@ const ProductList = () => {
                 </ul>
             </ModalContext.Provider>
             <div className="flex justify-center">
-                <PaginationUI />
+                <PaginationPanel />
             </div>
         </div>
     );

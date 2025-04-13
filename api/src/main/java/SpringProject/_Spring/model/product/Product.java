@@ -18,6 +18,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private int stockQuantity;
+    private String imageUrl;
 
     @ManyToMany
     @JoinTable(
@@ -27,12 +28,13 @@ public class Product {
     )
     private List<Category> categories;
 
-    public Product(String name, String description, BigDecimal price, int stockQuantity, List<Category> categories) {
+    public Product(String name, String description, BigDecimal price, int stockQuantity, List<Category> categories, String imageUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.categories = categories != null ? new ArrayList<>(categories) : new ArrayList<>();
+        this.imageUrl = imageUrl;
     }
 
     public Product() {
@@ -85,5 +87,13 @@ public class Product {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories != null ? new ArrayList<>(categories) : new ArrayList<>();
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

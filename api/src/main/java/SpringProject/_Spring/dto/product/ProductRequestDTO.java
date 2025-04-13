@@ -8,7 +8,7 @@ import java.util.List;
 
 public record ProductRequestDTO(@NotBlank(message = "Name can't be empty!")
                                 @Pattern(
-                                        regexp = "^[a-zA-Z0-9.,!?@#$%^&*()'\"]+$",
+                                        regexp = "^[a-zA-Z0-9.,!?@#$%^&*()'\"\\s]+$",
                                         message = "Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"
                                 )
                                 String name,
@@ -35,5 +35,7 @@ public record ProductRequestDTO(@NotBlank(message = "Name can't be empty!")
                                 )
                                 int stockQuantity,
                                 @NotNull(message = "Product should have at least 1 category!")
-                                List<CategoryDTO> categories) {
+                                List<CategoryDTO> categories,
+                                @NotBlank(message = "Image URL cannot be empty!")
+                                String imageUrl) {
 }

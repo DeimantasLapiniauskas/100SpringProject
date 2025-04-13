@@ -45,9 +45,9 @@ public class ProductUpdateTest {
     @Test
     void updateProduct_whenValid_thenReturnAnd200() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new CategoryDTO(1L)), "url");
 
-        Product product = new Product("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new Category("String")));
+        Product product = new Product("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new Category("String")), "url");
         product.setId(1L);
 
         when(productService.updateProduct(1L, productRequestDTO)).thenReturn(product);
@@ -74,7 +74,7 @@ public class ProductUpdateTest {
     @Test
     void updateProduct_whenInvalidRequest_thenReturnAnd400() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Testвыапып", "TestDescrпфвпы", BigDecimal.valueOf(-1), -10, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Testвыапып", "TestDescrпфвпы", BigDecimal.valueOf(-1), -10, List.of(new CategoryDTO(1L)), "url");
 
         //when
         mockMvc.perform(put("/api/products/{id}", 1L)
@@ -112,7 +112,7 @@ public class ProductUpdateTest {
     @Test
     void updateProduct_whenProductNotFound_thenReturnAnd404() throws Exception {
         //given
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new CategoryDTO(1L)));
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO("Test", "TestDescr", BigDecimal.valueOf(10.0), 15, List.of(new CategoryDTO(1L)), "url");
 
         when(productService.updateProduct(1L, productRequestDTO)).thenThrow(new NotFoundException("Product with id '1' not found"));
         //when

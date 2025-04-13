@@ -12,11 +12,11 @@ import java.util.List;
 public class ProductMapping {
 
     public static ProductResponseDTO toProductResponseDTO(Product product) {
-        return new ProductResponseDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity());
+        return new ProductResponseDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity(), product.getImageUrl());
     }
 
     public static Product toProduct(ProductRequestDTO productRequestDTO, CategoryRepository categoryRepository) {
-        return new Product(productRequestDTO.name(), productRequestDTO.description(), productRequestDTO.price(), productRequestDTO.stockQuantity(), CategoryMapper.toCategoryListFromDTO(productRequestDTO.categories(), categoryRepository));
+        return new Product(productRequestDTO.name(), productRequestDTO.description(), productRequestDTO.price(), productRequestDTO.stockQuantity(), CategoryMapper.toCategoryListFromDTO(productRequestDTO.categories(), categoryRepository), productRequestDTO.imageUrl());
     }
 
     public static ProductPageResponseDTO toProductPageResponseDTO(Page<Product> productsPage) {
@@ -40,6 +40,7 @@ public class ProductMapping {
         product.setPrice(productRequestDTO.price());
         product.setStockQuantity(productRequestDTO.stockQuantity());
         product.setCategories(CategoryMapper.toCategoryListFromDTO(productRequestDTO.categories(), categoryRepository));
+        product.setImageUrl(productRequestDTO.imageUrl());
     }
 
 

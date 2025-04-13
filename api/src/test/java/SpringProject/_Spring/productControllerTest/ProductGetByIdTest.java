@@ -41,7 +41,7 @@ public class ProductGetByIdTest {
     @Test
     void getProductById_whenValid_thenReturnAnd200() throws Exception {
         //given
-        Product product = new Product("test", "testDescr", BigDecimal.valueOf(10.0), 12, List.of(new Category("TestCategory")));
+        Product product = new Product("test", "testDescr", BigDecimal.valueOf(10.0), 12, List.of(new Category("TestCategory")), "url");
         product.setId(1L);
 
         when(productService.findProductById(1L)).thenReturn(product);

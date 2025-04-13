@@ -5,60 +5,206 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
-
     const { setAddModalID } = useContext(ModalContext);
-
+  
     const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
+      register,
+      handleSubmit,
+      setValue,
+      watch,
+      reset,
+      formState: { errors },
     } = useForm({
-        defaultValues: {
-            name: "",
-            description: "",
-            price: "",
-            stockQuantity: "",
-        },
+      defaultValues: {
+        name: "",
+        description: "",
+        price: "",
+        stockQuantity: "",
+        imageFile: null, // Поле для изображения
+      },
     });
-
+  
     const [isLoading, setIsLoading] = useState(false);
     const [submitError, setSubmitError] = useState(null);
-
-    const formSubmitHandler = async (data) => {
-        setIsLoading(true);
-        setSubmitError(null);
-
-        const trimmedData = {
-            ...data,
-            email: data.email.trim(),
-            password: data.password.trim(),
-            firstName: data.firstName.trim(),
-            lastName: data.lastName.trim(),
-            phoneNumber: data.phoneNumber.trim(),
-            specialty: data.specialty.trim(),
-            licenseNumber: data.licenseNumber.trim(),
-        };
-
-        const payload = { ...trimmedData };
-
-        try {
-            await addProduct(payload);
-            await getPage(pageSize, currentPage);
-            setAddModalID("");
-            reset();
-        } catch (error) {
-            console.error("Error details: ", error.response?.data || error.message);
-            setSubmitError(error.response?.data?.message || "Failed to submit the form.");
-        } finally {
-            setIsLoading(false);
-        }
+    const [previewUrl, setPreviewUrl] = useState(null); // Для предпросмотра изображения
+    const [imageError, setImageError] = useState(null); // Для ошибок от Dropzone
+  
+    // Следим за полем imageFile для обновления предпросмотра
+    const imageFile = watch("imageFile");
+  
+    // Обновление предпросмотра при изменении файла
+    const updatePreview = (file) => {
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => setPreviewUrl(reader.result);
+        reader.readAsDataURL(file);
+      } else {
+        setPreviewUrl(null);
+      }
     };
-
+  
+    const formSubmitHandler = async (data) => {
+      setIsLoading(true);
+      setSubmitError(null);
+      setImageError(null);
+  
+      try {
+        // Формируем данные для отправки (без изображения, пока нет бэкенда)
+        const payload = {
+          name: data.name.trim(),
+          description: data.description.trim(),
+          price: parseFloat(data.price),
+          stockQuantity: parseInt(data.stockQuantity, 10),
+          // imageFile пока не отправляем, ждём детали API
+        };
+  
+        // Отправляем данные на сервер
+        await addProduct(payload);
+        await getPage(pageSize, currentPage);
+        setAddModalID("");
+        reset();
+        setPreviewUrl(null); // Сбрасываем предпросмотр
+      } catch (error) {
+        console.error("Error details: ", error.response?.data || error.message);
+        setSubmitError(error.response?.data?.message || "Failed to submit the form.");
+      } finally {
+        setIsLoading(false);
+        setValue("imageFile", null); // Сбрасываем поле изображения
+      }
+    };
+  
     return (
-        <form>
-        </form>
-    )
-}
-
-export default ProductAddForm;
+      <form
+        onSubmit={handleSubmit(formSubmitHandler)}
+        className="text-center p-3"
+      >
+        {submitError && <p className="bg-red-700 text-white p-2 mb-4">{submitError}</p>}
+        <div className="p-3">
+          
+          <div className="pb-5 text-center">
+            <label htmlFor="name" className="font-bold text-lg text-white">
+              Product Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              className="form-text-select"
+              {...register("name", {
+                required: "Product name is required",
+                maxLength: {
+                  value: 100,
+                  message: "Name cannot exceed 100 characters",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Name must be at least 3 characters",
+                },
+              })}
+              placeholder="Product name"
+            />
+            <div className="text-red-500">
+              {errors.name && <p>{errors.name.message}</p>}
+            </div>
+          </div>
+  
+          <div className="pb-5 text-center">
+            <label htmlFor="description" className="font-bold text-lg text-white">
+              Description:
+            </label>
+            <textarea
+              id="description"
+              className="form-text-select"
+              {...register("description", {
+                required: "Description is required",
+                maxLength: {
+                  value: 500,
+                  message: "Description cannot exceed 500 characters",
+                },
+              })}
+              placeholder="Product description"
+            />
+            <div className="text-red-500">
+              {errors.description && <p>{errors.description.message}</p>}
+            </div>
+          </div>
+  
+          <div className="pb-5 text-center">
+            <label htmlFor="price" className="font-bold text-lg text-white">
+              Price:
+            </label>
+            <input
+              type="number"
+              id="price"
+              step="0.01"
+              className="form-text-select"
+              {...register("price", {
+                required: "Price is required",
+                min: {
+                  value: 0.01,
+                  message: "Price must be greater than 0",
+                },
+              })}
+              placeholder="Price"
+            />
+            <div className="text-red-500">
+              {errors.price && <p>{errors.price.message}</p>}
+            </div>
+          </div>
+  
+          <div className="pb-5 text-center">
+            <label
+              htmlFor="stockQuantity"
+              className="font-bold text-lg text-white"
+            >
+              Stock Quantity:
+            </label>
+            <input
+              type="number"
+              id="stockQuantity"
+              className="form-text-select"
+              {...register("stockQuantity", {
+                required: "Stock quantity is required",
+                min: {
+                  value: 0,
+                  message: "Stock quantity cannot be negative",
+                },
+              })}
+              placeholder="Stock quantity"
+            />
+            <div className="text-red-500">
+              {errors.stockQuantity && <p>{errors.stockQuantity.message}</p>}
+            </div>
+          </div>
+  
+          {/* Поле: Image */}
+          <div className="pb-5 text-center">
+            <label htmlFor="imageFile" className="font-bold text-lg text-white">
+              Product Image (optional):
+            </label>
+            <SimpleDropzone
+              onDrop={(file, error) => {
+                setValue("imageFile", file, { shouldValidate: true });
+                setImageError(error);
+                updatePreview(file);
+              }}
+              previewUrl={previewUrl}
+              error={imageError || errors.imageFile?.message}
+            />
+            <div className="text-red-500">
+              {errors.imageFile && <p>{errors.imageFile.message}</p>}
+            </div>
+          </div>
+        </div>
+  
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+        >
+          {isLoading ? "Submitting..." : "Submit"}
+        </button>
+      </form>
+    );
+  };
+  
+  export default ProductAddForm;
