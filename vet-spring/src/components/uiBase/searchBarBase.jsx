@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import { Search } from "lucide-react";
 
 const searchBarVariants = cva(
-  "flex items-center w-full transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2",
+  "flex items-center w-full transition-all shadow-sm focus:outline-none focus:ring-1 focus:ring-offset-1 md:focus:ring-2 md:focus:ring-offset-2",
   {
     variants: {
       intent: {

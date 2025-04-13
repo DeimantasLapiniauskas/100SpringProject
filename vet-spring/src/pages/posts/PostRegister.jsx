@@ -162,7 +162,7 @@ export const PostRegister = ({ initialData }) => {
         </h1>
         <img src={pencil} alt="pencil" className="w-40 sm:w-full" />
       </div>
-      <div className="xs:max-w-3/5 xs:min-w-3/5 lg:min-w-1/2 lg:max-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative mt-2 sm:mt-3 md:mt-4 lg:mt-5 flex border border-info shadow-lg shadow-info">
+      <div className="xs:max-w-3/5 xs:min-w-3/5 lg:min-w-1/2 lg:max-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 via-blue-300 to-indigo-400 rounded-[10px] relative mt-2 sm:mt-3 md:mt-4 lg:mt-5 flex border border-info shadow-lg shadow-info">
         <FormProvider {...form}>
           <Form
             onSubmit={form.handleSubmit(handleFormSubmit)}
@@ -227,7 +227,8 @@ export const PostRegister = ({ initialData }) => {
                         <SelectValue placeholder="Select a type" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent
+                    className="!w-[170%] ">
                       <SelectItem size="postRegForm" value="News" className="text-[#004C99] ">News</SelectItem>
                       <SelectItem size="postRegForm" value="Blog" className="text-[#006666]">Blog</SelectItem>
                       <SelectItem size="postRegForm" value="Sale" className="text-red-700">Sale</SelectItem>

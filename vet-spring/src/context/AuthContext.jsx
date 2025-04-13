@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import api, { setAuth, clearAuth } from "../utils/api.js";
 import { jwtDecode } from "jwt-decode";
 
-
 const AuthContext = createContext({
   account: {},
   login: () => {},
@@ -36,10 +35,12 @@ export const AuthProvider = ({ children }) => {
         if (decodedJwt.exp * 1000 < Date.now()) {
           localStorage.removeItem("jwt");
           setAccount(null);
+          localStorage.setItem("lastPath", window.location.pathname);
+          navigate("/login");
         }
       }
     }, 45000);
-    return () => clearInterval(interval)
+    return () => clearInterval(interval);
   }, []);
 
   const login = async (email, password) => {
@@ -54,7 +55,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("jwt", jwt);
     setAccount(jwtDecode(jwt));
     setAuth(jwt);
-    navigate("/");
+
+    const lastPath = localStorage.getItem("lastPath");
+    if (lastPath) {
+      localStorage.removeItem("lastPath")
+      navigate(lastPath);
+    } else navigate("/");
   };
 
   const register = async (
@@ -81,14 +87,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    // Paduodas sukurtas funkcijas, tam kad jas būtų galima naudoti betkur su useAuth
+    // Paduodamos sukurtos funkcijos, tam kad jas būtų galima naudoti betkur su useAuth
     <AuthContext.Provider value={{ account, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Sukuriamas custom hookas, kuris leidžia naudoti AuthContext
 export const useAuth = () => {
   return useContext(AuthContext);
 };

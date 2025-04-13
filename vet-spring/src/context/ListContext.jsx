@@ -118,44 +118,47 @@ export const ListProvider = ({ children }) => {
 
   const onPageSizeChange = (e) => {
     const pageSize = Math.max(1, parseInt(e.target.value, 10));
-    searchParams.set("size", pageSize);
-    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: 0, pageSize: pageSize }));
     localStorage.setItem(`${localStoragePath} - pageSize`, pageSize);
+    searchParams.set("size", pageSize);
+    setSearchParams(searchParams);
   };
 
   const onPaginate = (page) => {
     if (page < 0 || page >= pagination.totalPages) return;
 
-    searchParams.set("page", page);
-    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: page }));
     localStorage.setItem(`${localStoragePath} - currentPage`, page);
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
   };
 
   const onSortBy = (e) => {
     let sortBy = e.target.value;
 
     if (sortBy === "Content") {
-      searchParams.delete("sort");
-      searchParams.delete("page");
-      setSearchParams(searchParams);
+      
       localStorage.removeItem(`${localStoragePath} - sorted`);
       localStorage.removeItem(`${localStoragePath} - currentPage`);
       setPagination((prev) => ({ ...prev, sorted: null }));
+      searchParams.delete("sort");
+      searchParams.delete("page");
+      setSearchParams(searchParams);
       return;
     }
-    searchParams.set("sort", sortBy), setSearchParams(searchParams);
+    
     setPagination((prev) => ({ ...prev, sorted: sortBy, currentPage: 0 }));
     localStorage.setItem(`${localStoragePath} - sorted`, sortBy);
     localStorage.removeItem(`${localStoragePath} - currentPage`);
+    searchParams.set("sort", sortBy);
+    setSearchParams(searchParams); 
   };
 
   const handleSearch = (searchValue) => {
-    searchParams.set("search", searchValue);
-    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, searchValue: searchValue }));
     localStorage.setItem(`${localStoragePath} - searchValue`, searchValue);
+    searchParams.set("search", searchValue);
+    setSearchParams(searchParams);
   };
 
   const [clearSearchBar, setClearSearchBar] = useState(0);

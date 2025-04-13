@@ -33,7 +33,7 @@ export const PostCard = (props) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="card card-side will-change-transform bg-blue-300/15 backdrop-blur-lg p-4 sm:p-5 md:p-6 rounded-xl shadow-lg"
       >
-        <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[20.55rem] sm:h-[25.75rem] md:h-[32rem] p-1.5 sm:p-2.25 md:p-3  shadow-lg shadow-info w-full border-1 border-info">
+        <div className="text-center bg-gradient-to-br from-blue-200 via-blue-300 to-indigo-400 text-info-content rounded-[10px] h-[20.55rem] sm:h-[25.75rem] md:h-[32rem] p-1.5 sm:p-2.25 md:p-3  shadow-lg shadow-info w-full border-1 border-info">
           <h2
             className={`card-title block break-all min-h-[40px] sm:min-h-[55px] md:min-h-[60px] max-h-[40px] sm:max-h-[55px] md:max-h-[60px] px-10 sm:px-15 md:px-15 lg:px-5 xl:px-15 text-sm sm:text-lg md:text-xl overflow-hidden break-words ${
               postType === "Sale"
@@ -111,15 +111,14 @@ export const PostCard = (props) => {
         </div>
         {roles && (
           <div className="absolute bottom-[-1px] flex gap-2">
-            <NavLink to={`/posts/edit/${id}`}>
               <button
                 type="button"
                 className="text-xs px-2 sm:px-3 md:px-4 sm:text-sm md:text-base rounded-[5px] text-info-content font-semibold border-1 border-blue-200 cursor-pointer inline-flex gap-2 items-center"
+                onClick={() => {navigate(`/posts/edit/${id}`)}}
               >
                 Update
                 <Pencil className="w-3 h-3 sm:w-4 sm:h-4  md:w-5 md:h-5 text-warning-content" />
               </button>
-            </NavLink>
              <button
                 type="button"
                 className="text-xs px-2 sm:px-3 md:px-4 sm:text-sm md:text-base rounded-[5px] text-info-content font-semibold border-1 border-blue-200 cursor-pointer inline-flex gap-2 items-center"
