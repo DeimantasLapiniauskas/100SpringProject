@@ -64,9 +64,8 @@ export const ListProvider = ({ children }) => {
   const getPage = useCallback(
     async (size, page, sort, search) => {
       try {
-        setStatus(Loading);
-
         if (currentPath) {
+          setStatus(Loading);
           const response = await api.get(
             `/${currentPath}/pagination?page=${page}&size=${size}${
               sort ? `&sort=${sort}` : ""
@@ -91,7 +90,7 @@ export const ListProvider = ({ children }) => {
             }));
             setStatus(Success);
           }
-        } else {
+         else {
           setPagination((prev) => ({
             ...prev,
             content: [],
@@ -99,7 +98,8 @@ export const ListProvider = ({ children }) => {
           }));
           setStatus(Unusual);
         }
-      } catch (error) {
+      }
+    } catch (error) {
         if (!isMounted.current) return;
 
         const errorMessage =
