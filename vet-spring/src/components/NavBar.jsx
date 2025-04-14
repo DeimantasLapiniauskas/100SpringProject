@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 import { DropdownMenu } from "../pages/profile/DropdownMenu";
-import menu from "../assets/pawsNav.png";
+import menu from "../assets/icons/pawsNav.png";
 export const Navbar = () => {
   
   return (
