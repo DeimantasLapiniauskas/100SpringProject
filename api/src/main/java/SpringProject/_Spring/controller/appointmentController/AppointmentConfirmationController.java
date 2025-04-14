@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentConfirmationController extends BaseController {
+    //todo: send emails
 
     private final AppointmentService appointmentService;
     private final PetService petService;
