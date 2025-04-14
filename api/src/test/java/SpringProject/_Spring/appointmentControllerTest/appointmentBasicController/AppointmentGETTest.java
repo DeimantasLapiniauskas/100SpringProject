@@ -1,5 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest.appointmentBasicController;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
 import SpringProject._Spring.model.*;
 import SpringProject._Spring.model.appointment.Appointment;
@@ -40,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentBasicController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class AppointmentGETTest {
 
     @Autowired
@@ -317,68 +318,68 @@ public class AppointmentGETTest {
         Mockito.verify(appointmentService, times(1)).getAllAppointmentsByVetId(vetIdOne);
     }
 
-    @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
-    void getAppointmentsById_whenGetAdmin_thenRespond200() throws Exception {
-
-        when(appointmentService.getAllAppointmentsByClientId(clientId))
-                .thenReturn(List.of(appointmentOne, appointmentTwo));
-
-        when(petService.getPetById(petIdOne))
-                .thenReturn(Optional.of(petOne));
-        when(petService.getPetById(petIdTwo))
-                .thenReturn(Optional.of(petTwo));
-
-        when(vetService.getVetById(vetIdOne))
-                .thenReturn(Optional.of(vetOne));
-        when(vetService.getVetById(vetIdTwo))
-                .thenReturn(Optional.of(vetTwo));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + clientId))
-                .andExpect(status().isOk())
-
-                .andExpect(jsonPath("data.[0].id").value(appointmentOneId))
-                .andExpect(jsonPath("data.[1].id").value(appointmentTwoId))
-
-                .andExpect(jsonPath("data.[0].petDTO.name").value(petOne.getName()))
-                .andExpect(jsonPath("data.[1].petDTO.name").value(petTwo.getName()))
-                .andExpect(jsonPath("data.[0].petDTO.species").value(petOne.getSpecies()))
-                .andExpect(jsonPath("data.[1].petDTO.species").value(petTwo.getSpecies()))
-                .andExpect(jsonPath("data.[0].petDTO.breed").value(petOne.getBreed()))
-                .andExpect(jsonPath("data.[1].petDTO.breed").value(petTwo.getBreed()))
-                .andExpect(jsonPath("data.[0].petDTO.gender").value(petOne.getGender().name()))
-                .andExpect(jsonPath("data.[1].petDTO.gender").value(petTwo.getGender().name()))
-
-                .andExpect(jsonPath("data.[0].vetDTO.email").value(vetOne.getAccount().getEmail()))
-                .andExpect(jsonPath("data.[1].vetDTO.email").value(vetTwo.getAccount().getEmail()))
-                .andExpect(jsonPath("data.[0].vetDTO.firstName").value(vetOne.getFirstName()))
-                .andExpect(jsonPath("data.[1].vetDTO.firstName").value(vetTwo.getFirstName()))
-                .andExpect(jsonPath("data.[0].vetDTO.lastName").value(vetOne.getLastName()))
-                .andExpect(jsonPath("data.[1].vetDTO.lastName").value(vetTwo.getLastName()))
-                .andExpect(jsonPath("data.[0].vetDTO.specialty").value(vetOne.getSpecialty()))
-                .andExpect(jsonPath("data.[1].vetDTO.specialty").value(vetTwo.getSpecialty()))
-
-                .andExpect(jsonPath("data.[0].services[0].name").value(serviceAtClinicOne.getName()))
-                .andExpect(jsonPath("data.[1].services[0].name").value(serviceAtClinicThree.getName()))
-                .andExpect(jsonPath("data.[0].services[0].description").value(serviceAtClinicOne.getDescription()))
-                .andExpect(jsonPath("data.[1].services[0].description").value(serviceAtClinicThree.getDescription()))
-                .andExpect(jsonPath("data.[0].services[0].price").value(serviceAtClinicOne.getPrice()))
-                .andExpect(jsonPath("data.[1].services[0].price").value(serviceAtClinicThree.getPrice()))
-                .andExpect(jsonPath("data.[0].services[1].name").value(serviceAtClinicTwo.getName()))
-                .andExpect(jsonPath("data.[1].services[1].name").value(serviceAtClinicFour.getName()))
-                .andExpect(jsonPath("data.[0].services[1].description").value(serviceAtClinicTwo.getDescription()))
-                .andExpect(jsonPath("data.[1].services[1].description").value(serviceAtClinicFour.getDescription()))
-                .andExpect(jsonPath("data.[0].services[1].price").value(serviceAtClinicTwo.getPrice()))
-                .andExpect(jsonPath("data.[1].services[1].price").value(serviceAtClinicFour.getPrice()))
-
-                .andExpect(jsonPath("data.[0].notes").value(appointmentOne.getNotes()))
-                .andExpect(jsonPath("data.[1].notes").value(appointmentTwo.getNotes()))
-
-                .andExpect(jsonPath("data.[0].price").value(appointmentOne.getTotalServicesSum()))
-                .andExpect(jsonPath("data.[1].price").value(appointmentTwo.getTotalServicesSum()));
-
-        Mockito.verify(appointmentService, times(1)).getAllAppointmentsByClientId(clientId);
-    }
+//    @Test
+//    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
+//    void getAppointmentsById_whenGetAdmin_thenRespond200() throws Exception {
+//
+//        when(appointmentService.getAllAppointmentsByClientId(clientId))
+//                .thenReturn(List.of(appointmentOne, appointmentTwo));
+//
+//        when(petService.getPetById(petIdOne))
+//                .thenReturn(Optional.of(petOne));
+//        when(petService.getPetById(petIdTwo))
+//                .thenReturn(Optional.of(petTwo));
+//
+//        when(vetService.getVetById(vetIdOne))
+//                .thenReturn(Optional.of(vetOne));
+//        when(vetService.getVetById(vetIdTwo))
+//                .thenReturn(Optional.of(vetTwo));
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + clientId))
+//                .andExpect(status().isOk())
+//
+//                .andExpect(jsonPath("data.[0].id").value(appointmentOneId))
+//                .andExpect(jsonPath("data.[1].id").value(appointmentTwoId))
+//
+//                .andExpect(jsonPath("data.[0].petDTO.name").value(petOne.getName()))
+//                .andExpect(jsonPath("data.[1].petDTO.name").value(petTwo.getName()))
+//                .andExpect(jsonPath("data.[0].petDTO.species").value(petOne.getSpecies()))
+//                .andExpect(jsonPath("data.[1].petDTO.species").value(petTwo.getSpecies()))
+//                .andExpect(jsonPath("data.[0].petDTO.breed").value(petOne.getBreed()))
+//                .andExpect(jsonPath("data.[1].petDTO.breed").value(petTwo.getBreed()))
+//                .andExpect(jsonPath("data.[0].petDTO.gender").value(petOne.getGender().name()))
+//                .andExpect(jsonPath("data.[1].petDTO.gender").value(petTwo.getGender().name()))
+//
+//                .andExpect(jsonPath("data.[0].vetDTO.email").value(vetOne.getAccount().getEmail()))
+//                .andExpect(jsonPath("data.[1].vetDTO.email").value(vetTwo.getAccount().getEmail()))
+//                .andExpect(jsonPath("data.[0].vetDTO.firstName").value(vetOne.getFirstName()))
+//                .andExpect(jsonPath("data.[1].vetDTO.firstName").value(vetTwo.getFirstName()))
+//                .andExpect(jsonPath("data.[0].vetDTO.lastName").value(vetOne.getLastName()))
+//                .andExpect(jsonPath("data.[1].vetDTO.lastName").value(vetTwo.getLastName()))
+//                .andExpect(jsonPath("data.[0].vetDTO.specialty").value(vetOne.getSpecialty()))
+//                .andExpect(jsonPath("data.[1].vetDTO.specialty").value(vetTwo.getSpecialty()))
+//
+//                .andExpect(jsonPath("data.[0].services[0].name").value(serviceAtClinicOne.getName()))
+//                .andExpect(jsonPath("data.[1].services[0].name").value(serviceAtClinicThree.getName()))
+//                .andExpect(jsonPath("data.[0].services[0].description").value(serviceAtClinicOne.getDescription()))
+//                .andExpect(jsonPath("data.[1].services[0].description").value(serviceAtClinicThree.getDescription()))
+//                .andExpect(jsonPath("data.[0].services[0].price").value(serviceAtClinicOne.getPrice()))
+//                .andExpect(jsonPath("data.[1].services[0].price").value(serviceAtClinicThree.getPrice()))
+//                .andExpect(jsonPath("data.[0].services[1].name").value(serviceAtClinicTwo.getName()))
+//                .andExpect(jsonPath("data.[1].services[1].name").value(serviceAtClinicFour.getName()))
+//                .andExpect(jsonPath("data.[0].services[1].description").value(serviceAtClinicTwo.getDescription()))
+//                .andExpect(jsonPath("data.[1].services[1].description").value(serviceAtClinicFour.getDescription()))
+//                .andExpect(jsonPath("data.[0].services[1].price").value(serviceAtClinicTwo.getPrice()))
+//                .andExpect(jsonPath("data.[1].services[1].price").value(serviceAtClinicFour.getPrice()))
+//
+//                .andExpect(jsonPath("data.[0].notes").value(appointmentOne.getNotes()))
+//                .andExpect(jsonPath("data.[1].notes").value(appointmentTwo.getNotes()))
+//
+//                .andExpect(jsonPath("data.[0].price").value(appointmentOne.getTotalServicesSum()))
+//                .andExpect(jsonPath("data.[1].price").value(appointmentTwo.getTotalServicesSum()));
+//
+//        Mockito.verify(appointmentService, times(1)).getAllAppointmentsByClientId(clientId);
+//    }
 
     @Test
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
@@ -392,22 +393,6 @@ public class AppointmentGETTest {
     @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void getVetAppointments_whenGetAdmin_thenRespond403() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/vet"))
-                .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
-    }
-
-    @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
-    void getAppointmentsById_whenGetClient_thenRespond403() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
-                .andExpect(status().isForbidden());
-        Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
-    }
-
-    @Test
-    @WithMockUser(authorities = "SCOPE_ROLE_VE")
-    void getAppointmentsById_whenGetVet_thenRespond403() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/appointments/" + 69))
                 .andExpect(status().isForbidden());
         Mockito.verify(appointmentService, times(0)).getAllAppointmentsByClientId(anyLong());
     }

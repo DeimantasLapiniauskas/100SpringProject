@@ -1,5 +1,6 @@
 package SpringProject._Spring.productControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.exceptions.NotFoundException;
 import SpringProject._Spring.model.Product;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ProductController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
 public class ProductGetByIdTest {

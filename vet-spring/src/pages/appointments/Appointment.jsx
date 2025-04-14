@@ -36,7 +36,7 @@ export const Appointment = () => {
   const closeAppointment = async (id) => {
     try {
       await api.put(`/appointments/cancel/${id}`);
-      const response = await getClientAppointments();
+      const response = account.scope == "ROLE_CLIENT" ? await getClientAppointments() : await getVetAppointments();
       setAppointments(response.data.data);
     } catch (error) {
       console.log(error.message);

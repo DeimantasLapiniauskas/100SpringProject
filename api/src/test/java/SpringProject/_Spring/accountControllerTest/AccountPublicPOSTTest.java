@@ -1,5 +1,6 @@
 package SpringProject._Spring.accountControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.accountController.AccountControllerPost;
 import SpringProject._Spring.dto.authentication.client.ClientRequestDTO;
 import SpringProject._Spring.model.authentication.Account;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AccountControllerPost.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 public class AccountPublicPOSTTest {
 
