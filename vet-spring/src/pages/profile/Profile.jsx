@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import pawssAdminPageImage from '/src/assets/pawss_for_background.png';
+import pawssAdminPageImage from '/src/assets/icons/pawss_for_admin_spaced_out_rotated_1536px.png';
 export const Profile = () => {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
