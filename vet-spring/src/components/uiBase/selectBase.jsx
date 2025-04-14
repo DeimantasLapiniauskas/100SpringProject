@@ -100,6 +100,7 @@ const Select = ({ value, onValueChange, children, ...props }) => {
 
 const SelectTrigger = React.forwardRef(
   ({ className, children, size, intent, variant, isOpen, ...props }, ref) => {
+   
     return (
       <SelectPrimitive.Trigger
         ref={ref}
