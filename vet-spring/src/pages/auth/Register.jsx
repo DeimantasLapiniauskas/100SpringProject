@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { Error } from "../../components/feedback/Error.jsx";
 
-import RegisterPageDog from "../../assets/pet.png"; // Assuming you want the same image for Register page
+import RegisterPageDog from "../../assets/images/pet.png"; // Assuming you want the same image for Register page
 
 export const Register = () => {
   const {
