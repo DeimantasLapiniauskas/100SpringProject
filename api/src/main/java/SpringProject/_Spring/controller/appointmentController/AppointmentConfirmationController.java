@@ -52,7 +52,6 @@ public class AppointmentConfirmationController extends BaseController {
         }
 
         appointmentFromDB.setStatus(Status.Scheduled);
-        appointmentFromDB.setStatus(Status.Scheduled);
         appointmentService.saveAppointment(appointmentFromDB);
         return ok("Appointment confirmed successfully!");
     }
