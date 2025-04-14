@@ -75,6 +75,6 @@ export default BandytiDesign;
 //        </h1>
 //      </main>
 
-//About to do merge main with BUGFIX pull request #69 Deimantas branch. Using 61.2 as a way to simulate main branch. 08:43 2025-04-08. Use this as an idicator I returned before unsuccesfull commit.
+//Comment for initial commit for KOM-124 18:22 03/04/2025
 
-//About to do merge main with KOM-125_Product pull request Andrej branch. Using 61.2 as a way to simulate main branch. 09:28 2025-04-08. Use this as an idicator I returned before unsuccesfull commit.
+//Comment for commit for KOM-124 13:28 11/04/2025 before merge main
