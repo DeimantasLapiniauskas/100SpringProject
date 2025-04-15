@@ -1,8 +1,6 @@
 package SpringProject._Spring.dto.product;
 
-import SpringProject._Spring.dto.product.category.CategoryDTO;
 import SpringProject._Spring.dto.product.category.CategoryMapper;
-import SpringProject._Spring.model.product.Category;
 import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.repository.product.CategoryRepository;
 import org.springframework.data.domain.Page;

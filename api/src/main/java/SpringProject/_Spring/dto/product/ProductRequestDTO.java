@@ -34,8 +34,8 @@ public record ProductRequestDTO(@NotBlank(message = "Name can't be empty!")
                                         message = "Stock quantity must be zero or greater!"
                                 )
                                 int stockQuantity,
-                                @NotNull(message = "Product should have at least 1 category!")
+                                @NotEmpty(message = "Product should have at least 1 category!")
                                 List<CategoryDTO> categories,
-                                @NotBlank(message = "Image URL cannot be empty!")
+                                //@NotBlank(message = "Image URL cannot be empty!")
                                 String imageUrl) {
 }

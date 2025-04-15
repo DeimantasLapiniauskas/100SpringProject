@@ -9,8 +9,7 @@ import java.util.List;
 public class CategoryMapper {
 
     public static Category toCategoryFromDTO(CategoryDTO categoryDTO, CategoryRepository categoryRepository) {
-        return categoryRepository.findById(categoryDTO.id())
-                .orElseThrow(() -> new NotFoundException("Category with id '" + categoryDTO.id() + "' not found"));
+        return categoryRepository.findByName(categoryDTO.name()).orElseThrow(() -> new NotFoundException("Category with name '" + categoryDTO.name() + "' not found"));
     }
 
     public static List<Category> toCategoryListFromDTO(List<CategoryDTO> categoryDTOList, CategoryRepository categoryRepository) {

@@ -1,4 +1,4 @@
 package SpringProject._Spring.dto.product.category;
 
-public record CategoryDTO(long id) {
+public record CategoryDTO(String name) {
 }

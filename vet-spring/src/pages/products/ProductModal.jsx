@@ -1,5 +1,5 @@
 const ProductModal = ({ product, onClose }) => {
-  const { name, description, price, stockQuantity } = product;
+  const { name, description, price, stockQuantity, imageUrl } = product;
 
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -24,7 +24,9 @@ const ProductModal = ({ product, onClose }) => {
         </button>
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="w-full sm:w-1/3 h-40 sm:h-auto bg-gray-200 rounded-lg flex items-center justify-center">
-            <span className="text-gray-500">Image Placeholder</span>
+
+            <img src={imageUrl} alt={name} className="w-full h-full object-cover rounded-lg" />
+
           </div>
           <div className="w-full sm:w-2/3 flex flex-col gap-2">
             <h2 className="text-xl sm:text-2xl font-bold">{name}</h2>

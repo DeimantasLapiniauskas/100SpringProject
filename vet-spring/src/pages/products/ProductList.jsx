@@ -7,6 +7,7 @@ import ModalContext from "@/utils/helpers/modalContext";
 import { useState } from "react";
 import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 import { PaginationPanel } from "@/components/features/PaginationPanel";
+import AddProductButton from "./buttons/AddProductButton";
 
 const ProductList = () => {
     const {
@@ -20,16 +21,17 @@ const ProductList = () => {
     } = useList();
 
     const [activeModalID, setModalID] = useState('');
+    const [addModalID, setAddModalID] = useState('');
 
     const { isLoading, isError, isBadRequest } = useUI();
     return (
         <div className="p-4 justify-center mx-[7rem] mt-[2rem]">
-            <ModalContext.Provider value={{ activeModalID, setModalID }}>
-                {/* <AddProductButton
-                getPage={getPage}
-                currentPage={currentPage}
-                pageSize={pageSize}
-            /> */}
+            <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID }}>
+                <AddProductButton
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
                 {isEmpty ? <p>{message}</p> : ""}
                 {isLoading ? <Loading /> : ""}
                 {isError ? <Error error={error} isHidden={!error} /> : ""}
