@@ -4,7 +4,7 @@ import {useState} from "react";
 import {useAuth} from "../../context/AuthContext.jsx";
 import {Error} from "../../components/feedback/Error.jsx";
 
-import LoginPageDog from "../../assets/pet.png";
+import LoginPageDog from "../../assets/images/pet.png";
 
 export const Login = () => {
     const { register, handleSubmit } = useForm();

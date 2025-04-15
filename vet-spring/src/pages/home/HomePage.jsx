@@ -1,4 +1,4 @@
-import HomePageDog from "../../assets/dog.png";
+import HomePageDog from "../../assets/images/dog.png";
 import { ListProvider } from "../../context/ListContext";
 import PostCarousel from "./PostsCarousel";
 import happyHeart from "../../assets/icons/happyHeart.svg";
