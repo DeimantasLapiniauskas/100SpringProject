@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export const ServiceCard = (props) => {
   const { service } = props;
-  const { id, name, description, price } = service;
+  const { id, name, description, price, imageUrl } = service;
   const [error, setError] = useState("");
   const { account } = useAuth();
   const [visible, setVisible] = useState(false);
@@ -57,6 +57,7 @@ export const ServiceCard = (props) => {
           {description}
         </p>
         <p className="text-[#854685]">{price} €</p>
+        <img src={imageUrl} alt="imgUrl" />
         <div className="card-actions">
           {checkRoles() && (
             <button

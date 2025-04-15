@@ -1,22 +1,26 @@
 import { useForm } from "react-hook-form";
-import { addService } from "../../utils/helpers/serviceService.js";
+import { addService, uploadServiceImage } from "../../utils/helpers/serviceService.js";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { Error } from "../../components/feedback/Error.jsx";
+import { Dropzone } from "@/components/uiBase/dropZoneBase";
+import { Controller } from "react-hook-form";
 export const ServiceAdd = ({ service }) => {
   const navigate = useNavigate();
   const [error, setError] = useState();
+
   const {
     register,
     handleSubmit,
     reset,
+    control,
     setValue,
     formState: { errors },
   } = useForm();
 
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-
+  const [previewUrl, setPreviewUrl] = useState(null);
   // useEffect(() => {
   //   if (service) {
   //     const { name, description, price } = service;
@@ -31,21 +35,34 @@ export const ServiceAdd = ({ service }) => {
   const formSubmitHandler = async (data) => {
     setIsLoading(true);
     setSubmitError(null);
-
-    const trimmedData = {
-      ...data,
-      name: data.name.trim(),
-    };
-
-    const payload = { ...trimmedData };
-
+    let imageUrl = null;
     try {
-    await addService(payload);
-      console.log("Resetting form...");
+      if (data?.imageFile) {
+        const formData = new FormData();
+        formData.append("file", data.imageFile);
+        const imageRes = await uploadServiceImage(formData);
+
+        imageUrl = imageRes.data.data;
+        
+        setPreviewUrl(imageUrl);
+      }
+      const payload = {
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        imageUrl: imageUrl ?? null, };
+      
+     await addService(payload);
+     console.log(payload);
+     
+    // const { data: data2, message, success } = response.data;
+
+      // console.log("Resetting form...");
       reset({
         name: "",
         description: "",
         price: "",
+        imageUrl: "",
       });
 
       console.log("Form reset complete");
@@ -91,7 +108,6 @@ export const ServiceAdd = ({ service }) => {
               className="block w-full text-sm resize-none text-gray-900 bg-gray-50 focus:outline-[0px]"
               placeholder="Enter description"
             />
-
             <label className="fieldset-label">Price</label>
             <input
               {...register("price", {
@@ -102,6 +118,27 @@ export const ServiceAdd = ({ service }) => {
               className="input focus:outline-[0px] focus:border-base-300"
               placeholder="Enter price"
             />
+
+<Controller
+  name="imageFile"
+  control={control}
+  rules={{ required: "Image is required" }}
+  render={({ field, fieldState }) => (
+    <Dropzone
+      onDrop={async (file) => {
+        field.onChange(file);
+        const reader = new FileReader();
+        reader.onload = () => setPreviewUrl(reader.result);
+        reader.readAsDataURL(file);
+      }}
+      previewUrl={previewUrl}
+      error={fieldState.error?.message}
+    />
+  )}
+/>
+
+
+
 
             <button
               type="submit"

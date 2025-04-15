@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import { updateService } from "../../utils/helpers/serviceService.js";
+import { updateService, uploadServiceImage } from "../../utils/helpers/serviceService.js";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import { Error } from "../../components/feedback/Error.jsx";
+import { Dropzone } from "@/components/uiBase/dropZoneBase";
+import { Controller } from "react-hook-form";
 export const ServiceUpdate = () => {
   const { id } = useParams();
 
@@ -13,12 +15,14 @@ export const ServiceUpdate = () => {
     register,
     handleSubmit,
     reset,
+    control,
     setValue,
     formState: { errors },
   } = useForm();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,11 +30,13 @@ export const ServiceUpdate = () => {
         const response = await api.get(`/services/${id}`);
 
         const data = response.data.data;
-        const { name, description, price } = data;
+        const { name, description, price, imageUrl } = data;
+console.log(imageUrl);
 
         setValue("name", name);
         setValue("description", description);
         setValue("price", price);
+        setValue("imageUrl", imageUrl)
       } catch (error) {
         setError(error.message);
       }
@@ -41,16 +47,24 @@ export const ServiceUpdate = () => {
   const formSubmitHandler = async (data) => {
     setIsLoading(true);
     setSubmitError(null);
-
-    const trimmedData = {
-      ...data,
-      name: data.name.trim(),
-    };
-
-    const payload = { ...trimmedData };
-
+    let imageUrl = null;
     try {
-      const { data } = await updateService(id, payload);
+      if (data?.imageFile) {
+        const formData = new FormData();
+        formData.append("file", data.imageFile);
+        const imageRes = await uploadServiceImage(formData);
+
+        imageUrl = imageRes.data.data;
+        
+        setPreviewUrl(imageUrl);
+      }
+      const payload = {
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        imageUrl: imageUrl ?? null, };
+
+       await updateService(id, payload);
 
       console.log("Resetting form...");
       reset({
@@ -109,7 +123,23 @@ export const ServiceUpdate = () => {
               className="input focus:outline-[0px] focus:border-base-300"
               placeholder="Enter price"
             />
-
+<Controller
+  name="imageFile"
+  control={control}
+  rules={{ required: "Image is required" }}
+  render={({ field, fieldState }) => (
+    <Dropzone
+      onDrop={async (file) => {
+        field.onChange(file);
+        const reader = new FileReader();
+        reader.onload = () => setPreviewUrl(reader.result);
+        reader.readAsDataURL(file);
+      }}
+      previewUrl={previewUrl}
+      error={fieldState.error?.message}
+    />
+  )}
+/>
             <button
               type="submit"
               className="btn bg-black border-neutral-950 text-white hover:bg-white hover:text-neutral-950 mt-4"

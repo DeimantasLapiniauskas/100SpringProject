@@ -25,7 +25,7 @@ import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
 import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
-
+import { Servicefovet } from "@/pages/services/Serviceforvet.jsx";
 const VetClinicRoutes = () => {
   return (
     <BrowserRouter>
@@ -84,9 +84,17 @@ const VetClinicRoutes = () => {
                   </ListProvider>
                 }
               />
-              <Route path="services/add" element={<ServiceAdd />} />
-              <Route path="services/edit/:id" element={<ServiceUpdate />} />
-              {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
+              <Route path="services/add" element={
+                <Servicefovet>
+                <ServiceAdd />
+                </Servicefovet>
+                } />
+              <Route path="services/edit/:id" element={
+                <Servicefovet>
+                <ServiceUpdate />
+                </Servicefovet>
+                } />
+
               <Route
                 path="/profile"
                 element={
@@ -103,6 +111,9 @@ const VetClinicRoutes = () => {
               <Route path="/appointments/client/:id" element={<UpdateData />} />
             </Route>
             <Route path={"*"} element={<NotFound />} />
+          </Routes>
+          <Routes>
+
           </Routes>
         </AuthProvider>
       </UIProvider>
