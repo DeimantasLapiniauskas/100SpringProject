@@ -15,21 +15,21 @@ export const DropdownMenu = () => {
         </button>
   </div> */}
 
-      <div className="w-full p-3 bg-[#97a0f1]">
+      <div className="w-full p-3 rounded bg-blue-500">
         <NavLink
           to={`/profile`}
-          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1"
+          className="custom-hamburger-btn cursor-pointer figma-headline-4 !font-bold mb-1"
         >
           Profile
         </NavLink>
         <NavLink to={"/pets"}>
-          <p className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1">
+          <p className="custom-hamburger-btn cursor-pointer figma-headline-4 !font-bold mb-1">
             Your Pets
           </p>
         </NavLink>
         {account && (
           <NavLink to={"/appointments"}>
-            <p className=" custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center">
+            <p className=" custom-hamburger-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center">
               Appointments history
             </p>
           </NavLink>
@@ -39,14 +39,14 @@ export const DropdownMenu = () => {
             type="button"
             value="logout"
             onClick={logout}
-            className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold"
+            className="custom-hamburger-btn cursor-pointer figma-headline-4 !font-bold"
           >
             Log Out
           </button>
         ) : (
           <NavLink to={"/login"}>
             <p>
-              <button className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold">
+              <button className="custom-hamburger-btn cursor-pointer figma-headline-4 !font-bold">
                 Log In
               </button>
             </p>

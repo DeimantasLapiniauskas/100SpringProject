@@ -78,6 +78,23 @@
   background-color: #C7A4D6;
 }
 
+.custom-hamburger-btn {
+  background-color: #84d1d6;
+  color: white;
+  padding: 1rem;
+  width: 8.25rem; /* Adjusted width */
+  height: 2.9375rem; /* Adjusted height */
+  border-radius: 8px;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-hamburger-btn:hover {
+  background-color: #023047;
+}
 .custom-red-btn {
   background-color: #fb2c36;
   color: #000000;
