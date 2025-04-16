@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="vet_clinic@happy-hearths-db.cjcswiuquqvn.eu-north-1.rds.amazonaws.com" uuid="eefbf9ac-fbdd-4522-b0ef-bb62ce84dfa6">
+    <data-source source="LOCAL" name="vet_clinic@happy-hearths-db.cjcswiuquqvn.eu-north-1.rds.amazonaws.com" uuid="731b33dd-2e76-42c5-bf84-c66568d8b260">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
