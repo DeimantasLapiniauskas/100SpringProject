@@ -12,7 +12,7 @@ public record ServiceAtClinicRequestDTO(
         @NotBlank
         @NotNull
         @Size(max = 255, message = "Description too long! Please limit it to a max of 255 characters!")
-        @Pattern(regexp = "^[A-Za-z0-9\\s.\\-?!',]*$",
+        @Pattern(regexp = "^[A-Za-z0-9\\s.\\-?!',’]*$",
                 message = "Description must contain only letters, spaces, numbers, fullstops," +
                         " apostrophes, commas, exclamation and question marks and dashes!")
         String description,
