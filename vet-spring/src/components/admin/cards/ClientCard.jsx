@@ -1,5 +1,5 @@
 import { useState } from "react";
-import EditClientButton from "../admin/buttons/EditClientButton";
+import EditClientButton from "../buttons/EditClientButton";
 
 
 const ClientCard = ({ client, getPage, currentPage, pageSize }) => {

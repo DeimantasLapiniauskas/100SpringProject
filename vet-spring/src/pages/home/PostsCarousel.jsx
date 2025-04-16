@@ -10,14 +10,11 @@ import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
 import { ChevronsRight } from "lucide-react";
 
-
 const PostCarousel = () => {
   const { content: posts } = useList();
   const { Redirecting } = UIStatus;
   const { setStatus } = useUI();
   const navigate = useNavigate();
-
-  console.log("PostCarousel posts:", posts?.map(post => post.id));
 
   return (
     <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px] shadow-md shadow-info-content">
@@ -58,9 +55,9 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
+            <div className="text-center bg-gradient-to-br from-blue-200  to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
               <h2
-                className={`text-base md:px-2 block leading-[22px] font-semibold break-all min-h-[48px] max-h-[48px] overflow-hidden ${
+                className={`text-base md:px-2 block leading-[22px] font-semibold min-h-[48px] max-h-[48px] overflow-hidden break-words ${
                   post.postType === "Sale"
                     ? `text-red-700`
                     : post.postType === "Blog"
@@ -68,7 +65,9 @@ const PostCarousel = () => {
                     : `text-[#004C99]`
                 }`}
               >
-                {post.title}
+                {post.title.length > 55
+                  ? post.title.slice(0, 52) + "..."
+                  : post.title}
               </h2>
               <h3
                 className={`font-semibold text-left text-sm ${
@@ -79,7 +78,9 @@ const PostCarousel = () => {
                     : `text-[#004C99]`
                 }`}
               >
-                {post.postType === "Sale" ? post.postType + "!" : post.postType}
+                {post.postType === "Sale"
+                  ? post.postType + " !"
+                  : post.postType}
               </h3>
               <div className={post.imageUrl ? "grid grid-cols-3" : ""}>
                 <p className=" leading-[18px] text-left overflow-hidden min-h-[115px] max-h-[115px] text-sm col-span-2 break-words p-1">
@@ -100,15 +101,13 @@ const PostCarousel = () => {
                 )}
               </div>
               <div className="flex justify-center items-center">
-                <ChevronsRight className=" w-[18px] md:w-[22px] text-white slow-pulse"/>
+                <ChevronsRight className=" w-[18px] md:w-[22px] text-white slow-pulse" />
                 <button
                   type="button"
                   className=" text-white hover:underline text-xs md:text-sm font-medium p-1 ps-0 cursor-pointer slow-pulse"
                   onClick={() => {
                     setStatus(Redirecting);
-                    setTimeout(() => {
-                      navigate(`/posts/view/${post.id}`);
-                    }, 1000);
+                    navigate(`/posts/view/${post.id}`);
                   }}
                 >
                   Read more here

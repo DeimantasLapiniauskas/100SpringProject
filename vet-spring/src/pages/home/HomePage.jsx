@@ -1,4 +1,4 @@
-import HomePageDog from "../../assets/dog.png";
+import HomePageDog from "../../assets/images/dog.png";
 import { ListProvider } from "../../context/ListContext";
 import PostCarousel from "./PostsCarousel";
 import happyHeart from "../../assets/icons/happyHeart.svg";
@@ -6,10 +6,11 @@ import { ReviewsPanel } from "../../components/features/ReviewsPanel";
 import "../../index.css"
 import { useUI } from "@/context/UIContext";
 import { Redirecting } from "@/components/feedback/Redirecting";
+import { Loading } from "@/components/feedback/Loading";
 
 export const HomePage = () => {
 
-  const { isRedirecting } = useUI();
+  const { isRedirecting, isLoading } = useUI();
 
  if (isRedirecting) {
       return <Redirecting />;
@@ -60,6 +61,7 @@ export const HomePage = () => {
               />
             </figure>
       </main>
+      {isLoading ? <Loading/> : ""}
       <ListProvider>
         <PostCarousel />
       </ListProvider>

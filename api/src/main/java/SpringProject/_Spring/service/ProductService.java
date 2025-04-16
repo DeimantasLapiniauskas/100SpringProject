@@ -5,8 +5,9 @@ import SpringProject._Spring.dto.product.ProductPageResult;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
 import SpringProject._Spring.exceptions.NotFoundException;
-import SpringProject._Spring.model.Product;
-import SpringProject._Spring.repository.ProductRepository;
+import SpringProject._Spring.model.product.Product;
+import SpringProject._Spring.repository.product.CategoryRepository;
+import SpringProject._Spring.repository.product.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +20,12 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public Product addNewProduct(ProductRequestDTO productRequestDTO) {
@@ -30,7 +33,7 @@ public class ProductService {
             throw new NameAlreadyExistsException("Product", productRequestDTO.name());
         }
 
-        return saveProduct(ProductMapping.toProduct(productRequestDTO));
+        return saveProduct(ProductMapping.toProduct(productRequestDTO, categoryRepository));
     }
 
     public boolean existsProductByName(String name) {
@@ -61,7 +64,7 @@ public class ProductService {
 
         Product product = findProductById(id);
 
-        ProductMapping.updateProductFromDTO(product, productRequestDTO);
+        ProductMapping.updateProductFromDTO(product, productRequestDTO, categoryRepository);
 
         return saveProduct(product);
     }

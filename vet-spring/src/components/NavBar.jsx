@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 import { DropdownMenu } from "../pages/profile/DropdownMenu";
-import menu from "../assets/pawsNav.png";
+import menu from "../assets/icons/pawsNav.png";
 export const Navbar = () => {
   
   return (
@@ -18,7 +18,7 @@ export const Navbar = () => {
          className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
           <p className="text-xs sm:text-sm md:text-base">Service List</p>
         </NavLink>
-        <NavLink 
+        <NavLink to={"/products"} 
          className={({ isActive }) => isActive? "text-[#005050] font-semibold hover:animate-pulse" : "inline-block transform transition duration-400 hover:-translate-y-1 text-white"}>
           <p className="text-xs sm:text-sm md:text-base">Products</p>
         </NavLink>

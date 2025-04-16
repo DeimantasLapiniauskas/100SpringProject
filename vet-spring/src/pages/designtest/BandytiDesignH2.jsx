@@ -1,4 +1,4 @@
-import HomePageDog from "../../assets/dog.png"; 
+import HomePageDog from "../../assets/images/dog.png";
 import TestCarousel from "../designtest/TestCarousel";
 //import HomePagePawArrow from "../../assets/dog.png";
 

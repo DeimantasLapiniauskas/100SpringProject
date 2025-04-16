@@ -1,5 +1,5 @@
 import { Error } from "@/components/feedback/Error";
-import VetCard from "../../cards/VetCard";
+import VetCard from "../cards/VetCard";
 import AddVetButton from "../buttons/AddVetButton";
 import { useList } from "@/context/ListContext";
 import { useUI } from "@/context/UIContext";

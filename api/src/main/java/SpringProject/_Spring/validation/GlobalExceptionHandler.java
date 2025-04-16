@@ -10,7 +10,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ServerErrorException;
+
 import java.io.IOException;
+import java.rmi.ServerException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +68,10 @@ public class GlobalExceptionHandler extends BaseController {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiResponse<String>> handleNotFoundException(NotFoundException ex) {
         return notFound(ex.getMessage());
+    }
 
+    @ExceptionHandler(ServerErrorException.class)
+public ResponseEntity<ApiResponse<String>> handleServerErrorException(ServerErrorException ex) {
+    return serverError("Server error");
     }
 }

@@ -6,5 +6,6 @@ public record ProductResponseDTO(long id,
                                  String name,
                                  String description,
                                  BigDecimal price,
-                                 int stockQuantity) {
+                                 int stockQuantity,
+                                 String imageUrl) {
 }

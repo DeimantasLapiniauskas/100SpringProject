@@ -118,7 +118,7 @@
   /* position: absolute; */
   width: clamp(20px, 5%, 50px);
   height: clamp(30px, 5%, 50px);
-  background-image: url("/src/assets/pawss_for_background.png");
+  background-image: url("/src/assets/images/pawss_for_background.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -254,7 +254,7 @@
   /* Put on Your Pets PAGE; */
   width: clamp(20px, 5%, 50px);
   height: clamp(30px, 5%, 50px);
-  background-image: url("/src/assets/pawss_for_background.png");
+  background-image: url("/src/assets/images/pawss_for_background.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -460,12 +460,12 @@
 
 /* Left Paw Button */
 .custom-paw-left-btn {
-  background-image: url("/src/assets/pawss_3_left.png");
+  background-image: url("/src/assets/icons/pawss_3_left.png");
 }
 
 /* Right Paw Button */
 .custom-paw-right-btn {
-  background-image: url("/src/assets/pawss_4_right.png");
+  background-image: url("/src/assets/icons/pawss_4_right.png");
 }
 
 

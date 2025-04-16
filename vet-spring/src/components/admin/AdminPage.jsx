@@ -4,7 +4,7 @@ import ModalContext from '../../utils/helpers/modalContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import pawssAdminPageImage from '/src/assets/icons/pawss_for_admin_spaced_out_rotated_1536px.png';
+import pawssBackgroundImage from '/src/assets/icons/pawss_for_background_spaced_out_rotated_1536px.png';
 
 const AdminPage = ({ initialList }) => {
     const [activeList, setActiveList] = useState(initialList || '');
@@ -34,7 +34,7 @@ const AdminPage = ({ initialList }) => {
           {/* Paws background inside wrapper, starts after navbar naturally */}
           <div
             className="absolute inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-center opacity-5 pointer-events-none z-0"
-            style={{ backgroundImage: `url(${pawssAdminPageImage})` }}
+            style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
           ></div>
 
           {/* Main Content - z-10 so it appears above background */}
