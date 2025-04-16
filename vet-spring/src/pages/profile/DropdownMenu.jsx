@@ -1,57 +1,78 @@
 import { useAuth } from "../../context/AuthContext";
-import react from "react";
 import { NavLink } from "react-router";
 
 export const DropdownMenu = () => {
   const { account, logout } = useAuth();
-  const [open, setOpen] = react.useState(false);
-  const handleOpen = () => setOpen(!open);
-  return (
-    <>
-      {/* <div>
-    <button className="btn bg-[#97a0f1] w-12" onClick={handleOpen}>
-          <img src={menu} alt="" className="w-10 absolute"/>
-        </button>
-  </div> */}
 
-      <div className="w-full p-3 bg-[#97a0f1]">
+  const checkClient = () => {
+    return (
+      account !== null &&
+      account.scope !== null &&
+      account.scope.includes("ROLE_CLIENT")
+    );
+  };
+
+  const checkAdmin = () => {
+    return (
+      account !== null &&
+      account.scope !== null &&
+      account.scope.includes("ROLE_ADMIN")
+    );
+  };
+
+  return (
+    <div className="w-full p-3 bg-[#97a0f1]">
+      {account && (
         <NavLink
-          to={`/profile`}
+          to="/profile"
           className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1"
         >
           Profile
         </NavLink>
-        <NavLink to={"/pets"}>
-          <p className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1">
-            Your Pets
-          </p>
+      )}
+
+      {checkAdmin() && (
+        <NavLink
+          to="/adminpage"
+          className="custom-red-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center"
+        >
+          Admin Page
         </NavLink>
-        {account && (
-          <NavLink to={"/appointments"}>
-            <p className=" custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center">
-              Appointments history
-            </p>
-          </NavLink>
-        )}
-        {account ? (
-          <button
-            type="button"
-            value="logout"
-            onClick={logout}
-            className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold"
-          >
-            Log Out
-          </button>
-        ) : (
-          <NavLink to={"/login"}>
-            <p>
-              <button className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold">
-                Log In
-              </button>
-            </p>
-          </NavLink>
-        )}
-      </div>
-    </>
+      )}
+
+      {checkClient() && (
+        <NavLink
+          to="/pets"
+          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1"
+        >
+          Your Pets
+        </NavLink>
+      )}
+
+      {account && (
+        <NavLink
+          to="/appointments"
+          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center"
+        >
+          Appointments History
+        </NavLink>
+      )}
+
+      {account ? (
+        <button
+          onClick={logout}
+          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1"
+        >
+          Log Out
+        </button>
+      ) : (
+        <NavLink
+          to="/login"
+          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1"
+        >
+          Log In
+        </NavLink>
+      )}
+    </div>
   );
 };
