@@ -5,6 +5,7 @@ import { useState } from "react";
 import { RegisterAppointment } from "../appointments/RegisterAppointment.jsx";
 import { useList } from "../../context/ListContext.jsx";
 import { motion } from "framer-motion";
+import ReactDOM from 'react-dom';
 
 export const ServiceCard = (props) => {
   const { service } = props;
@@ -79,7 +80,7 @@ export const ServiceCard = (props) => {
         <div>
           {checkRoleClient() && (
             <button
-              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              className="btn btn-error bg-[#ffffff] border-0 hover:bg-[#CBC5C5]"
               onClick={() => setVisible(true)}
             >
               Register
@@ -87,9 +88,14 @@ export const ServiceCard = (props) => {
           )}
         </div>
       </div>
-      {visible && (
+      {/* {visible && (
         <RegisterAppointment setVisible={setVisible} serviceId={service.id} />
-      )}
+      )} */}
+      {visible &&
+        ReactDOM.createPortal(
+          <RegisterAppointment setVisible={setVisible} serviceId={service.id} />,
+          document.body // Append to the body element
+        )}
     </motion.div>
   );
 };
