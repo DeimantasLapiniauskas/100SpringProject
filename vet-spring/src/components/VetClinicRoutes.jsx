@@ -26,7 +26,7 @@ import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
 import ProductList from "@/pages/products/ProductList.jsx";
 import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
-import { Servicefovet } from "@/pages/services/Serviceforvet.jsx";
+import { ServiceForVet } from "@/pages/services/ServiceForVet.jsx";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
 
 const VetClinicRoutes = () => {
@@ -98,14 +98,14 @@ const VetClinicRoutes = () => {
                     </Route>
                   <Route path="/services" element={<ServiceList />}/>
               <Route path="services/add" element={
-                <Servicefovet>
+                <ServiceForVet>
                 <ServiceAdd />
-                </Servicefovet>
+                </ServiceForVet>
                 } />
               <Route path="services/edit/:id" element={
-                <Servicefovet>
+                <ServiceForVet>
                 <ServiceUpdate />
-                </Servicefovet>
+                </ServiceForVet>
                 } />
 
               <Route
