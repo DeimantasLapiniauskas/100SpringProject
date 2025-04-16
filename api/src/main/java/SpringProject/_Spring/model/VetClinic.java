@@ -1,9 +1,7 @@
 package SpringProject._Spring.model;
-
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.authentication.Vet;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -63,7 +63,7 @@ export const PostView = () => {
   }
 
   return (
-    <div className="max-w-[1400px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 bg-[url('/icons/paw.svg')] bg-repeat ">
+    <div className="max-w-[1400px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
       <div className="relative">
         <h2
           className={`w-full text-center text-base sm:text-lg md:text-xl font-semibold ${

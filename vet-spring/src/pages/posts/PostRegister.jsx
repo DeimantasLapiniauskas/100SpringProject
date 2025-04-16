@@ -261,7 +261,6 @@ export const PostRegister = ({ initialData }) => {
                 </FormItem>
               )}
             />
-
             <FormField
               name="content"
               render={({ field }) => (
