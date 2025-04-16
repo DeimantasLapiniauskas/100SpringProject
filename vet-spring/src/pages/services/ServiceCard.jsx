@@ -36,24 +36,24 @@ export const ServiceCard = (props) => {
   };
 
   const checkRoleClient = () => {
-    return (account !== null &&
-        account.scope !== null &&
-        account.scope.includes("ROLE_CLIENT"))
-  }
- 
+    return (
+      account !== null &&
+      account.scope !== null &&
+      account.scope.includes("ROLE_CLIENT")
+    );
+  };
+
   return (
     <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    whileHover={{ scale: 1.03 }}
-    transition={{ duration: 0.5, delay: 0.2 }}
-    className=" card-side will-change-transform bg-purple-300/20 backdrop-blur-lg p-5 rounded-xl shadow-lg ">
-
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className=" card-side will-change-transform bg-purple-300/20 backdrop-blur-lg p-5 rounded-xl shadow-lg "
+    >
       <div className="card-body shadow-lg shadow-[#854685] rounded-[10px] bg-gradient-to-tr backdrop-blur-[100px] to-indigo-600 text-[#FFFFFF] ">
         <h2 className="card-title block break-all">{name}</h2>
-        <p
-          className=" caret-transparent h-full min-h-[75px] w-full resize-none text-sm focus:outline-[0px]"
-        >
+        <p className=" caret-transparent h-full min-h-[75px] w-full resize-none text-sm focus:outline-[0px]">
           {description}
         </p>
         <p className="text-[#854685]">{price} €</p>
@@ -77,10 +77,19 @@ export const ServiceCard = (props) => {
           )}
         </div>
         <div>
-            {checkRoleClient() && <button className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]" onClick={()=>setVisible(true)}>Register</button>}
-          </div>
+          {checkRoleClient() && (
+            <button
+              className="btn btn-error bg-[#FFFFFF] border-0 hover:bg-[#CBC5C5]"
+              onClick={() => setVisible(true)}
+            >
+              Register
+            </button>
+          )}
+        </div>
       </div>
-      {visible && <RegisterAppointment setVisible={setVisible} serviceId={service.id}/>}
-    </motion.div>          
+      {visible && (
+        <RegisterAppointment setVisible={setVisible} serviceId={service.id} />
+      )}
+    </motion.div>
   );
 };

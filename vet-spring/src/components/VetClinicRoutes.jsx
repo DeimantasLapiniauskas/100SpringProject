@@ -112,9 +112,6 @@ const VetClinicRoutes = () => {
             </Route>
             <Route path={"*"} element={<NotFound />} />
           </Routes>
-          <Routes>
-
-          </Routes>
         </AuthProvider>
       </UIProvider>
     </BrowserRouter>

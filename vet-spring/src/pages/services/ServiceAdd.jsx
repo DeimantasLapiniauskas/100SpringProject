@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
-import { addService, uploadServiceImage } from "../../utils/helpers/serviceService.js";
+import {
+  addService,
+  uploadServiceImage,
+} from "../../utils/helpers/serviceService.js";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { Error } from "../../components/feedback/Error.jsx";
@@ -43,19 +46,20 @@ export const ServiceAdd = ({ service }) => {
         const imageRes = await uploadServiceImage(formData);
 
         imageUrl = imageRes.data.data;
-        
+
         setPreviewUrl(imageUrl);
       }
       const payload = {
         name: data.name,
         description: data.description,
         price: data.price,
-        imageUrl: imageUrl ?? null, };
-      
-     await addService(payload);
-     console.log(payload);
-     
-    // const { data: data2, message, success } = response.data;
+        imageUrl: imageUrl ?? null,
+      };
+
+      await addService(payload);
+      console.log(payload);
+
+      // const { data: data2, message, success } = response.data;
 
       // console.log("Resetting form...");
       reset({
@@ -119,26 +123,23 @@ export const ServiceAdd = ({ service }) => {
               placeholder="Enter price"
             />
 
-<Controller
-  name="imageFile"
-  control={control}
-  rules={{ required: "Image is required" }}
-  render={({ field, fieldState }) => (
-    <Dropzone
-      onDrop={async (file) => {
-        field.onChange(file);
-        const reader = new FileReader();
-        reader.onload = () => setPreviewUrl(reader.result);
-        reader.readAsDataURL(file);
-      }}
-      previewUrl={previewUrl}
-      error={fieldState.error?.message}
-    />
-  )}
-/>
-
-
-
+            <Controller
+              name="imageFile"
+              control={control}
+              rules={{ required: "Image is required" }}
+              render={({ field, fieldState }) => (
+                <Dropzone
+                  onDrop={async (file) => {
+                    field.onChange(file);
+                    const reader = new FileReader();
+                    reader.onload = () => setPreviewUrl(reader.result);
+                    reader.readAsDataURL(file);
+                  }}
+                  previewUrl={previewUrl}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
 
             <button
               type="submit"

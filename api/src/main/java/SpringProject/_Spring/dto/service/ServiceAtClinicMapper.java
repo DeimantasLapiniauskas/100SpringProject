@@ -24,6 +24,7 @@ public class ServiceAtClinicMapper {
         serviceAtClinic.setName(serviceAtClinicRequestDTO.name());
         serviceAtClinic.setDescription(serviceAtClinicRequestDTO.description());
         serviceAtClinic.setPrice(serviceAtClinicRequestDTO.price());
+        serviceAtClinic.setImageUrl(serviceAtClinicRequestDTO.imageUrl());
         return serviceAtClinic;
     }
 

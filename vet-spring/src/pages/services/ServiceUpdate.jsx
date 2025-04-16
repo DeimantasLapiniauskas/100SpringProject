@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import { updateService, uploadServiceImage } from "../../utils/helpers/serviceService.js";
+import {
+  updateService,
+  uploadServiceImage,
+} from "../../utils/helpers/serviceService.js";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import { Error } from "../../components/feedback/Error.jsx";
@@ -30,13 +33,15 @@ export const ServiceUpdate = () => {
         const response = await api.get(`/services/${id}`);
 
         const data = response.data.data;
+
         const { name, description, price, imageUrl } = data;
-console.log(imageUrl);
+        console.log(data);
 
         setValue("name", name);
         setValue("description", description);
         setValue("price", price);
-        setValue("imageUrl", imageUrl)
+        setValue("imageUrl", imageUrl);
+        setPreviewUrl(imageUrl);
       } catch (error) {
         setError(error.message);
       }
@@ -48,6 +53,7 @@ console.log(imageUrl);
     setIsLoading(true);
     setSubmitError(null);
     let imageUrl = null;
+
     try {
       if (data?.imageFile) {
         const formData = new FormData();
@@ -55,28 +61,33 @@ console.log(imageUrl);
         const imageRes = await uploadServiceImage(formData);
 
         imageUrl = imageRes.data.data;
-        
+        console.log(imageUrl);
         setPreviewUrl(imageUrl);
       }
       const payload = {
         name: data.name,
         description: data.description,
         price: data.price,
-        imageUrl: imageUrl ?? null, };
+        imageUrl: imageUrl,
+      };
 
-       await updateService(id, payload);
-
+      await updateService(id, payload);
+      console.log(payload);
       console.log("Resetting form...");
       reset({
         name: "",
         description: "",
         price: "",
+        imageFile: null,
+        imageUrl: null,
       });
-
+      setPreviewUrl(null);
       console.log("Form reset complete");
       navigate("/services");
     } catch (error) {
       setError(error.response?.data?.message || error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -123,23 +134,23 @@ console.log(imageUrl);
               className="input focus:outline-[0px] focus:border-base-300"
               placeholder="Enter price"
             />
-<Controller
-  name="imageFile"
-  control={control}
-  rules={{ required: "Image is required" }}
-  render={({ field, fieldState }) => (
-    <Dropzone
-      onDrop={async (file) => {
-        field.onChange(file);
-        const reader = new FileReader();
-        reader.onload = () => setPreviewUrl(reader.result);
-        reader.readAsDataURL(file);
-      }}
-      previewUrl={previewUrl}
-      error={fieldState.error?.message}
-    />
-  )}
-/>
+            <Controller
+              name="imageFile"
+              control={control}
+              rules={{ required: "Image is required" }}
+              render={({ field, fieldState }) => (
+                <Dropzone
+                  onDrop={async (file) => {
+                    field.onChange(file);
+                    const reader = new FileReader();
+                    reader.onload = () => setPreviewUrl(reader.result);
+                    reader.readAsDataURL(file);
+                  }}
+                  previewUrl={previewUrl}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
             <button
               type="submit"
               className="btn bg-black border-neutral-950 text-white hover:bg-white hover:text-neutral-950 mt-4"
