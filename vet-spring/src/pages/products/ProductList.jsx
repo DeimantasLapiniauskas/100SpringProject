@@ -22,11 +22,12 @@ const ProductList = () => {
 
     const [activeModalID, setModalID] = useState('');
     const [addModalID, setAddModalID] = useState('');
+    const [editModalID, setEditModalID] = useState('');
 
     const { isLoading, isError, isBadRequest } = useUI();
     return (
         <div className="p-4 justify-center mx-[7rem] mt-[2rem]">
-            <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID }}>
+            <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID, editModalID, setEditModalID }}>
                 <AddProductButton
                     getPage={getPage}
                     currentPage={currentPage}

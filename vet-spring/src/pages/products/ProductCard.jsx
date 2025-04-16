@@ -1,6 +1,7 @@
 import ModalContext from "@/utils/helpers/modalContext";
 import { useContext } from "react";
 import ProductModal from "./ProductModal";
+import EditProductButton from "./buttons/EditProductButton";
 
 const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
   const { name, description, price, stockQuantity, id, imageUrl } = product;
@@ -26,8 +27,16 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
               <div>{price} EUR</div>
             </div>
             <div className="text-gray-700">
-              <p>Description: {description}</p>
+              <p>{description}</p>
               <p>Quantity: {stockQuantity}</p>
+            </div>
+            <div className="mt-2">
+              <EditProductButton
+                product={product}
+                getPage={getPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
             </div>
           </div>
         </div>

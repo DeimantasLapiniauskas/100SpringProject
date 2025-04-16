@@ -1,13 +1,14 @@
-import { addProduct } from "@/utils/helpers/addEditProduct";
+import { addProduct, updateProduct } from "@/utils/helpers/addEditProduct";
 import ModalContext from "@/utils/helpers/modalContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SimpleDropzone } from "./SimpleDropzone";
 import { addProductImage } from "@/utils/helpers/addProductImage";
 
-const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
-  const { setAddModalID } = useContext(ModalContext);
+const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
+  const { setAddModalID, setEditModalID } = useContext(ModalContext);
+  const { name, description, price, stockQuantity, id, categories, imageUrl } = product;
 
   const {
     register,
@@ -30,7 +31,18 @@ const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
   const [submitError, setSubmitError] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [imageError, setImageError] = useState(null);
-  const categories = ["Medicine", "Food", "Toys"];
+  const categoriesSelect = ["Medicine", "Food", "Toys"];
+
+  useEffect(() => {
+    if (product) {
+      setValue("name", name);
+      setValue("description", description);
+      setValue("price", price.toString());
+      setValue("stockQuantity", stockQuantity.toString());
+      setValue("category", categories?.[0]?.name || "");
+      setPreviewUrl(imageUrl || null);
+    }
+  }, [categories, description, imageUrl, name, price, product, setValue, stockQuantity]);
 
   const updatePreview = (file) => {
     if (file) {
@@ -48,7 +60,7 @@ const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
     setImageError(null);
 
     try {
-      let imageUrl = "";
+      let imageUrl = product?.imageUrl || "";
       if (data.imageFile) {
         imageUrl = await addProductImage(data.imageFile);
       }
@@ -66,9 +78,17 @@ const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
         categories: [{ name: data.category }],
       };
 
-      await addProduct(payload);
-      await getPage(pageSize, currentPage);
-      setAddModalID("");
+      if (product?.id) {
+        
+        await updateProduct(id, payload);
+        await getPage(pageSize, currentPage);
+        setEditModalID("");
+      } else {
+        await addProduct(payload);
+        await getPage(pageSize, currentPage);
+        setAddModalID("");
+      }
+
       reset();
       setPreviewUrl(null);
     } catch (error) {
@@ -197,7 +217,7 @@ const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
               <option value="" hidden selected>
                 Select a category
               </option>
-              {categories.map((category) => (
+              {categoriesSelect.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -239,4 +259,4 @@ const ProductAddForm = ({ getPage, currentPage, pageSize }) => {
   );
 };
 
-export default ProductAddForm;
+export default ProductForm;
