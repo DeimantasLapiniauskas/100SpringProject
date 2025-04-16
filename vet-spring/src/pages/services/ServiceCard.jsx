@@ -61,7 +61,7 @@ export const ServiceCard = (props) => {
           {checkRoles() && (
             <button
               onClick={deleteService}
-              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#CBC5C5] text-error-content font-semibold rounded shadow-sm shadow-pink-400"
+              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#CBC5C5] text-error-content font-semibold rounded shadow-sm shadow-pink-400 cursor-pointer"
             >
               Delete
             </button>

@@ -1,5 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
 import SpringProject._Spring.model.*;
 import SpringProject._Spring.model.appointment.Appointment;
@@ -37,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentBasicController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class AppointmentGETTest {
 
     @Autowired

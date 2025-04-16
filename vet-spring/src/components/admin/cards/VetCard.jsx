@@ -1,5 +1,5 @@
 import { useState } from "react";
-import EditVetButton from "../admin/buttons/EditVetButton";
+import EditVetButton from "../buttons/EditVetButton";
 
 const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
     const { firstName, lastName, email, phoneNumber, specialty, licenseNumber } = vet;

@@ -19,16 +19,15 @@ const ListContext = createContext({
   onPaginate: () => {},
   onSortBy: () => {},
   handleSearch: () => {},
-  clearAll: () => {}
+  clearAll: () => {},
 });
 
 export const ListProvider = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams("");
-  const isFirstLoad = useRef(true);
   const isMounted = useIsMounted();
   const currentPath = useCurrentPath();
   const realPath = useRealPath();
-  const localStoragePath = realPath.replace(/\//g, "");
+  const localStoragePath = (realPath || "").replace(/\//g, "");
 
   const defaultPageSize =
     parseInt(searchParams.get("size")) ||
@@ -65,29 +64,33 @@ export const ListProvider = ({ children }) => {
   const getPage = useCallback(
     async (size, page, sort, search) => {
       try {
-        setStatus(Loading);
-        const response = await api.get(
-          `/${currentPath}/pagination?page=${page}&size=${size}${
-            sort ? `&sort=${sort}` : ""
-          }${search ? `&search=${search}` : ""}`
-        );
-        const { data, message, success } = response.data;
+        if (currentPath) {
+          setStatus(Loading);
+          const response = await api.get(
+            `/${currentPath}/pagination?page=${page}&size=${size}${
+              sort ? `&sort=${sort}` : ""
+            }${search ? `&search=${search}` : ""}`
+          );
+          if (!isMounted.current) return;
 
-        if (!isMounted.current) return;
-        if (page >= data.totalPages && data.totalPages > 0) {
-          setStatus(BadPageRequest);
-          return;
-        }
-        if (success && data) {
-          setPagination((prev) => ({
-            ...prev,
-            content: data.content || [],
-            totalPages: data.totalPages ?? 0,
-            error: null,
-            message: message,
-          }));
-          setStatus(Success);
-        } else {
+          const { data, message, success } = response.data;
+          console.log(response.data);
+
+          if (page >= data.totalPages && data.totalPages > 0) {
+            setStatus(BadPageRequest);
+            return;
+          }
+          if (success && data) {
+            setPagination((prev) => ({
+              ...prev,
+              content: data.content || [],
+              totalPages: data.totalPages ?? 0,
+              error: null,
+              message: message,
+            }));
+            setStatus(Success);
+          }
+         else {
           setPagination((prev) => ({
             ...prev,
             content: [],
@@ -95,8 +98,10 @@ export const ListProvider = ({ children }) => {
           }));
           setStatus(Unusual);
         }
-      } catch (error) {
+      }
+    } catch (error) {
         if (!isMounted.current) return;
+
         const errorMessage =
           error.response?.data?.message ?? error.message ?? "Unknown error";
         setPagination((prev) => ({
@@ -113,69 +118,103 @@ export const ListProvider = ({ children }) => {
 
   const onPageSizeChange = (e) => {
     const pageSize = Math.max(1, parseInt(e.target.value, 10));
-    searchParams.set("size", pageSize);
-    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: 0, pageSize: pageSize }));
     localStorage.setItem(`${localStoragePath} - pageSize`, pageSize);
+    searchParams.set("size", pageSize);
+    setSearchParams(searchParams);
   };
 
   const onPaginate = (page) => {
     if (page < 0 || page >= pagination.totalPages) return;
 
-    searchParams.set("page", page);
-    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, currentPage: page }));
     localStorage.setItem(`${localStoragePath} - currentPage`, page);
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
   };
 
   const onSortBy = (e) => {
     let sortBy = e.target.value;
 
     if (sortBy === "Content") {
-      searchParams.delete("sort");
-      searchParams.delete("page");
-      setSearchParams(searchParams);
+      
       localStorage.removeItem(`${localStoragePath} - sorted`);
       localStorage.removeItem(`${localStoragePath} - currentPage`);
       setPagination((prev) => ({ ...prev, sorted: null }));
+      searchParams.delete("sort");
+      searchParams.delete("page");
+      setSearchParams(searchParams);
       return;
     }
-    searchParams.set("sort", sortBy), setSearchParams(searchParams);
+    
     setPagination((prev) => ({ ...prev, sorted: sortBy, currentPage: 0 }));
     localStorage.setItem(`${localStoragePath} - sorted`, sortBy);
     localStorage.removeItem(`${localStoragePath} - currentPage`);
+    searchParams.set("sort", sortBy);
+    setSearchParams(searchParams); 
   };
 
   const handleSearch = (searchValue) => {
-    searchParams.set("search", searchValue);
-    setSearchParams(searchParams);
     setPagination((prev) => ({ ...prev, searchValue: searchValue }));
     localStorage.setItem(`${localStoragePath} - searchValue`, searchValue);
+    searchParams.set("search", searchValue);
+    setSearchParams(searchParams);
   };
 
+  const [clearSearchBar, setClearSearchBar] = useState(0);
+
   const clearAll = () => {
+    if (
+      localStorage.getItem(`${localStoragePath} - sorted`) === null &&
+      localStorage.getItem(`${localStoragePath} - pageSize`) === null &&
+      localStorage.getItem(`${localStoragePath} - currentPage`) === null &&
+      localStorage.getItem(`${localStoragePath} - searchValue`) === null
+    ) return;
+
     localStorage.removeItem(`${localStoragePath} - pageSize`);
     localStorage.removeItem(`${localStoragePath} - currentPage`);
     localStorage.removeItem(`${localStoragePath} - sorted`);
     localStorage.removeItem(`${localStoragePath} - searchValue`);
+   
+    setClearSearchBar((prev) => prev + 1);
+
+    setPagination({
+      ...initialPagination,
+      currentPage: 0,
+      pageSize: 6,
+      sorted: null,
+      searchValue: "",
+    });
     setSearchParams({});
-    setPagination(initialPagination);
   };
+
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
     if (isFirstLoad.current && realPath === "home") {
       isFirstLoad.current = false;
-      // const newPageSize = 8;
-      // const newSort = "createdAt";
-      // const newPage = 0
+
+      const homePagepageSize = 8;
+      const homePageSorted = "createdAt";
 
       setPagination((prev) => ({
         ...prev,
-        pageSize: 8,
-        sorted: "createdAt",
-        // currentPage: newPage,
+        pageSize: homePagepageSize,
+        sorted: homePageSorted,
       }));
-      // getPage(newPageSize, newPage, newSort);
+      localStorage.setItem(`${localStoragePath} - pageSize`, homePagepageSize);
+      localStorage.setItem(`${localStoragePath} - sorted`, homePageSorted);
+
+      return;
+    } else if (realPath === currentPath) {
+      setPagination(initialPagination);
+
+      getPage(
+        initialPagination.pageSize,
+        initialPagination.currentPage,
+        initialPagination.sorted,
+        initialPagination.searchValue
+      );
       return;
     }
     getPage(
@@ -196,6 +235,8 @@ export const ListProvider = ({ children }) => {
     searchParams,
   ]);
 
+  console.log(defaultPageSize);
+
   return (
     <ListContext.Provider
       value={{
@@ -205,8 +246,10 @@ export const ListProvider = ({ children }) => {
         onSortBy,
         handleSearch,
         clearAll,
+        setPagination,
         ...pagination,
         isEmpty,
+        clearSearchBar,
       }}
     >
       {children}

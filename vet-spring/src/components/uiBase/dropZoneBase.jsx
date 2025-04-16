@@ -55,7 +55,7 @@ export function Dropzone({ onDrop, previewUrl, error, className, size, intent })
       dropzoneVariants({ intent, size }),
       className,
       isDragActive ? "bg-muted" : "bg-background",
-      "relative w-full h-full overflow-hidden flex items-center justify-center"
+      "relative w-full overflow-hidden flex items-center justify-center"
     )}>
       <input {...getInputProps()} />
       {previewUrl ? (

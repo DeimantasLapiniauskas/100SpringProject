@@ -1,5 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest.appointmentConfirmationController;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentConfirmationController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
@@ -25,6 +26,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -40,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentConfirmationController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class AppointmentConfirmGETTest {
 
     @Autowired
@@ -64,8 +66,8 @@ public class AppointmentConfirmGETTest {
     private final long vetOneId = 2;
     private final long vetTwoId = 8;
 
-    private final ServiceAtClinic serviceOne = new ServiceAtClinic("ServiceOne", "ServiceOneDesctiption", BigDecimal.valueOf(10.1));
-    private final ServiceAtClinic serviceTwo = new ServiceAtClinic("ServiceTwo", "ServiceTwoDescription", BigDecimal.valueOf(20.2));
+    private final ServiceAtClinic serviceOne = new ServiceAtClinic("ServiceOne", "ServiceOneDesctiption", BigDecimal.valueOf(10.1), "https://example.com/new.jpg");
+    private final ServiceAtClinic serviceTwo = new ServiceAtClinic("ServiceTwo", "ServiceTwoDescription", BigDecimal.valueOf(20.2), "https://example.com/new.jpg");
     private final Pet petOne = new Pet(ownerId, "petOneName", "petOneSpecies", "petOneBreed", LocalDate.now(), Gender.Female);
     private final Pet petTwo = new Pet(ownerId, "petTwoName", "petTwoSpecies", "petTwoBreed", LocalDate.now(), Gender.Male);
     private final Appointment appointmentOne = new Appointment(petOneId, vetOneId, List.of(serviceOne, serviceTwo), LocalDateTime.of(2222, 11, 11, 11, 11), "Appointment #1 notes", Timestamp.valueOf(LocalDateTime.now()));
@@ -89,6 +91,7 @@ public class AppointmentConfirmGETTest {
     }
 
     @Test
+    @WithMockUser
     void getUnconfirmedAppointments_whenGetClient_thenRespond200() throws Exception {
 
         Account account = new Account("email","password",List.of(new Role("ROLE_CLIENT")));

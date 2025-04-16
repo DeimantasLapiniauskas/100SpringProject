@@ -1,6 +1,7 @@
 package SpringProject._Spring.petControllerTest;
 
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.PetController;
 import SpringProject._Spring.dto.pet.PetMapping;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
@@ -43,8 +44,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(controllers = PetController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class PetPOSTTest {
+
+//    @Autowired
+//    private DefaultEmailService emailService;
+//
+//    @Autowired
+//    private JavaMailSender javaMailSender;
 
     @Autowired
     private MockMvc mockMvc;

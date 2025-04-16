@@ -86,6 +86,7 @@ const dialogFooterVariants = cva("mt-2 sm:mt-2.5 md:mt-3 flex justify-end gap-2"
 export const DialogRoot = Dialog.Root;
 export const DialogTrigger = Dialog.Trigger;
 export const DialogPortal = Dialog.Portal;
+export const DialogClose = Dialog.Close;
 
 export const DialogOverlay = ({ className, ...props }) => (
   <Dialog.Overlay
@@ -99,15 +100,18 @@ export const DialogContent = ({
   size,
   centered,
   children,
+  onPointerDownOutside = (e) => e.preventDefault(),
+  onInteractOutside = (e) => e.preventDefault(),
+  onEscapeKeyDown = (e) => e.preventDefault(),
   ...props
 }) => (
   <Dialog.Portal>
     <DialogOverlay />
     <Dialog.Content
-      className={cn(
-        dialogVariants({ size, centered }),
-        className
-      )}
+      onPointerDownOutside={onPointerDownOutside}
+      onInteractOutside={onInteractOutside}
+      onEscapeKeyDown={onEscapeKeyDown}
+      className={cn(dialogVariants({ size, centered }), className)}
       {...props}
     >
       {children}
@@ -132,6 +136,7 @@ export const DialogFooter = ({ className, variant, children, ...props }) => (
   <div className={cn(dialogFooterVariants({ variant }), className)} {...props}>
     {children}
   </div>
+  
 );
 
 
