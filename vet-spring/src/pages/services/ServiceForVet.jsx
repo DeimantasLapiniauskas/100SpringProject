@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import vetClinicForbidden from "../../assets/images/vet-clinic-forbidden.jpg";
 
-export const Servicefovet = ({ children }) => {
+export const ServiceForVet = ({ children }) => {
   const { account } = useAuth();
 
   if (
