@@ -41,7 +41,7 @@ export const ServiceUpdate = () => {
         setValue("description", description);
         setValue("price", price);
         setValue("imageUrl", imageUrl);
-        setPreviewUrl(imageUrl ?? null);
+        setPreviewUrl(imageUrl);
       } catch (error) {
         setError(error.message);
       }
@@ -68,7 +68,7 @@ export const ServiceUpdate = () => {
         name: data.name,
         description: data.description,
         price: data.price,
-        imageUrl: imageUrl ?? null,
+        imageUrl: imageUrl,
       };
 
       await updateService(id, payload);
