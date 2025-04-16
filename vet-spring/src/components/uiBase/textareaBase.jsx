@@ -10,7 +10,7 @@ const textareaVariants = cva(
         sm: "text-sm",
         md: "text-base",
         lg: "text-lg ",
-        responsive : "text-[10px] sm:text-xs md:text-sm lg:text-base h-[100px] sm:h-[125px] md:h-[150px]"
+        responsive : "text-[10px] sm:text-xs md:text-sm lg:text-base h-[100px] sm:h-[125px] md:h-[150px] text-info-content"
       },
       intent: {
         default: "border-blue-500 focus:ring-blue-500",

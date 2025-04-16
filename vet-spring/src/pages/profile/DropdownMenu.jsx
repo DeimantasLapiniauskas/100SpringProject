@@ -1,7 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
 import react from "react";
 import { NavLink } from "react-router";
-import menu from "../../assets/icons/menu.svg";
 
 export const DropdownMenu = () => {
   const { account, logout } = useAuth();

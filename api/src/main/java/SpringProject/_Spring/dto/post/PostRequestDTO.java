@@ -1,16 +1,16 @@
 package SpringProject._Spring.dto.post;
 
+
 import SpringProject._Spring.model.post.PostType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.Label;
-import org.hibernate.validator.constraints.Length;
+
 
 public record PostRequestDTO(@NotNull
                              @NotBlank(message = "Title cannot be empty")
-                             @Size(min = 3, max = 50, message = "Title must be at least 3 characters long but not longer than 50 characters" )
+                             @Size(min = 3, max = 100, message = "Title must be at least 3 characters long but not longer than 100 characters" )
                              String title,
 
                              @NotNull

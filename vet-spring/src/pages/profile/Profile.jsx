@@ -110,7 +110,7 @@ export const Profile = () => {
           ></div>
       <div className="bg-[#97a0f1] rounded-box gap-10 flex flex-col p-5 z-2">
         <h2>
-          Email:
+          Email:{" "}
           <input
             {...register("email")}
             type="text"

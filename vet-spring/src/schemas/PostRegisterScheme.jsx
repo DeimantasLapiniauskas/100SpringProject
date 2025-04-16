@@ -4,7 +4,7 @@ export const PostRegisterSchema  = z.object({
   title: z
     .string()
     .min(3, { message: "Title must be atleast 3 characters long" })
-    .max(50, { message: "Title must not exceed 50 characters" })
+    .max(100, { message: "Title must not exceed 100 characters" })
     .refine((val) => val.trim() !== "", {
       message: "Title cannot be blank",
     }),
