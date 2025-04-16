@@ -82,7 +82,7 @@ public class ReviewController extends  BaseController {
 
     @DeleteMapping("/reviews/{reviewId}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<ApiResponse<Review>> deleteReview(@PathVariable long reviewId) {
+    public ResponseEntity<ApiResponse<String>> deleteReview(@PathVariable long reviewId) {
         Optional<Review> reviewOpt = reviewService.findReviewById(reviewId);
         if (reviewOpt.isEmpty()) {
             return notFound("Review not found");
