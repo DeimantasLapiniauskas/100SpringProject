@@ -9,7 +9,7 @@ function EditVetButton({ vet, getPage, currentPage, pageSize }) {
     <>
       <div>
         <button
-          className="btn"
+          className="btn lg:text-lg md:text-base sm:text-sm text-xs"
           onClick={() => {
             setEditModalID(vet.id);
           }}

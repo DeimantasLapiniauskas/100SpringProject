@@ -1,5 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest.appointmentConfirmationController;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentConfirmationController;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
@@ -25,6 +26,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -40,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentConfirmationController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class AppointmentConfirmGETTest {
 
     @Autowired
@@ -89,6 +91,7 @@ public class AppointmentConfirmGETTest {
     }
 
     @Test
+    @WithMockUser
     void getUnconfirmedAppointments_whenGetClient_thenRespond200() throws Exception {
 
         Account account = new Account("email","password",List.of(new Role("ROLE_CLIENT")));

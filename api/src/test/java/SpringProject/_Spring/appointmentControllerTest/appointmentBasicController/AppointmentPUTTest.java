@@ -1,5 +1,6 @@
 package SpringProject._Spring.appointmentControllerTest.appointmentBasicController;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
 import SpringProject._Spring.dto.appointment.AppointmentRescheduleDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
@@ -48,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentBasicController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class AppointmentPUTTest {
 
     @Autowired
@@ -83,6 +84,7 @@ public class AppointmentPUTTest {
     }
     
     @Test
+    @WithMockUser
     void cancelAppointment_whenValidCancelClient_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
@@ -127,6 +129,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
+    @WithMockUser
     void cancelAppointment_whenValidCancelVet_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
@@ -194,6 +197,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
+    @WithMockUser
     void rescheduleAppointment_whenRescheduleClient_thenRespond200() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222, 11, 11, 11, 11));
@@ -244,6 +248,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
+    @WithMockUser
     void rescheduleAppointment_whenRescheduleVet_thenRespond200() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222, 11, 11, 11, 11));

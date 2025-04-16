@@ -47,7 +47,7 @@ public class AccountControllerPut extends BaseController {
     @PutMapping("/account/password")
     public ResponseEntity<ApiResponse<String>> updateAccountPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
-        Account accountFromDB = accountService.findAccountById(((Account) authentication.getPrincipal()).getId()).get();
+        Account accountFromDB = accountService.findByEmail(authentication.getName()).get();
 
         PasswordUpdateMapper.updatePasswordFromDTO(passwordUpdateDTO, accountFromDB);
 

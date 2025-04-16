@@ -25,6 +25,12 @@ public class ServiceAtClinic {
         this.imageUrl = imageUrl;
     }
 
+    public ServiceAtClinic(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
