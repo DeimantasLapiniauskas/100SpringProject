@@ -79,7 +79,6 @@ public class PostController extends BaseController{
     public ResponseEntity<ApiResponse<PostResponseDTO>> postPost(@Valid @RequestBody PostRequestDTO postRequestDTO, Authentication authentication) {
 
         Optional<Vet> vet = vetService.findVetByAccountEmail(authentication.getName());
-
         if (vet.isEmpty()) {
             return forbidden("You are not allowed to post here");
         }
@@ -108,8 +107,6 @@ public class PostController extends BaseController{
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        System.out.println("Checking search: [" + search + "]");
-
         if (search != null) {
             search = search.trim();
             if (search.length() > 50) {
@@ -123,16 +120,15 @@ public class PostController extends BaseController{
 
         Page<Post> pagedPosts = postService.findAllPostsPage(page, size, sort, search);
         String message = pagedPosts.isEmpty() ? "Posts list is empty" : null;
-        PostPageResponseDTO responseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
+        PostPageResponseDTO postResponseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
 
-        return ok(responseDTO, message);
+        return ok(postResponseDTO, message);
     }
 
     @GetMapping("/posts/view/{postId}")
     public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
-
         if (post.isEmpty()) {
             return notFound("Post does not exist");
         }

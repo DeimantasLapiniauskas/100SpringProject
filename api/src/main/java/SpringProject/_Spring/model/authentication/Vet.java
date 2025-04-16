@@ -1,5 +1,6 @@
 package SpringProject._Spring.model.authentication;
 
+import SpringProject._Spring.model.VetClinic;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -17,6 +18,10 @@ public class Vet {
     private String specialty;
     private String licenseNumber;
     private LocalDate hireDate;
+
+    @ManyToOne
+    @JoinColumn(name = "vet_clinic_id")
+    private VetClinic vetClinic;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", insertable = false, updatable = false)
@@ -38,6 +43,7 @@ public class Vet {
         this.specialty = specialty;
         this.licenseNumber = licenseNumber;
         this.hireDate = hireDate;
+
     }
 
     public Vet() {
@@ -118,5 +124,12 @@ public class Vet {
         this.accountId = accountId;
     }
 
+    public VetClinic getVetClinic() {
+        return vetClinic;
+    }
+
+    public void setVetClinic(VetClinic vetClinic) {
+        this.vetClinic = vetClinic;
+    }
 }
 

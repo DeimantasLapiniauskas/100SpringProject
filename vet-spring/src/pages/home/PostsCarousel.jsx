@@ -10,7 +10,6 @@ import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
 import { ChevronsRight } from "lucide-react";
 
-
 const PostCarousel = () => {
   const { content: posts } = useList();
   const { Redirecting } = UIStatus;
@@ -66,9 +65,9 @@ const PostCarousel = () => {
                     : `text-[#004C99]`
                 }`}
               >
-                {post.title.length > 55 ? 
-                post.title.slice(0, 52) + "..." 
-                : post.title}
+                {post.title.length > 55
+                  ? post.title.slice(0, 52) + "..."
+                  : post.title}
               </h2>
               <h3
                 className={`font-semibold text-left text-sm ${
@@ -79,7 +78,9 @@ const PostCarousel = () => {
                     : `text-[#004C99]`
                 }`}
               >
-                {post.postType === "Sale" ? post.postType + " !" : post.postType}
+                {post.postType === "Sale"
+                  ? post.postType + " !"
+                  : post.postType}
               </h3>
               <div className={post.imageUrl ? "grid grid-cols-3" : ""}>
                 <p className=" leading-[18px] text-left overflow-hidden min-h-[115px] max-h-[115px] text-sm col-span-2 break-words p-1">
@@ -100,15 +101,13 @@ const PostCarousel = () => {
                 )}
               </div>
               <div className="flex justify-center items-center">
-                <ChevronsRight className=" w-[18px] md:w-[22px] text-white slow-pulse"/>
+                <ChevronsRight className=" w-[18px] md:w-[22px] text-white slow-pulse" />
                 <button
                   type="button"
                   className=" text-white hover:underline text-xs md:text-sm font-medium p-1 ps-0 cursor-pointer slow-pulse"
                   onClick={() => {
                     setStatus(Redirecting);
-                    setTimeout(() => {
-                      navigate(`/posts/view/${post.id}`);
-                    }, 1000);
+                    navigate(`/posts/view/${post.id}`);
                   }}
                 >
                   Read more here

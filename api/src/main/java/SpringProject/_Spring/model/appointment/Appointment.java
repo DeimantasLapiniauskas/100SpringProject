@@ -1,6 +1,7 @@
 package SpringProject._Spring.model.appointment;
 
 import SpringProject._Spring.model.ServiceAtClinic;
+import SpringProject._Spring.model.VetClinic;
 import SpringProject._Spring.model.pet.Pet;
 import SpringProject._Spring.model.authentication.Vet;
 import jakarta.persistence.*;
@@ -42,7 +43,10 @@ public class Appointment {
     private List<ServiceAtClinic> services = new ArrayList<>();
 
     private LocalDateTime appointmentDate;
-    private String clinicAddress;
+
+    @ManyToOne
+    @JoinColumn(name = "vet_clinic_id")
+    private VetClinic vetClinic;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -60,7 +64,6 @@ public class Appointment {
         this.vetId = vetId;
         this.services = services;
         this.appointmentDate = appointmentDate;
-        clinicAddress = "Here.";
         status = Status.ScheduledUnconfirmedByVet;
         this.notes = notes;
         totalServicesSum = services.stream().map(ServiceAtClinic::getPrice).reduce(BigDecimal.valueOf(0), BigDecimal::add);
@@ -110,12 +113,12 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
     }
 
-    public String getClinicAddress() {
-        return clinicAddress;
+    public VetClinic getVetClinic() {
+        return vetClinic;
     }
 
-    public void setClinicAddress(String clinicAddress) {
-        this.clinicAddress = clinicAddress;
+    public void setVetClinic(VetClinic vetClinic) {
+        this.vetClinic = vetClinic;
     }
 
     public Status getStatus() {

@@ -150,7 +150,7 @@ export const PostRegister = ({ initialData }) => {
   }
 
   return (
-    <div className="max-w-[1500px] mx-auto flex flex-col-reverse xs:flex xs:flex-row justify-center gap-2">
+    <div className="max-w-[1400px] mx-auto flex flex-col-reverse xs:flex xs:flex-row justify-center gap-2">
       <div className="flex flex-col gap-4 items-center mt-2 sm:mt-3 md:mt-4 lg:mt-5">
         <h1 className="text-center text-info-content text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] bg-gradient-to-l from-red-500 via-white to-blue-500">
           REGISTER NEW POST HERE
