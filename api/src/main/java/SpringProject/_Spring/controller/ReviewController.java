@@ -39,9 +39,8 @@ public class ReviewController extends  BaseController {
     if(clientOpt.isEmpty()) {
     return forbidden("You are not allowed to leave a review");
 }
-    Client client = clientOpt.get();
-    Review review = ReviewMapper.toReview(reviewRequestDTO, client);
-    Review savedReview = reviewService.addReview(review);
+
+    Review savedReview = reviewService.addReview(ReviewMapper.toReview(reviewRequestDTO, clientOpt.get()));
     ReviewResponseDTO reviewResponseDTO = ReviewMapper.toReviewResponseDTO(savedReview);
 
     return ok(reviewResponseDTO, "Review submitted");
@@ -60,10 +59,9 @@ public class ReviewController extends  BaseController {
         }
 
         Page<Review> pagedReview = reviewService.findAllReviewsPage(page, size, sort);
-        String message = pagedReview.isEmpty() ? "Review list is empty" : null;
         ReviewPageResponseDTO reviewPageResponseDTO = ReviewMapper.toReviewPageResponseDTO(pagedReview);
 
-        return ok(reviewPageResponseDTO, message);
+        return ok(reviewPageResponseDTO, pagedReview.isEmpty() ? "Review list is empty" : null);
     }
 
     @PutMapping("/reviews/{reviewId}")

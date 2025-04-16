@@ -50,14 +50,7 @@ const VetClinicRoutes = () => {
                   />
                   <Route path="pets/add" element={<PetForm />} />
                   {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-                  <Route
-                    path="/posts"
-                    element={
-                      <AuthGuard>
-                        <PostList />
-                      </AuthGuard>
-                    }
-                  />
+                  <Route path="/posts" element={<PostList />} />
                   <Route
                     path="/posts/register"
                     element={

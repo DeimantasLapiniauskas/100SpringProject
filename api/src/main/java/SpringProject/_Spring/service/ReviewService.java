@@ -19,16 +19,15 @@ import java.util.Optional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final VetClinicRepository vetClinicRepository;
+
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository, VetClinicRepository vetClinicRepository) {
+    public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-        this.vetClinicRepository = vetClinicRepository;
+
     }
 
     public Review addReview(Review review) {
-        review.setVetClinic(vetClinicRepository.findAll().stream().findFirst().orElseThrow(() -> new NotFoundException("Vet clinic not found")));
        return reviewRepository.save(review);
     }
 

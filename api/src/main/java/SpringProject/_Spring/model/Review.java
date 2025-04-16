@@ -31,6 +31,8 @@ public class Review {
         this.client = client;
         this.rating = rating;
         this.comment = comment;
+        this.vetClinic = new VetClinic();
+        vetClinic.setId(1);
     }
 
     public Review() {
