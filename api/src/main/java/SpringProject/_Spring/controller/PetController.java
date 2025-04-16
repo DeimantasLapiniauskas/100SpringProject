@@ -49,7 +49,7 @@ public class PetController extends BaseController {
 //    }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<List<PetResponseDTO>>> getAllPetsByOwner(Authentication authentication) {
         return ok(petService.getAllPetsByOwnerId(clientService.findClientIdByEmail(authentication.getName())).stream()
                 .map(PetMapping::toPetResponseDTO)
@@ -77,7 +77,7 @@ public class PetController extends BaseController {
 
     @Operation(summary = "Update pet by ID (Client and Admin)", description = "Updates a pet by it's unique ID")
     @PutMapping("/{petId}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<PetResponseDTO>> updatePet(@PathVariable long petId,
                                                                  @Valid @RequestBody PetRequestDTO petRequestDTO,
                                                                  Authentication authentication
@@ -115,7 +115,7 @@ public class PetController extends BaseController {
 
     @Operation(summary = "Delete pet by ID (Client and Admin)", description = "Deletes a pet by it's unique ID")
     @DeleteMapping("/{petId}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN' or hasAuthority('SCOPE_ROLE_VET'))")
     public ResponseEntity<ApiResponse<Object>> deletePet(
             @PathVariable long petId,
             Authentication authentication) {
