@@ -52,12 +52,7 @@ export const PostRegister = ({ initialData }) => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const {
-    Loading: Fetching,
-    Success,
-    Error: Err,
-    Unusual: Unknown,
-  } = UIStatus;
+  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
   const { isLoading, isError, isUnusual, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
@@ -109,7 +104,6 @@ export const PostRegister = ({ initialData }) => {
             imageUrl: imageUrl ?? initialData.imageUrl ?? null,
           });
           setPreviewUrl(imageUrl ?? initialData.imageUrl ?? null);
-          // setStatus(Navigating)
           setTimeout(() => {
             navigate("/posts");
           }, 500);
@@ -118,8 +112,6 @@ export const PostRegister = ({ initialData }) => {
           toast.dismiss();
           toast.success(message);
           form.reset();
-          setPreviewUrl(null);
-          // setStatus(Navigating)
           setTimeout(() => {
             navigate("/posts");
           }, 500);
@@ -149,7 +141,7 @@ export const PostRegister = ({ initialData }) => {
   if (isLoading) {
     return <Loading />;
   }
- 
+
   if (isUnusual) {
     return <Unusual error={error} />;
   }
@@ -158,14 +150,14 @@ export const PostRegister = ({ initialData }) => {
   }
 
   return (
-    <div className="max-w-[1500px] mx-auto flex flex-col-reverse xs:flex xs:flex-row justify-center gap-2">
+    <div className="max-w-[1400px] mx-auto flex flex-col-reverse xs:flex xs:flex-row justify-center gap-2">
       <div className="flex flex-col gap-4 items-center mt-2 sm:mt-3 md:mt-4 lg:mt-5">
         <h1 className="text-center text-info-content text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] bg-gradient-to-l from-red-500 via-white to-blue-500">
           REGISTER NEW POST HERE
         </h1>
         <img src={pencil} alt="pencil" className="w-40 sm:w-full" />
       </div>
-      <div className="xs:max-w-3/5 xs:min-w-3/5 lg:min-w-1/2 lg:max-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 to-indigo-400 rounded-[10px] relative mt-2 sm:mt-3 md:mt-4 lg:mt-5 flex">
+      <div className="xs:max-w-3/5 xs:min-w-3/5 lg:min-w-1/2 lg:max-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 via-blue-300 to-indigo-400 rounded-[10px] relative mt-2 sm:mt-3 md:mt-4 lg:mt-5 flex border border-info shadow-lg shadow-info">
         <FormProvider {...form}>
           <Form
             onSubmit={form.handleSubmit(handleFormSubmit)}
@@ -190,6 +182,7 @@ export const PostRegister = ({ initialData }) => {
                           ? "success"
                           : "default"
                       }
+                      className={`${field.value && "font-semibold"}`}
                       placeholder="Enter post title"
                       {...field}
                     />
@@ -204,19 +197,19 @@ export const PostRegister = ({ initialData }) => {
               control={form.control}
               name="postType"
               render={({ field, fieldState }) => (
-                <FormItem className="w-1/2 ">
+                <FormItem className="w-1/2">
                   <FormLabel>Post Type*</FormLabel>
-                  <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    onOpenChange={(isOpen) => {
-                      if (!isOpen) {
-                        form.setFocus("postType");
-                        form.trigger("postType");
-                      }
-                    }}
-                  >
-                    <FormControl>
+                  <FormControl>
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      onOpenChange={(isOpen) => {
+                        if (!isOpen) {
+                          form.setFocus("postType");
+                          form.trigger("postType");
+                        }
+                      }}
+                    >
                       <SelectTrigger
                         intent={
                           fieldState.error
@@ -225,17 +218,43 @@ export const PostRegister = ({ initialData }) => {
                             ? "success"
                             : "default"
                         }
-                        className="w-full"
+                        className={`w-full ${
+                          field.value === "Sale"
+                            ? "text-red-700 font-semibold"
+                            : field.value === "News"
+                            ? "text-[#004C99] font-semibold"
+                            : field.value === "Blog"
+                            ? "text-[#006666] font-semibold"
+                            : "text-info-content"
+                        }`}
                       >
                         <SelectValue placeholder="Select a type" />
                       </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="News">News</SelectItem>
-                      <SelectItem value="Blog">Blog</SelectItem>
-                      <SelectItem value="Sale">Sale</SelectItem>
-                    </SelectContent>
-                  </Select>
+                      <SelectContent className="!w-[170%]">
+                        <SelectItem
+                          size="postRegForm"
+                          value="News"
+                          className="text-[#004C99]"
+                        >
+                          News
+                        </SelectItem>
+                        <SelectItem
+                          size="postRegForm"
+                          value="Blog"
+                          className="text-[#006666]"
+                        >
+                          Blog
+                        </SelectItem>
+                        <SelectItem
+                          size="postRegForm"
+                          value="Sale"
+                          className="text-red-700"
+                        >
+                          Sale
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
                   <FormMessage>
                     {form.formState.errors.postType?.message}
                   </FormMessage>
@@ -286,7 +305,7 @@ export const PostRegister = ({ initialData }) => {
                 </FormItem>
               )}
             />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-end">
               <div className="inline-flex pt-2 gap-2">
                 <Button type="submit" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting
@@ -309,7 +328,8 @@ export const PostRegister = ({ initialData }) => {
                 </Button>
               </div>
               <p className="text-info-content text-right text-[10px] sm:text-xs md:text-sm">
-                * required
+                <span className="text-xs sm:text-sm md:text-base">*</span>{" "}
+                required
               </p>
             </div>
             {/* <pre className="text-xs text-red-500">

@@ -63,7 +63,7 @@ export const PostView = () => {
   }
 
   return (
-    <div className="max-w-[1400px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px]">
+    <div className="max-w-[1400px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
       <div className="relative">
         <h2
           className={`w-full text-center text-base sm:text-lg md:text-xl font-semibold ${
@@ -97,7 +97,7 @@ export const PostView = () => {
           >
             {post.title}
           </h1>
-          <p className="break-words break-all py-3 ms:py-4 md:py-5 px-3 sm:px-6 md:px-12 lg:px-15 text-xs sm:text-sm md:text-base text-info-content">{post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px] float-right w-full h-[10rem] xs:h-[12rem] md:h-[15rem] lg:h-[20rem] xs:w-2/3 md:w-1/2 mb-1 ms-2 object-cover"/> : ""}{post.content}</p>
+          <p className="break-all py-3 ms:py-4 md:py-5 px-3 sm:px-6 md:px-12 lg:px-15 text-xs sm:text-sm md:text-base text-info-content">{post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px] float-right w-full h-[10rem] xs:h-[12rem] md:h-[15rem] lg:h-[20rem] xs:w-2/3 md:w-1/2 mb-1 ms-2 object-cover"/> : ""}{post.content}</p>
         </div>
       </div>
     </div>

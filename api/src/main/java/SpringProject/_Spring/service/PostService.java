@@ -54,7 +54,6 @@ public class PostService {
         if (sort == null ) {
 
             Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-
             if (search == null ) {
                 return postRepository.findAll(pageable);
             }

@@ -30,6 +30,7 @@ public class PasswordController extends BaseController {
     @PostMapping("/verify-password")
     public ResponseEntity<ApiResponse<String>> verifyPassword(@Valid @RequestBody PasswordUpdateDTO passwordUpdateDTO, Authentication authentication) {
 
+
         String password = passwordUpdateDTO.newPassword();
         Optional<Account> accountOpt = accountService.findByEmail(authentication.getName());
         if (accountOpt.isEmpty()) {

@@ -44,7 +44,7 @@ public class AccountService {
         //warning: not Optional<>
     }
 
-    public Boolean verifyAccountPassword(Account account, String password){
+    public boolean verifyAccountPassword(Account account, String password){
         return passwordEncoder.matches(password, account.getPassword());
     }
 }

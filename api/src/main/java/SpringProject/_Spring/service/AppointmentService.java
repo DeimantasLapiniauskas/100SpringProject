@@ -1,8 +1,10 @@
 package SpringProject._Spring.service;
 
+import SpringProject._Spring.exceptions.NotFoundException;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.appointment.Status;
 import SpringProject._Spring.repository.AppointmentRepository;
+import SpringProject._Spring.repository.VetClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.Optional;
 @Service
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
+    private final VetClinicRepository vetClinicRepository;
 
     @Autowired
-    public AppointmentService(AppointmentRepository appointmentRepository) {
+    public AppointmentService(AppointmentRepository appointmentRepository, VetClinicRepository vetClinicRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.vetClinicRepository = vetClinicRepository;
     }
 
     public boolean existsByPetIdAndServiceIdAndIsScheduled(long petId, long appointmentId) {
@@ -25,6 +29,7 @@ public class AppointmentService {
     }
 
     public Appointment saveAppointment(Appointment appointment) {
+        appointment.setVetClinic(vetClinicRepository.findAll().stream().findFirst().orElseThrow(() -> new NotFoundException("Vet clinic not found")));
         return appointmentRepository.save(appointment);
     }
 
