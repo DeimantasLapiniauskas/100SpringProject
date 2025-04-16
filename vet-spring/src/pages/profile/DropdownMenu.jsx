@@ -40,21 +40,21 @@ export const DropdownMenu = () => {
         </NavLink>
       )}
 
+      {account && !checkAdmin() && (
+        <NavLink
+          to="/appointments"
+          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center"
+        >
+          Appointments History
+        </NavLink>
+      )}
+
       {checkClient() && (
         <NavLink
           to="/pets"
           className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1"
         >
           Your Pets
-        </NavLink>
-      )}
-
-      {account && (
-        <NavLink
-          to="/appointments"
-          className="custom-purple-btn cursor-pointer figma-headline-4 !font-bold mb-1 text-center"
-        >
-          Appointments History
         </NavLink>
       )}
 
