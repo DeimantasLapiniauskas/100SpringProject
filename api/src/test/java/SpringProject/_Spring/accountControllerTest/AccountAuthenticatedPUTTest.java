@@ -1,5 +1,6 @@
 package SpringProject._Spring.accountControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.accountController.AccountControllerPut;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.authentication.Account;
@@ -24,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,7 +39,7 @@ import java.util.List;
 import java.util.Optional;
 
 @WebMvcTest(controllers = AccountControllerPut.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 public class AccountAuthenticatedPUTTest {
 
@@ -56,6 +58,7 @@ public class AccountAuthenticatedPUTTest {
 
     //happy path
     @Test
+    @WithMockUser
     void updateAccountPassword_whenValidRequest_thenReturnAnd200() throws Exception {
         //given
         Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_CLIENT")));
@@ -63,7 +66,7 @@ public class AccountAuthenticatedPUTTest {
 
         PasswordUpdateDTO passwordUpdateDTO = new PasswordUpdateDTO("newPassword1");
 
-        when(accountService.findAccountById(1L)).thenReturn(Optional.of(account));
+        when(accountService.findByEmail(any())).thenReturn(Optional.of(account));
         when(passwordEncoder.encode("newPassword")).thenReturn("hashedNewPassword1");
 
         //context: since this endpoint uses Authentication getPrinciple() it needs authentication to exist to convert
@@ -113,6 +116,7 @@ public class AccountAuthenticatedPUTTest {
 
     //unhappy path
     @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateAccountPassword_whenAccountIdNotFound_thenReturn404() throws Exception {
         //given
         Account account = new Account("test@example.com", "oldPassword1", List.of(new Role("ROLE_CLIENT")));
@@ -134,7 +138,7 @@ public class AccountAuthenticatedPUTTest {
         SecurityContextHolder.setContext(securityContext);
 
         //when
-        mockMvc.perform(put("/api/account/password/"+account.getId())
+        mockMvc.perform(put("/api/account/password/" + account.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then

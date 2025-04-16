@@ -1,5 +1,6 @@
 package SpringProject._Spring.petControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.PetController;
 import SpringProject._Spring.dto.pet.PetRequestDTO;
 import SpringProject._Spring.model.pet.Gender;
@@ -28,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -44,7 +46,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PetController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 public class PetPUTTest {
     @Autowired
     private MockMvc mockMvc;
@@ -69,6 +71,7 @@ public class PetPUTTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putPet_whenPutPetOwner_thenRespond200() throws Exception {
 
         long ownerId = 1;
@@ -149,6 +152,7 @@ public class PetPUTTest {
 
 
     @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void putPet_whenPutAdmin_thenRespond200() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(
@@ -186,7 +190,6 @@ public class PetPUTTest {
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
                 "password", principal.getAuthorities()));
         SecurityContextHolder.setContext(securityContext);
-
         Client client = new Client("firstName", "lastName", "123-456-789", new Timestamp(System.currentTimeMillis()));
         client.setAccount(account);
         when(clientService.findClientByAccountId(ownerId + 4))
@@ -211,6 +214,7 @@ public class PetPUTTest {
 
 
     @Test
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void putPet_whenPutDifferentOwner_thenRespond403() throws Exception {
         long ownerId = 1;
         Pet originalPet = new Pet(

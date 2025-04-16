@@ -1,5 +1,6 @@
 package SpringProject._Spring.productControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.dto.product.ProductPageResponseDTO;
 import SpringProject._Spring.dto.product.ProductPageResult;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ProductController.class)
-@Import({SecurityConfig.class, GlobalExceptionHandler.class})
+@Import({SecurityConfig.class, GlobalExceptionHandler.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 public class ProductGetPaginationTest {
 

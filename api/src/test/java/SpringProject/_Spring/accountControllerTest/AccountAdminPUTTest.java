@@ -1,5 +1,6 @@
 package SpringProject._Spring.accountControllerTest;
 
+import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.accountController.AccountControllerPut;
 import SpringProject._Spring.dto.authentication.password.PasswordUpdateDTO;
 import SpringProject._Spring.model.authentication.Account;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = AccountControllerPut.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, MailSenderTestConfig.class})
 @AutoConfigureMockMvc
 @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
 public class AccountAdminPUTTest {

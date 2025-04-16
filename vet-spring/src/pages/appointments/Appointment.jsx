@@ -10,20 +10,17 @@ export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
   const { account } = useAuth();
-  
 
   useEffect(() => {
-
     getAppointment();
   }, []);
-  
-  const getAppointment = async () => {
 
+  const getAppointment = async () => {
     try {
       if (account.scope == "ROLE_CLIENT") {
         const response = await getClientAppointments();
         setAppointments(response.data.data);
-      } else {      
+      } else {
         const response = await getVetAppointments();
         setAppointments(response.data.data);
       }
@@ -39,12 +36,24 @@ export const Appointment = () => {
   const closeAppointment = async (id) => {
     try {
       await api.put(`/appointments/cancel/${id}`);
-      const response = await getClientAppointments();
+      const response = account.scope == "ROLE_CLIENT" ? await getClientAppointments() : await getVetAppointments();
       setAppointments(response.data.data);
     } catch (error) {
       console.log(error.message);
     }
+  };
 
+  const confirmAppointment = async (id) => {
+    try {
+      if (account.scope.includes("ROLE_CLIENT")) {
+        await api.put(`/appointments/client/confirm/${id}`);
+      } else {
+        await api.put(`/appointments/vet/confirm/${id}`);
+      }
+      getAppointment();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -97,16 +106,29 @@ export const Appointment = () => {
             <div className="flex flex-row">
               <NavLink
                 to={`/appointments/client/${a.id}`}
-                className="btn bg-red-500 w-20"
+                className="btn bg-yellow-500 w-20"
               >
                 Change Data
               </NavLink>
               <button
                 onClick={() => closeAppointment(a.id)}
-                className=" btn bg-green-500 w-20 "
+                className=" btn bg-red-500 w-20 "
               >
                 Cancel
               </button>
+              {a.status !== "Cancelled" &&
+                a.status !== "Scheduled" &&
+                a.status !==
+                  (account.scope.includes("ROLE_CLIENT")
+                    ? "ScheduledUnconfirmedByVet"
+                    : "ScheduledUnconfirmedByClient") && (
+                  <button
+                    onClick={() => confirmAppointment(a.id)}
+                    className=" btn bg-green-500 w-20 "
+                  >
+                    Confirm
+                  </button>
+                )}
             </div>
           </div>
         ))}

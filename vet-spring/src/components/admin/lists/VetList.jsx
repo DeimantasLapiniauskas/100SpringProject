@@ -34,7 +34,7 @@ const VetList = () => {
       {isLoading ? <Loading /> : ""}
       {isError ? <Error error={error} isHidden={!error} /> : ""}
       {isBadRequest ? <BadPageRequest /> : ""}
-      <ul className="w-full divide-y divide-gray-200">
+      <ul className="w-full divide-y divide-gray-200 z-50">
         {vets.map((vet) => (
           <VetCard
             key={vet.id}
