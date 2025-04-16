@@ -24,6 +24,7 @@ import { PostView } from "@/pages/posts/PostView.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
+import ProductList from "@/pages/products/ProductList.jsx";
 import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
 
@@ -85,6 +86,15 @@ const VetClinicRoutes = () => {
                       element={<AdminPage initialList="clients" />}
                     />
                   </Route>
+                    <Route
+                        path="/products"
+                        element={
+                            <AuthGuard>
+                                <ProductList />
+                            </AuthGuard>
+                        }
+                    >
+                    </Route>
                   <Route path="/services" element={<ServiceList />} />
                   <Route path="services/add" element={<ServiceAdd />} />
                   <Route path="services/edit/:id" element={<ServiceUpdate />} />

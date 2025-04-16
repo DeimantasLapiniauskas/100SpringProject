@@ -49,7 +49,7 @@ public class ProductGetPaginationTest {
     void getProductsPage_whenValid_thenReturnAnd200() throws Exception {
         //given
         ProductPageResponseDTO productPageResponseDTO = new ProductPageResponseDTO(
-                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10)),
+                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10, "url")),
                 1,
                 6,
                 0,
@@ -90,7 +90,7 @@ public class ProductGetPaginationTest {
     void getProductsPage_whenValidWithSort_thenReturnAnd200() throws Exception {
         // given
         ProductPageResponseDTO productPageResponseDTO = new ProductPageResponseDTO(
-                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10)),
+                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10, "url")),
                 1,
                 6,
                 0,
