@@ -69,7 +69,7 @@ public class AppointmentBasicController extends BaseController {
 
     @Operation(summary = "Create new appointment", description = "Creates an appointment for a pet with selected vet")
     @PostMapping("/appointments")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO, Authentication authentication) throws AddressException {
         if (appointmentDTO.serviceIds().stream()
                 .anyMatch(appointmentId -> appointmentService.existsByPetIdAndServiceIdAndIsScheduled(
@@ -265,7 +265,7 @@ public class AppointmentBasicController extends BaseController {
     //Why is this in this controller? -DL
     @Operation(summary = "Get vets list", description = "Retrieves a vet list (names, specialty)")
     @GetMapping("/vets")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<List<VetAppointmentResponseDTO>>> getVeterinarians() {
         List<VetAppointmentResponseDTO> vetsDTO = vetService.getAllVets().stream().map(VetAppointmentMapping::toVetDTO).toList();
         return ok(vetsDTO);
