@@ -85,7 +85,6 @@ public class ServiceAtClinicController extends BaseController {
 
         String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         String fileUrl = baseUrl + "/api/images/" + fileName;
-        System.out.println(fileUrl);
         return ok(fileUrl, "Image uploaded successfully");
     }
 
