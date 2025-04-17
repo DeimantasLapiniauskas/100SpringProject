@@ -27,6 +27,8 @@ public class ContactMessMapper {
                                     new Timestamp(System.currentTimeMillis()));
     }
 
+
+    
     public static List<ContactMessResponseDTO> toContactMessResponseDTOList(List<ContactMessages> contactMessages) {
         return contactMessages.stream()
                 .map(ContactMessMapper::toContactMessResponseDTO)
