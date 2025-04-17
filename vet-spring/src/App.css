@@ -59,6 +59,42 @@
   background-color: #333;
 }
 
+/* TEST: Drowdown menu buttons */
+.custom-dropdown-btn {
+  color: #FFF;
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  width: 14rem;
+  height: 2.6rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  cursor: pointer;
+}
+
+.custom-dropdown-btn:hover {
+  background-color: rgb(255,255,255,0.2)
+}
+
+.custom-dropdown-green-btn {
+  background-color: var(--color-green-400);
+}
+
+.custom-dropdown-green-btn:hover {
+  background-color: #86efac; /* --color-green-200 */
+}
+
+.custom-dropdown-red-btn {
+  background-color: var(--color-red-400);
+}
+
+.custom-dropdown-red-btn:hover {
+  background-color: var(--color-red-200);
+}
+
 /* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
 .custom-purple-btn {
   background-color: #ac64b4;
