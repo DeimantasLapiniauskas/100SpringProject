@@ -1,6 +1,6 @@
 package SpringProject._Spring.model.cart;
 
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Product;
 import jakarta.persistence.*;
 
 @Entity

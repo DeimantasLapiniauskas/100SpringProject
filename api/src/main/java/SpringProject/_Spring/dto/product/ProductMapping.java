@@ -1,6 +1,6 @@
 package SpringProject._Spring.dto.product;
 
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Product;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

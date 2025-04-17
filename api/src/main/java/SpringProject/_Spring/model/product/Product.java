@@ -1,4 +1,4 @@
-package SpringProject._Spring.model;
+package SpringProject._Spring.model.product;
 
 import jakarta.persistence.*;
 

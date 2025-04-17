@@ -5,7 +5,7 @@ import SpringProject._Spring.dto.product.ProductPageResult;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
 import SpringProject._Spring.exceptions.NotFoundException;
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

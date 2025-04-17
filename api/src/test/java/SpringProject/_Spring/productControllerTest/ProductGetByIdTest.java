@@ -3,7 +3,7 @@ package SpringProject._Spring.productControllerTest;
 import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.exceptions.NotFoundException;
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ProductService;
 import org.junit.jupiter.api.Test;

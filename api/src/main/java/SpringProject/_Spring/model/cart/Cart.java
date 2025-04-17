@@ -1,10 +1,8 @@
 package SpringProject._Spring.model.cart;
 
-import SpringProject._Spring.model.Product;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

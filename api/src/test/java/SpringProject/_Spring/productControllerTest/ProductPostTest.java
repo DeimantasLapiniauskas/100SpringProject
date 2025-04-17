@@ -4,7 +4,7 @@ import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.dto.product.ProductRequestDTO;
 import SpringProject._Spring.exceptions.NameAlreadyExistsException;
-import SpringProject._Spring.model.Product;
+import SpringProject._Spring.model.product.Product;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
