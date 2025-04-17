@@ -27,6 +27,9 @@ public class ContactMessagesService {
     }
 
     public ContactMessages saveContactMessages(ContactMessages contactMessages) {
+        if (!subjectTypesRepository.existsById(contactMessages.getId())){
+            throw new NotFoundException("Subject Type Not Found:" + contactMessages.getId());
+        }
         contactMessages.setVet_clinic(vetClinicRepository.findAll().stream().findFirst().orElseThrow(() -> new NotFoundException("Vet clinic not found")));
         return contactMessagesRepository.save(contactMessages);
     }

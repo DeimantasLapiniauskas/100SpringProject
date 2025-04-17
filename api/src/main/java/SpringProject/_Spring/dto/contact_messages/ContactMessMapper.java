@@ -4,6 +4,8 @@ import SpringProject._Spring.dto.contact_messages.subject_types.SubjectTypesResp
 import SpringProject._Spring.model.ContactMessages.ContactMessages;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ContactMessMapper {
 
@@ -25,4 +27,9 @@ public class ContactMessMapper {
                                     new Timestamp(System.currentTimeMillis()));
     }
 
+    public static List<ContactMessResponseDTO> toContactMessResponseDTOList(List<ContactMessages> contactMessages) {
+        return contactMessages.stream()
+                .map(ContactMessMapper::toContactMessResponseDTO)
+                .collect(Collectors.toList());
+    }
 }
