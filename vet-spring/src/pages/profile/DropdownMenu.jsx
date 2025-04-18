@@ -21,11 +21,11 @@ export const DropdownMenu = () => {
   };
 
   return (
-    <div className="w-full p-3 bg-gradient-to-br from-blue-400 to-indigo-600 border-1 rounded-[10px] border-indigo-600 mt-7">
+    <div className="custom-dropdown bg-gradient-to-br from-blue-400 to-indigo-600 border-indigo-600">
       {account && (
         <NavLink
           to="/profile"
-          className="custom-dropdown-btn figma-headline-4 !font-bold"
+          className="figma-headline-4 !font-bold"
         >
           Profile
         </NavLink>
@@ -34,7 +34,7 @@ export const DropdownMenu = () => {
       {checkAdmin() && (
         <NavLink
           to="/adminpage"
-          className="custom-dropdown-btn figma-headline-4 !font-bold"
+          className="figma-headline-4 !font-bold"
         >
           Admin Page
         </NavLink>
@@ -43,7 +43,7 @@ export const DropdownMenu = () => {
       {account && !checkAdmin() && (
         <NavLink
           to="/appointments"
-          className="custom-dropdown-btn figma-headline-4 !font-bold"
+          className="figma-headline-4 !font-bold"
         >
           Appointments History
         </NavLink>
@@ -52,7 +52,7 @@ export const DropdownMenu = () => {
       {checkClient() && (
         <NavLink
           to="/pets"
-          className="custom-dropdown-btn figma-headline-4 !font-bold"
+          className="figma-headline-4 !font-bold"
         >
           Your Pets
         </NavLink>
@@ -61,14 +61,14 @@ export const DropdownMenu = () => {
       {account ? (
         <button
           onClick={logout}
-          className="custom-dropdown-btn custom-dropdown-red-btn figma-headline-4 !font-bold"
+          className="bg-red-400 hover:bg-red-200 figma-headline-4 !font-bold"
         >
           Log Out
         </button>
       ) : (
         <NavLink
           to="/login"
-          className="custom-dropdown-btn custom-dropdown-green-btn figma-headline-4 !font-bold"
+          className="bg-green-400 hover:bg-green-200 figma-headline-4 !font-bold"
         >
           Log In
         </NavLink>
