@@ -10,7 +10,7 @@ import java.util.List;
 public class ProductMapping {
 
     public static ProductResponseDTO toProductResponseDTO(Product product) {
-        return new ProductResponseDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity(), product.getImageUrl());
+        return new ProductResponseDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity(), CategoryMapper.toCategoryDTOList(product.getCategories()), product.getImageUrl());
     }
 
     public static Product toProduct(ProductRequestDTO productRequestDTO, CategoryRepository categoryRepository) {
