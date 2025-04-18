@@ -35,7 +35,7 @@ public class ProductController extends BaseController {
     @Value("${aws.s3.bucket}")
     private String bucketName;
 
-    @Autowired
+    @Autowired //Needs to be here or spring won't initialize it :(
     private S3Client s3Client;
 
     @Operation(summary = "Add new product", description = "Adds new product to the DB")
