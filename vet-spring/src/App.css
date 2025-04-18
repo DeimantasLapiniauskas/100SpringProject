@@ -80,19 +80,19 @@
 }
 
 .custom-dropdown-green-btn {
-  background-color: var(--color-green-400);
+  background-color: #66BB6A; /* green-400 */
 }
 
 .custom-dropdown-green-btn:hover {
-  background-color: #86efac; /* --color-green-200 */
+  background-color: #86efac; /* green-200 */
 }
 
 .custom-dropdown-red-btn {
-  background-color: var(--color-red-400);
+  background-color: #EF5350; /* red-400 */
 }
 
 .custom-dropdown-red-btn:hover {
-  background-color: var(--color-red-200);
+  background-color: #EF9A9A /* red-200 */;
 }
 
 /* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
