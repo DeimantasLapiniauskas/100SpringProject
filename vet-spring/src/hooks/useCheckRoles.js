@@ -9,4 +9,9 @@ const { account } = useAuth();
     );
   };
 
+  export const useIsLogged = () => {
+    const { account } = useAuth();
+
+    return account !== null && account !== undefined;
+  };
 
