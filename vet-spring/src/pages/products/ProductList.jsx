@@ -28,6 +28,7 @@ const ProductList = () => {
     const [activeModalID, setModalID] = useState('');
     const [addModalID, setAddModalID] = useState('');
     const [editModalID, setEditModalID] = useState('');
+    const [deleteModalID, setDeleteModalID] = useState('');
 
     const categories = ["All", "Medicine", "Food", "Toys"];
     const pageSizes = [12, 24, 36];
@@ -36,7 +37,7 @@ const ProductList = () => {
 
     return (
         <div className="p-4 justify-center mx-[7rem] mt-[1rem]">
-            <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID, editModalID, setEditModalID }}>
+            <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID, editModalID, setEditModalID, deleteModalID, setDeleteModalID }}>
                 <div className="flex w-full justify-center gap-1.5 sm:gap-2.5 md:gap-3.5 relative mb-[4rem]">
                     {/* <button
                         type="button"
@@ -51,13 +52,13 @@ const ProductList = () => {
                     <FilterPanel sortFields={categories} />
                 </div>
                 {roles && (
-                <div className="flex justify-center w-full items-center">
-                    <AddProductButton
-                        getPage={getPage}
-                        currentPage={currentPage}
-                        pageSize={pageSize}
-                    />
-                </div>
+                    <div className="flex justify-center w-full items-center">
+                        <AddProductButton
+                            getPage={getPage}
+                            currentPage={currentPage}
+                            pageSize={pageSize}
+                        />
+                    </div>
                 )}
                 {isEmpty ? <p>{message}</p> : ""}
                 {isLoading ? <Loading /> : ""}
