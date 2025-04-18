@@ -49,7 +49,7 @@ public class ReviewController extends  BaseController {
     @GetMapping("/reviews/pagination")
     public ResponseEntity<ApiResponse<ReviewPageResponseDTO>> getAllReviews (@RequestParam int page,
                                                                              @RequestParam int size,
-                                                                             @RequestParam(required = false) String sort) {
+                                                                             @RequestParam(required = false) Integer sort) {
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
         }

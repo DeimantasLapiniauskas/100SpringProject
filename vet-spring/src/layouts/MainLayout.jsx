@@ -1,6 +1,6 @@
 import {Outlet} from "react-router";
 import { Navbar } from "../components/NavBar.jsx";
-import { DeletePostModal } from "@/pages/posts/DeleteModal.jsx";
+import { DeletePostModal } from "@/components/DeleteModal.jsx";
 
 export const MainLayout = () => {
     

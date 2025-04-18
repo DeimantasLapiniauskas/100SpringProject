@@ -22,7 +22,7 @@ import { Dropzone } from "@/components/uiBase/dropZoneBase";
 import { useState, useEffect } from "react";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
-import { postPost, updatePost, uploadImage } from "@/utils/helpers/posts";
+import { postEntity, putEntity, uploadEntityImage } from "@/utils/helpers/entity";
 import { Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -35,8 +35,10 @@ import { Unusual } from "@/components/feedback/Unusual";
 import { PostRegisterSchema } from "@/schemas/PostRegisterScheme";
 import pencil from "../../assets/icons/pencil.png";
 import "../../index.css";
+import { Redirecting } from "@/components/feedback/Redirecting";
+import { useEntityPath } from "@/hooks/usePath";
 
-export const PostRegister = ({ initialData }) => {
+export const PostRegister = ({ initialData, getPostError }) => {
   const form = useForm({
     resolver: zodResolver(PostRegisterSchema),
     mode: "onChange",
@@ -49,15 +51,22 @@ export const PostRegister = ({ initialData }) => {
     },
   });
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(getPostError ? getPostError : null);
   const [message, setMessage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
-  const { isLoading, isError, isUnusual, setStatus } = useUI();
+  const {
+    Loading: Fetching,
+    Success,
+    Error: Err,
+    Unusual: Unknown,
+    Redirecting: Navigating,
+  } = UIStatus;
+  const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
   const isMounted = useIsMounted();
   const navigate = useNavigate();
+  const entityPath = useEntityPath()
 
   const handleFormSubmit = async (data) => {
     let imageUrl = initialData?.imageUrl ?? null;
@@ -67,7 +76,7 @@ export const PostRegister = ({ initialData }) => {
       if (data?.imageFile) {
         const formData = new FormData();
         formData.append("file", data.imageFile);
-        const imageRes = await uploadImage(formData);
+        const imageRes = await uploadEntityImage(entityPath, formData);
         if (!isMounted.current) return;
 
         imageUrl = imageRes.data.data;
@@ -82,10 +91,11 @@ export const PostRegister = ({ initialData }) => {
       };
       // console.log(initialData.id)
       let response;
+
       if (isEditMode) {
-        response = await updatePost(initialData.id, payload);
+        response = await putEntity(entityPath, initialData.id, payload);
       } else {
-        response = await postPost(payload);
+        response = await postEntity(entityPath, payload);
       }
       if (!isMounted.current) return;
 
@@ -94,28 +104,30 @@ export const PostRegister = ({ initialData }) => {
       if (data2 && success) {
         setStatus(Success);
 
+        // if (isEditMode) {
+        setMessage(message);
+        // toast.dismiss();
+        toast.success(message);
         if (isEditMode) {
-          setMessage(message);
-          toast.dismiss();
-          toast.success(message);
           form.reset({
             ...data2,
             imageFile: null,
             imageUrl: imageUrl ?? initialData.imageUrl ?? null,
           });
           setPreviewUrl(imageUrl ?? initialData.imageUrl ?? null);
-          setTimeout(() => {
-            navigate("/posts");
-          }, 500);
         } else {
-          setMessage(message);
-          toast.dismiss();
-          toast.success(message);
           form.reset();
-          setTimeout(() => {
-            navigate("/posts");
-          }, 500);
         }
+        setStatus(Navigating);
+        navigate("/posts");
+        // } else {
+        //   setMessage(message);
+        //   // toast.dismiss();
+        //   toast.success(message);
+        //   form.reset();
+        //   setStatus(Navigating);
+        //   navigate("/posts");
+        // }
       } else {
         setStatus(Unknown);
         setPreviewUrl(null);
@@ -125,6 +137,7 @@ export const PostRegister = ({ initialData }) => {
 
       const errorMessage =
         error.response?.data?.message ?? error.message ?? "Unknown error";
+      form.reset();
       setStatus(Err);
       setError(errorMessage);
     } finally {
@@ -147,6 +160,10 @@ export const PostRegister = ({ initialData }) => {
   }
   if (isError) {
     return <Error error={error} isHidden={!error} />;
+  }
+
+  if (isRedirecting) {
+    return <Redirecting />;
   }
 
   return (

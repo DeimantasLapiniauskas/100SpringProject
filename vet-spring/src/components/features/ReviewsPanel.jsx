@@ -1,5 +1,6 @@
 import reviewers from "../../assets/icons/reviewers.png";
 import pawss from "../../assets/icons/pawssSmall.png";
+import { NavLink } from "react-router";
 
 export const ReviewsPanel = () => {
   return (
@@ -11,9 +12,11 @@ export const ReviewsPanel = () => {
         <p className="text-info-content font-semibold">101 Reviews</p>
         <div className="relative">
           <img src={pawss} alt="pawws" className="w-[14px] sm:w-[17px] md:w-[20px] lg:w-[24px] absolute left-[-15px] sm:left-[-18px] md:left-[-21px] lg:left-[-25px]" />
-          <p className="text-white text-[10px] sm:text-xs md:text-[13px] lg:text-sm hover:underline slow-pulse">
-            Leave a review
-          </p>
+          <NavLink to={"/reviews/leaveReview"}>
+            <p className="text-white text-[10px] sm:text-xs md:text-[13px] lg:text-sm hover:underline slow-pulse">
+              Leave a review
+            </p>
+          </NavLink>
         </div>
       </div>
     </div>

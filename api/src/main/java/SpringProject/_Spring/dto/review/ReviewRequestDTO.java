@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public record ReviewRequestDTO(@Max(5)
+public record ReviewRequestDTO(@Max(value = 5, message = "You can rate up to 5 maximum")
                                @Positive(message = "Rating must be positive number")
                                Integer rating,
 

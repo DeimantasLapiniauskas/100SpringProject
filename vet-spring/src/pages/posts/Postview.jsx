@@ -1,53 +1,64 @@
-import { getPostById } from "@/utils/helpers/posts";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { UIStatus } from "@/constants/UIStatus";
+// import { getEntityById } from "@/utils/helpers/entity";
+// import { useEffect, useState } from "react";
+// import { useParams } from "react-router";
+// import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
+// import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
 import "../../index.css"
 import dayjs from 'dayjs'
+// import { useEntityPath } from "@/hooks/usePath";
+import { useEntityData } from "@/hooks/useEntityData";
 
 export const PostView = () => {
-  const { postId } = useParams();
-  const [post, setPost] = useState({});
-  const [error, setError] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
-  const { isLoading, isError, isUnusual, setStatus } = useUI();
+  
+  
+const {initialData: post, error} = useEntityData()
 
-  const isMounted = useIsMounted();
 
-  const getPost = async () => {
-    try {
-      setStatus(Fetching);
-      const response = await getPostById(postId);
-      if (!isMounted.current) return;
 
-      const { data, success } = response.data;
+  // const { entityId } = useParams();
+  // const [post, setPost] = useState({});
+  // const [error, setError] = useState(null);
 
-      if (data && success) {
-        setStatus(Success);
-        setPost(data);
-      } else {
-        setStatus(Unknown);
-        setPost(null);
-      }
-    } catch (error) {
-      if (!isMounted.current) return;
+  // const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
+  const { isLoading, isError, isUnusual } = useUI();
+  // const entityPath = useEntityPath();
 
-      const errorMessage =
-        error.response?.data?.message ?? error.message ?? "Unknown error";
-      setError(errorMessage);
-      setStatus(Err);
-      setPost(null);
-    }
-  };
+  // const isMounted = useIsMounted();
 
-  useEffect(() => {
-    getPost();
-  }, [postId]);
+  // const getPost = async () => {
+  //   try {
+  //     setStatus(Fetching);
+  //     const response = await getEntityById(entityPath, entityId);
+  //     if (!isMounted.current) return;
+
+  //     const { data, success } = response.data;
+
+  //     if (data && success) {
+  //       setStatus(Success);
+  //       setPost(data);
+  //     } else {
+  //       setStatus(Unknown);
+  //       setPost(null);
+  //     }
+  //   } catch (error) {
+  //     if (!isMounted.current) return;
+
+  //     const errorMessage =
+  //       error.response?.data?.message ?? error.message ?? "Unknown error";
+  //     setError(errorMessage);
+  //     setStatus(Err);
+  //     setPost(null);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (entityId) getPost();
+  if (!post) return null;
+  // }, [entityId]);
 
   const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
   

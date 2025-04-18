@@ -40,7 +40,7 @@ export const PostList = () => {
   return (
     <div className="flex flex-col items-center gap-2 px-1 sm:px-2 md:px-3 mt-0.5  max-w-[1400px] mx-auto">
       <div className="flex w-full justify-end gap-1.5 sm:gap-2.5 md:gap-3.5 relative">
-        <button type="button" className="cursor-pointer bg-gray-400 hover:bg-gray-300 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-gray-800 hover:text-warning-content absolute bottom-[-65%] sm:bottom-[-75%] md:bottom-[-82%] lg:bottom-[-75%] border border-gray-500 hover:border-gray-400" onClick={clearAll}>Clear</button>
+        <button type="button" className="cursor-pointer bg-gray-300 hover:bg-gray-200 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-gray-700 hover:text-warning-content absolute bottom-[-70%] sm:bottom-[-80%] md:bottom-[-87%] lg:bottom-[-77%] border border-gray-400 hover:border-warning-content" onClick={clearAll}>Clear</button>
         <SearchBarPanel />
         <FilterPanel sortFields={sortFields} />
         <SelectPanel pageSizes={pageSizes} />

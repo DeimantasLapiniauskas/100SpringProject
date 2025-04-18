@@ -50,20 +50,22 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
-    public boolean isNotValidSortField(String sort) {
-        List<String> sortFields = List.of("1", "2", "3", "4", "5");
+    public boolean isNotValidSortField(Integer sort) {
+        List<Integer> sortFields = List.of(1, 2, 3, 4, 5);
 
         return !sortFields.contains(sort);
     }
 
-    public Page<Review> findAllReviewsPage(int page, int size, String sort) {
+    public Page<Review> findAllReviewsPage(int page, int size, Integer sort) {
+        String defaultSort = "createdAt";
         if (sort == null) {
-            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+            Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
 
             return reviewRepository.findAll(pageable);
         }
 
-        Pageable pageable = PageRequest.of(page, size,Sort.by(sort).descending());
-        return reviewRepository.findAll(pageable);
+        int sortByRating = sort;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
+        return reviewRepository.findAllByRating(sortByRating, pageable);
     }
 }

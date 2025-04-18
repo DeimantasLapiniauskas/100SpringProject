@@ -80,6 +80,8 @@ const selectContentVariants = cva(
 const Select = ({ value, onValueChange, children, ...props }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
+  const safeToReceiveIsOpen = ["SelectTrigger"];
+
   return (
     <SelectPrimitive.Root
       value={value}
@@ -88,19 +90,32 @@ const Select = ({ value, onValueChange, children, ...props }) => {
       {...props}
     >
       {typeof children === "function"
-        ? children({ isOpen }) 
-        : React.Children.map(children, (child) =>
-            React.isValidElement(child)
-              ? React.cloneElement(child, { isOpen })
-              : child
-          )}
+        ? children({ isOpen })
+        : React.Children.map(children, (child) => {
+            if (
+              React.isValidElement(child) &&
+              typeof child.type !== "string" &&
+              safeToReceiveIsOpen.includes(child.type.displayName)
+            ) {
+              return React.cloneElement(child, { isOpen });
+            }
+
+            return child;
+          })}
     </SelectPrimitive.Root>
   );
 };
 
 const SelectTrigger = React.forwardRef(
-  ({ className, children, size, intent, variant, isOpen, ...props }, ref) => {
-   
+  ( props = {} , ref) => {
+    const {  className,
+      children,
+      size,
+      intent,
+      variant,
+      isOpen,
+      ...rest} = props
+
     return (
       <SelectPrimitive.Trigger
         ref={ref}
@@ -108,7 +123,7 @@ const SelectTrigger = React.forwardRef(
           selectTriggerVariants({ size, intent, variant }),
           className
         )}
-        {...props}
+        {...rest}
       >
         <div className="flex-1 text-left">{children}</div>
         {isOpen ? (

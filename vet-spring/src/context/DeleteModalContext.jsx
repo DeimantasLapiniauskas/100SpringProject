@@ -1,18 +1,19 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { deletePost } from "@/utils/helpers/posts";
+import { deleteEntity } from "@/utils/helpers/entity";
 import toast from "react-hot-toast";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useList } from "@/context/ListContext";
-import { verifyPassword } from "@/utils/helpers/posts";
+import { verifyPassword } from "@/utils/helpers/entity";
+import { useEntityPath } from "@/hooks/usePath";
 
 const DeleteModalContext = createContext();
 
 export const DeleteModalProvider = ({ children }) => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedEntity, setSelectedEntity] = useState(null);
   const [fieldErrors, setFieldErrors] = useState({});
   const [message, setMessage] = useState(null);
   const [password, setPassword] = useState("");
@@ -22,23 +23,24 @@ export const DeleteModalProvider = ({ children }) => {
   const { setStatus } = useUI();
   const { getPage, pageSize, currentPage, sorted, searchValue, setPagination } = useList();
   const { Loading, Success, Error, Unusual } = UIStatus;
+  const entityPath = useEntityPath();
 
-  const openDeleteModal = useCallback((post) => {
-    setSelectedPost(post);
+  const openDeleteModal = useCallback((entity) => {
+    setSelectedEntity(entity);
     setIsDeleteModalOpen(true);
   }, []);
 
   const closeDeleteModal = useCallback(() => {
     setIsDeleteModalOpen(false);
-    setSelectedPost(null);
+    setSelectedEntity(null);
   }, []);
 
-  const handlePostDelete = useCallback(async (postId) => {
+  const handleEntityDelete = useCallback(async (entityId) => {
     try {
       setStatus(Loading);
 
-      if (postId) {
-        await deletePost(postId);
+      if (entityId) {
+        await deleteEntity(entityPath, entityId);
 
         if (!isMounted.current) return;
 
@@ -74,7 +76,7 @@ export const DeleteModalProvider = ({ children }) => {
   
         if (success && message) {
           setMessage(message);
-          await handlePostDelete(selectedPost?.id);
+          await handleEntityDelete(selectedEntity?.id);
 
           if (!isMounted.current) return;
 
@@ -97,7 +99,7 @@ export const DeleteModalProvider = ({ children }) => {
         }
         setStatus(Error);
       }
-    }, [setStatus, password, selectedPost, isMounted, fieldErrors, error, closeDeleteModal, handlePostDelete]
+    }, [setStatus, password, selectedEntity, isMounted, fieldErrors, error, closeDeleteModal, handleEntityDelete]
   );
   
       const handleCloseModal = () => {
@@ -112,10 +114,10 @@ export const DeleteModalProvider = ({ children }) => {
     <DeleteModalContext.Provider
       value={{
         isDeleteModalOpen,
-        selectedPost,
+        selectedEntity,
         openDeleteModal,
         closeDeleteModal,
-        handlePostDelete,
+        handleEntityDelete,
         onConfirm,
         handleCloseModal,
         setFieldErrors,
