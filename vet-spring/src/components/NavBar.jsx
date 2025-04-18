@@ -5,7 +5,7 @@ import defaultProfile from "../assets/icons/user.png";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
 export const Navbar = () => {
   const hasRoles = useCheckRoles();
-  print(hasRoles)
+  
   return (
     <div>
       <nav className="lg:h-[84px] md:h-[72px] sm:h-[60px] h-[48px] bg-gradient-to-br from-indigo-100 to-blue-100 px-[1rem] sm:px-[3rem] md:px-[5rem] flex justify-between items-center rounded-[100px] border-2 border-white shadow-md shadow-black max-w-[1500px] mx-auto">
