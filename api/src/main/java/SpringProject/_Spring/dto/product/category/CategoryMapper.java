@@ -17,4 +17,14 @@ public class CategoryMapper {
                 .map(categoryDTO -> toCategoryFromDTO(categoryDTO, categoryRepository))
                 .toList();
     }
+
+    public static CategoryDTO toCategoryDTO(Category category) {
+        return new CategoryDTO(category.getName());
+    }
+
+    public static List<CategoryDTO> toCategoryDTOList(List<Category> categories) {
+        return categories.stream()
+                .map(CategoryMapper::toCategoryDTO)
+                .toList();
+    }
 }

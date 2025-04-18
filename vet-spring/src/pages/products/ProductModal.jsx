@@ -23,13 +23,11 @@ const ProductModal = ({ product, onClose }) => {
           ✕
         </button>
         <div className="flex flex-col sm:flex-row gap-4">
-          <div className="w-full sm:w-1/3 h-40 sm:h-auto bg-gray-200 rounded-lg flex items-center justify-center">
-
+          <div className="w-full sm:w-1/3 h-40 sm:h-auto bg-gray-200 rounded-lg flex items-center justify-center min-w-[8rem]">
             <img src={imageUrl} alt={name} className="w-full h-full object-cover rounded-lg" />
-
           </div>
-          <div className="w-full sm:w-2/3 flex flex-col gap-2">
-            <h2 className="text-xl sm:text-2xl font-bold block break-all">{name}</h2>
+          <div className="w-full sm:w-2/3 flex flex-col gap-2 max-w-full pt-8">
+            <h2 className="text-xl sm:text-2xl font-bold break-words">{name}</h2>
             <div className="flex justify-between items-center">
               <p className="text-sm sm:text-base">Price: {price} EUR</p>
               <p className="text-xs text-gray-700">Stock: {stockQuantity}</p>
@@ -39,9 +37,9 @@ const ProductModal = ({ product, onClose }) => {
             </button>
           </div>
         </div>
-        <div className="mt-4">
-          <h3 className="text-sm sm:text-base font-semibold text-left ">Description:</h3>
-          <p className="text-sm sm:text-base text-left block break-all">{description}</p>
+        <div className="mt-4 max-w-full">
+          <h3 className="text-sm sm:text-base font-semibold text-left">Description:</h3>
+          <p className="text-sm sm:text-base text-left break-words overflow-auto max-h-[10rem]">{description}</p>
         </div>
       </div>
     </div>

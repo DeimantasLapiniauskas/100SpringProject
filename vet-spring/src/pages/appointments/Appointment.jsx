@@ -59,16 +59,17 @@ export const Appointment = () => {
 
   return (
     <div>
-      <div className="flex flex-row justify-start m-6 items-baselin">
+      <div className="flex flex-row justify-start m-6 items-baselin mb-12 mt-10 ml-10">
         <h1 className="text-2xl mr-6 text-black">Appointment history</h1>
         <button
-          className="custom-white-btn !w-fit"
+          className="custom-white-btn !w-fit border-2 border-[#97a0f1] font-bold shadow-sm shadow-violet-400 ml-5"
           onClick={() => setVisible(true)}
         >
           New Appointment
         </button>
       </div>
 
+    
       <div className="bg-white m-6 p-6 rounded-box text-black">
         <div className="grid grid-cols-8 border-b-2 border-[#97a0f1] font-bold text-xl">
           <p className="mb-4">Appointment Date</p>
@@ -131,7 +132,11 @@ export const Appointment = () => {
                   </button>
                 )}
             </div>
+
+
           </div>
+
+          
         ))}
       </div>
 

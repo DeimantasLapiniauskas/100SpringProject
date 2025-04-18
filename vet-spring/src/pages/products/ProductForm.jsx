@@ -8,7 +8,6 @@ import { addProductImage } from "@/utils/helpers/addProductImage";
 
 const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
   const { setAddModalID, setEditModalID } = useContext(ModalContext);
-  const { name, description, price, stockQuantity, id, categories, imageUrl } = product;
 
   const {
     register,
@@ -35,14 +34,14 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
 
   useEffect(() => {
     if (product) {
-      setValue("name", name);
-      setValue("description", description);
-      setValue("price", price.toString());
-      setValue("stockQuantity", stockQuantity.toString());
-      setValue("category", categories?.[0]?.name || "");
-      setPreviewUrl(imageUrl || null);
+      setValue("name", product.name || "");
+      setValue("description", product.description || "");
+      setValue("price", product.price ? product.price.toString() : "");
+      setValue("stockQuantity", product.stockQuantity ? product.stockQuantity.toString() : "");
+      setValue("category", product.categories?.[0]?.name || "");
+      setPreviewUrl(product.imageUrl || null);
     }
-  }, [categories, description, imageUrl, name, price, product, setValue, stockQuantity]);
+  }, [product, setValue]);
 
   const updatePreview = (file) => {
     if (file) {
@@ -79,8 +78,8 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
       };
 
       if (product?.id) {
-        
-        await updateProduct(id, payload);
+
+        await updateProduct(product.id, payload);
         await getPage(pageSize, currentPage);
         setEditModalID("");
       } else {
@@ -211,11 +210,12 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
             <select
               id="category"
               className="form-text-select"
+              defaultValue={product?.categories?.[0]?.name}
               {...register("category", {
                 required: "Category is required",
               })}
             >
-              <option value="" hidden selected>
+              <option value="" hidden>
                 Select a category
               </option>
               {categoriesSelect.map((category) => (
