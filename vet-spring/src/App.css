@@ -59,6 +59,38 @@
   background-color: #333;
 }
 
+/* Custom dropdown menu & buttons */
+.custom-dropdown {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1.75rem;
+  border: solid 1px;
+  border-radius: 10px;
+}
+
+.custom-dropdown > a,
+.custom-dropdown > button:not(:first-child) {
+  color: #FFF;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+  padding: 0.625rem 1rem;
+  width: 8.75rem;
+  height: auto;
+  border-radius: 0.625rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  cursor: pointer;
+}
+
+.custom-dropdown > a:hover {
+  background-color: rgb(255,255,255,0.2)
+}
+
 /* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
 .custom-purple-btn {
   background-color: #ac64b4;
