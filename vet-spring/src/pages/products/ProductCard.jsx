@@ -13,8 +13,8 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
         className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
         onClick={() => setModalID(id.toString())}
       >
-        <div className="flex items-center py-4 px-6 md:px-4 md:py-2 gap-4">
-          <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+        <div className="flex flex-col">
+          <div className="w-16 h-20 sm:w-50 sm:h-30 bg-gray-200 rounded-lg flex items-center justify-center">
             {imageUrl ? (
               <img src={imageUrl} alt={name} className="w-full h-full object-cover rounded-lg" />
             ) : (
@@ -22,12 +22,12 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
             )}
           </div>
           <div className="w-full">
-            <div className="w-full text-lg md:text-base font-medium flex justify-between">
-              <div>{name}</div>
+            <div className=" text-lg md:text-base font-medium flex justify-between">
+              <div className="block break-all ">{name}</div>
               <div>{price} EUR</div>
             </div>
             <div className="text-gray-700">
-              <p>{description}</p>
+              <p className="block break-all ">{description}</p>
               <p>Quantity: {stockQuantity}</p>
             </div>
             <div className="mt-2">

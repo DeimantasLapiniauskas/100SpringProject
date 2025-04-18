@@ -29,7 +29,7 @@ const ProductModal = ({ product, onClose }) => {
 
           </div>
           <div className="w-full sm:w-2/3 flex flex-col gap-2">
-            <h2 className="text-xl sm:text-2xl font-bold">{name}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold block break-all">{name}</h2>
             <div className="flex justify-between items-center">
               <p className="text-sm sm:text-base">Price: {price} EUR</p>
               <p className="text-xs text-gray-700">Stock: {stockQuantity}</p>
@@ -40,8 +40,8 @@ const ProductModal = ({ product, onClose }) => {
           </div>
         </div>
         <div className="mt-4">
-          <h3 className="text-sm sm:text-base font-semibold text-left">Description:</h3>
-          <p className="text-sm sm:text-base text-left">{description}</p>
+          <h3 className="text-sm sm:text-base font-semibold text-left ">Description:</h3>
+          <p className="text-sm sm:text-base text-left block break-all">{description}</p>
         </div>
       </div>
     </div>

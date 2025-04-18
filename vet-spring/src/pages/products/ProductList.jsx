@@ -26,7 +26,7 @@ const ProductList = () => {
 
     const { isLoading, isError, isBadRequest } = useUI();
     return (
-        <div className="p-4 justify-center mx-[7rem] mt-[2rem]">
+        <div className="p-4 justify-center mx-[2rem] mt-[2rem]">
             <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID, editModalID, setEditModalID }}>
                 <AddProductButton
                     getPage={getPage}
@@ -37,7 +37,7 @@ const ProductList = () => {
                 {isLoading ? <Loading /> : ""}
                 {isError ? <Error error={error} isHidden={!error} /> : ""}
                 {isBadRequest ? <BadPageRequest /> : ""}
-                <ul className="w-full grid grid-cols-5 gap-4 p-4 divide-gray-200">
+                <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 divide-gray-200">
                     {products.map((product) => (
                         <ProductCard
                             key={product.id}
