@@ -3,6 +3,7 @@ import { useContext } from "react";
 import ProductModal from "./ProductModal";
 import EditProductButton from "./buttons/EditProductButton";
 import { useCheckRoles } from "@/hooks/useCheckRoles";
+import DeleteProductButton from "./buttons/DeleteProductButton";
 
 const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
   const { name, price, stockQuantity, id, imageUrl } = product;
@@ -34,6 +35,12 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
         {roles && (
           <div className="mt-[-2.8rem] ml-5">
             <EditProductButton
+              product={product}
+              getPage={getPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+            />
+            <DeleteProductButton
               product={product}
               getPage={getPage}
               currentPage={currentPage}

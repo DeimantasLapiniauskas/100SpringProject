@@ -1,4 +1,4 @@
-import { addProduct, updateProduct } from "@/utils/helpers/addEditProduct";
+import { addProduct, updateProduct } from "@/utils/helpers/productHelpers";
 import ModalContext from "@/utils/helpers/modalContext";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
@@ -232,7 +232,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
 
         <div className="text-center">
           <label htmlFor="imageFile" className="font-bold text-lg text-white">
-            Product Image (optional):
+            Product Image:
           </label>
           <SimpleDropzone
             onDrop={(file, error) => {

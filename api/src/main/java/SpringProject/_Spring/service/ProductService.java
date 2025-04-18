@@ -10,11 +10,14 @@ import SpringProject._Spring.repository.product.CategoryRepository;
 import SpringProject._Spring.repository.product.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
 @Service
 @Transactional
@@ -22,11 +25,16 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final S3Client s3Client;
+
+    @Value("${aws.s3.bucket}")
+    private String bucketName;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, S3Client s3Client) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.s3Client = s3Client;
     }
 
     public Product addNewProduct(ProductRequestDTO productRequestDTO) {
@@ -104,9 +112,22 @@ public class ProductService {
     }
 
     public void deleteProduct(long id) {
-        if (!existsProductById(id)) {
-            throw new NotFoundException("Product with id '" + id + "' not found");
-        }
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product with id '" + id + "' not found"));
+
+        deleteImageFromS3(product.getImageUrl());
+
         productRepository.deleteById(id);
+    }
+
+    private void deleteImageFromS3(String imageUrl) {
+        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .build();
+
+        s3Client.deleteObject(deleteObjectRequest);
     }
 }
