@@ -35,7 +35,7 @@ const ProductList = () => {
     const roles = useCheckRoles();
 
     return (
-        <div className="p-4 justify-center mx-[7rem] mt-[1rem]">
+        <div className="">
             <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID, editModalID, setEditModalID }}>
                 <div className="flex w-full justify-center gap-1.5 sm:gap-2.5 md:gap-3.5 relative mb-[4rem]">
                     {/* <button
@@ -63,7 +63,7 @@ const ProductList = () => {
                 {isLoading ? <Loading /> : ""}
                 {isError ? <Error error={error} isHidden={!error} /> : ""}
                 {isBadRequest ? <BadPageRequest /> : ""}
-                <ul className="w-full grid grid-cols-3 gap-4 p-4 divide-gray-200">
+                <ul className=" w-full justify-items-center grid divide-gray-200 grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
                     {products.map((product) => (
                         <ProductCard
                             key={product.id}
@@ -74,6 +74,7 @@ const ProductList = () => {
                         />
                     ))}
                 </ul>
+                
             </ModalContext.Provider>
             <div className="flex justify-center">
                 <PaginationPanel />
