@@ -14,7 +14,7 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
     <>
       <div>
         <li
-          className="bg-gray-100 rounded-2xl border-[1px] border-[#2c70b1] hover:bg-gray-50 transition-colors duration-200 cursor-pointer w-[20rem] h-[15rem]"
+          className="bg-gray-100 rounded-2xl border-[1px] border-[#2c70b1] hover:bg-gray-50 transition-colors duration-200 cursor-pointer w-[20rem] h-[15rem] lg:w-[26rem] lg:h-[25rem]"
           onClick={() => setModalID(id.toString())}
         >
           <div className="flex items-center py-4 px-6 md:px-4 md:py-2 h-full w-full">
@@ -27,13 +27,13 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
                 </div>
               </div>
             </div>
-            <div className="w-[30%] min-w-[8rem] h-[8rem] bg-gray-200 rounded-lg flex items-center  flex-shrink-0">
+            <div className="w-[30%] min-w-[8rem] lg:w-[16rem] h-[8rem] lg:h-[16rem] bg-gray-200 rounded-lg flex items-center  flex-shrink-0">
               <img src={imageUrl} alt={name} className="w-full h-full object-cover rounded-lg" />
             </div>
           </div>
         </li>
         {roles && (
-          <div className="mt-[-2.8rem] ml-5">
+          <div className="mt-[-2.8rem] ml-5 flex">
             <EditProductButton
               product={product}
               getPage={getPage}
