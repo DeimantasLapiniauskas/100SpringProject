@@ -68,7 +68,8 @@
   border-radius: 10px;
 }
 
-.custom-dropdown > a, button:not(:first-child) {
+.custom-dropdown > a,
+.custom-dropdown > button:not(:first-child) {
   color: #FFF;
   font-size: 0.875rem;
   text-overflow: ellipsis;
