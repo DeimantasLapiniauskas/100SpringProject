@@ -7,6 +7,7 @@ import SpringProject._Spring.repository.ContactMessagesRepository;
 import SpringProject._Spring.repository.SubjectTypesRepository;
 import SpringProject._Spring.repository.VetClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public class ContactMessagesService {
     private final VetClinicRepository vetClinicRepository;
 
     @Autowired
-    public ContactMessagesService(ContactMessagesRepository contactMessagesRepository,SubjectTypesRepository subjectTypesRepository, VetClinicRepository vcr) {
+    public ContactMessagesService(ContactMessagesRepository contactMessagesRepository,SubjectTypesRepository subjectTypesRepository, VetClinicRepository vetClinicRepository) {
         this.contactMessagesRepository = contactMessagesRepository;
         this.subjectTypesRepository = subjectTypesRepository;
-        this.vetClinicRepository = vcr;
+        this.vetClinicRepository = vetClinicRepository;
     }
 
     public ContactMessages saveContactMessages(ContactMessages contactMessages) {
@@ -43,7 +44,14 @@ public class ContactMessagesService {
     }
 
     public List<ContactMessages> getAllContactMessages() {
-        return contactMessagesRepository.findAll();
+
+        List<ContactMessages> results = contactMessagesRepository.findAll();
+
+        if (results.isEmpty()) {
+            return null;
+        }
+
+        return results;
     }
 
     public void deleteContactMessagesById(long id) {

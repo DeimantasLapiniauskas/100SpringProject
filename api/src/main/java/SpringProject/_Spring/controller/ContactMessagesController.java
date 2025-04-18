@@ -38,12 +38,12 @@ public class ContactMessagesController {
     @Operation(summary = "Create a new contact messages")
     @PostMapping("/contactmessage")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> addContactMessage(@Valid @RequestBody ContactMessRequestDTO contactDTO, Authentication authentication){
-        ContactMessages savedContactMessages = contactMessagesService.saveContactMessages(
-                ContactMessMapper.toContactMessages(contactDTO)
-        );
+    public ResponseEntity<?> addContactMessage(@Valid @RequestBody ContactMessRequestDTO contactDTO){
 
-        return ok(ContactMessMapper.toContactMessResponseDTO(savedContactMessages));
+
+        return ok(ContactMessMapper.toContactMessResponseDTO(contactMessagesService.saveContactMessages(
+                ContactMessMapper.toContactMessages(contactDTO)
+        )));
     }
 
 //    @Operation(summary = "Get ContactMessage by Id")
@@ -60,16 +60,7 @@ public class ContactMessagesController {
     @GetMapping("/contactmessage")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> getAllContactMessages(){
-
-
-        List<ContactMessages> results = contactMessagesService.getAllContactMessages();
-
-        if (results.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        List<ContactMessResponseDTO> responseDTO = ContactMessMapper.toContactMessResponseDTOList(results);
-        return ok(responseDTO);
+        return ok(ContactMessMapper.toContactMessResponseDTOList(contactMessagesService.getAllContactMessages()));
     }
 
     @Operation(summary = "Get ContactMessage by Id")
@@ -77,8 +68,7 @@ public class ContactMessagesController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ContactMessResponseDTO> getContactMessageById(@PathVariable long id){
 
-        Optional<ContactMessages> results = contactMessagesService.getContactMessagesById(id);
-
-        return results.map(contactMessages -> ResponseEntity.ok(ContactMessMapper.toContactMessResponseDTO(contactMessages))).orElse(ResponseEntity.notFound().build());
+        return contactMessagesService.getContactMessagesById(id).map(contactMessages -> ResponseEntity.ok(
+                ContactMessMapper.toContactMessResponseDTO(contactMessages))).orElse(ResponseEntity.notFound().build());
     }
 }

@@ -1,5 +1,10 @@
 package SpringProject._Spring.dto.contact_messages;
 
+import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailRegex;
+import SpringProject._Spring.validation.customAnnotations.authentication.firstName.FNameLength;
+import SpringProject._Spring.validation.customAnnotations.authentication.firstName.FNameRegex;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,13 +14,13 @@ public record ContactMessRequestDTO(
                                     long subject_type_id,
 
                                     @NotNull
-                                    @NotBlank(message = "Email cannot be empty")
-                                    @Size(max = 255, message = "email cannot be longer than 255 characters")
+                                    @EmailLength
+                                    @EmailRegex
                                     String email,
 
-                                    @NotNull
-                                    @NotBlank(message = "Name cannot be empty")
-                                    @Size(max = 100, message = "Name cannot be longer than 100 characters")
+                                    @NotNull(message = "Name cannot be empty")
+                                    @FNameLength
+                                    @FNameRegex
                                     String name,
 
                                     @NotNull
