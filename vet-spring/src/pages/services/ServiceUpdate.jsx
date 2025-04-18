@@ -68,7 +68,7 @@ export const ServiceUpdate = () => {
         name: data.name,
         description: data.description,
         price: data.price,
-        imageUrl: imageUrl,
+        imageUrl: imageUrl ?? null,
       };
 
       await updateService(id, payload);
