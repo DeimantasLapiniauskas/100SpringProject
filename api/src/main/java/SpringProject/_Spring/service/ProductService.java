@@ -71,13 +71,13 @@ public class ProductService {
             if (search == null || search.trim().isEmpty()) {
                 return productRepository.findAll(pageable);
             } else {
-                return productRepository.searchByName(search.toLowerCase(), pageable);
+                return productRepository.findByNameContainingIgnoreCase(search.toLowerCase(), pageable);
             }
         } else {
             if (search == null || search.trim().isEmpty()) {
-                return productRepository.findByCategory(sort, pageable);
+                return productRepository.findByCategoriesName(sort, pageable);
             } else {
-                return productRepository.searchInCategory(search.toLowerCase(), sort, pageable);
+                return productRepository.findByNameContainingIgnoreCaseAndCategoriesName(search.toLowerCase(), sort, pageable);
             }
         }
     }
