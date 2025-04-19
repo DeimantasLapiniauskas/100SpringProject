@@ -13,7 +13,7 @@ public class ReviewMapper {
     }
 
     public static ReviewResponseDTO toReviewResponseDTO(Review review) {
-        return new ReviewResponseDTO(review.getId(),
+        return new ReviewResponseDTO(review.getId(), ClientMapping.toClientResponseDTO(review.getClient()),
                 VetClinicMapper.toVetClinicResponseDTO(review.getVetClinic()), review.getRating(), review.getComment(), review.getCreatedAt());
     }
 

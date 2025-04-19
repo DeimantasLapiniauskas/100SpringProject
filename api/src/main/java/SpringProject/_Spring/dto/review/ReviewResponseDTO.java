@@ -8,6 +8,7 @@ import SpringProject._Spring.model.authentication.Client;
 import java.time.LocalDateTime;
 
 public record ReviewResponseDTO(long id,
+                                ClientResponseDTO clientResponseDTO,
                                 VetClinicResponseDTO vetClinicResponseDTO,
                                 int rating,
                                 String comment,

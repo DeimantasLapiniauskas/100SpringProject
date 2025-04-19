@@ -14,10 +14,7 @@ import { useEntityData } from "@/hooks/useEntityData";
 
 export const PostView = () => {
   
-  
 const {initialData: post, error} = useEntityData()
-
-
 
   // const { entityId } = useParams();
   // const [post, setPost] = useState({});
