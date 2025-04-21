@@ -5,6 +5,7 @@ import SpringProject._Spring.controller.ProductController;
 import SpringProject._Spring.dto.product.ProductPageResponseDTO;
 import SpringProject._Spring.dto.product.ProductPageResult;
 import SpringProject._Spring.dto.product.ProductResponseDTO;
+import SpringProject._Spring.dto.product.category.CategoryDTO;
 import SpringProject._Spring.security.SecurityConfig;
 import SpringProject._Spring.service.ProductService;
 import SpringProject._Spring.validation.GlobalExceptionHandler;
@@ -49,7 +50,7 @@ public class ProductGetPaginationTest {
     void getProductsPage_whenValid_thenReturnAnd200() throws Exception {
         //given
         ProductPageResponseDTO productPageResponseDTO = new ProductPageResponseDTO(
-                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10, "url")),
+                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO("test")), "url")),
                 1,
                 6,
                 0,
@@ -58,7 +59,7 @@ public class ProductGetPaginationTest {
 
         ProductPageResult productPageResult = new ProductPageResult(productPageResponseDTO, null);
 
-        when(productService.findAllProductsPage(0, 10, null)).thenReturn(productPageResult);
+        when(productService.findAllProductsPage(0, 10, null, null)).thenReturn(productPageResult);
 
         //when
         mockMvc.perform(get("/api/products/pagination")
@@ -81,7 +82,7 @@ public class ProductGetPaginationTest {
                         jsonPath("message").doesNotExist()
                 );
 
-        Mockito.verify(productService, times(1)).findAllProductsPage(0, 10, null);
+        Mockito.verify(productService, times(1)).findAllProductsPage(0, 10, null, null);
     }
 
     //happy path
@@ -90,7 +91,7 @@ public class ProductGetPaginationTest {
     void getProductsPage_whenValidWithSort_thenReturnAnd200() throws Exception {
         // given
         ProductPageResponseDTO productPageResponseDTO = new ProductPageResponseDTO(
-                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10, "url")),
+                List.of(new ProductResponseDTO(1L, "Name", "Description", BigDecimal.valueOf(10.0), 10, List.of(new CategoryDTO("test")), "url")),
                 1,
                 6,
                 0,
@@ -99,7 +100,7 @@ public class ProductGetPaginationTest {
 
         ProductPageResult productPageResult = new ProductPageResult(productPageResponseDTO, null);
 
-        when(productService.findAllProductsPage(0, 10, "name")).thenReturn(productPageResult);
+        when(productService.findAllProductsPage(0, 10, "name", null)).thenReturn(productPageResult);
 
         // when
         mockMvc.perform(get("/api/products/pagination")
@@ -123,7 +124,7 @@ public class ProductGetPaginationTest {
                         jsonPath("message").doesNotExist()
                 );
 
-        Mockito.verify(productService, times(1)).findAllProductsPage(0, 10, "name");
+        Mockito.verify(productService, times(1)).findAllProductsPage(0, 10, "name", null);
     }
 
     //unhappy path
@@ -139,7 +140,7 @@ public class ProductGetPaginationTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
 
-        Mockito.verify(productService, times(0)).findAllProductsPage(0, 10, null);
+        Mockito.verify(productService, times(0)).findAllProductsPage(0, 10, null, null);
     }
 
     //unhappy path
@@ -147,7 +148,7 @@ public class ProductGetPaginationTest {
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getProductsPage_whenInvalidPageSize_thenReturnAnd400() throws Exception {
         //given
-        when(productService.findAllProductsPage(-1, 10, null)).thenThrow(new IllegalArgumentException("Invalid page or size parameters"));
+        when(productService.findAllProductsPage(-1, 10, null, null)).thenThrow(new IllegalArgumentException("Invalid page or size parameters"));
         //when
         mockMvc.perform(get("/api/products/pagination")
                         .param("page", "-1")
@@ -159,6 +160,6 @@ public class ProductGetPaginationTest {
                 .andExpect(jsonPath("message").exists())
                 .andExpect(jsonPath("data").doesNotExist());
 
-        Mockito.verify(productService, times(1)).findAllProductsPage(-1, 10, null);
+        Mockito.verify(productService, times(1)).findAllProductsPage(-1, 10, null, null);
     }
 }
