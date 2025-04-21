@@ -1,0 +1,239 @@
+/*UNIQUE COLORS USED//////////////////////////////////////////////////////// */
+/*WILL BE UPDATED AS PROJECT MOVES FORWARD////////////////////////////////// */
+
+/* Light Violet - COLOR used as lighter background for cards or boxes.
+ Example: Log In Page and Register Page card*/
+.bg-light-violet {
+  background-color: #97a0f1;
+}
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#97a0f1] h-64 w-full">Content</div> */
+
+/* Default Violet - COLOR used as default background for cards or boxes.
+ Example: Cards in Service List Page */
+.bg-default-violet {
+  background-color: #6A7AFF;
+}
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#6A7AFF] h-64 w-full">Content</div> */
+
+/* Light Orange - COLOR used as lighter orange background for cards or boxes.
+ Example: Not implemented yet */
+ .bg-light-orange {
+  background-color: #FFBD89;
+}
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
+
+/* Default Purple - COLOR used in Navigation bar, for "Login" button and "Logout" button.
+ Example: Cards in Log In Page and Register Page */
+ .bg-default-purple {
+  background-color: #ac64b4;
+}
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
+
+/* Light Gray - COLOR used as EXTRA FOR FUTURE USE.
+ Example: Not implemented yet. Have to check other KOM-?? branches if it is in use */
+ .bg-light-gray {
+  background-color: #CBC5C5;
+}
+/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
+
+/*FOR ALL PAGES//////////////////////////////////////////////////////// */
+
+/* Black button located in Login Page and Register Page */
+/* .custom-black-btn {
+  background-color: #000000;
+  color: white;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .custom-black-btn:hover {
+  background-color: #333;
+} */
+
+/* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
+/* .custom-purple-btn {
+  background-color: #ac64b4;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem;
+  height: 2.9375rem;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .custom-purple-btn:hover {
+  background-color: #C7A4D6;
+} */
+
+/* .custom-red-btn {
+  background-color: #fb2c36;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem;
+  height: 2.9375rem;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+/* .custom-red-btn:hover {
+  background-color: #ffabb0;
+} */
+/* White button to be used inside boxes in the future */
+/* .custom-white-btn {
+  background-color: #FFFFFF;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem;
+  height: 2.9375rem;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .custom-white-btn:hover {
+  background-color: #C7A4D6;
+} */
+
+/* Put on Home PAGE; */
+/* .pawss-for-background-medium {
+  width: clamp(20px, 5%, 50px);
+  height: clamp(30px, 5%, 50px);
+  background-image: url("/src/assets/images/pawss_for_background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  transform: rotate(53.04deg);
+} */
+
+
+
+/* .pawss-for-background-small { */
+  /* FIGMA paw smaller image to be used inside background of ards/boxes */
+  /* paws 4 in FIGMA description in FIGMA Services Page */
+  /* position: absolute;
+  width: 30px;
+  height: 27.6px;
+  left: 140.05px;
+  top: 236px;
+  background-image: url("/src/assets/pawss_for_background.png");
+  transform: rotate(53.04deg); */
+/* } */
+
+/* Put on Your Pets PAGE; */
+/* .pawss1-for-background-medium {
+
+  width: clamp(20px, 5%, 50px);
+  height: clamp(30px, 5%, 50px);
+  background-image: url("/src/assets/images/pawss_for_background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  transform: rotate(53.04deg);
+} */
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/*FOR NAVIGATION BAR TO USE IN FUTURE JUST IN CASE //////////////////////////////////////////////////////// */
+
+/* .paws-1 {
+
+
+  position: absolute;
+  width: 117px;
+  height: 52px;
+  left: 63px;
+  top: 16px;
+  background-image: url("/src/assets/paws.png");
+} */
+
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+/*FOR HOME PAGE //////////////////////////////////////////////////////// */
+
+/* .text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 60%;
+  padding-left: 20px;
+} */
+
+/* Base Paw Button */
+/* .custom-paw-left-btn,
+.custom-paw-right-btn {
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+
+.custom-paw-left-btn:hover,
+.custom-paw-right-btn:hover {
+  transform: scale(1.1);
+}
+
+.custom-paw-left-btn:active,
+.custom-paw-right-btn:active {
+  transform: scale(0.9);
+}
+
+
+.custom-paw-left-btn {
+  background-image: url("/src/assets/icons/pawss_3_left.png");
+}
+
+
+.custom-paw-right-btn {
+  background-image: url("/src/assets/icons/pawss_4_right.png");
+} */
+
+
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+/*FOR ADMIN PAGE //////////////////////////////////////////////////////// */
+
+/* .custom-admin-panel-btn {
+  background-color: #ac64b4;
+  color: #000000;
+  padding: 1rem;
+  width: 8.25rem;
+  height: 2.9375rem;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.custom-admin-panel-btn:hover {
+  background-color: #C7A4D6;
+} */
