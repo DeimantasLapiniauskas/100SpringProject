@@ -6,6 +6,8 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { NavLink } from "react-router";
 import api from "@/utils/api";
 
+import pawssBackgroundImage from '/src/assets/icons/pawss_for_background_spaced_out_rotated_1536px.png';
+
 
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -58,91 +60,99 @@ export const Appointment = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-row justify-start m-6 items-baselin mb-12 mt-10 ml-10">
-        <h1 className="text-2xl mr-6 text-black">Appointment history</h1>
-        <button
-          className="custom-white-btn !w-fit border-2 border-[#97a0f1] font-bold shadow-sm shadow-violet-400 ml-5"
-          onClick={() => setVisible(true)}
-        >
-          New Appointment
-        </button>
-      </div>
+    <div className="relative w-full min-h-screen">
 
-    
-      <div className="bg-white m-6 p-6 rounded-box text-black">
-        <div className="grid grid-cols-8 border-b-2 border-[#97a0f1] font-bold text-xl">
-          <p className="mb-4">Appointment Date</p>
-          <p className="mb-4">Pet</p>
-          <p className="mb-4">Price</p>
-          <p className="mb-4">Veterinarian</p>
-          <p className="mb-4">Services</p>
-          <p className="mb-4">Notes</p>
-          <p className="mb-4">Status</p>
-        </div>
-        {appointments.map((a) => (
-          <div
-            className="grid-cols-8 grid border-b-2 border-[#97a0f1] mt-3"
-            key={a.id}
+      {/* Background Layer */}
+      <div
+        className="absolute inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-center opacity-5 pointer-events-none z-0"
+        style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
+      ></div>
+
+      {/* Main Content Layer - z-10 and relative , so it appears above background */}
+      <div className="relative z-10">
+
+        {/* Your main content starts here */}
+        <div className="flex flex-row justify-start m-6 items-baselin mb-12 mt-10 ml-10">
+          <h1 className="text-2xl mr-6 text-black">Appointment history</h1>
+          <button
+            className="custom-white-btn !w-fit border-2 border-[#97a0f1] font-bold shadow-sm shadow-violet-400 ml-5"
+            onClick={() => setVisible(true)}
           >
-            <p>{a.appointmentDate.replace("T", " ")}</p>
-            <div>
-              <p>{a.petDTO.name}</p>
-              <p className="text-slate-500 pt-1 mb-3">{a.petDTO.species}</p>
-            </div>
-            <p>{a.price}</p>
-            <div>
-              <p>
-                {a.vetDTO.firstName} {a.vetDTO.lastName}
-              </p>
-              <p className="text-slate-500 pt-1">{a.vetDTO.specialty}</p>
-            </div>
-            <div>
-              {a.services.map((s) => (
-                <div key={s.id}>{s.name}</div>
-              ))}
-            </div>
-            <p>{a.notes}</p>
-            <p>{a.status}</p>
+            New Appointment
+          </button>
+        </div>
 
-            <div className="flex flex-row">
-              <NavLink
-                to={`/appointments/client/${a.id}`}
-                className="btn bg-yellow-300 w-20 shadow-sm shadow-amber-500 hover:bg-yellow-400 border-transparent mr-1.5"
-              >
-                Change Data
-              </NavLink>
-              <button
-                onClick={() => closeAppointment(a.id)}
-                className=" btn bg-red-500 w-20 shadow-sm shadow-red-800 hover:bg-red-600 border-transparent"
-              >
-                Cancel
-              </button>
-              {a.status !== "Cancelled" &&
-                a.status !== "Scheduled" &&
-                a.status !==
-                  (account.scope.includes("ROLE_CLIENT")
-                    ? "ScheduledUnconfirmedByVet"
-                    : "ScheduledUnconfirmedByClient") && (
-                  <button
-                    onClick={() => confirmAppointment(a.id)}
-                    className=" btn bg-green-500 w-20 "
-                  >
-                    Confirm
-                  </button>
-                )}
-            </div>
-
-
+        <div className="bg-white m-6 p-6 rounded-box text-black">
+          <div className="grid grid-cols-8 border-b-2 border-[#97a0f1] font-bold text-xl">
+            <p className="mb-4">Appointment Date</p>
+            <p className="mb-4">Pet</p>
+            <p className="mb-4">Price</p>
+            <p className="mb-4">Veterinarian</p>
+            <p className="mb-4">Services</p>
+            <p className="mb-4">Notes</p>
+            <p className="mb-4">Status</p>
           </div>
+          {appointments.map((a) => (
+            <div
+              className="grid-cols-8 grid border-b-2 border-[#97a0f1] mt-3"
+              key={a.id}
+            >
+              <p>{a.appointmentDate.replace("T", " ")}</p>
+              <div>
+                <p>{a.petDTO.name}</p>
+                <p className="text-slate-500 pt-1 mb-3">{a.petDTO.species}</p>
+              </div>
+              <p>{a.price}</p>
+              <div>
+                <p>
+                  {a.vetDTO.firstName} {a.vetDTO.lastName}
+                </p>
+                <p className="text-slate-500 pt-1">{a.vetDTO.specialty}</p>
+              </div>
+              <div>
+                {a.services.map((s) => (
+                  <div key={s.id}>{s.name}</div>
+                ))}
+              </div>
+              <p>{a.notes}</p>
+              <p>{a.status}</p>
 
-          
-        ))}
+              <div className="flex flex-row">
+                <NavLink
+                  to={`/appointments/client/${a.id}`}
+                  className="btn bg-yellow-300 w-20 shadow-sm shadow-amber-500 hover:bg-yellow-400 border-transparent mr-1.5"
+                >
+                  Change Data
+                </NavLink>
+                <button
+                  onClick={() => closeAppointment(a.id)}
+                  className=" btn bg-red-500 w-20 shadow-sm shadow-red-800 hover:bg-red-600 border-transparent"
+                >
+                  Cancel
+                </button>
+                {a.status !== "Cancelled" &&
+                  a.status !== "Scheduled" &&
+                  a.status !==
+                    (account.scope.includes("ROLE_CLIENT")
+                      ? "ScheduledUnconfirmedByVet"
+                      : "ScheduledUnconfirmedByClient") && (
+                    <button
+                      onClick={() => confirmAppointment(a.id)}
+                      className=" btn bg-green-500 w-20 "
+                    >
+                      Confirm
+                    </button>
+                  )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {visible && (
+          <RegisterAppointment setVisible={setVisible} serviceId={-1} />
+        )}
       </div>
-
-      {visible && (
-        <RegisterAppointment setVisible={setVisible} serviceId={-1} />
-      )}
+      
     </div>
   );
 };
