@@ -14,6 +14,8 @@ import { useCheckRoles } from "@/hooks/useCheckRoles.js";
 import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient.jsx";
 import vetServiceIcon from "../../assets/icons/vetServiceIcon.svg"
 
+import pawssBackgroundImage from '/src/assets/icons/pawss_for_background_spaced_out_rotated_1536px.png';
+
 export const ServiceList = () => {
 
   const { getPage, error, message, content: services, currentPage, pageSize } = useList();
@@ -22,14 +24,26 @@ export const ServiceList = () => {
   const roles = useCheckRoles();
 
   return (
-    <>
-      <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto">
-        <div className="flex w-full justify-end gap-5">
-          {/* <FilterPanel /> */}
-          {/* <SelectPanel /> */}
-        </div>
-        <div className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}>
-          {/* <div className="flex gap-1 bottom-[60%]">
+    <div>
+
+      {/* MAIN WRAPPER BELOW NAVBAR */}
+      <div className="relative w-full min-h-screen">
+        
+        {/* Paws background inside wrapper, starts after navbar naturally */}
+        <div
+          className="absolute inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-center opacity-5 pointer-events-none z-0"
+          style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
+        ></div>
+
+        <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto relative z-10">
+          <div className="flex w-full justify-end gap-5">
+            {/* <FilterPanel /> */}
+            {/* <SelectPanel /> */}
+          </div>
+          <div
+            className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}
+          >
+            {/* <div className="flex gap-1 bottom-[60%]">
            
             <figure className="w-[150px] h-[150px] bg-gradient-to-r from-pink-50 to-purple-400 border-2 border-[#ebb4eb] rounded-[35px] p-2 flex items-center justify-center overflow-hidden">
               <img
@@ -59,47 +73,52 @@ export const ServiceList = () => {
               />
             </figure>
           </div> */}
-          <div className="flex me-30 p-5">
-            <h1 className="text-fuchsia-950 font-semibold text-md sm:text-lg md:text-xl lg:text-2xl text-center " >
-              Find What Your Pet Needs Here To Make Your Pet Happy
-            </h1>
-            <img src={vetServiceIcon} alt="vetServiceIcon" className="w-30"/>
+            <div className="flex me-30 p-5">
+              <h1 className="text-fuchsia-950 font-semibold text-md sm:text-lg md:text-xl lg:text-2xl text-center ">
+                Find What Your Pet Needs Here To Make Your Pet Happy
+              </h1>
+              <img src={vetServiceIcon} alt="vetServiceIcon" className="w-30" />
+            </div>
           </div>
-        </div>
-        {roles && (
-          <div className="w-full flex justify-center py-2 relative">
-            <CatSilhouetteGradient className="w-40 absolute z-10 bottom-[15px] " />
-            <NavLink
-              to={`/services/add`}
-              className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 z-10 transform transition duration-700 text-info-content border-1 border-[#854685]"
-            >
-              Add Service
-            </NavLink>
+          {roles && (
+            <div className="w-full flex justify-center py-2 relative">
+              <CatSilhouetteGradient className="w-40 absolute z-10 bottom-[15px] " />
+              <NavLink
+                to={`/services/add`}
+                className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 z-10 transform transition duration-700 text-info-content border-1 border-[#854685]"
+              >
+                Add Service
+              </NavLink>
+            </div>
+          )}
+          {isEmpty ? <p>{message}</p> : ""}
+          {isLoading ? <Loading /> : ""}
+          {isError ? <Error error={error} isHidden={!error} /> : ""}
+          <div className="flex justify-end w-full">
+            <div className="relative">
+              {roles ? (
+                ""
+              ) : (
+                <CatSilhouetteGradient className="w-50 absolute z-10 top-[-160px] right-[-250px] ] " />
+              )}
+            </div>
+            <ul className="flex flex-col w-3/5">
+              {services?.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  getPage={getPage}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                />
+              ))}
+            </ul>
           </div>
-        )}
-        {isEmpty ? <p>{message}</p> : ""}
-        {isLoading ? <Loading /> : ""}
-        {isError ? <Error error={error} isHidden={!error} /> : ""}
-        <div className="flex justify-end w-full">
-          <div className="relative">
-           {roles ? "" : <CatSilhouetteGradient className="w-50 absolute z-10 top-[-160px] right-[-250px] ] "/>}
+          <div className="p-3">
+            <PaginationPanel />
           </div>
-          <ul className="flex flex-col w-3/5">
-            {services?.map((service) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                getPage={getPage}
-                currentPage={currentPage}
-                pageSize={pageSize}
-              />
-            ))}
-          </ul>
-        </div>
-        <div className="p-3">
-          <PaginationPanel />
         </div>
       </div>
-    </>
+    </div>
   );
 };
