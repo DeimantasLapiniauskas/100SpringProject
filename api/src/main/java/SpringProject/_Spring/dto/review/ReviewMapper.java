@@ -28,6 +28,12 @@ return new ReviewPageResponseDTO(
         reviewsPage.getNumber(),
         reviewsPage.getSize());
     }
+
+    public static ReviewResponseListDTO toReviewResponseListDTO(List<Review> reviews) {
+        return new ReviewResponseListDTO(reviews.stream()
+                .map(ReviewMapper::toReviewResponseDTO)
+                .toList());
+    }
 }
 
 

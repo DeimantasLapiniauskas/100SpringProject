@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 export const FloatingReviewBubbles = ({ myReviewsFromBackend = [], max = 4, interval = 10000 }) => {
   const positionStyles = [
-    "top-[70%] xs:top-[17%] sm:top-[23%] md:top-[10rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
-    "top-[76%] xs:top-[28%] sm:top-[35%] md:top-[16.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
-    "top-[82%] xs:top-[39%] sm:top-[47%] md:top-[23rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
-    "top-[88%] xs:top-[50%] sm:top-[59%] md:top-[29.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]" ]
+    "top-[70%] xs:top-[7.5rem] sm:top-[9.75rem] md:top-[10rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
+    "top-[76%] xs:top-[12rem] sm:top-[14.75rem] md:top-[16.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
+    "top-[82%] xs:top-[16.5rem] sm:top-[19.75rem] md:top-[23rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
+    "top-[88%] xs:top-[21rem] sm:top-[24.75rem] md:top-[29.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]" ]
 
   const [visibleReviews, setVisibleReviews] = useState([]);
   const [previousReviews, setPreviousReviews] = useState([]);

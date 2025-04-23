@@ -79,6 +79,7 @@ const VetClinicRoutes = () => {
                       </AuthGuard>
                     }
                   />
+                  <Route path="reviews" element={<ReviewsList/>} />
                   <Route
                     path="/reviews/leaveReview"
                     element={

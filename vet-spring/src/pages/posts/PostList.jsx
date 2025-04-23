@@ -15,15 +15,11 @@ import { SearchBarPanel } from "@/components/features/SearchBarPanel";
 
 export const PostList = () => {
   const {
-    getPage,
     clearAll,
     error,
     message,
     content: posts,
-    currentPage,
-    pageSize,
     isEmpty,
-    sorted,
   } = useList();
 
   const { isLoading, isError, isBadPageRequest, isUnusual, isRedirecting } =
@@ -80,10 +76,6 @@ export const PostList = () => {
               <PostCard
                 key={post.id}
                 post={post}
-                getPage={getPage}
-                currentPage={currentPage}
-                pageSize={pageSize}
-                sorted={sorted}
               />
             ))}
           </div>
