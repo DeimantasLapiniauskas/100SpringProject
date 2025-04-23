@@ -27,7 +27,7 @@ const AdminPage = ({ initialList }) => {
           setAddModalID,
         }}
       >
-        <div className="w-full">
+        <div>
 
           <div className="admin-page relative flex flex-col items-center gap-2 sm:px-4 md:px-6 lg:px-8 max-w-[1500px] mx-auto">
             <h1 className="text-black lg:text-2xl md:text-xl sm:text-lg text-base font-semibold text-center py-8 mb-4 mt-12">

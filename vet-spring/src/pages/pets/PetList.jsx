@@ -43,10 +43,6 @@ export const PetList = () => {
 
   return (
     <>
-      {/* MAIN WRAPPER BELOW NAVBAR */}
-      <div className="w-full">
-
-
         {/* Top Section - Future Image & Text */}
         <main className="flex flex-col sm:flex-row items-center justify-center gap-4 py-22 z-10">
           {/* Text Section */}
@@ -123,7 +119,6 @@ export const PetList = () => {
             <Error error={error} isHidden={!error} />
           </div>
         </ThemeContext.Provider>
-      </div>
     </>
   );
 };

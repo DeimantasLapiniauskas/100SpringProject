@@ -103,7 +103,7 @@ export const Profile = () => {
   };
 
   return (
-    <div className="flex justify-center mt-10 relative w-full">
+    <div className="flex justify-center mt-10">
 
       <div className="bg-[#97a0f1] rounded-box gap-10 flex flex-col p-5 z-2">
         <h2>
