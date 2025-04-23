@@ -20,6 +20,7 @@ const selectTriggerVariants = cva(
       },
       variant: {
         new: "gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50",
+        default: "shadow-lg"
       },
       intent: {
         default: "border-blue-500 focus:ring-blue-500",
@@ -32,6 +33,7 @@ const selectTriggerVariants = cva(
     defaultVariants: {
       intent: "default",
       size: "responsive",
+      variant: "default"
     },
   }
 );
@@ -50,7 +52,7 @@ const selectItemVariants = cva(
           "text-[10px] px-2 py-1 sm:text-xs sm:px-2.5 sm:py-1.25 md:text-sm md:px-4 md:py-1.5 lg:px-5 lg:py-1.75 ",
       },
       intent: {
-        blue: " text-info-content hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px]",
+        blue: " text-info-content hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px] ",
       },
     },
     defaultVariants: {

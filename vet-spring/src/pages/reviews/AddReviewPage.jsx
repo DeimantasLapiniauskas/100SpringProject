@@ -26,6 +26,12 @@ import { postEntity, putEntity } from "@/utils/helpers/entity";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useEntityPath } from "@/hooks/usePath";
+import closeButton from "../../assets/icons/close-button.svg"
+import "../../index.css"
+import reviewDogy from "../../assets/images/reviewDogy.png"
+import { FloatingReviewBubbles } from "./FloatingReviewBubbles";
+import { ChevronsRight } from "lucide-react";
+import reviewParrot from "../../assets/images/vet-parrot.png"
 
 export const AddReviewPage = ({initialData, getReviewError}) => {
 
@@ -33,11 +39,8 @@ export const AddReviewPage = ({initialData, getReviewError}) => {
     resolver: zodResolver(AddReviewSchema),
     mode: "onChange",
     defaultValues: {
-      title: initialData?.title ?? "",
-      postType: initialData?.postType ?? "",
-      content: initialData?.content ?? "",
-      imageFile: null,
-      imageUrl: initialData?.imageUrl ?? null,
+      rating: initialData?.rating ?? null,
+      comment: initialData?.comment ?? ""
     },
   });
 
@@ -110,84 +113,113 @@ export const AddReviewPage = ({initialData, getReviewError}) => {
     return <Redirecting />;
   }
 
-  return (
-    <div>
-      <h1>Share Your Experience With Us</h1>
+  const myReviewsFromBackend = [
+    {id: 1, author: "Emma", comment: "Amazing care! My cat loved the vet 🐱" },
+    {id: 2, author: "Lukas", comment: "Super friendly staff & clean clinic!" },
+    {id: 3, author: "Sarah", comment: "My dog was treated like royalty 🐶👑" },
+    {id: 4, author: "Lukas", comment: "Super friendly staff Super friendly staff & clean clinicSuper friendly staff & clean clinic !💥⚠️" },
+    {id: 5, author: "Lukas", comment: "Super friendly staff & clean clinic!✅🔙" },
+    {id: 6, author: "Lukas", comment: "Super friendly staff Super friendly staff & clean clinicSuper friendly staff & clean clinic !🚀⭐" },
+    {id: 7, author: "Lukas", comment: "Super friendly staff & Super friendly staff & clean clinic Super friendly staff & clean clinic Super friendly staff & clean clinicSuper friendly staff & clean clinic!❌📛" },
+    {id: 8, author: "Lukas", comment: "Super friendly staff Super friendly staff & clean clinicSuper friendly staff & clean clinicSuper friendly staff & clean clinicv !🤣😂" },
+    {id: 9, author: "Lukas", comment: "Super friendly staff!❤️" },
+    
+  ];
 
-      <FormProvider {...form}>
-        <Form onSubmit={form.handleSubmit(handleFormSubmit)} className="w-full">
-          <NavLink to={"/reviews"}>
-            <p className=" right-3 top-1.5 text-warning-content text-right text-xs sm:text-sm md:text-base hover:underline">
-              Close
-            </p>
-          </NavLink>
-          <FormField
-            name="rating"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rate us</FormLabel>
-                <FormControl>
-                  <Rating
-                    style={{ maxWidth: 150 }}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          ></FormField>
-          <FormField
-            name="comment"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content*</FormLabel>
-                <FormControl>
-                  <Textarea
-                    intent={
-                      form.formState.errors.content
-                        ? "error"
-                        : field.value && !form.formState.errors.content
-                        ? "success"
-                        : "default"
-                    }
-                    placeholder="Write a content..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage>
-                  {form.formState.errors.content?.message}
-                </FormMessage>
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-between items-end">
-            <div className="inline-flex pt-2 gap-2">
-              <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting
-                  ? isEditMode
-                    ? "Editing..."
-                    : "Submitting..."
-                  : isEditMode
-                  ? "Edit"
-                  : "Submit"}
-              </Button>
-              <Button
-                type="button"
-                className="text-white/80"
-                onClick={() => {
-                  form.reset();
-                }}
-              >
-                Reset
-              </Button>
-            </div>
-            <p className="text-info-content text-right text-[10px] sm:text-xs md:text-sm">
-              <span className="text-xs sm:text-sm md:text-base">*</span>{" "}
-              required
-            </p>
-          </div>
-        </Form>
-      </FormProvider>
+  return (
+    <div className="flex flex-col items-end  px-1 py-1 sm:py-2 sm:px-2 md:px-3 md:py-3 lg:px-4 lg:py-4 
+    h-screen relative bg-gradient-to-b via-transparent xs:via-sky-400 to-sky-400 xs:to-transparent " >
+      <FloatingReviewBubbles myReviewsFromBackend={myReviewsFromBackend}/>
+      <div className="flex items-center flex-col w-full xs:w-2/3 md:w-1/2 relative">
+      <img src={reviewParrot} alt="reviewParrot" className=" w-15 sm:w-20 md:w-25 lg:w-30 absolute right-20 xs:right-12  top-[-0.5rem] sm:top-[-0.75rem] md:top-[-1rem] lg:top-[-1.25rem]"  />
+        <img src={reviewDogy} alt="reviewDogy" className="w-30 sm:w-40 md:w-50 lg:w-60 z-10" />
+        <div className="animate-gradient bg-[linear-gradient(270deg,_#fcda2e,_#ffffff,_#38bdf8)] w-full text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
+          <h1 className="responsive-text-lg font-semibold text-amber-700 pb-3 sm:pb-4 md:pb-5"> We’d Love to Hear Your Feedback</h1>
+          <FormProvider {...form}>
+            <Form onSubmit={form.handleSubmit(handleFormSubmit)}>
+              <NavLink to={"/reviews"}>
+                <div className="flex justify-end absolute top-1.5 right-3">
+                  <span className=" transition-transform duration-400 origin-center hover:scale-115 inline-block  w-10 sm:w-11 md:w-12 ">
+                   <img src={closeButton} alt="closeButton" />
+                  </span>
+                </div>
+              </NavLink>
+              <FormField
+                name="rating"
+                render={({ field }) => (
+                  <FormItem className="flex items-center flex-col mb-1">
+                    <FormLabel className="mb-1" intent="amber">Rate us*</FormLabel>
+                    <FormControl>
+                      <Rating
+                        style={{ maxWidth: 150 }}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.rating?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              ></FormField>
+              <FormField
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel intent="amber">Comment</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        intent={
+                          form.formState.errors.content
+                            ? "error"
+                            : field.value && !form.formState.errors.content
+                            ? "success"
+                            : "amber"
+                        }
+                        placeholder="Write a content..."
+                        {...field}
+                        className="border-2"
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.comment?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-between items-end">
+                <div className="inline-flex pt-2 gap-2">
+                  <Button type="submit" disabled={form.formState.isSubmitting} variant="review" size="sm" intent="review">
+                    {form.formState.isSubmitting
+                      ? isEditMode
+                        ? "Editing..."
+                        : "Submitting..."
+                      : isEditMode
+                      ? "Edit"
+                      : "Submit"}
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    intent="faded"
+                    className="text-white/90"
+                    onClick={() => {
+                      form.reset();
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </div>
+                <p className="text-amber-800 text-right responsive-text-sm">
+                  <span className="responsive-text-md">*</span>
+                  required
+                </p>
+              </div>
+            </Form>
+          </FormProvider>
+        </div>
+      </div>
+      <p className="responsive-text-sm text-yellow-700 font-semibold text-xl-start w-full px-2 md:px-4 hover:underline inline-flex items-center relative top-[-1.5%]"><span><ChevronsRight className="w-4 sm:w-5 md:w-6"/></span>Read more Reviews</p>
     </div>
   );
 };

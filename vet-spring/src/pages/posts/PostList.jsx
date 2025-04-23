@@ -38,9 +38,9 @@ export const PostList = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-2 px-1 sm:px-2 md:px-3 mt-0.5  max-w-[1400px] mx-auto">
+    <div className="flex flex-col items-center gap-2 px-1 sm:px-2 md:px-3 mt-0.5">
       <div className="flex w-full justify-end gap-1.5 sm:gap-2.5 md:gap-3.5 relative">
-        <button type="button" className="cursor-pointer bg-gray-300 hover:bg-gray-200 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-gray-700 hover:text-warning-content absolute bottom-[-70%] sm:bottom-[-80%] md:bottom-[-87%] lg:bottom-[-77%] border border-gray-400 hover:border-warning-content" onClick={clearAll}>Clear</button>
+        <button type="button" className="cursor-pointer bg-blue-200 hover:bg-gray-200 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-info-content hover:text-warning-content absolute bottom-[-70%] sm:bottom-[-80%] md:bottom-[-87%] lg:bottom-[-77%] border border-blue-400 hover:border-warning-content" onClick={clearAll}>Clear</button>
         <SearchBarPanel />
         <FilterPanel sortFields={sortFields} />
         <SelectPanel pageSizes={pageSizes} />
@@ -75,7 +75,7 @@ export const PostList = () => {
         ""
       ) : (
         <div>
-          <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
             {posts.map((post) => (
               <PostCard
                 key={post.id}
@@ -86,7 +86,7 @@ export const PostList = () => {
                 sorted={sorted}
               />
             ))}
-          </ul>
+          </div>
           <div className="p-3 flex justify-center">
             <PaginationPanel />
           </div>

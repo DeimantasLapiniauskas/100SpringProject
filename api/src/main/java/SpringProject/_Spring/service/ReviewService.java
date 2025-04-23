@@ -56,15 +56,15 @@ public class ReviewService {
         return !sortFields.contains(sort);
     }
 
-    public Page<Review> findAllReviewsPage(int page, int size, Integer sort) {
+    public Page<Review> findAllReviewsPage(int page, int size, Integer filter) {
         String defaultSort = "createdAt";
-        if (sort == null) {
+        if (filter == null) {
             Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
 
             return reviewRepository.findAll(pageable);
         }
 
-        int sortByRating = sort;
+        int sortByRating = filter;
         Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
         return reviewRepository.findAllByRating(sortByRating, pageable);
     }
