@@ -1,4 +1,3 @@
-
 import "./App.css";
 import VetClinicRoutes from "./components/VetClinicRoutes";
 import { CustomToaster } from "@/components/uiBase/CustomToaster";
