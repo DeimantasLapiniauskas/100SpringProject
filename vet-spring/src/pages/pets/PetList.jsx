@@ -6,9 +6,6 @@ import ThemeContext from "../../utils/helpers/themeContext.js";
 import AddPetButton from "./AddPetButton.jsx";
 import { useList } from "../../context/ListContext.jsx";
 
-import pawssBackgroundImage from '/src/assets/icons/pawss_for_background_spaced_out_rotated_1536px.png';
-
-
 export const PetList = () => {
   const { account } = useAuth();
   const { iat } = account || "";
@@ -46,13 +43,7 @@ export const PetList = () => {
 
   return (
     <>
-      {/* MAIN WRAPPER BELOW NAVBAR */}
-      <div className="relative w-full min-h-screen">
-        {/* Paws background inside wrapper, starts after navbar naturally */}
-        <div
-          className="absolute inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-center opacity-5 pointer-events-none z-0"
-          style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
-        ></div>
+      <div className="w-full">
 
         {/* Top Section - Future Image & Text */}
         <main className="flex flex-col sm:flex-row items-center justify-center gap-4 py-22 z-10">
