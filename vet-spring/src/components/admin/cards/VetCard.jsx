@@ -2,7 +2,7 @@ import { useState } from "react";
 import EditVetButton from "../buttons/EditVetButton";
 
 const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber } = vet;
+    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber, hireDate } = vet;
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -27,6 +27,7 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
                     <p>Phone: {phoneNumber}</p>
                     <p>Specialty: {specialty}</p>
                     <p>License: {licenseNumber}</p>
+                    <p>Hire Date: {hireDate}</p>
                 </div>
             )}
         </div>
