@@ -10,6 +10,7 @@ public record VetResponseDTO(
         String phoneNumber,
         String specialty,
         String licenseNumber,
-        LocalDate hireDate
+        LocalDate hireDate,
+        long accountId
 ) {
 }

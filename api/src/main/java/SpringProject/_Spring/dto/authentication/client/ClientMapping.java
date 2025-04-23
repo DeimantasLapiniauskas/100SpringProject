@@ -23,7 +23,8 @@ public class ClientMapping {
                 client.getAccount().getEmail(),
                 client.getFirstName(),
                 client.getLastName(),
-                client.getPhoneNumber()
+                client.getPhoneNumber(),
+                client.getAccountId()
         );
     }
 

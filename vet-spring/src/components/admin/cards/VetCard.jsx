@@ -1,8 +1,9 @@
 import { useState } from "react";
 import EditVetButton from "../buttons/EditVetButton";
+import DeleteAccountButton from "../buttons/DeleteAccountButton";
 
 const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber, hireDate } = vet;
+    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber, hireDate, accountId } = vet;
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -15,6 +16,12 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
                 </div>
                 <EditVetButton
                     vet={vet}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
+                <DeleteAccountButton
+                    id={accountId}
                     getPage={getPage}
                     currentPage={currentPage}
                     pageSize={pageSize}
