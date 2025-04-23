@@ -23,7 +23,7 @@ export const ServiceList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto">
+      <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1400px] mx-auto pt-1 md:pt-2">
         <div className="flex w-full justify-end gap-5">
           {/* <FilterPanel /> */}
           {/* <SelectPanel /> */}

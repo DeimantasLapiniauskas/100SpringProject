@@ -80,3 +80,10 @@ export default BandytiDesign;
 //Comment for commit for KOM-124 13:28 11/04/2025 before merge main
 
 //Comment for initial commit for KOM-136_alt 12:51 23/04/2025
+
+//Comment containing problem if pawss background images and NavBar are not in full harmony, like some pieces of pawss are hanging just above Navbar as if cut 90% (such image does not look good)
+//Solution - remove min-h-screen
+// return (
+//   <>
+//     {/* MAIN WRAPPER BELOW NAVBAR */}
+//     <div className="w-full min-h-screen">
