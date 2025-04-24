@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EditClientButton from "../buttons/EditClientButton";
 import DeleteAccountButton from "../buttons/DeleteAccountButton";
+import ChangeAccountPasswordButton from "../buttons/ChangeAccountPasswordButton";
 
 
 const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
@@ -24,6 +25,12 @@ const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
                 />
                 <DeleteAccountButton
                     id={accountId}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
+                <ChangeAccountPasswordButton
+                    accountId={accountId}
                     getPage={getPage}
                     currentPage={currentPage}
                     pageSize={pageSize}

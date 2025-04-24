@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EditVetButton from "../buttons/EditVetButton";
 import DeleteAccountButton from "../buttons/DeleteAccountButton";
+import ChangeAccountPasswordButton from "../buttons/ChangeAccountPasswordButton";
 
 const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
     const { firstName, lastName, email, phoneNumber, specialty, licenseNumber, hireDate, accountId } = vet;
@@ -22,6 +23,12 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
                 />
                 <DeleteAccountButton
                     id={accountId}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
+                <ChangeAccountPasswordButton
+                    accountId={accountId}
                     getPage={getPage}
                     currentPage={currentPage}
                     pageSize={pageSize}
