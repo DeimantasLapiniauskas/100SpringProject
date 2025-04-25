@@ -71,7 +71,7 @@ export const ServiceList = () => {
             <CatSilhouetteGradient className="w-40 absolute z-10 bottom-[15px] " />
             <NavLink
               to={`/services/add`}
-              className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 transform transition duration-700 text-info-content border-1 border-[#854685]"
+              className="btn bg-gradient-to-br to-indigo-700 hover:scale-110 z-10 transform transition duration-700 text-info-content border-1 border-[#854685]"
             >
               Add Service
             </NavLink>

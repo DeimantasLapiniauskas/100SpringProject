@@ -48,7 +48,7 @@ public class ServiceAtClinicController extends BaseController {
         service.setName(serviceDTO.name());
         service.setDescription(serviceDTO.description());
         service.setPrice(serviceDTO.price());
-
+        service.setImageUrl(serviceDTO.imageUrl());
         ServiceAtClinicResponseDTO newService = ServiceAtClinicMapper.toServiceAtClinicDTO(serviceAtClinicService.saveService(service));
 
         return created(newService, "Service created successfully");
@@ -85,7 +85,6 @@ public class ServiceAtClinicController extends BaseController {
 
         String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         String fileUrl = baseUrl + "/api/images/" + fileName;
-
         return ok(fileUrl, "Image uploaded successfully");
     }
 

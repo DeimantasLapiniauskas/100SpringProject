@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { NavLink } from "react-router";
 import api from "@/utils/api";
 
+
 export const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -58,35 +59,36 @@ export const Appointment = () => {
 
   return (
     <div>
-      <div className="flex flex-row justify-start m-6 items-baselin">
+      <div className="flex flex-row justify-start m-6 items-baselin mb-12 mt-10 ml-10">
         <h1 className="text-2xl mr-6 text-black">Appointment history</h1>
         <button
-          className="custom-white-btn !w-fit"
+          className="custom-white-btn !w-fit border-2 border-[#97a0f1] font-bold shadow-sm shadow-violet-400 ml-5"
           onClick={() => setVisible(true)}
         >
           New Appointment
         </button>
       </div>
 
+    
       <div className="bg-white m-6 p-6 rounded-box text-black">
-        <div className="grid grid-cols-8 border-b border-[#97a0f1]">
-          <p>Appointment Date</p>
-          <p>Pet</p>
-          <p>Price</p>
-          <p>Veterinarian</p>
-          <p>Services</p>
-          <p>Notes</p>
-          <p>Status</p>
+        <div className="grid grid-cols-8 border-b-2 border-[#97a0f1] font-bold text-xl">
+          <p className="mb-4">Appointment Date</p>
+          <p className="mb-4">Pet</p>
+          <p className="mb-4">Price</p>
+          <p className="mb-4">Veterinarian</p>
+          <p className="mb-4">Services</p>
+          <p className="mb-4">Notes</p>
+          <p className="mb-4">Status</p>
         </div>
         {appointments.map((a) => (
           <div
-            className="grid-cols-8 grid border-b border-[#97a0f1]"
+            className="grid-cols-8 grid border-b-2 border-[#97a0f1] mt-3"
             key={a.id}
           >
             <p>{a.appointmentDate.replace("T", " ")}</p>
             <div>
               <p>{a.petDTO.name}</p>
-              <p className="text-slate-500 pt-1">{a.petDTO.species}</p>
+              <p className="text-slate-500 pt-1 mb-3">{a.petDTO.species}</p>
             </div>
             <p>{a.price}</p>
             <div>
@@ -106,13 +108,13 @@ export const Appointment = () => {
             <div className="flex flex-row">
               <NavLink
                 to={`/appointments/client/${a.id}`}
-                className="btn bg-yellow-500 w-20"
+                className="btn bg-yellow-300 w-20 shadow-sm shadow-amber-500 hover:bg-yellow-400 border-transparent mr-1.5"
               >
                 Change Data
               </NavLink>
               <button
                 onClick={() => closeAppointment(a.id)}
-                className=" btn bg-red-500 w-20 "
+                className=" btn bg-red-500 w-20 shadow-sm shadow-red-800 hover:bg-red-600 border-transparent"
               >
                 Cancel
               </button>
@@ -130,7 +132,11 @@ export const Appointment = () => {
                   </button>
                 )}
             </div>
+
+
           </div>
+
+          
         ))}
       </div>
 

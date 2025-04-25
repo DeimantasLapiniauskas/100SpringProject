@@ -1,4 +1,4 @@
-package SpringProject._Spring.appointmentControllerTest.appointmentConfirmationController;
-
-public class AppointmentConfirmPUTTest {
-}
+//package SpringProject._Spring.appointmentControllerTest.appointmentConfirmationController;
+//
+//public class AppointmentConfirmPUTTest {
+//}

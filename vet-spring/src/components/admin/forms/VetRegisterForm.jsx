@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 import { addVet } from "@/utils/helpers/addEditVet";
 import ModalContext from "@/utils/helpers/modalContext";
 
-
-//not used right now, when will be used needs to be moved in another folder
 const VetRegisterForm = ({ getPage, currentPage, pageSize }) => {
     const { setAddModalID } = useContext(ModalContext);
 

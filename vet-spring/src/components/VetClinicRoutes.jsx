@@ -24,7 +24,9 @@ import { PostView } from "@/pages/posts/PostView.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
 import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
+import ProductList from "@/pages/products/ProductList.jsx";
 import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
+import { ServiceForVet } from "@/pages/services/ServiceForVet.jsx";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
 import { AddReviewPage } from "@/pages/reviews/AddReviewPage.jsx";
 import { ReviewsList } from "@/pages/reviews/ReviewsList.jsx";
@@ -113,26 +115,41 @@ const VetClinicRoutes = () => {
                       element={<AdminPage initialList="clients" />}
                     />
                   </Route>
-                  <Route path="/services" element={<ServiceList />} />
-                  <Route path="services/add" element={<ServiceAdd />} />
-                  <Route path="services/edit/:id" element={<ServiceUpdate />} />
-                  {/* <Route path="pets/view/:id" element={<ViewPet />} /> */}
-                  <Route
-                    path="/profile"
-                    element={
-                      <AuthGuard>
-                        <Profile />
-                      </AuthGuard>
-                    }
-                  />
-                  <Route path="/design" element={<BandytiDesign />} />
-                  <Route path="/designh" element={<BandytiDesignHomePage />} />
-                  <Route path="/designh1" element={<BandytiDesignH1 />} />
-                  <Route path="/designh2" element={<BandytiDesignH2 />} />
-                  <Route path="/appointments" element={<Appointment />} />
-                  <Route
-                    path="/appointments/client/:id"
-                    element={<UpdateData />}
+                    <Route
+                        path="/products"
+                        element={
+                            <AuthGuard>
+                                <ProductList />
+                            </AuthGuard>
+                        }
+                    >
+                    </Route>
+                  <Route path="/services" element={<ServiceList />}/>
+              <Route path="services/add" element={
+                <ServiceForVet>
+                <ServiceAdd />
+                </ServiceForVet>
+                } />
+              <Route path="services/edit/:id" element={
+                <ServiceForVet>
+                <ServiceUpdate />
+                </ServiceForVet>
+                } />
+
+              <Route
+                path="/profile"
+                element={
+                  <AuthGuard>
+                    <Profile />
+                  </AuthGuard>
+                }
+              />
+              <Route path="/design" element={<BandytiDesign />} />
+              <Route path="/designh" element={<BandytiDesignHomePage />} />
+              <Route path="/designh1" element={<BandytiDesignH1 />} />
+              <Route path="/designh2" element={<BandytiDesignH2 />} />
+              <Route path="/appointments" element={<Appointment />} />
+              <Route path="/appointments/client/:id" element={<UpdateData />}
                   />
                 </Route>
                 <Route path={"*"} element={<NotFound />} />
