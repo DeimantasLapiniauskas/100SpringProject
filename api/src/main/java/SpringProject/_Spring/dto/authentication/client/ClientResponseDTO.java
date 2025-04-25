@@ -7,7 +7,8 @@ public record ClientResponseDTO(
         AccountResponseDTO accountResponseDTO,
         String firstName,
         String lastName,
-        String phoneNumber
+        String phoneNumber,
+        long accountId
 ) {
 
 }
