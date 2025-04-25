@@ -32,7 +32,10 @@ import reviewDogy from "../../assets/images/reviewDogy.png";
 import { FloatingReviewBubbles } from "./FloatingReviewBubbles";
 import { ChevronsRight } from "lucide-react";
 import reviewParrot from "../../assets/images/vet-parrot.png";
-import reviewHamster from "../../assets/images/vet-hamster.png"
+import reviewHamster from "../../assets/images/vet-hamster.png";
+import { useEffect } from "react";
+import { getAllEntitys } from "@/utils/helpers/entity";
+import vetDoc from "../../assets/icons/vetDoc.png"
 
 export const AddReviewPage = ({ initialData, getReviewError }) => {
   const form = useForm({
@@ -46,6 +49,9 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
 
   const [error, setError] = useState(getReviewError ? getReviewError : null);
   const [message, setMessage] = useState(null);
+  const [fetching, setIsFetching] = useState(false);
+  const [reviews, setRewies] = useState([]);
+
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
   const isMounted = useIsMounted();
   const navigate = useNavigate();
@@ -99,6 +105,32 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
     }
   };
 
+  useEffect(() => {
+    const getAllReviews = async () => {
+      try {
+        setIsFetching(true);
+        const response = await getAllEntitys("reviews");
+        if (!isMounted) return;
+
+        const { data } = response.data;
+
+        if (data) {
+          setRewies(data.reviewResponseListDTO);
+          setIsFetching(false);
+        }
+      } catch (error) {
+        if (!isMounted) return;
+
+        const errorMessage =
+          error.response?.data?.errorMessage ??
+          error.message ??
+          "Unknown error";
+        console.log(errorMessage);
+      }
+    };
+    getAllReviews();
+  }, []);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -114,48 +146,12 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
     return <Redirecting />;
   }
 
-  const myReviewsFromBackend = [
-    { id: 1, author: "Emma", comment: "Amazing care! My cat loved the vet 🐱" },
-    { id: 2, author: "Lukas", comment: "Super friendly staff & clean clinic!" },
-    { id: 3, author: "Sarah", comment: "My dog was treated like royalty 🐶👑" },
-    {
-      id: 4,
-      author: "Lukas",
-      comment:
-        "Super friendly staff Super friendly staff & clean clinicSuper friendly staff & clean clinic !💥⚠️",
-    },
-    {
-      id: 5,
-      author: "Lukas",
-      comment: "Super friendly staff & clean clinic!✅🔙",
-    },
-    {
-      id: 6,
-      author: "Lukas",
-      comment:
-        "Super friendly staff Super friendly staff & clean clinicSuper friendly staff & clean clinic !🚀⭐",
-    },
-    {
-      id: 7,
-      author: "Lukas",
-      comment:
-        "Super friendly staff & Super friendly staff & clean clinic Super friendly staff & clean clinic Super friendly staff & clean clinicSuper friendly staff & clean clinic!❌📛",
-    },
-    {
-      id: 8,
-      author: "Lukas",
-      comment:
-        "Super friendly staff Super friendly staff & clean clinicSuper friendly staff & clean clinicSuper friendly staff & clean clinicv !🤣😂",
-    },
-    { id: 9, author: "Lukas", comment: "Super friendly staff!❤️" },
-  ];
-
   return (
     <div
       className="flex flex-col items-end  px-1 py-1 sm:py-2 sm:px-2 md:px-3 md:py-3 lg:px-4 lg:py-4 
     h-screen relative bg-gradient-to-b via-transparent xs:via-sky-400 to-sky-400 xs:to-transparent"
-    >
-      <FloatingReviewBubbles myReviewsFromBackend={myReviewsFromBackend} />
+    ><img src={vetDoc} alt="vetDoc" className=" absolute w-17 left-[30%] " />
+      <FloatingReviewBubbles reviews={reviews} />
       <div className="flex items-center flex-col w-full xs:w-2/3 md:w-1/2 relative">
         <img
           src={reviewParrot}
@@ -167,9 +163,13 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
           alt="reviewDogy"
           className="w-30 sm:w-40 md:w-50 lg:w-60 z-10"
         />
-         <div className="relative w-full">
-           <img src={reviewHamster} alt="reviewHamster" className="absolute w-8 sm:w-10 md:w-12 lg:w-14 top-[-2.2rem] sm:top-[-2.75rem] md:top-[-3.35rem] lg:top-[-4rem] left-9 "/>
-                   <div className="animate-gradient bg-[linear-gradient(270deg,_#fcda2e,_#ffffff,_#38bdf8)] text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
+        <div className="relative w-full">
+          <img
+            src={reviewHamster}
+            alt="reviewHamster"
+            className="absolute w-8 sm:w-10 md:w-12 lg:w-14 top-[-2.2rem] sm:top-[-2.75rem] md:top-[-3.35rem] lg:top-[-4rem] left-9 "
+          />
+          <div className="animate-gradient bg-[linear-gradient(270deg,_#fcda2e,_#ffffff,_#38bdf8)] text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
             <h1 className="responsive-text-lg font-semibold text-amber-700 pb-3 sm:pb-4 md:pb-5">
               We’d Love to Hear Your Feedback
             </h1>
@@ -263,15 +263,17 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
                 </div>
               </Form>
             </FormProvider>
-                   </div>
-         </div>
+          </div>
+        </div>
       </div>
-      <p className="responsive-text-sm text-yellow-700 font-semibold text-xl-start w-full px-2 md:px-4 hover:underline inline-flex items-center relative top-[-1.5%]">
-        <span>
-          <ChevronsRight className="w-4 sm:w-5 md:w-6" />
-        </span>
-        Read more Reviews
-      </p>
+      <NavLink to="/reviews" className="responsive-text-sm text-yellow-700 font-semibold text-xl-start w-full px-2 md:px-4  relative top-[-1.5%]">
+        <p className="inline-flex hover:underline items-center ">
+          <span>
+            <ChevronsRight className="w-4 sm:w-5 md:w-6" />
+          </span>
+          Read more Reviews
+        </p>
+      </NavLink>
     </div>
   );
 };

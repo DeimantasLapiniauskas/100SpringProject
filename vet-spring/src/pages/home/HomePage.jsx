@@ -47,7 +47,7 @@ export const HomePage = () => {
                 by a singular purpose: to nurture Lithuania and humankind by
                 advancing care for animals.
               </p>
-              <div className=" absolute bottom-89 left-17 xs:relative xs:top-[0.5rem] xs:left-[-1rem] sm:top-[0rem] sm:left-[-1.5rem]">
+              <div className=" absolute bottom-105 left-17 xs:relative xs:top-[0.5rem] xs:left-[-1.22rem] sm:top-[0rem] sm:left-[-1.5rem]">
                 <ReviewsPanel/>
               </div>
           </div>

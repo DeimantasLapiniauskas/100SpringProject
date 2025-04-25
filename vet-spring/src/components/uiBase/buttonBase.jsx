@@ -6,8 +6,8 @@ const buttonVariants = cva(
   {
     variants: {
       size: {
-        sm: "text-[8px] sm:text-[10px] md:text-xs xs:text-sm h-5 sm:h-6 md:h-7",
-        md : "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-8 md:h-9",
+        sm: "text-[9px] sm:text-[10px] md:text-xs lg:text-sm h-5 sm:h-6 md:h-7",
+        md: "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-8 md:h-9",
         responsive2 : "text-xs px-2 sm:px-3 md:px-4 sm:text-sm md:text-base text-info-content font-semibold "
       },
       variant: {

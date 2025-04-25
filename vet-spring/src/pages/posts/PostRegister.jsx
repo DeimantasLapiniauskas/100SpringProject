@@ -103,10 +103,7 @@ export const PostRegister = ({ initialData, getPostError }) => {
 
       if (data2 && success) {
         setStatus(Success);
-
-        // if (isEditMode) {
         setMessage(message);
-        // toast.dismiss();
         toast.success(message);
         if (isEditMode) {
           form.reset({
@@ -120,14 +117,6 @@ export const PostRegister = ({ initialData, getPostError }) => {
         }
         setStatus(Navigating);
         navigate("/posts");
-        // } else {
-        //   setMessage(message);
-        //   // toast.dismiss();
-        //   toast.success(message);
-        //   form.reset();
-        //   setStatus(Navigating);
-        //   navigate("/posts");
-        // }
       } else {
         setStatus(Unknown);
         setPreviewUrl(null);
