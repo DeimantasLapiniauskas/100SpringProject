@@ -1,4 +1,4 @@
-package SpringProject._Spring.model.ContactMessages;
+package SpringProject._Spring.model.contactMessage;
 
 import SpringProject._Spring.model.VetClinic;
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "contact_messages")
-public class ContactMessages {
+public class ContactMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class ContactMessages {
     @Column(name = "created_at")
     private Timestamp created_at;
 
-    public ContactMessages(long subject_type_id, String email, String name, String message, Timestamp created_at) {
+    public ContactMessage(long subject_type_id, String email, String name, String message, Timestamp created_at) {
         this.subject_type_id = subject_type_id;
         this.email = email;
         this.name = name;
@@ -40,7 +40,7 @@ public class ContactMessages {
         this.created_at = created_at;
     }
 
-    public ContactMessages() {
+    public ContactMessage() {
 
     }
 

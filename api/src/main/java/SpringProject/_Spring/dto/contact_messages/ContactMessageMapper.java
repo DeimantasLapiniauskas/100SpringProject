@@ -1,37 +1,35 @@
 package SpringProject._Spring.dto.contact_messages;
 
-import SpringProject._Spring.dto.contact_messages.subject_types.SubjectTypesResponseDTO;
-import SpringProject._Spring.model.ContactMessages.ContactMessages;
+import SpringProject._Spring.dto.contact_messages.subject_types.SubjectTypeResponseDTO;
+import SpringProject._Spring.model.contactMessage.ContactMessage;
+import SpringProject._Spring.model.contactMessage.SubjectTypes;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ContactMessMapper {
+public class ContactMessageMapper {
 
-//    public static ContactMessResponseDTO toContactMessResponseDTO(ContactMessages contactMessages, SubjectTypesResponseDTO subjectTypesResponseDTO) {
-//        return new ContactMessResponseDTO(contactMessages.getId(), subjectTypesResponseDTO ,contactMessages.getEmail(),
-//                contactMessages.getName(), contactMessages.getMessage(), contactMessages.getCreated_at());
-//    }
-
-    public static ContactMessResponseDTO toContactMessResponseDTO(ContactMessages contactMessages) {
-        return new ContactMessResponseDTO(contactMessages.getId(),contactMessages.getEmail(),
-                contactMessages.getName(), contactMessages.getMessage(), contactMessages.getCreated_at());
+    public static ContactMessageResponseDTO toContactMessageResponseDTO(ContactMessage contactMessage) {
+        return new ContactMessageResponseDTO(contactMessage.getId(), contactMessage.getEmail(),
+                contactMessage.getName(), contactMessage.getMessage(), contactMessage.getCreated_at());
     }
 
-    public static ContactMessages toContactMessages(ContactMessRequestDTO contactMessRequestDTO) {
-        return new ContactMessages( contactMessRequestDTO.subject_type_id(),
-                                    contactMessRequestDTO.email(),
-                                    contactMessRequestDTO.name(),
-                                    contactMessRequestDTO.message(),
-                                    new Timestamp(System.currentTimeMillis()));
+    public static ContactMessage toContactMessages(ContactMessageRequestDTO contactMessageRequestDTO) {
+        return new ContactMessage(contactMessageRequestDTO.subject_type_id(),
+                contactMessageRequestDTO.email(),
+                contactMessageRequestDTO.name(),
+                contactMessageRequestDTO.message(),
+                new Timestamp(System.currentTimeMillis()));
     }
 
-
-    
-    public static List<ContactMessResponseDTO> toContactMessResponseDTOList(List<ContactMessages> contactMessages) {
+    public static List<ContactMessageResponseDTO> toContactMessageResponseDTOList(List<ContactMessage> contactMessages) {
         return contactMessages.stream()
-                .map(ContactMessMapper::toContactMessResponseDTO)
+                .map(ContactMessageMapper::toContactMessageResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public static SubjectTypeResponseDTO toSubjectTypeDTO(SubjectTypes subjectTypes) {
+        return new SubjectTypeResponseDTO(subjectTypes.getId(), subjectTypes.getName());
     }
 }

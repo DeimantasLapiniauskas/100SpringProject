@@ -1,4 +1,4 @@
-package SpringProject._Spring.model.ContactMessages;
+package SpringProject._Spring.model.contactMessage;
 
 import jakarta.persistence.*;
 
