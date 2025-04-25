@@ -29,7 +29,7 @@ public class ContactMessagesController {
     }
 
     @Operation(summary = "Create a new contact messages")
-    @PostMapping("/contactmessage")
+    @PostMapping("/contact")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> addContactMessage(@Valid @RequestBody ContactMessageRequestDTO contactDTO) {
 
@@ -38,14 +38,14 @@ public class ContactMessagesController {
     }
 
     @Operation(summary = "Get all contact messages")
-    @GetMapping("/contactmessage")
+    @GetMapping("/contact")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<?> getAllContactMessages() {
         return ok(ContactMessageMapper.toContactMessageResponseDTOList(contactMessageService.getAllContactMessages()));
     }
 
     @Operation(summary = "Get ContactMessage by Id")
-    @GetMapping("/contactmessage/{id}")
+    @GetMapping("/contact/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ContactMessageResponseDTO> getContactMessageById(@PathVariable long id) {
         return contactMessageService.getContactMessagesById(id).map(contactMessages -> ResponseEntity.ok(
