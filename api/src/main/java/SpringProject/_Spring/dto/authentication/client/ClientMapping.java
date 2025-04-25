@@ -1,5 +1,6 @@
 package SpringProject._Spring.dto.authentication.client;
 
+import SpringProject._Spring.dto.authentication.account.AccountMapper;
 import SpringProject._Spring.model.authentication.Client;
 import org.springframework.data.domain.Page;
 
@@ -20,7 +21,7 @@ public class ClientMapping {
     public static ClientResponseDTO toClientResponseDTO(Client client) {
         return new ClientResponseDTO(
                 client.getId(),
-                client.getAccount().getEmail(),
+                AccountMapper.toAccountResponseDTO(client.getAccount()),
                 client.getFirstName(),
                 client.getLastName(),
                 client.getPhoneNumber(),

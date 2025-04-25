@@ -28,6 +28,9 @@ import ProductList from "@/pages/products/ProductList.jsx";
 import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
 import { ServiceForVet } from "@/pages/services/ServiceForVet.jsx";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
+import { AddReviewPage } from "@/pages/reviews/AddReviewPage.jsx";
+import { ReviewsList } from "@/pages/reviews/ReviewsList.jsx";
+import { EditReviewPage } from "@/pages/reviews/EditReviewPage.jsx";
 
 const VetClinicRoutes = () => {
   return (
@@ -62,14 +65,39 @@ const VetClinicRoutes = () => {
                     }
                   />
                   <Route
-                    path="/posts/edit/:postId"
+                    path="/posts/edit/:entityId"
                     element={
                       <AuthGuard>
                         <PostEditPage />
                       </AuthGuard>
                     }
                   />
-                  <Route path="/posts/view/:postId" element={<PostView />} />
+                  <Route path="/posts/view/:entityId" element={<PostView />} />
+                  <Route
+                    path="/reviews"
+                    element={
+                      <AuthGuard>
+                        <ReviewsList />
+                      </AuthGuard>
+                    }
+                  />
+                  <Route path="reviews" element={<ReviewsList/>} />
+                  <Route
+                    path="/reviews/leaveReview"
+                    element={
+                      <AuthGuard>
+                        <AddReviewPage />
+                      </AuthGuard>
+                    }
+                  />
+                     <Route
+                    path="/reviews/edit/:reviewId"
+                    element={
+                      <AuthGuard>
+                        <EditReviewPage />
+                      </AuthGuard>
+                    }
+                  />
                   <Route
                     path="/adminpage"
                     element={

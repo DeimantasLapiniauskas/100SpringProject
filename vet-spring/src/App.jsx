@@ -5,7 +5,7 @@ import { CustomToaster } from "@/components/uiBase/CustomToaster";
 
 const App = () => {
   return (
-    <div className="px-5 pb-5">
+    <div className="px-2 pb-2">
         <CustomToaster reverseOrder={false} />
         <VetClinicRoutes />
     </div>

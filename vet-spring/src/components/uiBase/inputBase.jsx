@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
 
 const inputVariants = cva(
-  "flex w-full rounded border px-3 py-2 shadow-lg  placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2",
+  "flex w-full rounded border px-3 py-2 shadow-lg  placeholder:text-muted-foregroundfocus:outline-none focus:ring-2 focus:ring-offset-2",
   {
     variants: {
       size: {
