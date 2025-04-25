@@ -1,5 +1,7 @@
 package SpringProject._Spring.dto.authentication.vet;
 
+import java.time.LocalDate;
+
 public record VetResponseDTO(
         long id,
         String email,
@@ -7,6 +9,8 @@ public record VetResponseDTO(
         String lastName,
         String phoneNumber,
         String specialty,
-        String licenseNumber
+        String licenseNumber,
+        LocalDate hireDate,
+        long accountId
 ) {
 }

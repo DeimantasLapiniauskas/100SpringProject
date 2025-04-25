@@ -235,7 +235,7 @@ export const ListProvider = ({ children }) => {
     searchParams,
   ]);
 
-  console.log(defaultPageSize);
+  console.log(pagination.content);
 
   return (
     <ListContext.Provider
