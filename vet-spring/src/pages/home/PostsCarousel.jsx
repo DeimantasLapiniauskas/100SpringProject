@@ -55,7 +55,7 @@ const PostCarousel = () => {
       >
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
-            <div className="text-center bg-gradient-to-br from-blue-200  to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
+            <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
               <h2
                 className={`text-base md:px-2 block leading-[22px] font-semibold min-h-[48px] max-h-[48px] overflow-hidden break-words ${
                   post.postType === "Sale"
@@ -83,7 +83,7 @@ const PostCarousel = () => {
                   : post.postType}
               </h3>
               <div className={post.imageUrl ? "grid grid-cols-3" : ""}>
-                <p className=" leading-[18px] text-left overflow-hidden min-h-[115px] max-h-[115px] text-sm col-span-2 break-words p-1">
+                <p className=" leading-[18px] text-left overflow-hidden h-[115px] text-sm col-span-2 break-words p-1">
                   {post.imageUrl
                     ? post.content.length > 150
                       ? post.content.slice(0, 147) + "..."

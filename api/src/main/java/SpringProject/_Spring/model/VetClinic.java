@@ -33,6 +33,8 @@ public class VetClinic {
         this.email = email;
         this.phone = phone;
         this.reviews = new ArrayList<>();
+        this.appointments = new ArrayList<>();
+        this.vets= new ArrayList<>();
     }
 
     public VetClinic() {
@@ -102,4 +104,6 @@ public class VetClinic {
     public void setVets(List<Vet> vets) {
         this.vets = vets;
     }
+
+
 }
