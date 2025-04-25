@@ -15,7 +15,7 @@ const App = () => {
         style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
       ></div>
 
-      <div className="relative px-2 pb-2">
+      <div className="relative z-10 px-2 pb-2">
         <CustomToaster reverseOrder={false} />
         <VetClinicRoutes />
       </div>
