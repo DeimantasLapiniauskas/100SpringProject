@@ -150,7 +150,7 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
     <div
       className="flex flex-col items-end  px-1 py-1 sm:py-2 sm:px-2 md:px-3 md:py-3 lg:px-4 lg:py-4 
     h-screen relative bg-gradient-to-b via-transparent xs:via-sky-400 to-sky-400 xs:to-transparent"
-    ><img src={vetDoc} alt="vetDoc" className=" absolute w-17 left-[30%] " />
+    ><img src={vetDoc} alt="vetDoc" className=" absolute w-15 xs:w-20 sm:w-25 md:w-30 lg:w-35 bottom-57 xs:top-3 left-[50%] xs:left-[10%] md:left-[20%] " />
       <FloatingReviewBubbles reviews={reviews} />
       <div className="flex items-center flex-col w-full xs:w-2/3 md:w-1/2 relative">
         <img
