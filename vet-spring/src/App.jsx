@@ -6,7 +6,9 @@ import pawssBackgroundImage from "/src/assets/icons/pawss_for_background_spaced_
 
 const App = () => {
   return (
+    
     <div className="relative min-h-screen">
+      {/* Above code has to have relative and min-h-screen ; it ensures pawss images cover whole page */}
 
       {/* Paws background globally */}
       <div
@@ -14,7 +16,7 @@ const App = () => {
         style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
       ></div>
 
-      {/* Content sits above paw background */}
+      {/* Content sits above paw background; relative is essential here for that. */}
       <div className="relative px-2 pb-2">
         <CustomToaster reverseOrder={false} />
         <VetClinicRoutes />
