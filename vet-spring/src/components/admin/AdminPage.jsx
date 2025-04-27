@@ -62,4 +62,5 @@ const AdminPage = ({ initialList }) => {
 
 export default AdminPage;
 
-//bg-[length:6rem_6rem]
+////bg-[length:6rem_6rem]
+//
