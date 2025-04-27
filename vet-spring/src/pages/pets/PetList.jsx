@@ -119,7 +119,6 @@ export const PetList = () => {
             <Error error={error} isHidden={!error} />
           </div>
         </ThemeContext.Provider>
-      </div>
     </>
   );
 };
