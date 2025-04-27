@@ -6,7 +6,7 @@ import pawssBackgroundImage from "/src/assets/icons/pawss_for_background_spaced_
 
 const App = () => {
   return (
-    <div className="relative w-full min-h-screen">
+    <div>
 
       {/* Paws background globally */}
       <div
@@ -18,7 +18,8 @@ const App = () => {
       <div className="relative px-2 pb-2">
         <CustomToaster reverseOrder={false} />
         <VetClinicRoutes />
-      </div>
+      </div> 
+      
     </div>
   );
 };
