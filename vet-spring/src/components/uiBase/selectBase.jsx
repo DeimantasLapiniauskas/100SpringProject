@@ -19,8 +19,8 @@ const selectTriggerVariants = cva(
           "text-[8px] sm:text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75",
       },
       variant: {
-        new: "gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50",
-        default: "shadow-lg",
+        new: "gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 shadow-md shadow-white",
+        default: "shadow-lg ",
       },
       intent: {
         default: "border-blue-500 focus:ring-blue-500",
@@ -52,7 +52,7 @@ const selectItemVariants = cva(
           "text-[10px] px-2 py-1 sm:text-xs sm:px-2.5 sm:py-1.25 md:text-sm md:px-4 md:py-1.5 lg:px-5 lg:py-1.75 ",
       },
       intent: {
-        blue: " text-info-content hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px] ",
+        blue: " hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px] ",
       },
     },
     defaultVariants: {
@@ -68,13 +68,18 @@ const selectContentVariants = cva(
     variants: {
       variant: {
         default: "border-blue-500 bg-white",
-        blueSoft:
-          " z-50 overflow-auto border-blue-500 bg-blue-200 shadow-lg rounded-md",
+        blueSoft: " z-50 overflow-auto border-blue-500 bg-blue-200  rounded-md",
+        blueGradient:
+          "z-50 overflow-auto border-blue-400 bg-gradient-to-br from-blue-400 to-indigo-600  shadow-lg rounded-md",
       },
       size: {},
+      intent: {
+        default: "shadow-lg",
+      },
     },
     defaultVariants: {
       variant: "blueSoft",
+      intent: "default",
     },
   }
 );
@@ -132,14 +137,17 @@ const SelectTrigger = React.forwardRef((props = {}, ref) => {
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectContent = React.forwardRef(
-  ({ className, variant, size, ...props }, ref) => (
+  ({ className, variant, size, intent, ...props }, ref) => (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         ref={ref}
         side="bottom"
         position="popper"
         style={{ width: "var(--radix-select-trigger-width)" }}
-        className={cn(selectContentVariants({ variant, size }), className)}
+        className={cn(
+          selectContentVariants({ variant, size, intent }),
+          className
+        )}
         {...props}
       >
         <SelectPrimitive.Viewport className="p-1">

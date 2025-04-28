@@ -9,10 +9,11 @@ import { useUI } from "@/context/UIContext.jsx";
 import { PaginationPanel } from "@/components/features/PaginationPanel.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
 import { SelectPageSizePanel } from "@/components/features/SelectPageSizePanel.jsx";
-// import { FilterPanel } from "@/components/features/FilterPanel.jsx";
+import { FilterPanel } from "@/components/features/FilterPanel.jsx";
 import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles.js";
 import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient.jsx";
 import vetServiceIcon from "../../assets/icons/vetServiceIcon.svg"
+import { SearchBarPanel } from "@/components/features/SearchBarPanel.jsx";
 
 export const ServiceList = () => {
 
@@ -21,12 +22,16 @@ export const ServiceList = () => {
   const { isLoading, isEmpty, isError } = useUI();
   const roles = useCheckAdminAndVetRoles();
 
+  const filterFields = [{label: "All", value: "All"}, {label: "name", value: "name"}, {label: "price", value: "price"}]
+  const pageSizes = [10, 15, 20]
+
   return (
     <>
       <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8">
         <div className="flex w-full justify-end gap-5">
-          {/* <FilterPanel /> */}
-          {/* <SelectPageSizePanel /> */}
+          <SearchBarPanel/>
+          <FilterPanel filterFields={filterFields}/>
+          <SelectPageSizePanel pageSizes={pageSizes}/>
         </div>
         <div className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}>
           {/* <div className="flex gap-1 bottom-[60%]">

@@ -30,29 +30,25 @@ export const ListProvider = ({ children }) => {
   const realPath = useRealPath();
   const localStoragePath = (realPath || "").replace(/\//g, "");
 
-  const defaultValues = useMemo(() => {
-    return {
-      pageSize: parseInt(searchParams.get("size")) ||
+      const defaultpageSize = parseInt(searchParams.get("size")) ||
         parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 
-        (currentPath === "posts" ? 6 : 12),
-      currentPage: parseInt(searchParams.get("page")) ||
+        (currentPath === "posts" ? 6 : currentPath === "services" ? 10 : 12)
+      const defaultcurrentPage =  parseInt(searchParams.get("page")) ||
         parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) ||
-        0,
-      sorted: searchParams.get("sort") ||
+        0
+      const defaultsorted = searchParams.get("sort") ||
         localStorage.getItem(`${localStoragePath} - sorted`) ||
-        null,
-      searchValue: searchParams.get("search") ||
+        null
+      const defaultsearchValue = searchParams.get("search") ||
         localStorage.getItem(`${localStoragePath} - searchValue`) ||
-        "",
-    };
-  }, [searchParams, localStoragePath]);
-
+        ""
+  
   const initialPagination = {
-    currentPage: defaultValues.currentPage,
+    currentPage: defaultcurrentPage,
     totalPages: 0,
-    pageSize: defaultValues.pageSize,
-    sorted: defaultValues.sorted,
-    searchValue: defaultValues.searchValue,
+    pageSize: defaultpageSize,
+    sorted: defaultsorted,
+    searchValue: defaultsearchValue,
     error: null,
     content: [],
     message: null,

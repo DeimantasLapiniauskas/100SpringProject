@@ -29,7 +29,8 @@ export const SelectPageSizePanel = ({ pageSizes }) => {
           >
             <SelectValue placeholder="Per page" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent
+          variant="blueGradient">
             {pageSizes.map((num) => (
               <SelectItem key={num} value={String(num)}>
                 {num} per page

@@ -25,7 +25,7 @@ export const FilterPanel = ({ filterFields }) => {
         <p className="text-[8px] sm:text-[10px] md:text-xs text-info-content">
           Filter by:
         </p>
-        <SelectTrigger className="focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-blue-500 rounded-full">
+        <SelectTrigger className="focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-blue-500 rounded-full shadow-sm shadow-white">
           <FilterIcon />
         </SelectTrigger>
         <SelectContent className="z-50 w-[85px] sm:w-[105px] md:w-[125px] lg:w-[130px] overflow-auto rounded-md border border-blue-400 bg-gradient-to-br from-blue-300 via-sky-300 to-indigo-300 shadow-lg relative right-8 xs:right-8.5 sm:right-9 md:right-10.5 lg:right-12">
