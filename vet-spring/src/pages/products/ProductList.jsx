@@ -36,7 +36,7 @@ const ProductList = () => {
     const roles = useCheckRoles();
 
     return (
-        <div className="p-4 justify-center mx-[7rem] mt-[1rem]">
+        <div className="p-4 justify-center">
             <ModalContext.Provider value={{ activeModalID, setModalID, addModalID, setAddModalID, editModalID, setEditModalID, deleteModalID, setDeleteModalID }}>
                 <div className="flex w-full justify-center gap-1.5 sm:gap-2.5 md:gap-3.5 relative mb-[4rem]">
                     {/* <button
@@ -64,7 +64,7 @@ const ProductList = () => {
                 {isLoading ? <Loading /> : ""}
                 {isError ? <Error error={error} isHidden={!error} /> : ""}
                 {isBadRequest ? <BadPageRequest /> : ""}
-                <ul className="w-full grid grid-cols-3 gap-4 p-4 divide-gray-200">
+                <ul className="justify-items-center divide-gray-200 grid sm:grid-cols-1 gap-y-4 row-gap-10 md:grid-cols-2  lg:grid-cols-3  ">
                     {products.map((product) => (
                         <ProductCard
                             key={product.id}
