@@ -117,14 +117,6 @@ export const Profile = () => {
             readOnly
             className="caret-transparent focus:outline-[0px]"
           />
-          {checkAdmin() && (
-            <button
-            onClick={() => navigate("/adminpage")}
-              className="p-1 rounded-lg bg-red-500 hover:bg-red-800"
-            >
-              Admin Page
-            </button>
-          )}
         </h2>
         {checkVetClient() && (
           <p>
@@ -160,6 +152,14 @@ export const Profile = () => {
             />
           </p>
         )}
+        {checkAdmin() && (
+            <button
+            onClick={() => navigate("/adminpage")}
+              className="p-1 rounded-lg bg-red-500 hover:bg-red-800 mx-30"
+            >
+              Admin Page
+            </button>
+          )}
       </div>
     </div>
   );
