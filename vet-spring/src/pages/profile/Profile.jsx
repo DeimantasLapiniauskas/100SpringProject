@@ -30,7 +30,6 @@ export const Profile = () => {
           const response = await api.get(`/vet/${account.sub}`);
           const data = response.data.data;
           const { email, firstName, lastName, specialty } = data;
-
           setValue("email", email);
           setValue("firstName", firstName);
           setValue("lastName", lastName);
@@ -50,7 +49,7 @@ export const Profile = () => {
           const data = response.data.data;
           const { email, firstName, lastName } = data;
 
-          setValue("email", email);
+          setValue("email", account.sub);
           setValue("firstName", firstName);
           setValue("lastName", lastName);
         } catch (error) {
