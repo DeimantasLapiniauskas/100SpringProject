@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import pawssBackgroundImage from '/src/assets/icons/pawss_for_background_spaced_out_rotated_1536px.png';
+
 export const Profile = () => {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
@@ -102,11 +102,8 @@ export const Profile = () => {
   };
 
   return (
-    <div className="flex justify-center mt-10 relative w-full">
-      <div
-            className="absolute min-h-screen inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-center opacity-5 pointer-events-none z-0"
-            style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
-          ></div>
+    <div className="flex justify-center mt-10">
+
       <div className="bg-[#97a0f1] rounded-box gap-10 flex flex-col p-5 z-2">
         <h2>
           Email:{" "}
