@@ -1,4 +1,6 @@
 package SpringProject._Spring.dto.review;
+import SpringProject._Spring.dto.authentication.client.ClientMapping;
+import SpringProject._Spring.dto.vetClinic.VetClinicMapper;
 import SpringProject._Spring.model.Review;
 import SpringProject._Spring.model.authentication.Client;
 import org.springframework.data.domain.Page;
@@ -11,8 +13,8 @@ public class ReviewMapper {
     }
 
     public static ReviewResponseDTO toReviewResponseDTO(Review review) {
-        return new ReviewResponseDTO(review.getId(), review.getClient(),
-                review.getVetClinic(), review.getRating(), review.getComment(), review.getCreatedAt());
+        return new ReviewResponseDTO(review.getId(), ClientMapping.toClientResponseDTO(review.getClient()),
+                VetClinicMapper.toVetClinicResponseDTO(review.getVetClinic()), review.getRating(), review.getComment(), review.getCreatedAt());
     }
 
     public static ReviewPageResponseDTO toReviewPageResponseDTO(Page<Review> reviewsPage) {
@@ -25,6 +27,12 @@ return new ReviewPageResponseDTO(
         (int)reviewsPage.getTotalElements(),
         reviewsPage.getNumber(),
         reviewsPage.getSize());
+    }
+
+    public static ReviewResponseListDTO toReviewResponseListDTO(List<Review> reviews) {
+        return new ReviewResponseListDTO(reviews.stream()
+                .map(ReviewMapper::toReviewResponseDTO)
+                .toList());
     }
 }
 

@@ -29,6 +29,7 @@ const formLabelVariants = cva("text-sm font-medium", {
       error: "text-red-500",
       success: "text-green-600",
       muted: "text-muted-foreground",
+      amber: "text-amber-700"
     },
     size: {
       sm: "text-xs",

@@ -1,10 +1,7 @@
 package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.ApiResponse;
-import SpringProject._Spring.dto.review.ReviewMapper;
-import SpringProject._Spring.dto.review.ReviewPageResponseDTO;
-import SpringProject._Spring.dto.review.ReviewRequestDTO;
-import SpringProject._Spring.dto.review.ReviewResponseDTO;
+import SpringProject._Spring.dto.review.*;
 import SpringProject._Spring.model.Review;
 import SpringProject._Spring.model.authentication.Client;
 import SpringProject._Spring.repository.authentication.ClientRepository;
@@ -16,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -47,9 +46,9 @@ public class ReviewController extends  BaseController {
     }
 
     @GetMapping("/reviews/pagination")
-    public ResponseEntity<ApiResponse<ReviewPageResponseDTO>> getAllReviews (@RequestParam int page,
+    public ResponseEntity<ApiResponse<ReviewPageResponseDTO>> getAllReviewsPage (@RequestParam int page,
                                                                              @RequestParam int size,
-                                                                             @RequestParam(required = false) String sort) {
+                                                                             @RequestParam(required = false) Integer sort) {
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
         }
@@ -62,6 +61,15 @@ public class ReviewController extends  BaseController {
         ReviewPageResponseDTO reviewPageResponseDTO = ReviewMapper.toReviewPageResponseDTO(pagedReview);
 
         return ok(reviewPageResponseDTO, pagedReview.isEmpty() ? "Review list is empty" : null);
+    }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<ApiResponse<ReviewResponseListDTO>> getAllReviews() {
+
+        List<Review> reviews = reviewService.findAllReviews();
+        ReviewResponseListDTO reviewResponseListDTO = ReviewMapper.toReviewResponseListDTO(reviews);
+
+        return ok(reviewResponseListDTO, reviews.isEmpty() ? "Reviews List is empty" : null);
     }
 
     @PutMapping("/reviews/{reviewId}")

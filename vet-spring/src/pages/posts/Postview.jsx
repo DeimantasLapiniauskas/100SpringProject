@@ -1,53 +1,61 @@
-import { getPostById } from "@/utils/helpers/posts";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { UIStatus } from "@/constants/UIStatus";
+// import { getEntityById } from "@/utils/helpers/entity";
+// import { useEffect, useState } from "react";
+// import { useParams } from "react-router";
+// import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
+// import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
 import "../../index.css"
 import dayjs from 'dayjs'
+// import { useEntityPath } from "@/hooks/usePath";
+import { useEntityData } from "@/hooks/useEntityData";
 
 export const PostView = () => {
-  const { postId } = useParams();
-  const [post, setPost] = useState({});
-  const [error, setError] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
-  const { isLoading, isError, isUnusual, setStatus } = useUI();
+  
+const {initialData: post, error} = useEntityData()
 
-  const isMounted = useIsMounted();
+  // const { entityId } = useParams();
+  // const [post, setPost] = useState({});
+  // const [error, setError] = useState(null);
 
-  const getPost = async () => {
-    try {
-      setStatus(Fetching);
-      const response = await getPostById(postId);
-      if (!isMounted.current) return;
+  // const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
+  const { isLoading, isError, isUnusual } = useUI();
+  // const entityPath = useEntityPath();
 
-      const { data, success } = response.data;
+  // const isMounted = useIsMounted();
 
-      if (data && success) {
-        setStatus(Success);
-        setPost(data);
-      } else {
-        setStatus(Unknown);
-        setPost(null);
-      }
-    } catch (error) {
-      if (!isMounted.current) return;
+  // const getPost = async () => {
+  //   try {
+  //     setStatus(Fetching);
+  //     const response = await getEntityById(entityPath, entityId);
+  //     if (!isMounted.current) return;
 
-      const errorMessage =
-        error.response?.data?.message ?? error.message ?? "Unknown error";
-      setError(errorMessage);
-      setStatus(Err);
-      setPost(null);
-    }
-  };
+  //     const { data, success } = response.data;
 
-  useEffect(() => {
-    getPost();
-  }, [postId]);
+  //     if (data && success) {
+  //       setStatus(Success);
+  //       setPost(data);
+  //     } else {
+  //       setStatus(Unknown);
+  //       setPost(null);
+  //     }
+  //   } catch (error) {
+  //     if (!isMounted.current) return;
+
+  //     const errorMessage =
+  //       error.response?.data?.message ?? error.message ?? "Unknown error";
+  //     setError(errorMessage);
+  //     setStatus(Err);
+  //     setPost(null);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (entityId) getPost();
+  if (!post) return null;
+  // }, [entityId]);
 
   const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
   
@@ -63,7 +71,7 @@ export const PostView = () => {
   }
 
   return (
-    <div className="max-w-[1400px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
+    <div className=" mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
       <div className="relative">
         <h2
           className={`w-full text-center text-base sm:text-lg md:text-xl font-semibold ${

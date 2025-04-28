@@ -6,7 +6,7 @@ export const useCurrentPath = () => {
     const path = location.pathname.split("/").filter(Boolean).pop()
 
     if (!isNaN(path)) return ;
-    if (["register", "login", "form"].includes(path)) return ;
+    if (["register", "login", "form", "leaveReview"].includes(path)) return ;
 
     //I'm using this for adminpage because its path is more complicated
     const segments = location.pathname.split("/").filter(Boolean); // <--- Andrej, primink man apie sita, as padesiu tau ji siek tiek sutrumpinti
@@ -28,4 +28,12 @@ export const useRealPath = () => {
 
     return path
 
+}
+
+export const useEntityPath = () => {
+
+    const location = useLocation()
+    const path = location.pathname.split("/").filter(Boolean).shift()
+
+    return path
 }
