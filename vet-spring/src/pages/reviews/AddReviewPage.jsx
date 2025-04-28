@@ -72,7 +72,7 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
       setStatus(Fetching);
 
       if (isEditMode) {
-        response = await putEntity(entityPath, data);
+        response = await putEntity(entityPath, initialData.id, data);
       } else {
         response = await postEntity(entityPath, data);
       }
@@ -149,8 +149,8 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
   return (
     <div
       className="flex flex-col items-end  px-1 py-1 sm:py-2 sm:px-2 md:px-3 md:py-3 lg:px-4 lg:py-4 
-    h-screen relative bg-gradient-to-b via-transparent xs:via-sky-400 to-sky-400 xs:to-transparent"
-    ><img src={vetDoc} alt="vetDoc" className=" absolute w-15 xs:w-20 sm:w-25 md:w-30 lg:w-35 bottom-57 xs:top-3 left-[50%] xs:left-[10%] md:left-[20%] " />
+    h-screen relative bg-gradient-to-b via-sky-transparent xs:via-sky-900 to-sky-900 xs:to-transparent"
+    ><img src={vetDoc} alt="vetDoc" className=" absolute w-15 xs:w-20 sm:w-25 md:w-30 lg:w-35 bottom-[18rem] xs:top-3 left-[50%] xs:left-[10%] md:left-[20%] rounded-2xl" />
       <FloatingReviewBubbles reviews={reviews} />
       <div className="flex items-center flex-col w-full xs:w-2/3 md:w-1/2 relative">
         <img
@@ -169,8 +169,8 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
             alt="reviewHamster"
             className="absolute w-8 sm:w-10 md:w-12 lg:w-14 top-[-2.2rem] sm:top-[-2.75rem] md:top-[-3.35rem] lg:top-[-4rem] left-9 "
           />
-          <div className="animate-gradient bg-[linear-gradient(270deg,_#fcda2e,_#ffffff,_#38bdf8)] text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
-            <h1 className="responsive-text-lg font-semibold text-amber-700 pb-3 sm:pb-4 md:pb-5">
+          <div className="bg-gradient-to-b from-amber-300 via-white to-amber-300 text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
+            <h1 className="responsive-text-lg font-semibold text-amber-800 pb-3 sm:pb-4 md:pb-5">
               We’d Love to Hear Your Feedback
             </h1>
             <FormProvider {...form}>
@@ -266,7 +266,7 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
           </div>
         </div>
       </div>
-      <NavLink to="/reviews" className="responsive-text-sm text-yellow-700 font-semibold text-xl-start w-full px-2 md:px-4  relative top-[-1.5%]">
+      <NavLink to="/reviews" className="responsive-text-sm text-amber-800 font-semibold text-xl-start w-full px-2 md:px-4  relative top-[-1.5%]">
         <p className="inline-flex hover:underline items-center ">
           <span>
             <ChevronsRight className="w-4 sm:w-5 md:w-6" />

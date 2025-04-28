@@ -20,7 +20,7 @@ const selectTriggerVariants = cva(
       },
       variant: {
         new: "gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50",
-        default: "shadow-lg"
+        default: "shadow-lg",
       },
       intent: {
         default: "border-blue-500 focus:ring-blue-500",
@@ -33,7 +33,7 @@ const selectTriggerVariants = cva(
     defaultVariants: {
       intent: "default",
       size: "responsive",
-      variant: "default"
+      variant: "default",
     },
   }
 );
@@ -71,7 +71,7 @@ const selectContentVariants = cva(
         blueSoft:
           " z-50 overflow-auto border-blue-500 bg-blue-200 shadow-lg rounded-md",
       },
-      size: {}
+      size: {},
     },
     defaultVariants: {
       variant: "blueSoft",
@@ -108,35 +108,27 @@ const Select = ({ value, onValueChange, children, ...props }) => {
   );
 };
 
-const SelectTrigger = React.forwardRef(
-  ( props = {} , ref) => {
-    const {  className,
-      children,
-      size,
-      intent,
-      variant,
-      isOpen,
-      ...rest} = props
+const SelectTrigger = React.forwardRef((props = {}, ref) => {
+  const { className, children, size, intent, variant, isOpen, ...rest } = props;
 
-    return (
-      <SelectPrimitive.Trigger
-        ref={ref}
-        className={cn(
-          selectTriggerVariants({ size, intent, variant }),
-          className
-        )}
-        {...rest}
-      >
-        <div className="flex-1 text-left">{children}</div>
-        {isOpen ? (
-          <ChevronUp className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
-        ) : (
-          <ChevronDown className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
-        )}
-      </SelectPrimitive.Trigger>
-    );
-  }
-);
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        selectTriggerVariants({ size, intent, variant }),
+        className
+      )}
+      {...rest}
+    >
+      <div className="flex-1 text-left">{children}</div>
+      {isOpen ? (
+        <ChevronUp className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
+      ) : (
+        <ChevronDown className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
+      )}
+    </SelectPrimitive.Trigger>
+  );
+});
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectContent = React.forwardRef(
@@ -150,7 +142,9 @@ const SelectContent = React.forwardRef(
         className={cn(selectContentVariants({ variant, size }), className)}
         {...props}
       >
-        <SelectPrimitive.Viewport>{props.children}</SelectPrimitive.Viewport>
+        <SelectPrimitive.Viewport className="p-1">
+          {props.children}
+        </SelectPrimitive.Viewport>
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   )
@@ -164,7 +158,7 @@ const SelectItem = React.forwardRef(
       className={cn(selectItemVariants({ size }), className)}
       {...props}
     >
-      <span className="absolute right-1.5 sm:right-2.5 md:right-3.5 flex h-3.5 w-3.5 items-center justify-center">
+      <span className="absolute right-0.5 sm:right-1 md:right-1.5 flex h-3.5 w-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <Check className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-info-content" />
         </SelectPrimitive.ItemIndicator>

@@ -7,8 +7,10 @@ import {
 } from "@/components/uiBase/selectBase";
 import { useList } from "@/context/ListContext";
 
-export const SelectPanel = ({ pageSizes }) => {
+export const SelectPageSizePanel = ({ pageSizes }) => {
   const { pageSize, onPageSizeChange } = useList();
+
+  if (!pageSize) return
 
   return (
     <div className="flex items-center gap-1 md:gap-2 ">
@@ -23,7 +25,7 @@ export const SelectPanel = ({ pageSizes }) => {
             variant="new"
             size="selectPageSize"
             intent="blueGradient"
-            className=" w-[80px] sm:w-[100px] md:w-[120px] lg:w-[130px]"
+            className=" w-[80px] sm:w-[100px] md:w-[121px] lg:w-[130px]"
           >
             <SelectValue placeholder="Per page" />
           </SelectTrigger>

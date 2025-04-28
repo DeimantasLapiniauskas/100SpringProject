@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useCheckRoles } from "@/hooks/useCheckRoles";
+import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router";
 import { ChevronsRight } from "lucide-react";
@@ -12,7 +12,7 @@ import { useDeleteModal } from "@/context/DeleteModalContext";
 
 export const PostCard = (props) => {
   const { post } = props;
-  const roles = useCheckRoles();
+  const roles = useCheckAdminAndVetRoles();
   const { id, postType, content, title, imageUrl } = post;
   const { Redirecting } = UIStatus;
   const { setStatus } = useUI();

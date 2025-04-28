@@ -2,14 +2,14 @@ import ModalContext from "@/utils/helpers/modalContext";
 import { useContext } from "react";
 import ProductModal from "./ProductModal";
 import EditProductButton from "./buttons/EditProductButton";
-import { useCheckRoles } from "@/hooks/useCheckRoles";
+import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 import DeleteProductButton from "./buttons/DeleteProductButton";
 
 const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
   const { name, price, stockQuantity, id, imageUrl } = product;
   const { activeModalID, setModalID } = useContext(ModalContext);
 
-  const roles = useCheckRoles();
+  const roles = useCheckAdminAndVetRoles();
   return (
     <>
       <div>

@@ -12,6 +12,7 @@ import { useIsMounted } from "../hooks/useIsMounted";
 import { useUI } from "./UIContext";
 import { UIStatus } from "../constants/UIStatus";
 import { useSearchParams } from "react-router";
+import { useMemo } from "react";
 
 const ListContext = createContext({
   getPage: () => {},
@@ -29,29 +30,29 @@ export const ListProvider = ({ children }) => {
   const realPath = useRealPath();
   const localStoragePath = (realPath || "").replace(/\//g, "");
 
-  const defaultPageSize =
-    parseInt(searchParams.get("size")) ||
-    parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) ||
-    6;
-  const defaultCurrentPage =
-    parseInt(searchParams.get("page")) ||
-    parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) ||
-    0;
-  const defaultSorted =
-    searchParams.get("sort") ||
-    localStorage.getItem(`${localStoragePath} - sorted`) ||
-    null;
-  const defaultSearchValue =
-    searchParams.get("search") ||
-    localStorage.getItem(`${localStoragePath} - searchValue`) ||
-    "";
+  const defaultValues = useMemo(() => {
+    return {
+      pageSize: parseInt(searchParams.get("size")) ||
+        parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 
+        (currentPath === "posts" ? 6 : 12),
+      currentPage: parseInt(searchParams.get("page")) ||
+        parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) ||
+        0,
+      sorted: searchParams.get("sort") ||
+        localStorage.getItem(`${localStoragePath} - sorted`) ||
+        null,
+      searchValue: searchParams.get("search") ||
+        localStorage.getItem(`${localStoragePath} - searchValue`) ||
+        "",
+    };
+  }, [searchParams, localStoragePath]);
 
   const initialPagination = {
-    currentPage: defaultCurrentPage,
+    currentPage: defaultValues.currentPage,
     totalPages: 0,
-    pageSize: defaultPageSize,
-    sorted: defaultSorted,
-    searchValue: defaultSearchValue,
+    pageSize: defaultValues.pageSize,
+    sorted: defaultValues.sorted,
+    searchValue: defaultValues.searchValue,
     error: null,
     content: [],
     message: null,
@@ -235,8 +236,6 @@ export const ListProvider = ({ children }) => {
     searchParams,
   ]);
 
-  console.log(pagination.content);
-
   return (
     <ListContext.Provider
       value={{
@@ -250,6 +249,8 @@ export const ListProvider = ({ children }) => {
         ...pagination,
         isEmpty,
         clearSearchBar,
+        localStoragePath,
+        searchParams
       }}
     >
       {children}

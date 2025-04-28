@@ -91,7 +91,7 @@ const VetClinicRoutes = () => {
                     }
                   />
                      <Route
-                    path="/reviews/edit/:reviewId"
+                    path="/reviews/edit/:entityId"
                     element={
                       <AuthGuard>
                         <EditReviewPage />

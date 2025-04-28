@@ -5,28 +5,27 @@ import { NavLink } from "react-router";
 import { Loading } from "../../components/feedback/Loading";
 import { useUI } from "../../context/UIContext";
 import { PaginationPanel } from "../../components/features/PaginationPanel";
-import { SelectPanel } from "@/components/features/SelectPagesPanel";
+import { SelectPageSizePanel } from "@/components/features/SelectPageSizePanel";
 import { FilterPanel } from "@/components/features/FilterPanel";
 import { BadPageRequest } from "@/components/feedback/BadPageRequest";
-import { useCheckRoles } from "@/hooks/useCheckRoles";
+import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 import { Unusual } from "@/components/feedback/Unusual";
 import { Redirecting } from "@/components/feedback/Redirecting";
 import { SearchBarPanel } from "@/components/features/SearchBarPanel";
 
 export const PostList = () => {
-  const {
-    clearAll,
-    error,
-    message,
-    content: posts,
-    isEmpty,
-  } = useList();
+  const { clearAll, error, message, content: posts, isEmpty } = useList();
 
   const { isLoading, isError, isBadPageRequest, isUnusual, isRedirecting } =
     useUI();
 
-  const roles = useCheckRoles();
-  const sortFields = ["Content", "News", "Sale", "Blog"];
+  const roles = useCheckAdminAndVetRoles();
+  const filterFields = [
+    { label: "Content", value: "Content" },
+    { label: "News", value: "News" },
+    { label: "Sale", value: "Sale" },
+    { label: "Blog", value: "Blog" },
+  ];
   const pageSizes = [6, 9, 12];
 
   if (isRedirecting) {
@@ -36,10 +35,16 @@ export const PostList = () => {
   return (
     <div className="flex flex-col items-center gap-2 px-1 sm:px-2 md:px-3 mt-0.5">
       <div className="flex w-full justify-end gap-1.5 sm:gap-2.5 md:gap-3.5 relative">
-        <button type="button" className="cursor-pointer bg-blue-200 hover:bg-gray-200 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-info-content hover:text-warning-content absolute bottom-[-70%] sm:bottom-[-80%] md:bottom-[-87%] lg:bottom-[-77%] border border-blue-400 hover:border-warning-content" onClick={clearAll}>Clear</button>
+        <button
+          type="button"
+          className="cursor-pointer bg-blue-200 hover:bg-gray-200 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-info-content hover:text-warning-content absolute bottom-[-70%] sm:bottom-[-80%] md:bottom-[-87%] lg:bottom-[-77%] border border-blue-400 hover:border-warning-content"
+          onClick={clearAll}
+        >
+          Clear
+        </button>
         <SearchBarPanel />
-        <FilterPanel sortFields={sortFields} />
-        <SelectPanel pageSizes={pageSizes} />
+        <FilterPanel filterFields={filterFields} />
+        <SelectPageSizePanel pageSizes={pageSizes} />
       </div>
       <section className="px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-6 text-center ">
         <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
@@ -64,7 +69,7 @@ export const PostList = () => {
       )}
       {isEmpty ? <p>{message}</p> : ""}
       {isLoading ? <Loading /> : ""}
-      {isError ? <Error error={error} isHidden={!error} /> : ""}
+      {isError ? <Error error={error} /> : ""}
       {isBadPageRequest ? <BadPageRequest /> : ""}
       {isUnusual ? <Unusual error={error} /> : ""}
       {isEmpty || isLoading || isError || isBadPageRequest || isUnusual ? (
@@ -73,10 +78,7 @@ export const PostList = () => {
         <div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
             {posts.map((post) => (
-              <PostCard
-                key={post.id}
-                post={post}
-              />
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
           <div className="p-3 flex justify-center">

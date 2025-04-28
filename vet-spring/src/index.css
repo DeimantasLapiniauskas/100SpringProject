@@ -141,6 +141,11 @@ body {
     @apply text-black;
   }
 
+  .responsive-text-xl {
+    @apply text-base sm:text-lg md:text-xl lg:text-2xl;
+  }
+
+
   .responsive-text-lg {
     @apply text-sm sm:text-base md:text-lg lg:text-xl;
   }

@@ -7,12 +7,17 @@ import { useList } from "@/context/ListContext";
 export const SearchBarPanel = ({ delay = 1000, ...props }) => {
   const {
     handleSearch,
-    searchValue: contextSearchValue,
     clearSearchBar,
+    localStoragePath,
+     searchParams
   } = useList();
   
-  const [searchValue, setSearchValue] = useState(contextSearchValue);
-  const lastSentValue = useRef(contextSearchValue);
+  const initialSearchValue = searchParams.get("search") 
+  || localStorage.getItem(`${localStoragePath} - searchValue`) 
+  || "";
+
+const [searchValue, setSearchValue] = useState(initialSearchValue);
+const lastSentValue = useRef(initialSearchValue);
 
   useEffect(() => {
     const trimmedValue = searchValue.trim();

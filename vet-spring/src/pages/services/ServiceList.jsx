@@ -8,9 +8,9 @@ import { NavLink } from "react-router";
 import { useUI } from "@/context/UIContext.jsx";
 import { PaginationPanel } from "@/components/features/PaginationPanel.jsx";
 import { Loading } from "@/components/feedback/Loading.jsx";
-import { SelectPanel } from "@/components/features/SelectPagesPanel.jsx";
+import { SelectPageSizePanel } from "@/components/features/SelectPageSizePanel.jsx";
 // import { FilterPanel } from "@/components/features/FilterPanel.jsx";
-import { useCheckRoles } from "@/hooks/useCheckRoles.js";
+import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles.js";
 import CatSilhouetteGradient from "@/assets/icons/CatSilhouetteGradient.jsx";
 import vetServiceIcon from "../../assets/icons/vetServiceIcon.svg"
 
@@ -19,14 +19,14 @@ export const ServiceList = () => {
   const { getPage, error, message, content: services, currentPage, pageSize } = useList();
 
   const { isLoading, isEmpty, isError } = useUI();
-  const roles = useCheckRoles();
+  const roles = useCheckAdminAndVetRoles();
 
   return (
     <>
       <div className="flex flex-col items-center px-2 sm:px-4 md:px-6 lg:px-8">
         <div className="flex w-full justify-end gap-5">
           {/* <FilterPanel /> */}
-          {/* <SelectPanel /> */}
+          {/* <SelectPageSizePanel /> */}
         </div>
         <div className={`grid grid-cols-2 pb-10 ${roles ? "" : "min-h-[250px]"}`}>
           {/* <div className="flex gap-1 bottom-[60%]">
