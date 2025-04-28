@@ -1,11 +1,14 @@
 package SpringProject._Spring.dto.authentication.client;
 
+import SpringProject._Spring.dto.authentication.account.AccountResponseDTO;
+
 public record ClientResponseDTO(
         long id,
-        String email,
+        AccountResponseDTO accountResponseDTO,
         String firstName,
         String lastName,
-        String phoneNumber
+        String phoneNumber,
+        long accountId
 ) {
 
 }

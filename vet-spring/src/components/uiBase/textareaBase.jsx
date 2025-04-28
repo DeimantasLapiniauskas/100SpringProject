@@ -16,6 +16,7 @@ const textareaVariants = cva(
         default: "border-blue-500 focus:ring-blue-500",
         error: "border-red-500 focus:ring-red-500",
         success: "border-green-500 focus:ring-green-500",
+        amber: "border-amber-500 focus:ring-amber-500"
       },
     },
     defaultVariants: {
