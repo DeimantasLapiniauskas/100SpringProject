@@ -64,7 +64,7 @@ const ProductList = () => {
                 {isLoading ? <Loading /> : ""}
                 {isError ? <Error error={error} isHidden={!error} /> : ""}
                 {isBadRequest ? <BadPageRequest /> : ""}
-                <ul className="justify-items-center divide-gray-200 grid grid-cols-1 gap-4 md:grid-cols-2  lg:grid-cols-3 w-full">
+                <ul className="justify-items-center divide-gray-200 grid sm:grid-cols-1 gap-y-4 row-gap-10 md:grid-cols-2  lg:grid-cols-3  ">
                     {products.map((product) => (
                         <ProductCard
                             key={product.id}
