@@ -19,7 +19,7 @@ function EditProductButton({ product, getPage, currentPage, pageSize }) {
 
       {editModalID === product.id.toString() && (
         <dialog open className="modal bg-[#DCDEFE]">
-          <div className="modal-box bg-[#97a0f1] text-center">
+          <div className="modal-box bg-[#97a0f1] text-center py-0">
             <ProductForm
               product={product}
               getPage={getPage}

@@ -30,7 +30,6 @@ export const Profile = () => {
           const response = await api.get(`/vet/${account.sub}`);
           const data = response.data.data;
           const { email, firstName, lastName, specialty } = data;
-
           setValue("email", email);
           setValue("firstName", firstName);
           setValue("lastName", lastName);
@@ -50,7 +49,7 @@ export const Profile = () => {
           const data = response.data.data;
           const { email, firstName, lastName } = data;
 
-          setValue("email", email);
+          setValue("email", account.sub);
           setValue("firstName", firstName);
           setValue("lastName", lastName);
         } catch (error) {
@@ -117,14 +116,6 @@ export const Profile = () => {
             readOnly
             className="caret-transparent focus:outline-[0px]"
           />
-          {checkAdmin() && (
-            <button
-            onClick={() => navigate("/adminpage")}
-              className="p-1 rounded-lg bg-red-500 hover:bg-red-800"
-            >
-              Admin Page
-            </button>
-          )}
         </h2>
         {checkVetClient() && (
           <p>
@@ -160,6 +151,14 @@ export const Profile = () => {
             />
           </p>
         )}
+        {checkAdmin() && (
+            <button
+            onClick={() => navigate("/adminpage")}
+              className="p-1 rounded-lg bg-red-500 hover:bg-red-800 mx-30"
+            >
+              Admin Page
+            </button>
+          )}
       </div>
     </div>
   );
