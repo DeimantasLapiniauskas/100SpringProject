@@ -2,10 +2,12 @@ package SpringProject._Spring.appointmentControllerTest.appointmentBasicControll
 
 import SpringProject._Spring.MailSenderTestConfig;
 import SpringProject._Spring.controller.appointmentController.AppointmentBasicController;
+import SpringProject._Spring.dto.appointment.AppointmentMapping;
 import SpringProject._Spring.dto.appointment.AppointmentRescheduleDTO;
 import SpringProject._Spring.model.ServiceAtClinic;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.authentication.Account;
+import SpringProject._Spring.model.authentication.Client;
 import SpringProject._Spring.model.authentication.Role;
 import SpringProject._Spring.model.authentication.Vet;
 import SpringProject._Spring.model.pet.Gender;
@@ -18,14 +20,20 @@ import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import it.ozimov.springboot.mail.model.Email;
+import it.ozimov.springboot.mail.service.EmailService;
+import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -44,6 +52,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,7 +82,12 @@ public class AppointmentPUTTest {
     @MockitoBean
     private ClientService clientService;
 
+    @MockitoBean
+    @Autowired
+    private EmailService emailService;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
+
     long appointmentId;
 
     @BeforeEach
@@ -82,9 +96,9 @@ public class AppointmentPUTTest {
         objectMapper.registerModule(new JavaTimeModule());
         appointmentId = 1;
     }
-    
+
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT", username = "Email@email.email")
     void cancelAppointment_whenValidCancelClient_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
@@ -92,7 +106,16 @@ public class AppointmentPUTTest {
 
         Account account = new Account("Email@email.email", "password", List.of(new Role("ROLE_CLIENT")));
         account.setId(69L);
-        Pet pet = new Pet(account.getId(), "petname","petspecies","petbreed", LocalDate.now(), Gender.Male);
+
+        Client client = new Client("firstName", "lastName", "666-666-666", Timestamp.valueOf(LocalDateTime.now()));
+        client.setAccount(account);
+        client.setId(420L);
+
+        Vet vet = new Vet("vetName", "vetLName", "666-666-666", "vetSpecialty", "vetLicenseNumber", LocalDate.now());
+        vet.setAccount(new Account("email@email.com", "password", List.of(new Role("ROLE_VET"))));
+        vet.setId(appointment.getVetId());
+
+        Pet pet = new Pet(account.getId(), "petname", "petspecies", "petbreed", LocalDate.now(), Gender.Male);
         pet.setId(appointment.getPetId());
 
         UserDetails principal = User.withUsername("CLIENT")
@@ -103,7 +126,6 @@ public class AppointmentPUTTest {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
                 account.getPassword(), principal.getAuthorities()));
-        System.out.println(securityContext);
         SecurityContextHolder.setContext(securityContext);
 
         when(appointmentService.existsAppointmentById(appointmentId))
@@ -112,10 +134,17 @@ public class AppointmentPUTTest {
                 .thenReturn(Optional.of(appointment));
         when(vetService.findVetByAccountEmail(account.getEmail()))
                 .thenReturn(Optional.empty());
+        System.err.println("         " + account.getEmail());
         when(clientService.findClientIdByEmail(account.getEmail()))
                 .thenReturn(account.getId());
         when(petService.findById(appointment.getPetId()))
                 .thenReturn(Optional.of(pet));
+        when(clientService.findClientById(client.getId()))
+                .thenReturn(Optional.of(client));
+        when(petService.findById(appointment.getPetId()))
+                .thenReturn(Optional.of(pet));
+        when(vetService.getVetById(anyLong()))
+                .thenReturn(Optional.of(vet));
 
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/cancel/" + appointmentId)
@@ -129,24 +158,31 @@ public class AppointmentPUTTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void cancelAppointment_whenValidCancelVet_thenRespond200() throws Exception {
 
         Appointment appointment = new Appointment(1, 2, List.of(), LocalDateTime.now(), "notes", Timestamp.valueOf(LocalDateTime.now()));
 
-        Account account = new Account("Email@email.email", "password", List.of(new Role("ROLE_CLIENT")));
+        Account account = new Account("Email@email.email", "password", List.of(new Role("ROLE_VET")));
         account.setId(69L);
 
-        UserDetails principal = User.withUsername("CLIENT")
+        Client client = new Client("firstName", "lastName", "666-666-666", Timestamp.valueOf(LocalDateTime.now()));
+        client.setAccount(new Account("email@email.com", "password", List.of(new Role("ROLE_CLIENT"))));
+        client.setId(420L);
+
+        UserDetails principal = User.withUsername("VET")
                 .password(account.getPassword())
-                .roles("CLIENT")
-                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_CLIENT"))
+                .roles("VET")
+                .authorities(new SimpleGrantedAuthority("SCOPE_ROLE_VET"))
                 .build();
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(account,
                 account.getPassword(), principal.getAuthorities()));
         System.out.println(securityContext);
         SecurityContextHolder.setContext(securityContext);
+
+        when(accountService.findByEmail(any()))
+                .thenReturn(Optional.of(account));
 
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(true);
@@ -158,9 +194,15 @@ public class AppointmentPUTTest {
         vet.setAccount(account);
         vet.setId(appointment.getVetId());
 
-        when(vetService.findVetByAccountEmail(account.getEmail()))
-                .thenReturn(Optional.of(vet));
+        Pet pet = new Pet(client.getId(), "petName", "PetSpecies", "Petbreed", LocalDate.now(), Gender.Male);
+        pet.setId(appointment.getPetId());
 
+        when(vetService.findVetByAccountEmail(any()))
+                .thenReturn(Optional.of(vet));
+        when(clientService.findClientById(client.getId()))
+                .thenReturn(Optional.of(client));
+        when(petService.findById(appointment.getPetId()))
+                .thenReturn(Optional.of(pet));
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(null);
 
@@ -197,7 +239,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_CLIENT", username = "Email@email.email")
     void rescheduleAppointment_whenRescheduleClient_thenRespond200() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222, 11, 11, 11, 11));
@@ -209,7 +251,7 @@ public class AppointmentPUTTest {
                                 "serviceName", "serviceDescription", BigDecimal.valueOf(10.1), "https://example.com/new.jpg"
                         )
                 ),
-                LocalDateTime.of(2222,10,11,11,11),
+                LocalDateTime.of(2222, 10, 11, 11, 11),
                 "appointmentNotes",
                 Timestamp.valueOf(LocalDateTime.now())
         );
@@ -236,6 +278,15 @@ public class AppointmentPUTTest {
         when(appointmentService.getAppointmentById(appointmentId))
                 .thenReturn(Optional.of(appointment));
 
+        Vet vet = new Vet("vetName", "vetLName", "666-666-666", "vetSpecialty", "vetLicenseNumber", LocalDate.now());
+        vet.setAccount(new Account("email@email.com", "password", List.of(new Role("ROLE_VET"))));
+        vet.setId(appointment.getVetId());
+
+        when(vetService.getVetById(appointment.getVetId()))
+                .thenReturn(Optional.of(vet));
+
+
+
         mockMvc.perform(MockMvcRequestBuilders.put("/api/appointments/" + appointmentId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(appointmentUpdateDTO)
@@ -248,7 +299,7 @@ public class AppointmentPUTTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_VET")
     void rescheduleAppointment_whenRescheduleVet_thenRespond200() throws Exception {
 
         AppointmentRescheduleDTO appointmentUpdateDTO = new AppointmentRescheduleDTO(LocalDateTime.of(2222, 11, 11, 11, 11));
@@ -260,7 +311,7 @@ public class AppointmentPUTTest {
                                 "serviceName", "serviceDescription", BigDecimal.valueOf(10.1), "https://example.com/new.jpg"
                         )
                 ),
-                LocalDateTime.of(2222,10,11,11,11),
+                LocalDateTime.of(2222, 10, 11, 11, 11),
                 "appointmentNotes",
                 Timestamp.valueOf(LocalDateTime.now())
         );
@@ -282,7 +333,7 @@ public class AppointmentPUTTest {
 
         when(appointmentService.existsAppointmentById(appointmentId))
                 .thenReturn(true);
-        when(accountService.findByEmail(account.getEmail()))
+        when(accountService.findByEmail(any()))
                 .thenReturn(Optional.of(account));
         when(appointmentService.getAppointmentById(appointmentId))
                 .thenReturn(Optional.of(appointment));

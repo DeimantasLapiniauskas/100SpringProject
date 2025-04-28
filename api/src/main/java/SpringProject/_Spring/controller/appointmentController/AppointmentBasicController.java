@@ -113,11 +113,9 @@ public class AppointmentBasicController extends BaseController {
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
         }
-
         Account currentAccount = accountService.findByEmail(authentication.getName()).get();
         Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
         appointmentFromDB.setAppointmentDate(rescheduleDTO.newDate());
-
         if (currentAccount.getRoles().stream()
                 .anyMatch(
                         role -> Objects.equals(role.getName(), "ROLE_CLIENT")
@@ -134,6 +132,7 @@ public class AppointmentBasicController extends BaseController {
         } else {
             appointmentFromDB.setStatus(Status.ScheduledUnconfirmedByClient);
             try { // breaks if pet or vet that was registered has been deleted.
+
                 emailService.send(
                         AppointmentMapping.makeEmail(
                                 clientService.findClientById(petService.findById(appointmentFromDB.getPetId()).get().getOwnerId()).get().getAccount().getEmail(),
@@ -157,17 +156,14 @@ public class AppointmentBasicController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<Object>> cancelAppointment(@PathVariable long id,
                                                                  Authentication authentication) throws AddressException {
-
         if (!appointmentService.existsAppointmentById(id)) {
             return notFound("Appointment not found!");
         }
 
         Appointment appointmentFromDB = appointmentService.getAppointmentById(id).get();
-
         if (appointmentFromDB.getStatus().name().equals(Status.Cancelled.name())) {
             return badRequest(id, "This appointment is already cancelled!");
         }
-
         Optional<Vet> vetUser = vetService.findVetByAccountEmail(authentication.getName());
         if (vetUser.isPresent()) { // if vet:
             if (vetUser.get().getId() != appointmentFromDB.getVetId()) {
