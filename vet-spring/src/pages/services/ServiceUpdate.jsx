@@ -41,7 +41,7 @@ export const ServiceUpdate = () => {
         setValue("description", description);
         setValue("price", price);
         setValue("imageUrl", imageUrl);
-        setPreviewUrl(imageUrl);
+        setPreviewUrl(imageUrl ?? null);
       } catch (error) {
         setError(error.message);
       }
