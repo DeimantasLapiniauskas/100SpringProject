@@ -123,7 +123,7 @@ public class AccountAdminPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("data.newPassword").value("Your password is either too short or too long! Min length is 8, max is 50 symbols"));
+                .andExpect(jsonPath("data.newPassword").value("Password has to be between 8 and 50 characters long!"));
 
         passwordUpdateDTO = new PasswordUpdateDTO("aaaaaaaaa");
 
@@ -163,7 +163,7 @@ public class AccountAdminPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("data.newPassword").value("Password can not be null!"));
+                .andExpect(jsonPath("data.newPassword").value("Password cannot be null!"));
     }
 
     //unhappy path

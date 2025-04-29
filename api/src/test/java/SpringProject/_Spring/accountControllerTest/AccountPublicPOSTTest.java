@@ -75,7 +75,7 @@ public class AccountPublicPOSTTest {
                         .content(objectMapper.writeValueAsString(clientRequestDTO)))
                 //then
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("data.email").value("test@example.com"))
+                .andExpect(jsonPath("data.accountResponseDTO.email").value("test@example.com"))
                 .andExpect(jsonPath("data.firstName").value("firstName"))
                 .andExpect(jsonPath("data.lastName").value("lastName"));
 
