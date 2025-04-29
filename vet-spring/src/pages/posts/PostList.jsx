@@ -34,15 +34,15 @@ export const PostList = () => {
   }
 
   return (
-    <div className="flex flex-col items-center  mt-1">
+    <div className="flex flex-col items-center mt-1 md:mt-2">
       <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative">
-        <SearchBarPanel />
+          <SearchBarPanel />
+          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-2 xs:right-15 sm:right-3">
+        <ClearAllButton />
+      </div>
         <div className="flex gap-2 items-center px-2 md:px-3">
           <FilterPanel filterFields={filterFields} />
           <SelectPageSizePanel pageSizes={pageSizes} />
-        </div>
-        <div className="absolute bottom-[-75%] xs:bottom-[-80%] sm:bottom-[-75%] md:bottom-[-80%] lg:bottom-[-70%]">
-          <ClearAllButton />
         </div>
       </div>
       <section className="px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-6 text-center ">

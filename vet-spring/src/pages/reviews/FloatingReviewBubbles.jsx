@@ -9,10 +9,10 @@ export const FloatingReviewBubbles = ({
   interval = 10000,
 }) => {
   const positionStyles = [
-    "top-[28rem] xs:top-[6.5rem] sm:top-[8.5rem] md:top-[10rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
-    "top-[31rem] xs:top-[11.25rem] sm:top-[14rem] md:top-[16.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
-    "top-[33rem] xs:top-[16rem] sm:top-[19.5rem] md:top-[23rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
-    "top-[36rem] xs:top-[20.75rem] sm:top-[25rem] md:top-[29.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
+    "top-[27.5rem] xs:top-[6.5rem] sm:top-[8.5rem] md:top-[10rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
+    "top-[30rem] xs:top-[11.25rem] sm:top-[14rem] md:top-[16.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
+    "top-[32.5rem] xs:top-[16rem] sm:top-[19.5rem] md:top-[23rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
+    "top-[35rem] xs:top-[20.75rem] sm:top-[25rem] md:top-[29.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
   ];
 
   const [visibleReviews, setVisibleReviews] = useState([]);

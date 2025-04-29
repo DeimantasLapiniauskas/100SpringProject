@@ -31,7 +31,7 @@ import { DeleteModalProvider } from "@/context/DeleteModalContext";
 import { AddReviewPage } from "@/pages/reviews/AddReviewPage.jsx";
 import { ReviewsList } from "@/pages/reviews/ReviewsList.jsx";
 import { EditReviewPage } from "@/pages/reviews/EditReviewPage.jsx";
-import { CartPage } from "./CartPage.jsx";
+import { ShoppingCartPage } from "./ShoppingCartPage.jsx";
 import { CartProvider } from "@/context/CartContext.jsx";
 
 const VetClinicRoutes = () => {
@@ -48,7 +48,7 @@ const VetClinicRoutes = () => {
                 <Route path={"/"} element={<MainLayout />}>
                   <Route index element={<Navigate to="home" replace />} />
                   <Route path="home" element={<HomePage />} />
-                  <Route path="/cart" element={<CartPage/>} />
+                  <Route path="/cart" element={<ShoppingCartPage/>} />
                   <Route
                     path="/pets"
                     element={

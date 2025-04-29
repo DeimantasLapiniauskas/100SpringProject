@@ -64,14 +64,14 @@ const previousClear = useRef(clearSearchBar)
       <img
         src={pawwSearch}
         alt="pawwSearch"
-        className="absolute left-1.5 top-1/2 -translate-y-1/2 transition w-4 md:w-4.5 lg:w-5 animate-bounce"
+        className="absolute left-1.5 top-3/5 -translate-y-3/5 transition w-4.5 md:w-5 lg:w-5.5 animate-bounce"
       />
       <button
         type="button"
         onClick={handleSearchClear}
         className="absolute right-3 top-1/2 -translate-y-1/2 "
       >
-        <TicketX className="hover:text-red-800 text-info-content transition w-3.5 md:w-4 lg:w-4.5" />
+        <TicketX className="hover:text-red-800 text-info-content transition w-4 md:w-4.5 lg:w-5" />
       </button>
     </div>
   );

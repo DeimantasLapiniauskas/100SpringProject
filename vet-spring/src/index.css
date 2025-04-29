@@ -128,6 +128,14 @@ body {
   animation: slow-pulse 3s ease-in-out infinite;
 }
 
+@keyframes shake {
+  0%, 93%, 100% { transform: translateX(0); }
+  96% { transform: translateX(-3px); }
+  97% { transform: translateX(2px); }
+  98% { transform: translateX(-3px); }
+  99% { transform: translateX(2px); }
+}
+
 @layer components {
   .form-text-select {
     @apply text-white pb-[14px] pt-[14px] focus:outline-none bg-transparent w-full border-b border-transparent;

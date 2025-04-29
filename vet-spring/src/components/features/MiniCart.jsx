@@ -17,11 +17,16 @@ export const MiniCart = () => {
             <img
               src={shoppingCartIcon}
               alt="shoppingCartIcon"
-              className="w-10"
+              className="w-7 xs:w-8 sm:w-9 md:w-10"
+              style={{
+                animation: "shake 5s ease-in-out infinite",
+              }}
             />
-            <div className="absolute w-5 h-5 top-1 rounded-full bg-sky-400 text-white flex justify-center items-center ">
-              {cartItems.length}
-            </div>
+            {cartItems?.length > 0 && (
+              <div className="absolute w-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5 top-1  rounded-full bg-sky-400 text-white flex justify-center items-center animate-bounce responsive-text-xs">
+                {cartItems?.length}
+              </div>
+            )}
           </div>
           {isOpen && (
             <div className="w-80 bg-red-500 shadow-lg z-50 p-4 flex flex-col">
@@ -39,12 +44,13 @@ export const MiniCart = () => {
                     className="flex justify-between items-center border-b pb-2"
                   >
                     <div>
-                      <p className="font-semibold">{item.title}</p>
+                      <p className="font-semibold">{item.name}</p>
                       <p className="text-sm text-gray-500">${item.price}</p>
+                      <p className="text-sm text-yellow-800">{item.quantity}</p>
                     </div>
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-red-500 text-sm"
+                      className="text-blue-500 text-sm"
                     >
                       Remove
                     </button>

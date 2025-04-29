@@ -7,8 +7,8 @@ export const ClearAllButton = () => {
 
     return (
         <Button onClick={clearAll}
-        size="xs"
-        className=" bg-gray-200 hover:bg-gray-200 rounded-[20px] text-info-content hover:text-warning-content border border-gray-400 hover:border-warning-content shadow-sm">Clear</Button>
+        size="xxs"
+        className=" bg-gray-200 hover:bg-gray-200 rounded-[20px] text-info-content hover:text-warning-content border border-gray-400 hover:border-warning-content shadow-sm">Clear All</Button>
     )
 
 }

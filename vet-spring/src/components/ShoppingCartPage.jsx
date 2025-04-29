@@ -1,11 +1,11 @@
 import { useCart } from '@/context/CartContext';
 import { useNavigate } from 'react-router';
 
-export const CartPage = () =>  {
+export const ShoppingCartPage = () =>  {
   const { cartItems, removeFromCart } = useCart();
   const navigate = useNavigate();
 
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const totalSum = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -28,7 +28,7 @@ export const CartPage = () =>  {
           ))}
 
           <div className="text-right mt-6">
-            <p className="text-lg font-semibold">Total: ${total.toFixed(2)}</p>
+            <p className="text-lg font-semibold">Total: ${totalSum.toFixed(2)}</p>
             <div className="mt-4 flex gap-4 justify-end">
               <button
                 onClick={() => navigate('/')}

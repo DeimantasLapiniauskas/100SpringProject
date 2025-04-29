@@ -39,15 +39,17 @@ export const ServiceList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center px-1 sm:px-3 md:px-5 lg:px-8 mt-1 ">
-        <div className="flex w-full justify-end gap-5 relative">
+      <div className="flex flex-col items-center px-1 sm:px-3 md:px-5 lg:px-8 mt-1 md:mt-2">
+      <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative">
           <SearchBarPanel />
+          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-2 xs:right-15 sm:right-3">
+        <ClearAllButton />
+      </div>
+        <div className="flex gap-2 items-center px-2 md:px-3">
           <FilterPanel filterFields={filterFields} />
           <SelectPageSizePanel pageSizes={pageSizes} />
-          <div className="absolute bottom-[-75%] xs:bottom-[-80%] sm:bottom-[-75%] md:bottom-[-80%] lg:bottom-[-70%]">
-            <ClearAllButton />
-          </div>
         </div>
+      </div>
         <div
           className={`${
             roles ? "" : "min-h-[250px]"
@@ -66,7 +68,7 @@ export const ServiceList = () => {
           <img
             src={vetCare}
             alt="vetCare"
-            className="sm:w-80 md:w-100 lg:w-120 sm:h-23 md:h-29 lg:h-35  rounded-lg me-0.5 xs:mx-4 sm:me-1.5 md:me-2 lg:me-2.5 mt-2  sm:mt-5 border border-purple-400 shadow-md shadow-fuchsia-900"
+            className="sm:w-90 md:w-115 lg:w-145 sm:h-25 md:h-32 lg:h-39  rounded-lg me-0.5 xs:mx-4 sm:me-1.5 md:me-2 lg:me-2.5 mt-2  sm:mt-5 border border-purple-400 shadow-md shadow-fuchsia-900"
           />
         </div>
         {roles && (
