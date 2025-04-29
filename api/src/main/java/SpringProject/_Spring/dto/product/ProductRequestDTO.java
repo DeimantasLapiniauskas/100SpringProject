@@ -15,7 +15,7 @@ public record ProductRequestDTO(
         String name,
         @NotBlank(message = "Description can't be empty!")
         @Pattern(
-                regexp = "^[a-zA-Z0-9.,!?@#$%^&*()'\"\\- \n]+$",
+                regexp = "^[a-zA-Z0-9.,!?@#$%^&*()'\"\\-  \n]+$",
                 message = "Description can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"
         )
         String description,
