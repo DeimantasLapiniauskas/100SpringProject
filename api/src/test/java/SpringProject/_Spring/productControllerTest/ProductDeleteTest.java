@@ -15,6 +15,7 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -32,6 +33,8 @@ public class ProductDeleteTest {
     private MockMvc mockMvc;
     @MockitoBean
     private ProductService productService;
+    @MockitoBean
+    private S3Client s3Client;
 
     //happy path
     @Test
