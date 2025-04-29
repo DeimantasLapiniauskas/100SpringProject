@@ -21,9 +21,11 @@ export const DropdownMenu = () => {
   };
 
   return (
-    <div className="custom-dropdown 
+    <div
+      className="custom-dropdown 
     bg-gradient-to-br from-blue-400 to-indigo-600 border-indigo-600
-     ">
+     "
+    >
       {account && (
         <NavLink
           to="/profile"
