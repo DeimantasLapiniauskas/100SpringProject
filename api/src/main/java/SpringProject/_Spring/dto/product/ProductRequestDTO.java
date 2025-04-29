@@ -10,13 +10,13 @@ public record ProductRequestDTO(
         @NotBlank(message = "Name can't be empty!")
         @Pattern(
                 regexp = "^[a-zA-Z0-9.,:!?@#$%^&*()'\"\\s]+$",
-                message = "Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"
+                message = "Name can only contain letters, numbers, punctuation, quotes, and symbols (:!@#$%^&*())"
         )
         String name,
         @NotBlank(message = "Description can't be empty!")
         @Pattern(
                 regexp = "^[a-zA-Z0-9.,:!?@#$%^&*()'\"\\-  \n]+$",
-                message = "Description can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"
+                message = "Description can only contain letters, numbers, punctuation, quotes, and symbols (:!@#$%^&*())"
         )
         String description,
         @NotNull(message = "Price can't be null!")
