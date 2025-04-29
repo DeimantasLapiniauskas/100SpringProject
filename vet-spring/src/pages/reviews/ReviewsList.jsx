@@ -10,6 +10,7 @@ import { Error } from "@/components/feedback/Error";
 import { useUI } from "@/context/UIContext";
 import { FilterPanel } from "@/components/features/FilterPanel";
 import { SelectPageSizePanel } from "@/components/features/SelectPageSizePanel";
+import { ClearAllButton } from "@/components/features/ClearAllButton";
 
 export const ReviewsList = () => {
   const { content: reviews, isEmpty, error, message } = useList();
@@ -36,10 +37,11 @@ export const ReviewsList = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-1 md:gap-1 mt-1 sm:mt-2 md:mt-3 lg:mt-4">
-      <div className="flex justify-end w-full gap-1.5 sm:gap-2.5 md:gap-3.5 px-6 sm:px-8 md:px-10">
+    <div className="flex flex-col items-center gap-1 md:gap-1 mt-1">
+      <div className="flex justify-end w-full gap-1.5 sm:gap-2.5 md:gap-3.5 px-6 sm:px-8 md:px-10 items-center">
         <FilterPanel filterFields={filterFields} />
         <SelectPageSizePanel pageSizes={pageSizes} />
+        <ClearAllButton/>
       </div>
       <h1 className="responsive-text-xl font-semibold text-amber-800 pb-1 md:pb-2">
         Our Rating

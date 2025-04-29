@@ -12,7 +12,6 @@ import { useIsMounted } from "../hooks/useIsMounted";
 import { useUI } from "./UIContext";
 import { UIStatus } from "../constants/UIStatus";
 import { useSearchParams } from "react-router";
-import { useMemo } from "react";
 
 const ListContext = createContext({
   getPage: () => {},

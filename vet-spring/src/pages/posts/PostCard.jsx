@@ -27,7 +27,7 @@ export const PostCard = (props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         whileHover={{ scale: 1.03 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
         className="card card-side will-change-transform bg-blue-300/15 backdrop-blur-lg p-4 sm:p-5 md:p-6 rounded-xl shadow-lg"
       >
         <div className="text-center bg-gradient-to-br from-blue-200 via-blue-300 to-indigo-400 text-info-content rounded-[10px] h-[20.55rem] sm:h-[25.75rem] md:h-[32rem] p-1.5 sm:p-2.25 md:p-3  shadow-lg shadow-info w-full border-1 border-info">

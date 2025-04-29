@@ -12,9 +12,10 @@ import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 import { Unusual } from "@/components/feedback/Unusual";
 import { Redirecting } from "@/components/feedback/Redirecting";
 import { SearchBarPanel } from "@/components/features/SearchBarPanel";
+import { ClearAllButton } from "@/components/features/ClearAllButton";
 
 export const PostList = () => {
-  const { clearAll, error, message, content: posts, isEmpty } = useList();
+  const { error, message, content: posts, isEmpty } = useList();
 
   const { isLoading, isError, isBadPageRequest, isUnusual, isRedirecting } =
     useUI();
@@ -33,18 +34,16 @@ export const PostList = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-2 px-1 sm:px-2 md:px-3 mt-0.5">
-      <div className="flex w-full justify-end gap-1.5 sm:gap-2.5 md:gap-3.5 relative">
-        <button
-          type="button"
-          className="cursor-pointer bg-blue-200 hover:bg-gray-200 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px] text-info-content hover:text-warning-content absolute bottom-[-70%] sm:bottom-[-80%] md:bottom-[-87%] lg:bottom-[-77%] border border-blue-400 hover:border-warning-content"
-          onClick={clearAll}
-        >
-          Clear
-        </button>
+    <div className="flex flex-col items-center  mt-1">
+      <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative">
         <SearchBarPanel />
-        <FilterPanel filterFields={filterFields} />
-        <SelectPageSizePanel pageSizes={pageSizes} />
+        <div className="flex gap-2 items-center px-2 md:px-3">
+          <FilterPanel filterFields={filterFields} />
+          <SelectPageSizePanel pageSizes={pageSizes} />
+        </div>
+        <div className="absolute bottom-[-75%] xs:bottom-[-80%] sm:bottom-[-75%] md:bottom-[-80%] lg:bottom-[-70%]">
+          <ClearAllButton />
+        </div>
       </div>
       <section className="px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-6 text-center ">
         <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">

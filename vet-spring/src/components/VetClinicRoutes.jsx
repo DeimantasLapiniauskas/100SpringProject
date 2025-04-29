@@ -31,12 +31,15 @@ import { DeleteModalProvider } from "@/context/DeleteModalContext";
 import { AddReviewPage } from "@/pages/reviews/AddReviewPage.jsx";
 import { ReviewsList } from "@/pages/reviews/ReviewsList.jsx";
 import { EditReviewPage } from "@/pages/reviews/EditReviewPage.jsx";
+import { CartPage } from "./CartPage.jsx";
+import { CartProvider } from "@/context/CartContext.jsx";
 
 const VetClinicRoutes = () => {
   return (
     <BrowserRouter>
       <UIProvider>
         <AuthProvider>
+        <CartProvider>
           <ListProvider>
             <DeleteModalProvider>
               <Routes>
@@ -45,6 +48,7 @@ const VetClinicRoutes = () => {
                 <Route path={"/"} element={<MainLayout />}>
                   <Route index element={<Navigate to="home" replace />} />
                   <Route path="home" element={<HomePage />} />
+                  <Route path="/cart" element={<CartPage/>} />
                   <Route
                     path="/pets"
                     element={
@@ -156,6 +160,7 @@ const VetClinicRoutes = () => {
               </Routes>
             </DeleteModalProvider>
           </ListProvider>
+          </CartProvider>
         </AuthProvider>
       </UIProvider>
     </BrowserRouter>

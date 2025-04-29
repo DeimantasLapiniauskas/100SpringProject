@@ -7,7 +7,7 @@ const buttonVariants = cva(
     variants: {
       size: {
         none: "p-0",
-        xs: "text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs h-4 sm:h-5 md:h-6 px-1 sm:px-2 md:px-3",
+        xs: "text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs h-3.5 sm:h-4.5 md:h-5.5 px-1 sm:px-2 md:px-3",
         sm: "text-[9px] sm:text-[10px] md:text-xs lg:text-sm h-5 sm:h-6 md:h-7 px-2 sm:px-3 md:px-4",
         md: "text-[10px] sm:text-xs md:text-sm lg:text-base h-7 sm:h-8 md:h-9 px-3 sm:px-4 md:px-5",
         responsive2 : "text-xs px-2 sm:px-3 md:px-4 sm:text-sm md:text-base text-info-content font-semibold "
@@ -23,7 +23,7 @@ const buttonVariants = cva(
         transparent: "bg-transparent"
       },
       intent: {
-        default: " hover:scale-105 transition-transform duration-500",
+        default: " hover:scale-105 transition-transform duration-400",
         review: " opacity-75 hover:shadow-amber-600 hover:text-amber-900 hover:opacity-100 shadow-sm",
         faded: "opacity-75 hover:opacity-100 border border-info hover:shadow-sm hover:shadow-info"
       }

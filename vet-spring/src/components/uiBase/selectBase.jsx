@@ -16,10 +16,10 @@ const selectTriggerVariants = cva(
         responsive:
           "text-[10px] sm:text-xs md:text-sm px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75 h-7 sm:h-9 md:h-11 text-info-content",
         selectPageSize:
-          "text-[8px] sm:text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75",
+          "text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75",
       },
       variant: {
-        new: "gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 shadow-md shadow-white",
+        new: "gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 shadow-md ",
         default: "shadow-lg ",
       },
       intent: {
@@ -47,9 +47,9 @@ const selectItemVariants = cva(
         md: "text-sm px-3 py-1.5",
         lg: "text-base px-4 py-2",
         selectPageSize:
-          "text-[8px] px-2 py-1 sm:text-[10px] sm:px-3 sm:py-1.25 md:text-xs md:px-4 md:py-1.5 lg:px-5 lg:py-1.75",
+          " text-[10px] px-3 py-1.25 md:text-xs md:px-4 md:py-1.5 lg:px-5 lg:py-1.75",
         postRegForm:
-          "text-[10px] px-2 py-1 sm:text-xs sm:px-2.5 sm:py-1.25 md:text-sm md:px-4 md:py-1.5 lg:px-5 lg:py-1.75 ",
+          "text-[10px] sm:text-xs md:text-sm px-3 py-1.25 md:px-4 md:py-1.5 lg:px-5 lg:py-1.75 ",
       },
       intent: {
         blue: " hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px] ",

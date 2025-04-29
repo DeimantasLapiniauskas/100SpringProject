@@ -9,6 +9,7 @@ import { useDeleteModal } from "@/context/DeleteModalContext";
 import { useNavigate } from "react-router";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
+import { motion } from "framer-motion";
 
 export const ReviewCard = (props) => {
   const { review } = props;
@@ -29,6 +30,11 @@ export const ReviewCard = (props) => {
     account?.account_id === review?.clientResponseDTO?.accountResponseDTO?.id;
 
   return (
+    <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.03 }}
+    transition={{ duration: 0.3, delay: 0.2 }}>
     <div className="bg-amber-50 rounded-xl w-[260px] xs:w-[300px] sm:w-sm md:w-md lg:w-lg pb-1 px-3 sm:pb-1.5 sm:px-4 md:pb-2  md:px-5 lg:pb-2.5 lg:px-6 border pt-2 sm:pt-2.5 md:pt-3 lg:pt-3.5 border-yellow-400 shadow-lg shadow-amber-600">
       <div className="flex justify-between">
         <p className="responsive-text-md text-amber-900 min-h-[30px] xs:min-h-[35] sm:min-h-[40px] md:min-h-[45px] lg:min-h-[50px]">
@@ -70,5 +76,6 @@ export const ReviewCard = (props) => {
         {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
       </p>
     </div>
+    </motion.div>
   );
 };
