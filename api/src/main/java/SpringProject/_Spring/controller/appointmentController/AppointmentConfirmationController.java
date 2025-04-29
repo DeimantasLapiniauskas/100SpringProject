@@ -15,8 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentConfirmationController extends BaseController {
@@ -72,7 +70,6 @@ public class AppointmentConfirmationController extends BaseController {
         if (!petService.existsById(appointmentFromDB.getPetId())) {
             return notFound("This pet no longer exists in our database!");
         }
-
         if (!appointmentFromDB.getStatus().equals(
                 Status.ScheduledUnconfirmedByClient) ||
                 petService.findById(appointmentFromDB.getPetId()).get().getOwnerId() !=
@@ -80,7 +77,6 @@ public class AppointmentConfirmationController extends BaseController {
         ) {
             return forbidden("This appointment isn't waiting for your approval!");
         }
-
         appointmentFromDB.setStatus(Status.Scheduled);
         appointmentService.saveAppointment(appointmentFromDB);
         return ok("Appointment confirmed successfully!");
