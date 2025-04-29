@@ -1,8 +1,10 @@
 import { useState } from "react";
 import EditVetButton from "../buttons/EditVetButton";
+import DeleteAccountButton from "../buttons/DeleteAccountButton";
+import ChangeAccountPasswordButton from "../buttons/ChangeAccountPasswordButton";
 
 const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber } = vet;
+    const { firstName, lastName, email, phoneNumber, specialty, licenseNumber, hireDate, accountId } = vet;
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -19,6 +21,18 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
                     currentPage={currentPage}
                     pageSize={pageSize}
                 />
+                <DeleteAccountButton
+                    id={accountId}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
+                <ChangeAccountPasswordButton
+                    accountId={accountId}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
             </div>
 
             {isExpanded && (
@@ -27,6 +41,7 @@ const VetCard = ({ vet, getPage, currentPage, pageSize }) => {
                     <p>Phone: {phoneNumber}</p>
                     <p>Specialty: {specialty}</p>
                     <p>License: {licenseNumber}</p>
+                    <p>Hire Date: {hireDate}</p>
                 </div>
             )}
         </div>

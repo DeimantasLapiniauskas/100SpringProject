@@ -24,7 +24,8 @@ public class ClientMapping {
                 AccountMapper.toAccountResponseDTO(client.getAccount()),
                 client.getFirstName(),
                 client.getLastName(),
-                client.getPhoneNumber()
+                client.getPhoneNumber(),
+                client.getAccountId()
         );
     }
 

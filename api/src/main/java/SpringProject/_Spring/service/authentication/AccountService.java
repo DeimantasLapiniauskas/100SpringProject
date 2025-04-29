@@ -1,5 +1,6 @@
 package SpringProject._Spring.service.authentication;
 
+import SpringProject._Spring.exceptions.NotFoundException;
 import SpringProject._Spring.model.authentication.Account;
 import SpringProject._Spring.repository.authentication.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,14 @@ public class AccountService {
         //warning: not Optional<>
     }
 
-    public boolean verifyAccountPassword(Account account, String password){
+    public boolean verifyAccountPassword(Account account, String password) {
         return passwordEncoder.matches(password, account.getPassword());
+    }
+
+    public void deleteAccount(long id) {
+        Account account = findAccountById(id)
+                .orElseThrow(() -> new NotFoundException("Account with id " + id + " not found"));
+
+        accountRepository.delete(account);
     }
 }

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import EditClientButton from "../buttons/EditClientButton";
+import DeleteAccountButton from "../buttons/DeleteAccountButton";
+import ChangeAccountPasswordButton from "../buttons/ChangeAccountPasswordButton";
 
 
 const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
-    const { firstName, lastName, phoneNumber } = client;
+    const { firstName, lastName, phoneNumber, accountId } = client;
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -17,6 +19,18 @@ const ClientCard = ({ client, getPage, currentPage, pageSize }) => {
                 </div>
                 <EditClientButton
                     client={client}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
+                <DeleteAccountButton
+                    id={accountId}
+                    getPage={getPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
+                <ChangeAccountPasswordButton
+                    accountId={accountId}
                     getPage={getPage}
                     currentPage={currentPage}
                     pageSize={pageSize}
