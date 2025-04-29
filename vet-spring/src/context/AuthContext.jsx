@@ -86,8 +86,10 @@ export const AuthProvider = ({ children }) => {
     navigate("/home");
   };
 
+  console.log("Mano", account);
+  
+
   return (
-    // Paduodamos sukurtos funkcijos, tam kad jas būtų galima naudoti betkur su useAuth
     <AuthContext.Provider value={{ account, login, logout, register }}>
       {children}
     </AuthContext.Provider>

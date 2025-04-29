@@ -14,6 +14,6 @@ export const putEntity = async (entityPath, entityId, payload) =>
   
   export const verifyPassword = async (password) => api.post(`${urlPassword}`, { newPassword: password })
   
-  export const getEntityById = async (entityPath, entityId) => api.get(`${url}/${entityPath}/view/${entityId}`);
+  export const getEntityById = async (entityPath, entityId) => api.get(`${url}/${entityPath}/${entityId}`);
 
   export const getAllEntitys = async (entityPath) => api.get(`${url}/${entityPath}`)

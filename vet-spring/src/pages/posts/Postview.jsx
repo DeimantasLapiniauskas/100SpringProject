@@ -1,66 +1,24 @@
-// import { getEntityById } from "@/utils/helpers/entity";
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router";
-// import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
-// import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
 import "../../index.css"
 import dayjs from 'dayjs'
-// import { useEntityPath } from "@/hooks/usePath";
 import { useEntityData } from "@/hooks/useEntityData";
+import { Redirecting } from "@/components/feedback/Redirecting";
 
 export const PostView = () => {
   
-const {initialData: post, error} = useEntityData()
+const {initialData: post, error} = useEntityData({redirect : true})
 
-  // const { entityId } = useParams();
-  // const [post, setPost] = useState({});
-  // const [error, setError] = useState(null);
+  const { isLoading, isError, isUnusual, isRedirecting } = useUI();
 
-  // const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
-  const { isLoading, isError, isUnusual } = useUI();
-  // const entityPath = useEntityPath();
-
-  // const isMounted = useIsMounted();
-
-  // const getPost = async () => {
-  //   try {
-  //     setStatus(Fetching);
-  //     const response = await getEntityById(entityPath, entityId);
-  //     if (!isMounted.current) return;
-
-  //     const { data, success } = response.data;
-
-  //     if (data && success) {
-  //       setStatus(Success);
-  //       setPost(data);
-  //     } else {
-  //       setStatus(Unknown);
-  //       setPost(null);
-  //     }
-  //   } catch (error) {
-  //     if (!isMounted.current) return;
-
-  //     const errorMessage =
-  //       error.response?.data?.message ?? error.message ?? "Unknown error";
-  //     setError(errorMessage);
-  //     setStatus(Err);
-  //     setPost(null);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (entityId) getPost();
-  if (!post) return null;
-  // }, [entityId]);
-
-  const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
-  
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isRedirecting) {
+    return <Redirecting/>
   }
 
   if (isUnusual) {
@@ -69,6 +27,10 @@ const {initialData: post, error} = useEntityData()
   if (isError) {
     return <Error error={error} isHidden={!error} />;
   }
+
+  if (!post) return null;
+
+  const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
 
   return (
     <div className=" mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">

@@ -6,6 +6,7 @@ import { getAllEntitys } from "@/utils/helpers/entity";
 import { Rating } from "@smastrom/react-rating";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { LoadingSmall } from "../feedback/Loading";
+import { useRatingResize } from "@/hooks/useRatingResize";
 
 export const ReviewsPanel = () => {
   const [reviews, setRewies] = useState([]);
@@ -13,26 +14,11 @@ export const ReviewsPanel = () => {
     reviews.length > 0
       ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
       : 0;
-  const [ratingSize, setRatingSize] = useState("50px");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
 
   const isMounted = useIsMounted();
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-
-      if (width < 640) setRatingSize("50px");
-      else if (width < 768) setRatingSize("60px");
-      else if (width < 1024) setRatingSize("70px");
-      else setRatingSize("80px");
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+ const ratingSize = useRatingResize("50px", "60px", "70px", "80px")
 
   useEffect(() => {
     const getAllReviews = async () => {
@@ -83,7 +69,7 @@ export const ReviewsPanel = () => {
           <img
             src={pawss}
             alt="pawws"
-            className="w-[14px] sm:w-[17px] md:w-[20px] lg:w-[24px] absolute left-[-15px] sm:left-[-18px] md:left-[-21px] lg:left-[-25px]"
+            className="w-[14px] sm:w-[17px] md:w-[20px] lg:w-[24px] absolute left-[-18px] sm:left-[-23px] md:left-[-26px] lg:left-[-31px]"
           />
           <NavLink to={"/reviews/leaveReview"}>
             <p className="text-white text-[9px] sm:text-[10px] md:text-xs lg:text-sm hover:underline slow-pulse">
