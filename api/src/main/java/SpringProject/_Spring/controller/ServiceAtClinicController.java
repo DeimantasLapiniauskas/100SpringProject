@@ -168,7 +168,7 @@ public class ServiceAtClinicController extends BaseController {
 
     @Operation(summary = "Get all services and split them by pages", description = "Retrieves a list of all services and splits them by pages")
     @GetMapping("/services/pagination")
-    public ResponseEntity<ApiResponse<ServiceAtClinicPageResponseDTO>> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort) {
+    public ResponseEntity<ApiResponse<ServiceAtClinicPageResponseDTO>> getAllServiceAtClinicPage(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort, @RequestParam(required = false) String search) {
 
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size parameters");
@@ -178,7 +178,17 @@ public class ServiceAtClinicController extends BaseController {
             throw new IllegalArgumentException("Invalid sort field");
         }
 
-        Page<ServiceAtClinic> pagedServices = serviceAtClinicService.findAllServiceAtClinicPages(page, size, sort);
+        if (search != null) {
+            search = search.trim();
+            if (search.length() > 50) {
+                throw new IllegalArgumentException("Search query is too long");
+            }
+            if (search.matches("^[%_]+$")) {
+                throw new IllegalArgumentException("Search query cannot contain only % or _");
+            }
+        }
+
+        Page<ServiceAtClinic> pagedServices = serviceAtClinicService.findAllServiceAtClinicPages(page, size, sort, search);
         String message = pagedServices.isEmpty() ? "Service list is empty" : null;
         ServiceAtClinicPageResponseDTO serviceAtClinicPageResponseDTO = ServiceAtClinicMapper.toServiceAtClinicListPageDTO(pagedServices);
 

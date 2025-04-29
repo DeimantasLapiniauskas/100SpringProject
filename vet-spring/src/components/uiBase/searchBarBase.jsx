@@ -16,10 +16,10 @@ const searchBarVariants = cva(
         sm: "text-sm px-3 py-1.5",
         md: "text-base px-4 py-2 ",
         lg: "text-lg px-5 py-3",
-        responsive: "text-[8px] sm:text-[10px] md:text-xs lg:text-sm px-6 md:px-7 lg:px-8 py-1 sm:py-1.25 md:py-1.5 lg:py-1.75"
+        responsive: "text-xs lg:text-sm px-6 md:px-7 lg:px-8 py-1.5 md:py-1.75 lg:py-2"
       },
       radius: {
-        default: "rounded-xl",
+        default: "rounded-[17px]",
         full: "rounded-full",
         none: "rounded-none",
       },

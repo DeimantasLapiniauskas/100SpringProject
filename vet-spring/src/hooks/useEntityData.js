@@ -6,12 +6,13 @@ import { useUI } from "@/context/UIContext";
 import { getEntityById } from "@/utils/helpers/entity";
 import { useEntityPath } from "./usePath";
 
-export const useEntityData = () => {
+export const useEntityData = ({redirect = false }) => {
+
     const { entityId } = useParams();
     const [initialData, setInitialData] = useState(null);
     const [error, setError] = useState(null);
 
-    const { Loading, Success, Error, Unusual } = UIStatus;
+    const { Loading, Success, Error, Unusual, Redirecting } = UIStatus;
     const { setStatus } = useUI();
     const isMounted = useIsMounted();
    const entityPath = useEntityPath();
@@ -19,12 +20,13 @@ export const useEntityData = () => {
     useEffect(() => {
       const GetEntity = async () => {
         try {
-          setStatus(Loading);
+          setStatus(redirect ? Redirecting : Loading );
           const response = await getEntityById(entityPath, entityId);
+
           if (!isMounted.current ) return;
   
           const { data, success } = response.data;
-     
+       
           if (data && success) {
             setStatus(Success);
             setInitialData(data);
@@ -45,7 +47,7 @@ export const useEntityData = () => {
       };
   
      if (entityId) GetEntity();
-    }, [entityId]);
+    }, [entityId, redirect]);
 
     return (
         {initialData, error}

@@ -13,12 +13,12 @@ import { Input } from "@/components/uiBase/inputBase";
 import { useUI } from "@/context/UIContext";
 import { useDeleteModal } from "@/context/DeleteModalContext";
 
-export const DeletePostModal = () => {
+export const DeleteModal = () => {
   const { isLoading } = useUI();
 
   const {
     isDeleteModalOpen,
-    selectedPost,
+    selectedEntity: entity,
     handleCloseModal,
     onConfirm,
     setFieldErrors,
@@ -28,6 +28,8 @@ export const DeletePostModal = () => {
     setPassword,
     password
   } = useDeleteModal();
+
+  if(!entity) return
 
   return (
     <DialogRoot
@@ -44,8 +46,8 @@ export const DeletePostModal = () => {
             Delete Post
           </DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete:{" "}
-            <strong>{selectedPost?.title}</strong>?
+            Are you sure you want to delete:
+            <strong>{entity.title || entity.rating}</strong> ?
           </DialogDescription>
         </DialogHeader>
         <div>
