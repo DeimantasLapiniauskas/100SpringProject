@@ -123,6 +123,7 @@ body {
     opacity: 0.5;
   }
 }
+
 .slow-pulse {
   animation: slow-pulse 3s ease-in-out infinite;
 }
