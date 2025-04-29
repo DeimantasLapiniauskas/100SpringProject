@@ -41,7 +41,7 @@ const ProductList = () => {
   const roles = useCheckAdminAndVetRoles();
 
   return (
-    <div className="p-4 justify-center mx-[7rem] mt-[1rem]">
+    <div className="p-4 justify-center">
       <ModalContext.Provider
         value={{
           activeModalID,
