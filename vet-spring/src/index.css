@@ -170,3 +170,11 @@ html, body {
     letter-spacing: 0%; 
     line-height: 1rem; /* 16px in FIGMA */   
   }
+  .figma-headline-6 {
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: 1rem; /* 11px in FIGMA */ /* Can use text-xs since it is 0.75rem (12px) */ 
+    font-weight: 400;
+    letter-spacing: 0%; 
+    line-height: 1rem; /* 16px in FIGMA */  
+    width: 10px; 
+  }

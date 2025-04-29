@@ -27,7 +27,9 @@ export const Navbar = () => {
             <img src={menu} alt="" className="w-10 absolute" />
             <i className="fa fa-caret-down mb-10"></i>
           </button>
-          <div className="dropdown-content flex flex-col ml-[-30px]">
+          <div className="dropdown-content flex flex-col content-center 
+          lg:ml-[-20px] md:ml-[-20px] sm:ml-[-53px] ml-[-98px]
+          ">
             <DropdownMenu />
           </div>
         </div>
