@@ -20,6 +20,7 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -41,6 +42,8 @@ public class ProductUpdateTest {
     private ProductService productService;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockitoBean
+    private S3Client s3Client;
 
     //happy path
     @Test
