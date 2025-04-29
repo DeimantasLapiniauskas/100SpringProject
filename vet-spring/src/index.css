@@ -1,23 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
 
 @theme {
-  --breakpoint-xs: 485px
+  --breakpoint-xs: 485px;
 }
 
 @theme {
-  --breakpoint-xl: 1285px
+  --breakpoint-xl: 1285px;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
-  font-family: 'Kiwi Maru', sans-serif;
-  background-color: #DBEAFE;
-
+html,
+body {
+  font-family: "Kiwi Maru", sans-serif;
+  background-color: #dbeafe;
 }
 
 @keyframes animatedGradient {
@@ -38,7 +38,8 @@ html, body {
 }
 
 @keyframes fadeSwap {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -57,8 +58,65 @@ html, body {
   animation-delay: 3s;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.90) translateY(-15px);
+    filter: blur(2px);
+  }
+}
+
+.animate-fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.animate-floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+.animate-fadeIn-floating {
+  animation: fadeIn 1s forwards, floating 3s ease-in-out infinite;
+}
+
+.animate-fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
 @keyframes slow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -67,11 +125,8 @@ html, body {
 }
 
 .slow-pulse {
-  @apply animate-none;
   animation: slow-pulse 3s ease-in-out infinite;
 }
-
-
 
 @layer components {
   .form-text-select {
@@ -85,6 +140,22 @@ html, body {
   .form-text-select option {
     @apply text-black;
   }
+
+  .responsive-text-lg {
+    @apply text-sm sm:text-base md:text-lg lg:text-xl;
+  }
+
+  .responsive-text-md {
+    @apply text-xs sm:text-sm md:text-base;
+  }
+
+  .responsive-text-sm {
+    @apply text-[10px] sm:text-xs md:text-sm;
+  }
+
+  .responsive-text-xs {
+    @apply text-[8px] sm:text-[10px] md:text-xs;
+  }
 }
 
 /* .swiper-pagination-bullet {
@@ -94,7 +165,6 @@ html, body {
 .swiper-pagination-bullet-active {
   @apply bg-blue-800 opacity-100 scale-110 transition-transform;
 } */
-
 
 .swiper-pagination-bullet {
   width: 14px;
@@ -106,75 +176,67 @@ html, body {
 }
 
 .swiper-pagination-bullet-active {
-  background-color: #1e40af; 
+  background-color: #1e40af;
   opacity: 1;
   transform: scale(1.5);
 }
 
-  /* RULES FOR USING FIGMA TYPOGRAPHY: */
+/* RULES FOR USING FIGMA TYPOGRAPHY: */
 
-  /* FOUND OUT YOU NEED TO INSERT CSS LIKE .figma-headline INSIDE tailwind.config.js FOR THEM TO WORK WITH
+/* FOUND OUT YOU NEED TO INSERT CSS LIKE .figma-headline INSIDE tailwind.config.js FOR THEM TO WORK WITH
    lg:??? md:??? sm:??? SCREEN SIZE CHANGES */
 
-  /* IF THEY ARE NOT IN USE, IN YOUR PAGES, IT IS FINE FOR NOW. AS LONG AS YOUR TEXT WORKS WITH DIFFERENT SCREEN SIZES */
-  /* IF WE DECIDE WE CAN INSERT THESE WHEN WE HAVE MORE TIME IN FUTURE AND ARE SURE THEY WILL NOT BREAK LAYOUT */
-  /* IN THE COMMENTS BELOW ARE EQUIVALENTS IN FORM OF TAILWIND FONT SIZES THAT WE CAN USE INSTEAD */
-  /* SOME OF YOU HAVE ALREADY USED SOME */
-  /* LINE HEIGHTS I AM NOT SURE. BUT IT SHOULD WORK OK. */
+/* IF THEY ARE NOT IN USE, IN YOUR PAGES, IT IS FINE FOR NOW. AS LONG AS YOUR TEXT WORKS WITH DIFFERENT SCREEN SIZES */
+/* IF WE DECIDE WE CAN INSERT THESE WHEN WE HAVE MORE TIME IN FUTURE AND ARE SURE THEY WILL NOT BREAK LAYOUT */
+/* IN THE COMMENTS BELOW ARE EQUIVALENTS IN FORM OF TAILWIND FONT SIZES THAT WE CAN USE INSTEAD */
+/* SOME OF YOU HAVE ALREADY USED SOME */
+/* LINE HEIGHTS I AM NOT SURE. BUT IT SHOULD WORK OK. */
 
-  /* LIKE text-6xl CAN BE USED INSTEAD OF .figma-headline IN CODE:
+/* LIKE text-6xl CAN BE USED INSTEAD OF .figma-headline IN CODE:
   <h1 className="text-black text-6xl">Some text</h1> INSTEAD OF <h1 className="text-black figma-headline"> */
 
-  /* <h1 className=" text-black lg:figma-headline md:figma-headline-2 figma-headline-3">Some text</h1>
+/* <h1 className=" text-black lg:figma-headline md:figma-headline-2 figma-headline-3">Some text</h1>
   WILL NOT WORK SINCE CSS overwrites Tailwind AND IT WILL RESULT IN TEXT STAYING THE SAME SIZE EVEN IF YOU CHANGE SCREEN SIZE. */
 
-  /* figma-headline-5 IS MY IDEA FOR SMALLEST FONT SIZE.
+/* figma-headline-5 IS MY IDEA FOR SMALLEST FONT SIZE.
   NOT LISTED IN FIGMA Syle Guide PAGE. IS USED IN FIGMA iPhone 14 Pro Max - 1 PAGE. "I have read and agree to the Privacy Policy" .*/
 
-  .figma-headline {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 4rem; /* 64px in FIGMA */ /* Can use text-6xl since it is 3.75rem (60px) */
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 5.8125rem; /* 93px in FIGMA */
-  }
-  
-  .figma-headline-2 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 2.5rem; /* 40px in FIGMA */ /* Can use text-4xl since it is 2.25rem (36px) */
-    font-weight: 400;
-    letter-spacing: 0%;
-    line-height: 3.625rem; /* 58px in FIGMA */  
-  }
-  
-  .figma-headline-3 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1.5rem; /* 24px in FIGMA */ /* Can use text-2xl since it is 1.5rem (24px) */
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 2.1875rem; /* 35px in FIGMA */   
-  }
-  
-  .figma-headline-4 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1rem; /* 16px in FIGMA */ /* Can use text-base since it is 1rem (16px) */
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 1.4375rem; /* 23px in FIGMA */   
-  }
+.figma-headline {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 4rem; /* 64px in FIGMA */ /* Can use text-6xl since it is 3.75rem (60px) */
+  font-weight: 400;
+  letter-spacing: 0%;
+  line-height: 5.8125rem; /* 93px in FIGMA */
+}
 
-  .figma-headline-5 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 0.5rem; /* 11px in FIGMA */ /* Can use text-xs since it is 0.75rem (12px) */ 
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 1rem; /* 16px in FIGMA */   
-  }
-  .figma-headline-6 {
-    font-family: 'Kiwi Maru', sans-serif;
-    font-size: 1rem; /* 11px in FIGMA */ /* Can use text-xs since it is 0.75rem (12px) */ 
-    font-weight: 400;
-    letter-spacing: 0%; 
-    line-height: 1rem; /* 16px in FIGMA */  
-    width: 10px; 
-  }
+.figma-headline-2 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 2.5rem; /* 40px in FIGMA */ /* Can use text-4xl since it is 2.25rem (36px) */
+  font-weight: 400;
+  letter-spacing: 0%;
+  line-height: 3.625rem; /* 58px in FIGMA */
+}
+
+.figma-headline-3 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 1.5rem; /* 24px in FIGMA */ /* Can use text-2xl since it is 1.5rem (24px) */
+  font-weight: 400;
+  letter-spacing: 0%;
+  line-height: 2.1875rem; /* 35px in FIGMA */
+}
+
+.figma-headline-4 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 1rem; /* 16px in FIGMA */ /* Can use text-base since it is 1rem (16px) */
+  font-weight: 400;
+  letter-spacing: 0%;
+  line-height: 1.4375rem; /* 23px in FIGMA */
+}
+
+.figma-headline-5 {
+  font-family: "Kiwi Maru", sans-serif;
+  font-size: 0.5rem; /* 11px in FIGMA */ /* Can use text-xs since it is 0.75rem (12px) */
+  font-weight: 400;
+  letter-spacing: 0%;
+  line-height: 1rem; /* 16px in FIGMA */
+}
