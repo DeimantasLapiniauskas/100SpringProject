@@ -70,7 +70,7 @@ public class AppointmentBasicController extends BaseController {
     @Operation(summary = "Create new appointment", description = "Creates an appointment for a pet with selected vet")
     @PostMapping("/appointments")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<?> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO, Authentication authentication) throws AddressException {
+    public ResponseEntity<ApiResponse<Object>> addAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO, Authentication authentication) throws AddressException {
         if (appointmentDTO.serviceIds().stream()
                 .anyMatch(appointmentId -> appointmentService.existsByPetIdAndServiceIdAndIsScheduled(
                                 appointmentDTO.petId(), appointmentId
@@ -80,13 +80,11 @@ public class AppointmentBasicController extends BaseController {
             return badRequest(appointmentDTO, "Your pet is already registered to at least one of these services!");
         }
 
-
         Appointment savedAppointment = appointmentService.saveAppointment(
                 AppointmentMapping.toAppointment(appointmentDTO,
                         appointmentDTO.serviceIds().stream().map(id -> serviceService.findServiceAtClinicById(id).get()).toList()
                 )
         );
-
         emailService.send(
                 AppointmentMapping.makeEmail(
                         vetService.getVetById(savedAppointment.getVetId()).get().getAccount().getEmail(),
@@ -94,7 +92,6 @@ public class AppointmentBasicController extends BaseController {
                         "A user by the email of " + authentication.getName() + " has scheduled an appointment to your " + String.join(", ", savedAppointment.getServices().stream().map(ServiceAtClinic::getName).toList()) + " service(s), " + savedAppointment.getAppointmentDate() + ". Please log in and confirm!"
                 )
         );
-
         return created(
                 AppointmentMapping.toAppointmentDTO(
                         savedAppointment,

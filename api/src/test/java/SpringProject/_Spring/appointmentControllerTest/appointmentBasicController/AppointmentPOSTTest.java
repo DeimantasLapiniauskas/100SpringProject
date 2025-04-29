@@ -18,6 +18,7 @@ import SpringProject._Spring.service.authentication.ClientService;
 import SpringProject._Spring.service.authentication.VetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import it.ozimov.springboot.mail.service.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -68,6 +69,10 @@ public class AppointmentPOSTTest {
 
     @MockitoBean
     private AppointmentService appointmentService;
+
+    @MockitoBean
+    @Autowired
+    private EmailService emailService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     long petId;
@@ -162,7 +167,7 @@ public class AppointmentPOSTTest {
         when(vetService.getVetById(vetId))
                 .thenReturn(Optional.of(vet));
 
-
+        System.err.println(1);
         mockMvc.perform(post("/api/appointments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
@@ -196,6 +201,8 @@ public class AppointmentPOSTTest {
 
         Mockito.verify(appointmentService, times(1)).saveAppointment(ArgumentMatchers.any());
     }
+
+
 
     @Test
     void addAppointment_whenAddUnauthenticated_thenRespond401() throws Exception {

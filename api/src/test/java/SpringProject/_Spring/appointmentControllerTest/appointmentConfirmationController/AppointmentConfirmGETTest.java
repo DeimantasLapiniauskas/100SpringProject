@@ -66,7 +66,7 @@ public class AppointmentConfirmGETTest {
     private final long vetOneId = 2;
     private final long vetTwoId = 8;
 
-    private final ServiceAtClinic serviceOne = new ServiceAtClinic("ServiceOne", "ServiceOneDesctiption", BigDecimal.valueOf(10.1), "https://example.com/new.jpg");
+    private final ServiceAtClinic serviceOne = new ServiceAtClinic("ServiceOne", "ServiceOneDescription", BigDecimal.valueOf(10.1), "https://example.com/new.jpg");
     private final ServiceAtClinic serviceTwo = new ServiceAtClinic("ServiceTwo", "ServiceTwoDescription", BigDecimal.valueOf(20.2), "https://example.com/new.jpg");
     private final Pet petOne = new Pet(ownerId, "petOneName", "petOneSpecies", "petOneBreed", LocalDate.now(), Gender.Female);
     private final Pet petTwo = new Pet(ownerId, "petTwoName", "petTwoSpecies", "petTwoBreed", LocalDate.now(), Gender.Male);
