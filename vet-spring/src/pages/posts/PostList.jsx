@@ -37,7 +37,7 @@ export const PostList = () => {
     <div className="flex flex-col items-center mt-1 md:mt-2">
       <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative">
           <SearchBarPanel />
-          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-2 xs:right-15 sm:right-3">
+          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-0.5 xs:right-15 sm:right-3">
         <ClearAllButton />
       </div>
         <div className="flex gap-2 items-center px-2 md:px-3">
@@ -60,7 +60,7 @@ export const PostList = () => {
       {roles && (
         <div className="flex justify-center w-full">
           <NavLink to={`/posts/register`}>
-            <p className="mb-1.5 text-xs py-1 px-2 sm:text-sm sm:py-1.5 sm:px-3 md:text-base md:py-2 md:px-4 rounded-[5px] bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-700 border-1 border-info">
+            <p className="mb-1.5 md:mb-2.5 text-xs py-1 px-2 sm:text-sm sm:py-1.5 sm:px-3 md:text-base md:py-2 md:px-4 rounded-[5px] bg-linear-to-br from-blue-400 to-indigo-600 text-white hover:scale-110 transform transition duration-700 border-1 border-info">
               Register new Post
             </p>
           </NavLink>

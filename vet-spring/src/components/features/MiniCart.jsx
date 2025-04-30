@@ -17,13 +17,13 @@ export const MiniCart = () => {
             <img
               src={shoppingCartIcon}
               alt="shoppingCartIcon"
-              className="w-7 xs:w-8 sm:w-9 md:w-10"
+              className="w-6 xs:w-7 sm:w-8 md:w-9 lg:w-10"
               style={{
                 animation: "shake 5s ease-in-out infinite",
               }}
             />
             {cartItems?.length > 0 && (
-              <div className="absolute w-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5 top-1  rounded-full bg-sky-400 text-white flex justify-center items-center animate-bounce responsive-text-xs">
+              <div className="absolute w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 md:w-4.5 lg:w-5 lg:h-5 md:h-4.5 top-1  rounded-full bg-sky-400 text-white flex justify-center items-center animate-bounce responsive-text-xs">
                 {cartItems?.length}
               </div>
             )}

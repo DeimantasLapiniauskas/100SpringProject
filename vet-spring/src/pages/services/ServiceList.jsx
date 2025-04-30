@@ -32,7 +32,7 @@ export const ServiceList = () => {
 
   const filterFields = [
     { label: "All", value: "All" },
-    { label: "Name", value: "name" },
+    { label: "Name - [A-Z]", value: "name" },
     { label: "Lowest price", value: "price" },
   ];
   const pageSizes = [10, 15, 20];
@@ -42,10 +42,10 @@ export const ServiceList = () => {
       <div className="flex flex-col items-center px-1 sm:px-3 md:px-5 lg:px-8 mt-1 md:mt-2">
       <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative">
           <SearchBarPanel />
-          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-2 xs:right-15 sm:right-3">
+          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-0.5 xs:right-15 sm:right-3">
         <ClearAllButton />
       </div>
-        <div className="flex gap-2 items-center px-2 md:px-3">
+        <div className="flex gap-2 md:gap-4 items-center px-2 md:px-3">
           <FilterPanel filterFields={filterFields} />
           <SelectPageSizePanel pageSizes={pageSizes} />
         </div>
@@ -53,7 +53,7 @@ export const ServiceList = () => {
         <div
           className={`${
             roles ? "" : "min-h-[250px]"
-          } w-full mt-5 sm:mt-3  p-1 xs:p-2 sm:p-3 md:p-4 lg:p-5 flex sm:justify-between sm:gap-1 flex-col sm:flex-row`}
+          } w-full  sm:mt-3  p-1 xs:p-2 sm:p-3 md:p-4 lg:p-5 flex sm:justify-between sm:gap-1 flex-col sm:flex-row`}
         >
           <div className="flex sm:flex-col items-center w-full sm:w-3/5 md:w-3/7 px-7 sm:px-0">
             <h1 className="text-fuchsia-950 font-semibold text-md sm:text-lg md:text-xl lg:text-2xl text-center ">

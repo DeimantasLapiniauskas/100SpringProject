@@ -8,7 +8,7 @@ export const MainLayout = () => {
     <div className="p-2 max-w-[1400px] mx-auto">
       <header className="pb-1 ">
         <Navbar />
-        <div className=" absolute left-7.5 xs:left-10 sm:left-12.5 md:left-15 z-100">
+        <div className=" absolute left-7.5 xs:left-10 sm:left-12.5 md:left-15 lg:left-20 top-14 xs:top-15 sm:top-17.5 md:top-20.5 lg:top-23 z-100">
             <MiniCart />
         </div>
       </header>

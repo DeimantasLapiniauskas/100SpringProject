@@ -1,6 +1,6 @@
 package SpringProject._Spring.service;
 
-import SpringProject._Spring.dto.contact_messages.ContactMessageRequestDTO;
+import SpringProject._Spring.dto.contactMessages.ContactMessageRequestDTO;
 import SpringProject._Spring.exceptions.NotFoundException;
 import SpringProject._Spring.model.contactMessage.ContactMessage;
 import SpringProject._Spring.repository.contactMessage.ContactMessageRepository;

@@ -1,4 +1,4 @@
-package SpringProject._Spring.dto.contact_messages;
+package SpringProject._Spring.dto.contactMessages;
 
 import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailLength;
 import SpringProject._Spring.validation.customAnnotations.authentication.email.EmailRegex;

@@ -33,7 +33,7 @@ const {initialData: post, error} = useEntityData({redirect : true})
   const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
 
   return (
-    <div className=" mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
+    <div className=" mt-4 bg-gradient-to-b  to-blue-300 min-h-screen  shadow-lg shadow-blue-300  ">
       <div className="relative">
         <h2
           className={`w-full text-center text-base sm:text-lg md:text-xl font-semibold ${

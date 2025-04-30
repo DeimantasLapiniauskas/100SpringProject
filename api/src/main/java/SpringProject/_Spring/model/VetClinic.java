@@ -1,6 +1,7 @@
 package SpringProject._Spring.model;
 import SpringProject._Spring.model.appointment.Appointment;
 import SpringProject._Spring.model.authentication.Vet;
+import SpringProject._Spring.model.order.Order;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,26 +20,24 @@ public class VetClinic {
     private String phone = "+370 511 233 78";
 
     @OneToMany(mappedBy = "vetClinic", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Review> reviews;
+    List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "vetClinic", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Appointment> appointments;
+    List<Appointment> appointments = new ArrayList<>();
 
     @OneToMany(mappedBy = "vetClinic", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Vet> vets;
+    List<Vet> vets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "vetClinic", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Order> orders = new ArrayList<>();
+
+    public VetClinic() {}
 
     public VetClinic( String name, String address, String email, String phone) {
         this.name = name;
         this.address = address;
         this.email = email;
         this.phone = phone;
-        this.reviews = new ArrayList<>();
-        this.appointments = new ArrayList<>();
-        this.vets= new ArrayList<>();
-    }
-
-    public VetClinic() {
-
     }
 
     public long getId() {
@@ -105,5 +104,11 @@ public class VetClinic {
         this.vets = vets;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }
