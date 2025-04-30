@@ -126,6 +126,7 @@ export const ServiceAdd = ({ service }) => {
             <Controller
               name="imageFile"
               control={control}
+              rules={{ required: "Image is required" }}
               render={({ field, fieldState }) => (
                 <Dropzone
                   onDrop={async (file) => {
