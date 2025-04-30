@@ -54,18 +54,25 @@ public class ServiceAtClinicService {
         return serviceAtClinicRepository.findById(id);
     }
 
-    public Page<ServiceAtClinic> findAllServiceAtClinicPages(int page, int size, String sort) {
-        if (sort == null) {
-            Pageable pageable = PageRequest.of(page, size);
-            return serviceAtClinicRepository.findAll(pageable);
+    public Page<ServiceAtClinic> findAllServiceAtClinicPages(int page, int size, String sort, String search) {
+        if (sort == null || sort.equalsIgnoreCase("All")) {
+            String defaultSort = "id";
+            Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
+            if (search == null) {
+                return serviceAtClinicRepository.findAll(pageable);
+            }
+            return serviceAtClinicRepository.searchInAllFields(search, pageable);
         }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        return serviceAtClinicRepository.findAll(pageable);
+        if (search == null) {
+            return serviceAtClinicRepository.findAll(pageable);
+        }
+        return serviceAtClinicRepository.searchInAllFields(search, pageable);
     }
 
     public boolean isNotValidSortField(String sort) {
-        List<String> validSortFields = List.of("name", "description", "price");
+        List<String> validSortFields = List.of("name", "description", "price", "All");
 
         return !validSortFields.contains(sort);
     }

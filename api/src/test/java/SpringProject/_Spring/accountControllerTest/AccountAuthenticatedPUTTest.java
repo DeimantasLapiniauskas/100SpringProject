@@ -29,6 +29,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -168,8 +169,7 @@ public class AccountAuthenticatedPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("data.newPassword").value("Your password is either too" +
-                        " short or too long! Min length is 8, max is 50 symbols"));
+                .andExpect(jsonPath("data.newPassword").value("Password has to be between 8 and 50 characters long!"));
 
         passwordUpdateDTO = new PasswordUpdateDTO("aaaaaaaaaa");
 
@@ -202,6 +202,6 @@ public class AccountAuthenticatedPUTTest {
                         .content(objectMapper.writeValueAsString(passwordUpdateDTO)))
                 //then
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("data.newPassword").value("Password can not be null!"));
+                .andExpect(jsonPath("data.newPassword").value("Password cannot be null!"));
     }
 }

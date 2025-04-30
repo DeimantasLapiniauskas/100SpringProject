@@ -34,9 +34,7 @@ const SelectContent = React.forwardRef(({ className, children, ...props }, ref) 
   ref={ref}
   position="popper"
   sideOffset={5}
-  className={cn(
-    "z-50 w-[55px] sm:w-[75px] md:w-[90px] lg:w-[100px] overflow-auto rounded-md border border-blue-500 bg-blue-200 shadow-lg", className
-  )}
+  className={cn( className )}
   {...props}
 >
       <SelectPrimitive.Viewport
@@ -61,10 +59,7 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName
 const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center outline-none   data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
-    )}
+    className={cn(className)}
     {...props}
   >
     <span className="absolute right-0 sm:right-1 md:right-1.5 flex h-3.5 w-3.5 items-center justify-center">

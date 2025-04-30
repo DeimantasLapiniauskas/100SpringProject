@@ -16,10 +16,11 @@ const selectTriggerVariants = cva(
         responsive:
           "text-[10px] sm:text-xs md:text-sm px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75 h-7 sm:h-9 md:h-11 text-info-content",
         selectPageSize:
-          "text-[8px] sm:text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75",
+          "text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-1.75",
       },
       variant: {
-        new: "gap-1 sm:gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50",
+        new: "gap-1.5 md:gap-2 rounded-md border border-input focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 shadow-md ",
+        default: "shadow-lg ",
       },
       intent: {
         default: "border-blue-500 focus:ring-blue-500",
@@ -32,6 +33,7 @@ const selectTriggerVariants = cva(
     defaultVariants: {
       intent: "default",
       size: "responsive",
+      variant: "default",
     },
   }
 );
@@ -45,12 +47,12 @@ const selectItemVariants = cva(
         md: "text-sm px-3 py-1.5",
         lg: "text-base px-4 py-2",
         selectPageSize:
-          "text-[8px] px-2 py-1 sm:text-[10px] sm:px-3 sm:py-1.25 md:text-xs md:px-4 md:py-1.5 lg:px-5 lg:py-1.75",
+          " text-[10px] px-3 py-1.25 md:text-xs md:px-4 md:py-1.5 lg:px-5 lg:py-1.75",
         postRegForm:
-          "text-[10px] px-2 py-1 sm:text-xs sm:px-2.5 sm:py-1.25 md:text-sm md:px-4 md:py-1.5 lg:px-5 lg:py-1.75 ",
+          "text-[10px] sm:text-xs md:text-sm px-3 py-1.25 md:px-4 md:py-1.5 lg:px-5 lg:py-1.75 ",
       },
       intent: {
-        blue: " text-info-content hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px]",
+        blue: " hover:bg-blue-300 data-[state=checked]:font-semibold text-info-content focus:font-semibold rounded-sm outline-none rounded-[10px] ",
       },
     },
     defaultVariants: {
@@ -66,19 +68,26 @@ const selectContentVariants = cva(
     variants: {
       variant: {
         default: "border-blue-500 bg-white",
-        blueSoft:
-          " z-50 overflow-auto border-blue-500 bg-blue-200 shadow-lg rounded-md",
+        blueSoft: " z-50 overflow-auto border-blue-500 bg-blue-200  rounded-md",
+        blueGradient:
+          "z-50 overflow-auto border-blue-400 bg-gradient-to-br from-blue-400 to-indigo-600  shadow-lg rounded-md",
       },
-      size: {}
+      size: {},
+      intent: {
+        default: "shadow-lg",
+      },
     },
     defaultVariants: {
       variant: "blueSoft",
+      intent: "default",
     },
   }
 );
 
 const Select = ({ value, onValueChange, children, ...props }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const safeToReceiveIsOpen = ["SelectTrigger"];
 
   return (
     <SelectPrimitive.Root
@@ -88,52 +97,62 @@ const Select = ({ value, onValueChange, children, ...props }) => {
       {...props}
     >
       {typeof children === "function"
-        ? children({ isOpen }) 
-        : React.Children.map(children, (child) =>
-            React.isValidElement(child)
-              ? React.cloneElement(child, { isOpen })
-              : child
-          )}
+        ? children({ isOpen })
+        : React.Children.map(children, (child) => {
+            if (
+              React.isValidElement(child) &&
+              typeof child.type !== "string" &&
+              safeToReceiveIsOpen.includes(child.type.displayName)
+            ) {
+              return React.cloneElement(child, { isOpen });
+            }
+
+            return child;
+          })}
     </SelectPrimitive.Root>
   );
 };
 
-const SelectTrigger = React.forwardRef(
-  ({ className, children, size, intent, variant, isOpen, ...props }, ref) => {
-   
-    return (
-      <SelectPrimitive.Trigger
-        ref={ref}
-        className={cn(
-          selectTriggerVariants({ size, intent, variant }),
-          className
-        )}
-        {...props}
-      >
-        <div className="flex-1 text-left">{children}</div>
-        {isOpen ? (
-          <ChevronUp className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
-        ) : (
-          <ChevronDown className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
-        )}
-      </SelectPrimitive.Trigger>
-    );
-  }
-);
+const SelectTrigger = React.forwardRef((props = {}, ref) => {
+  const { className, children, size, intent, variant, isOpen, ...rest } = props;
+
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        selectTriggerVariants({ size, intent, variant }),
+        className
+      )}
+      {...rest}
+    >
+      <div className="flex-1 text-left">{children}</div>
+      {isOpen ? (
+        <ChevronUp className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
+      ) : (
+        <ChevronDown className=" h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-white" />
+      )}
+    </SelectPrimitive.Trigger>
+  );
+});
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectContent = React.forwardRef(
-  ({ className, variant, size, ...props }, ref) => (
+  ({ className, variant, size, intent, ...props }, ref) => (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         ref={ref}
         side="bottom"
         position="popper"
         style={{ width: "var(--radix-select-trigger-width)" }}
-        className={cn(selectContentVariants({ variant, size }), className)}
+        className={cn(
+          selectContentVariants({ variant, size, intent }),
+          className
+        )}
         {...props}
       >
-        <SelectPrimitive.Viewport>{props.children}</SelectPrimitive.Viewport>
+        <SelectPrimitive.Viewport className="p-1">
+          {props.children}
+        </SelectPrimitive.Viewport>
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   )
@@ -147,7 +166,7 @@ const SelectItem = React.forwardRef(
       className={cn(selectItemVariants({ size }), className)}
       {...props}
     >
-      <span className="absolute right-1.5 sm:right-2.5 md:right-3.5 flex h-3.5 w-3.5 items-center justify-center">
+      <span className="absolute right-0.5 sm:right-1 md:right-1.5 flex h-3.5 w-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <Check className="h-2 w-2 sm:h-3 sm:w-3 md:h-4 md:w-4 text-info-content" />
         </SelectPrimitive.ItemIndicator>

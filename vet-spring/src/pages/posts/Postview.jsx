@@ -1,58 +1,24 @@
-import { getPostById } from "@/utils/helpers/posts";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
 import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
 import "../../index.css"
 import dayjs from 'dayjs'
+import { useEntityData } from "@/hooks/useEntityData";
+import { Redirecting } from "@/components/feedback/Redirecting";
 
 export const PostView = () => {
-  const { postId } = useParams();
-  const [post, setPost] = useState({});
-  const [error, setError] = useState(null);
-  const { Loading: Fetching, Success, Error: Err, Unusual: Unknown } = UIStatus;
-  const { isLoading, isError, isUnusual, setStatus } = useUI();
-
-  const isMounted = useIsMounted();
-
-  const getPost = async () => {
-    try {
-      setStatus(Fetching);
-      const response = await getPostById(postId);
-      if (!isMounted.current) return;
-
-      const { data, success } = response.data;
-
-      if (data && success) {
-        setStatus(Success);
-        setPost(data);
-      } else {
-        setStatus(Unknown);
-        setPost(null);
-      }
-    } catch (error) {
-      if (!isMounted.current) return;
-
-      const errorMessage =
-        error.response?.data?.message ?? error.message ?? "Unknown error";
-      setError(errorMessage);
-      setStatus(Err);
-      setPost(null);
-    }
-  };
-
-  useEffect(() => {
-    getPost();
-  }, [postId]);
-
-  const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
   
+const {initialData: post, error} = useEntityData({redirect : true})
+
+  const { isLoading, isError, isUnusual, isRedirecting } = useUI();
+
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isRedirecting) {
+    return <Redirecting/>
   }
 
   if (isUnusual) {
@@ -62,8 +28,12 @@ export const PostView = () => {
     return <Error error={error} isHidden={!error} />;
   }
 
+  if (!post) return null;
+
+  const postCreated = dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')
+
   return (
-    <div className="max-w-[1400px] mx-auto mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
+    <div className=" mt-4 bg-gradient-to-b from-blue-100 via-blue-100 to-blue-300 min-h-screen rounded-[10px] shadow-lg shadow-blue-300 ">
       <div className="relative">
         <h2
           className={`w-full text-center text-base sm:text-lg md:text-xl font-semibold ${
@@ -97,7 +67,7 @@ export const PostView = () => {
           >
             {post.title}
           </h1>
-          <p className="break-all py-3 ms:py-4 md:py-5 px-3 sm:px-6 md:px-12 lg:px-15 text-xs sm:text-sm md:text-base text-info-content">{post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px] float-right w-full h-[10rem] xs:h-[12rem] md:h-[15rem] lg:h-[20rem] xs:w-2/3 md:w-1/2 mb-1 ms-2 object-cover"/> : ""}{post.content}</p>
+          <p className="break-words py-3 ms:py-4 md:py-5 px-3 sm:px-6 md:px-12 lg:px-15 text-xs sm:text-sm md:text-base text-info-content">{post?.imageUrl ? <img src={post.imageUrl} alt="postImage" className="rounded-[10px] float-right w-full h-[10rem] xs:h-[12rem] md:h-[15rem] lg:h-[20rem] xs:w-2/3 md:w-1/2 mb-1 ms-2 object-cover"/> : ""}{post.content}</p>
         </div>
       </div>
     </div>

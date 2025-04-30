@@ -2,11 +2,16 @@ package SpringProject._Spring.model;
 
 import SpringProject._Spring.model.authentication.Client;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
+//@Data
+//@NoArgsConstructor
 @Entity
 @Table(name = "reviews")
+//@SuppressWarnings("unused")
 public class Review {
 
     @Id

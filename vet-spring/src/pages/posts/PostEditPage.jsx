@@ -1,61 +1,27 @@
-import { getPostById } from "@/utils/helpers/posts";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import { PostRegister } from "./PostRegister";
-import { UIStatus } from "@/constants/UIStatus";
+import { useEntityData } from "@/hooks/useEntityData";
 import { useUI } from "@/context/UIContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
+import { Redirecting } from "@/components/feedback/Redirecting";
+import { Loading } from "@/components/feedback/Loading";
 
 export const PostEditPage = () => {
-  const { postId } = useParams();
-  const [initialData, setInitialData] = useState(null);
-  const { Loading, Success, Error, Unusual } = UIStatus;
-  const { setStatus } = useUI();
-  const [error, setError] = useState(null);
-  const isMounted = useIsMounted();
+ 
+const { isRedirecting, isLoading } = useUI()
+const {initialData, error} = useEntityData({redirect : true})
 
-  useEffect(() => {
-    const fectchPost = async () => {
-      try {
-        setStatus(Loading);
-        const response = await getPostById(postId);
-        if (!isMounted.current ) return;
+if (isRedirecting) {
+  return <Redirecting />;
+}
 
-        const { data, success } = response.data;
-   
-        if (data && success) {
-          setStatus(Success);
-          setInitialData(data);
-          
-        } else {
-          setStatus(Unusual)
-          setInitialData(null);
-        }
-      } catch (error) {
-        if (!isMounted.current) return;
+if (isLoading) {
+  return <Loading/>
+}
 
-        const errorMessage =
-          error.response?.data?.message ?? error.message ?? "Unknown error";
-        setStatus(Error);
-        setError(errorMessage);
-        setInitialData(null);
-      }
-    };
-
-    fectchPost();
-  }, [postId]);
-  
-  // useEffect(() => {
-  //   if (initialData) {
-  //     console.log("Kai initialData pasikeičia:", initialData);
-  //   }
-  // }, [initialData]);
-  
   if (!initialData) return null;
 
   return (
     <>
-      <PostRegister initialData={initialData} />
+      <PostRegister initialData={initialData} getPostError={error}/>
     </>
   );
 };

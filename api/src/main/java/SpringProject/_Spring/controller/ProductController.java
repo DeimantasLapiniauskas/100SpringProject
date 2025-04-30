@@ -19,7 +19,6 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -35,12 +34,12 @@ public class ProductController extends BaseController {
     @Value("${aws.s3.bucket}")
     private String bucketName;
 
-    @Autowired
+    @Autowired //Needs to be here or spring won't initialize it :(
     private S3Client s3Client;
 
     @Operation(summary = "Add new product", description = "Adds new product to the DB")
     @PostMapping("/products")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ProductResponseDTO> addProduct(@Valid @RequestBody ProductRequestDTO productRequestDTO) {
         Product product = productService.addNewProduct(productRequestDTO);
 
@@ -57,9 +56,10 @@ public class ProductController extends BaseController {
     public ResponseEntity<ApiResponse<ProductPageResponseDTO>> getProductsPage(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestParam(required = false) String sort
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String search
     ) {
-        ProductPageResult result = productService.findAllProductsPage(page, size, sort);
+        ProductPageResult result = productService.findAllProductsPage(page, size, sort, search);
         return ok(result.data(), result.message());
     }
 
@@ -83,7 +83,7 @@ public class ProductController extends BaseController {
 
     @Operation(summary = "Delete product by ID", description = "Deletes product by it's unique ID")
     @DeleteMapping("/products/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
 
@@ -93,7 +93,7 @@ public class ProductController extends BaseController {
 
     //TODO: move inner logic to Mapper and Service
     @PostMapping(value = "/products/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_VET')")
     public ResponseEntity<ApiResponse<String>> uploadImage(@RequestPart("file") MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isBlank()) {

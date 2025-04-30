@@ -29,29 +29,25 @@ export const ListProvider = ({ children }) => {
   const realPath = useRealPath();
   const localStoragePath = (realPath || "").replace(/\//g, "");
 
-  const defaultPageSize =
-    parseInt(searchParams.get("size")) ||
-    parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) ||
-    6;
-  const defaultCurrentPage =
-    parseInt(searchParams.get("page")) ||
-    parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) ||
-    0;
-  const defaultSorted =
-    searchParams.get("sort") ||
-    localStorage.getItem(`${localStoragePath} - sorted`) ||
-    null;
-  const defaultSearchValue =
-    searchParams.get("search") ||
-    localStorage.getItem(`${localStoragePath} - searchValue`) ||
-    "";
-
+      const defaultpageSize = parseInt(searchParams.get("size")) ||
+        parseInt(localStorage.getItem(`${localStoragePath} - pageSize`)) || 
+        (currentPath === "posts" ? 6 : currentPath === "services" ? 10 : 12)
+      const defaultcurrentPage =  parseInt(searchParams.get("page")) ||
+        parseInt(localStorage.getItem(`${localStoragePath} - currentPage`)) ||
+        0
+      const defaultsorted = searchParams.get("sort") ||
+        localStorage.getItem(`${localStoragePath} - sorted`) ||
+        null
+      const defaultsearchValue = searchParams.get("search") ||
+        localStorage.getItem(`${localStoragePath} - searchValue`) ||
+        ""
+  
   const initialPagination = {
-    currentPage: defaultCurrentPage,
+    currentPage: defaultcurrentPage,
     totalPages: 0,
-    pageSize: defaultPageSize,
-    sorted: defaultSorted,
-    searchValue: defaultSearchValue,
+    pageSize: defaultpageSize,
+    sorted: defaultsorted,
+    searchValue: defaultsearchValue,
     error: null,
     content: [],
     message: null,
@@ -235,8 +231,6 @@ export const ListProvider = ({ children }) => {
     searchParams,
   ]);
 
-  console.log(defaultPageSize);
-
   return (
     <ListContext.Provider
       value={{
@@ -250,6 +244,8 @@ export const ListProvider = ({ children }) => {
         ...pagination,
         isEmpty,
         clearSearchBar,
+        localStoragePath,
+        searchParams
       }}
     >
       {children}

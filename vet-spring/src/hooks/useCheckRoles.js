@@ -1,6 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 
-export const useCheckRoles = () => {
+export const useCheckAdminAndVetRoles = () => {
 
 const { account } = useAuth();
 

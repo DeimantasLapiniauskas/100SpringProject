@@ -1,10 +1,7 @@
 package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.ApiResponse;
-import SpringProject._Spring.dto.review.ReviewMapper;
-import SpringProject._Spring.dto.review.ReviewPageResponseDTO;
-import SpringProject._Spring.dto.review.ReviewRequestDTO;
-import SpringProject._Spring.dto.review.ReviewResponseDTO;
+import SpringProject._Spring.dto.review.*;
 import SpringProject._Spring.model.Review;
 import SpringProject._Spring.model.authentication.Client;
 import SpringProject._Spring.repository.authentication.ClientRepository;
@@ -16,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -47,7 +46,7 @@ public class ReviewController extends  BaseController {
     }
 
     @GetMapping("/reviews/pagination")
-    public ResponseEntity<ApiResponse<ReviewPageResponseDTO>> getAllReviews (@RequestParam int page,
+    public ResponseEntity<ApiResponse<ReviewPageResponseDTO>> getAllReviewsPage (@RequestParam int page,
                                                                              @RequestParam int size,
                                                                              @RequestParam(required = false) String sort) {
         if (page < 0 || size <= 0) {
@@ -64,8 +63,28 @@ public class ReviewController extends  BaseController {
         return ok(reviewPageResponseDTO, pagedReview.isEmpty() ? "Review list is empty" : null);
     }
 
+    @GetMapping("/reviews")
+    public ResponseEntity<ApiResponse<ReviewResponseListDTO>> getAllReviews() {
+
+        List<Review> reviews = reviewService.findAllReviews();
+        ReviewResponseListDTO reviewResponseListDTO = ReviewMapper.toReviewResponseListDTO(reviews);
+
+        return ok(reviewResponseListDTO, reviews.isEmpty() ? "Reviews List is empty" : null);
+    }
+
+    @GetMapping("/reviews/{reviewId}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
+    public ResponseEntity<ApiResponse<ReviewResponseDTO>> getReview(@PathVariable long reviewId) {
+        Optional<Review> reviewOpt = reviewService.findReviewById(reviewId);
+        if (reviewOpt.isEmpty()) {
+            return notFound("Review not found");
+        }
+            return ok(ReviewMapper.toReviewResponseDTO(reviewOpt.get()));
+
+        }
+
     @PutMapping("/reviews/{reviewId}")
-    @PreAuthorize("hasAuthority('ROLE_SCOPE_CLIENT')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ApiResponse<ReviewResponseDTO>> editReview(@PathVariable long reviewId, @Valid @RequestBody ReviewRequestDTO reviewRequestDTO) {
 
         Optional<Review> reviewOpt = reviewService.findReviewById(reviewId);
@@ -89,7 +108,7 @@ public class ReviewController extends  BaseController {
         }
         reviewService.deleteReviewById(reviewId);
 
-//        return noContent("Review deleted successfully");
-        return noContent();
+        return ok(null,"Review deleted successfully");
+
     }
 }

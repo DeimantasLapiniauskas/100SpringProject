@@ -51,19 +51,22 @@ public class ReviewService {
     }
 
     public boolean isNotValidSortField(String sort) {
-        List<String> sortFields = List.of("1", "2", "3", "4", "5");
+        List<String> sortFields = List.of("0", "1", "2", "3", "4", "5");
 
         return !sortFields.contains(sort);
     }
 
-    public Page<Review> findAllReviewsPage(int page, int size, String sort) {
-        if (sort == null) {
-            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+    public Page<Review> findAllReviewsPage(int page, int size, String filter) {
+        String defaultSort = "createdAt";
+        if ( filter == null || filter.equalsIgnoreCase("0")) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
 
             return reviewRepository.findAll(pageable);
         }
 
-        Pageable pageable = PageRequest.of(page, size,Sort.by(sort).descending());
-        return reviewRepository.findAll(pageable);
+        int sortByRating = Integer.parseInt(filter);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
+
+        return reviewRepository.findAllByRating(sortByRating, pageable);
     }
 }

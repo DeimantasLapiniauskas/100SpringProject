@@ -1,4 +1,4 @@
-import { addProduct, updateProduct } from "@/utils/helpers/addEditProduct";
+import { addProduct, updateProduct } from "@/utils/helpers/productHelpers";
 import ModalContext from "@/utils/helpers/modalContext";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
@@ -8,7 +8,6 @@ import { addProductImage } from "@/utils/helpers/addProductImage";
 
 const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
   const { setAddModalID, setEditModalID } = useContext(ModalContext);
-  const { name, description, price, stockQuantity, id, categories, imageUrl } = product;
 
   const {
     register,
@@ -35,14 +34,14 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
 
   useEffect(() => {
     if (product) {
-      setValue("name", name);
-      setValue("description", description);
-      setValue("price", price.toString());
-      setValue("stockQuantity", stockQuantity.toString());
-      setValue("category", categories?.[0]?.name || "");
-      setPreviewUrl(imageUrl || null);
+      setValue("name", product.name || "");
+      setValue("description", product.description || "");
+      setValue("price", product.price ? product.price.toString() : "");
+      setValue("stockQuantity", product.stockQuantity ? product.stockQuantity.toString() : "");
+      setValue("category", product.categories?.[0]?.name || "");
+      setPreviewUrl(product.imageUrl || null);
     }
-  }, [categories, description, imageUrl, name, price, product, setValue, stockQuantity]);
+  }, [product, setValue]);
 
   const updatePreview = (file) => {
     if (file) {
@@ -79,8 +78,8 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
       };
 
       if (product?.id) {
-        
-        await updateProduct(id, payload);
+
+        await updateProduct(product.id, payload);
         await getPage(pageSize, currentPage);
         setEditModalID("");
       } else {
@@ -103,11 +102,11 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
   return (
     <form
       onSubmit={handleSubmit(formSubmitHandler)}
-      className="text-center p-3"
+      className="  text-center"
     >
-      {submitError && <p className="bg-red-700 text-white p-2 mb-4">{submitError}</p>}
-      <div className="p-3">
-        <div className="pb-5 text-center">
+      {submitError && <p className="bg-red-700 text-white">{submitError}</p>}
+      <div>
+        <div className="text-center">
           <label htmlFor="name" className="font-bold text-lg text-white">
             Product Name:
           </label>
@@ -133,8 +132,8 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
-          <label htmlFor="description" className="font-bold text-lg text-white">
+        <div className="text-center">
+          <label htmlFor="description" className="font-bold text-lg text-white ">
             Description:
           </label>
           <textarea
@@ -147,6 +146,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
                 message: "Description cannot exceed 500 characters",
               },
             })}
+            rows="1"
             placeholder="Product description"
           />
           <div className="text-red-500">
@@ -154,7 +154,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center">
           <label htmlFor="price" className="font-bold text-lg text-white">
             Price:
           </label>
@@ -177,7 +177,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center">
           <label
             htmlFor="stockQuantity"
             className="font-bold text-lg text-white"
@@ -202,19 +202,20 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="p-3">
-          <div className="pb-5 text-center">
+        <div>
+          <div className="text-center">
             <label htmlFor="category" className="font-bold text-lg text-white">
               Category:
             </label>
             <select
               id="category"
               className="form-text-select"
+              defaultValue={product?.categories?.[0]?.name}
               {...register("category", {
                 required: "Category is required",
               })}
             >
-              <option value="" hidden selected>
+              <option value="" hidden>
                 Select a category
               </option>
               {categoriesSelect.map((category) => (
@@ -229,9 +230,9 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center">
           <label htmlFor="imageFile" className="font-bold text-lg text-white">
-            Product Image (optional):
+            Product Image:
           </label>
           <SimpleDropzone
             onDrop={(file, error) => {

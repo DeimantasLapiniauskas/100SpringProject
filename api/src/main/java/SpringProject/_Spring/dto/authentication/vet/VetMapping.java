@@ -27,7 +27,9 @@ public class VetMapping {
                 vet.getLastName(),
                 vet.getPhoneNumber(),
                 vet.getSpecialty(),
-                vet.getLicenseNumber()
+                vet.getLicenseNumber(),
+                vet.getHireDate(),
+                vet.getAccountId()
         );
     }
 
