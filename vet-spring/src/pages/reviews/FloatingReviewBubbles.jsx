@@ -1,6 +1,7 @@
 import { Rating } from "@smastrom/react-rating";
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
+import { useRatingResize} from "@/hooks/useRatingResize";
 
 export const FloatingReviewBubbles = ({
   reviews = [],
@@ -8,16 +9,18 @@ export const FloatingReviewBubbles = ({
   interval = 10000,
 }) => {
   const positionStyles = [
-    "top-[64%] xs:top-[6.5rem] sm:top-[8.5rem] md:top-[10rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
-    "top-[69%] xs:top-[11.25rem] sm:top-[14rem] md:top-[16.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
-    "top-[75%] xs:top-[16rem] sm:top-[19.5rem] md:top-[23rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
-    "top-[80%] xs:top-[20.75rem] sm:top-[25rem] md:top-[29.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
+    "top-[27.5rem] xs:top-[6.5rem] sm:top-[8.5rem] md:top-[10rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
+    "top-[30rem] xs:top-[11.25rem] sm:top-[14rem] md:top-[16.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
+    "top-[32.5rem] xs:top-[16rem] sm:top-[19.5rem] md:top-[23rem] left-[10%] xs:left-[2%] md:left-[3%] lg:left-[5%]",
+    "top-[35rem] xs:top-[20.75rem] sm:top-[25rem] md:top-[29.5rem] right-[10%] xs:left-[2%] md:left-[20%] lg:left-[25%]",
   ];
 
   const [visibleReviews, setVisibleReviews] = useState([]);
   const [previousReviews, setPreviousReviews] = useState([]);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(null);
+
   const visibleRef = useRef([]);
+  const ratingSize = useRatingResize("50px", "60px", "70px", "80px")
 
   const getRandomReviews = () => {
     const array = [...reviews];
@@ -32,34 +35,19 @@ export const FloatingReviewBubbles = ({
     const firstReviews = getRandomReviews();
     setVisibleReviews(firstReviews);
     visibleRef.current = firstReviews;
+    setRefreshKey(Date.now())
 
     const timer = setInterval(() => {
       const nextReviews = getRandomReviews();
       setPreviousReviews(visibleRef.current);
       setVisibleReviews(nextReviews);
       visibleRef.current = nextReviews;
-      setRefreshKey((prev) => prev + 1);
+      setRefreshKey(Date.now())
     }, interval);
 
     return () => clearInterval(timer);
   }, [reviews, max, interval]);
 
-  const [ratingSize, setRatingSize] = useState("50px");
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-
-      if (width < 640) setRatingSize("50px");
-      else if (width < 768) setRatingSize("60px");
-      else if (width < 1024) setRatingSize("70px");
-      else setRatingSize("80px");
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <>
@@ -71,7 +59,7 @@ export const FloatingReviewBubbles = ({
         return (
           <div
             key={`prev-${review.id}-${refreshKey}`}
-            className={`absolute ${position} bg-yellow-50 shadow-md shadow-yellow-500 border border-yellow-400 rounded-xl px-2 py-2 md:px-3 md:py-3 w-[130px] sm:w-[175px] md:w-[200px] lg:w-[225px] responsive-text-xs text-amber-900  opacity-100`}
+            className={`absolute ${position} bg-yellow-50 shadow-md shadow-yellow-500 border border-yellow-400 rounded-[25px] md:rounded-[35px] px-2 py-2 md:px-3 md:py-3 w-[130px] sm:w-[175px] md:w-[200px] lg:w-[225px] responsive-text-xs text-amber-900  opacity-100`}
             style={{
               zIndex,
               animation: `fadeOut 2.5s ease-out ${delay} forwards, floating 2.5s ease-in-out infinite`,
@@ -99,10 +87,10 @@ export const FloatingReviewBubbles = ({
         return (
           <div
             key={`curr-${review.id}-${refreshKey}`}
-            className={`absolute ${position} bg-yellow-50 shadow-md border border-yellow-400  shadow-yellow-500 rounded-xl px-2 py-2 md:px-3 md:py-3 w-[130px] sm:w-[175px] md:w-[200px] lg:w-[225px]  responsive-text-xs text-amber-900  opacity-0`}
+            className={`absolute ${position} bg-yellow-50 shadow-md border border-yellow-400  shadow-yellow-500 rounded-[25px] md:rounded-[35px] px-2 py-2 md:px-3 md:py-3 w-[130px] sm:w-[175px] md:w-[200px] lg:w-[225px]  responsive-text-xs text-amber-900  opacity-0`}
             style={{
               zIndex,
-              animation: `fadeIn 2.5s ${delay} forwards, floating 2.5s ease-in-out infinite`,
+              animation: `fadeIn 2.5s ${delay} forwards, floating 2.5s ease-in infinite`,
             }}
           >
             <p className="h-[35px] sm:h-[40px] md:h-[45px] lg:h-[50px] overflow-hidden">
