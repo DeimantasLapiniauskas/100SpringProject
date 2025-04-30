@@ -99,11 +99,11 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
   return (
     <form
       onSubmit={handleSubmit(formSubmitHandler)}
-      className="text-center p-3"
+      className="  text-center"
     >
-      {submitError && <p className="bg-red-700 text-white p-2 mb-4">{submitError}</p>}
-      <div className="p-3">
-        <div className="pb-5 text-center">
+      {submitError && <p className="bg-red-700 text-white">{submitError}</p>}
+      <div>
+        <div className="text-center">
           <label htmlFor="name" className="font-bold text-lg text-white">
             Product Name:
           </label>
@@ -129,8 +129,8 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
-          <label htmlFor="description" className="font-bold text-lg text-white">
+        <div className="text-center">
+          <label htmlFor="description" className="font-bold text-lg text-white ">
             Description:
           </label>
           <textarea
@@ -139,10 +139,11 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
             {...register("description", {
               required: "Description is required",
               maxLength: {
-                value: 500,
-                message: "Description cannot exceed 500 characters",
+                value: 5000,
+                message: "Description cannot exceed 5000 characters",
               },
             })}
+            rows="1"
             placeholder="Product description"
           />
           <div className="text-red-500">
@@ -150,7 +151,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center">
           <label htmlFor="price" className="font-bold text-lg text-white">
             Price:
           </label>
@@ -173,7 +174,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center">
           <label
             htmlFor="stockQuantity"
             className="font-bold text-lg text-white"
@@ -198,8 +199,8 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="p-3">
-          <div className="pb-5 text-center">
+        <div>
+          <div className="text-center">
             <label htmlFor="category" className="font-bold text-lg text-white">
               Category:
             </label>
@@ -226,7 +227,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
           </div>
         </div>
 
-        <div className="pb-5 text-center">
+        <div className="text-center">
           <label htmlFor="imageFile" className="font-bold text-lg text-white">
             Product Image:
           </label>

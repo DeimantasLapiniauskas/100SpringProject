@@ -7,12 +7,17 @@ import { useList } from "@/context/ListContext";
 export const SearchBarPanel = ({ delay = 1000, ...props }) => {
   const {
     handleSearch,
-    searchValue: contextSearchValue,
     clearSearchBar,
+    localStoragePath,
+     searchParams
   } = useList();
   
-  const [searchValue, setSearchValue] = useState(contextSearchValue);
-  const lastSentValue = useRef(contextSearchValue);
+  const initialSearchValue = searchParams.get("search") 
+  || localStorage.getItem(`${localStoragePath} - searchValue`) 
+  || "";
+
+const [searchValue, setSearchValue] = useState(initialSearchValue);
+const lastSentValue = useRef(initialSearchValue);
 
   useEffect(() => {
     const trimmedValue = searchValue.trim();
@@ -46,7 +51,7 @@ const previousClear = useRef(clearSearchBar)
   }, [clearSearchBar]);
 
   return (
-    <div className=" w-4/10 xs:w-3/10 relative">
+    <div className="w-7/10 xs:w-1/2 sm:w-4/10  md:3/10 relative">
       <SearchBarBase
         value={searchValue}
         onChange={(e) => {
@@ -59,14 +64,14 @@ const previousClear = useRef(clearSearchBar)
       <img
         src={pawwSearch}
         alt="pawwSearch"
-        className="absolute left-1.5 top-1/2 -translate-y-1/2 transition w-3.5 sm:w-4 md:w-4.5 lg:w-5 animate-bounce"
+        className="absolute left-1.5 top-3/5 -translate-y-3/5 transition w-4.5 md:w-5 lg:w-5.5 animate-bounce"
       />
       <button
         type="button"
         onClick={handleSearchClear}
         className="absolute right-3 top-1/2 -translate-y-1/2 "
       >
-        <TicketX className="hover:text-red-800 text-info-content transition w-3 sm:w-3.5 md:w-4 lg:w-4.5" />
+        <TicketX className="hover:text-red-800 text-info-content transition w-4 md:w-4.5 lg:w-5" />
       </button>
     </div>
   );

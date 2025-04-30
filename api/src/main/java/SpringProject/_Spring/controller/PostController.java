@@ -114,7 +114,7 @@ public class PostController extends BaseController{
             }
 
             if (search.matches("^[%_]+$")) {
-                throw new IllegalArgumentException("Search query cannot contain only wildcards");
+                throw new IllegalArgumentException("Search query cannot contain only % or _");
             }
         }
 
@@ -125,7 +125,7 @@ public class PostController extends BaseController{
         return ok(postResponseDTO, message);
     }
 
-    @GetMapping("/posts/view/{postId}")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
@@ -189,7 +189,7 @@ public class PostController extends BaseController{
         }
 
         postService.deletePostById(postId);
-//        return noContent("Post deleted successfully");
-        return noContent();
+        return ok(null, "Post deleted successfully");
+
     }
 }

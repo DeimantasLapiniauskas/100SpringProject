@@ -11,7 +11,6 @@ import { useEntityPath } from "@/hooks/usePath";
 const DeleteModalContext = createContext();
 
 export const DeleteModalProvider = ({ children }) => {
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState(null);
   const [fieldErrors, setFieldErrors] = useState({});
@@ -21,7 +20,8 @@ export const DeleteModalProvider = ({ children }) => {
 
   const isMounted = useIsMounted();
   const { setStatus } = useUI();
-  const { getPage, pageSize, currentPage, sorted, searchValue, setPagination } = useList();
+  const { getPage, pageSize, currentPage, sorted, searchValue, setPagination } =
+    useList();
   const { Loading, Success, Error, Unusual } = UIStatus;
   const entityPath = useEntityPath();
 
@@ -35,53 +35,29 @@ export const DeleteModalProvider = ({ children }) => {
     setSelectedEntity(null);
   }, []);
 
-  const handleEntityDelete = useCallback(async (entityId) => {
-    try {
-      setStatus(Loading);
-
-      if (entityId) {
-        await deleteEntity(entityPath, entityId);
-
-        if (!isMounted.current) return;
-
-        toast.success("Post deleted successfully");
-        await getPage(pageSize, currentPage, sorted, searchValue);
-
-        if (!isMounted.current) return;
-        
-        setPagination((prev) => ({ ...prev }));
-        setStatus(Success);
-      } else {
-        setStatus(Unusual);
-      }
-    } catch (error) {
-      if (!isMounted.current) return;
-
-      const errorMessage =
-        error.response?.data?.message ?? error.message ?? "Unknown error";
-      setStatus(Error);
-      toast.error(errorMessage);
-    }
-  }, [setStatus, getPage, isMounted]);
-
-  
-    const onConfirm = useCallback (async () => {
+  const handleEntityDelete = useCallback(
+    async (entityId) => {
       try {
         setStatus(Loading);
-        const response = await verifyPassword(password);
 
-        if (!isMounted.current) return;
-
-        const { message, success } = response.data;
-  
-        if (success && message) {
-          setMessage(message);
-          await handleEntityDelete(selectedEntity?.id);
+        if (entityId) {
+          const response = await deleteEntity(entityPath, entityId);
 
           if (!isMounted.current) return;
 
-          setStatus(Success);
-          handleCloseModal()
+          const { message } = response.data;
+
+          if (message) {
+            toast.success(message);
+            await getPage(pageSize, currentPage, sorted, searchValue);
+
+            if (!isMounted.current) return;
+
+            setPagination((prev) => ({ ...prev }));
+            setStatus(Success);
+          } else {
+            setStatus(Unusual);
+          }
         } else {
           setStatus(Unusual);
         }
@@ -90,25 +66,65 @@ export const DeleteModalProvider = ({ children }) => {
 
         const errorMessage =
           error.response?.data?.message ?? error.message ?? "Unknown error";
-        const fieldErrors = error.response?.data?.data;
-  
-        if (errorMessage === "Validation failed" && fieldErrors) {
-          setFieldErrors(fieldErrors);
-        } else {
-          setError(errorMessage);
-        }
         setStatus(Error);
+        toast.error(errorMessage);
       }
-    }, [setStatus, password, selectedEntity, isMounted, fieldErrors, error, closeDeleteModal, handleEntityDelete]
+    },
+    [setStatus, getPage, isMounted]
   );
-  
-      const handleCloseModal = () => {
-        setPassword("");
-        setError(null);
-        setFieldErrors({});
-        closeDeleteModal();
-        setStatus(null)
-      };
+
+  const onConfirm = useCallback(async () => {
+    try {
+      setStatus(Loading);
+      const response = await verifyPassword(password);
+
+      if (!isMounted.current) return;
+
+      const { message, success } = response.data;
+
+      if (success && message) {
+        setMessage(message);
+        await handleEntityDelete(selectedEntity?.id);
+
+        if (!isMounted.current) return;
+
+        setStatus(Success);
+        handleCloseModal();
+      } else {
+        setStatus(Unusual);
+      }
+    } catch (error) {
+      if (!isMounted.current) return;
+
+      const errorMessage =
+        error.response?.data?.message ?? error.message ?? "Unknown error";
+      const fieldErrors = error.response?.data?.data;
+
+      if (errorMessage === "Validation failed" && fieldErrors) {
+        setFieldErrors(fieldErrors);
+      } else {
+        setError(errorMessage);
+      }
+      setStatus(Error);
+    }
+  }, [
+    setStatus,
+    password,
+    selectedEntity,
+    isMounted,
+    fieldErrors,
+    error,
+    closeDeleteModal,
+    handleEntityDelete,
+  ]);
+
+  const handleCloseModal = () => {
+    setPassword("");
+    setError(null);
+    setFieldErrors({});
+    closeDeleteModal();
+    setStatus(null);
+  };
 
   return (
     <DeleteModalContext.Provider
@@ -125,7 +141,7 @@ export const DeleteModalProvider = ({ children }) => {
         setError,
         error,
         setPassword,
-        password
+        password,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useFocusedField() {
+export const useFocusedField = () => {
   const [focusedField, setFocusedField] = useState(null);
 
   const handleFocus = (name) => () => setFocusedField(name);

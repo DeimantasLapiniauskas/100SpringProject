@@ -60,9 +60,9 @@ export const RegisterAppointment = (props) => {
 
   const formSubmitHandler = async (data) => {
     try {
-      if (typeof(data.serviceIds)=='string'){
+      if (typeof data.serviceIds == "string") {
         data.serviceIds = [data.serviceIds];
-      } 
+      }
       await postAppointment(data);
       reset({
         appointmentDate: "",
@@ -73,8 +73,15 @@ export const RegisterAppointment = (props) => {
       });
       setVisible(false);
     } catch (error) {
-      setVisibleError(true); 
-      setError(error.response?.data?.message || error.response?.data?.data || error.response?.data || error.message);
+      console.log(error);
+
+      setVisibleError(true);
+      setError(
+        error?.response?.data?.data ||
+          error.response?.data?.message ||
+          error.response?.data ||
+          error.message
+      );
     }
   };
 
@@ -85,7 +92,6 @@ export const RegisterAppointment = (props) => {
 
   return (
     <div className="bg-slate-400/50 h-screen w-screen fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-
       <div className="bg-[#97a0f1] border border-[#97a0f1] p-8 rounded-box absolute z-20 w-[600px] h-fit top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black">
         <h1 className="text-center text-2xl p-4">Register to appointment</h1>
         <form
@@ -110,9 +116,7 @@ export const RegisterAppointment = (props) => {
 
           <div>
             <div className="flex flex-row justify-between pt-2 pb-1">
-              <label htmlFor="pet">
-                Your pet
-              </label>
+              <label htmlFor="pet">Your pet</label>
               <div className="text-red-700 font-medium">
                 {errors.petId?.message}
               </div>
@@ -136,10 +140,7 @@ export const RegisterAppointment = (props) => {
 
           <div>
             <div className="flex flex-row justify-between pt-2 pb-1">
-              <label htmlFor="vet">
-                {" "}
-                Veterinarian
-              </label>
+              <label htmlFor="vet"> Veterinarian</label>
               <div className="text-red-700 font-medium">
                 {errors.vetId?.message}
               </div>
@@ -166,9 +167,7 @@ export const RegisterAppointment = (props) => {
 
           <div>
             <div className="flex flex-row justify-between pt-2 pb-1">
-              <label htmlFor="services">
-                Services
-              </label>
+              <label htmlFor="services">Services</label>
               <div className="text-red-700 font-medium">
                 {errors.serviceIds?.message}
               </div>
@@ -194,13 +193,10 @@ export const RegisterAppointment = (props) => {
                 </div>
               ))}
             </div>
-
           </div>
 
           <div className="pt-2  pb-1">
-            <label htmlFor="notes">
-              Notes
-            </label>
+            <label htmlFor="notes">Notes</label>
             <textarea
               type="text"
               cols={40}
