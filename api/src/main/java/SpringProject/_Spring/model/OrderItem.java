@@ -3,7 +3,6 @@ package SpringProject._Spring.model;
 import SpringProject._Spring.model.order.Order;
 import SpringProject._Spring.model.product.Product;
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
