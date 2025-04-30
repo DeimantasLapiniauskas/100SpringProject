@@ -142,8 +142,8 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
             {...register("description", {
               required: "Description is required",
               maxLength: {
-                value: 500,
-                message: "Description cannot exceed 500 characters",
+                value: 5000,
+                message: "Description cannot exceed 5000 characters",
               },
             })}
             rows="1"
