@@ -70,7 +70,7 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
 
       const payload = {
         name: data.name.trim(),
-        description: data.description.trim(),
+        description: data.description,
         price: parseFloat(data.price),
         stockQuantity: parseInt(data.stockQuantity, 10),
         imageUrl,
@@ -78,24 +78,21 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
       };
 
       if (product?.id) {
-
         await updateProduct(product.id, payload);
-        await getPage(pageSize, currentPage);
         setEditModalID("");
       } else {
         await addProduct(payload);
-        await getPage(pageSize, currentPage);
         setAddModalID("");
       }
 
+      await getPage(pageSize, currentPage);
       reset();
+      setValue("imageFile", null);
       setPreviewUrl(null);
     } catch (error) {
-      console.error("Error details: ", error.response?.data || error.message);
       setSubmitError(error.response?.data?.message || error.message || "Failed to submit the form.");
     } finally {
       setIsLoading(false);
-      setValue("imageFile", null);
     }
   };
 
@@ -242,6 +239,15 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
             }}
             previewUrl={previewUrl}
             error={imageError || errors.imageFile?.message}
+          />
+          <input
+            type="hidden"
+            {...register("imageFile", {
+              validate: (file) => {
+                if (product?.id && !file && product?.imageUrl) return true;
+                return !!file || "Product image is required";
+              },
+            })}
           />
           <div className="text-red-500">
             {errors.imageFile && <p>{errors.imageFile.message}</p>}
