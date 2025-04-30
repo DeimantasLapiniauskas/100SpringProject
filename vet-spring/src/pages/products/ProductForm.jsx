@@ -87,12 +87,12 @@ const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
 
       await getPage(pageSize, currentPage);
       reset();
+      setValue("imageFile", null);
       setPreviewUrl(null);
     } catch (error) {
       setSubmitError(error.response?.data?.message || error.message || "Failed to submit the form.");
     } finally {
       setIsLoading(false);
-      setValue("imageFile", null);
     }
   };
 
