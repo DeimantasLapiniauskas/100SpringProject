@@ -27,7 +27,7 @@ export const Login = () => {
     
     return (
         <main className="h-screen flex md:flex-col-reverse lg:flex-row justify-center items-center gap-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-[rgb(151,160,241)] border border-[#97a0f1] p-3 rounded-box min-h-[500px] mx-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] bg-gradient-to-br from-purple-400 to-indigo-600 p-3 rounded-box min-h-[500px] mx-6">
                     <div className="figma-headline-3 text-center mb-4 px-4">
                         Hi there! Welcome to Happy Hearts Community Dashboard
                     </div>
