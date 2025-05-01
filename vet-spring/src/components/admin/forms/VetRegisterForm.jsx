@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { addVet } from "@/utils/helpers/addEditVet";
 import ModalContext from "@/utils/helpers/modalContext";
+import { addVet } from "@/utils/helpers/vetHelpers";
 
 const VetRegisterForm = ({ getPage, currentPage, pageSize }) => {
     const { setAddModalID } = useContext(ModalContext);

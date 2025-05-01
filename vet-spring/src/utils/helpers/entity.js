@@ -8,12 +8,12 @@ export const postEntity = async (entityPath, payload) => api.post(`${url}/${enti
 export const uploadEntityImage = async (entityPath, data) => api.post(`${url}/${entityPath}/upload`, data);
 
 export const putEntity = async (entityPath, entityId, payload) =>
-    api.put(`${url}/${entityPath}/${entityId}`, payload);
-  
-  export const deleteEntity = async (entityPath, entityId) => api.delete(`${url}/${entityPath}/${entityId}`);
-  
-  export const verifyPassword = async (password) => api.post(`${urlPassword}`, { newPassword: password })
-  
-  export const getEntityById = async (entityPath, entityId) => api.get(`${url}/${entityPath}/${entityId}`);
+  api.put(`${url}/${entityPath}/${entityId}`, payload);
 
-  export const getAllEntitys = async (entityPath) => api.get(`${url}/${entityPath}`)
+export const deleteEntity = async (entityPath, entityId) => api.delete(`${url}/${entityPath}/${entityId}`);
+
+export const verifyPassword = async (password) => api.post(`${urlPassword}`, { newPassword: password })
+
+export const getEntityById = async (entityPath, entityId) => api.get(`${url}/${entityPath}/${entityId}`);
+
+export const getAllEntitys = async (entityPath) => api.get(`${url}/${entityPath}`)

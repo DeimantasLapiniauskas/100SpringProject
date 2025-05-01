@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import ModalContext from "@/utils/helpers/modalContext";
-import { updateAccountPassword } from "@/utils/helpers/updateAccountPassword";
+import { updateAccountPassword } from "@/utils/helpers/accountHelpers";
 
 const PasswordChangeForm = ({ accountId, getPage, currentPage, pageSize }) => {
     const { setEditPasswordModalID } = useContext(ModalContext);

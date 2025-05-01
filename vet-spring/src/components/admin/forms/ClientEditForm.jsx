@@ -2,8 +2,8 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useEffect } from "react";
-import { updateClient } from "../../../utils/helpers/updateClient";
 import ModalContext from "@/utils/helpers/modalContext";
+import { updateClient } from "@/utils/helpers/cientHelpers";
 
 const ClientEditForm = ({ client, getPage, currentPage, pageSize }) => {
     const { setEditModalID } = useContext(ModalContext);
