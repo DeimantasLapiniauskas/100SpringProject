@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,7 +30,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class PostController extends BaseController{
+public class PostController extends BaseController {
 
     public final VetService vetService;
     public final PostService postService;
@@ -59,7 +60,7 @@ public class PostController extends BaseController{
         }
 
         String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename);
-        Path uploadPath = Paths.get("uploads/images");
+        Path uploadPath = Paths.get("/uploads/images");
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -158,7 +159,7 @@ public class PostController extends BaseController{
             if (!isAdmin) {
                 Vet currentVet = vet.get();
                 if (foundPost.getVet().getId() != currentVet.getId()) {
-                    return forbidden( "You cannot edit someone else's Blog");
+                    return forbidden("You cannot edit someone else's Blog");
                 }
             } else {
                 return forbidden("Admins cannot edit Blogs");
@@ -182,7 +183,7 @@ public class PostController extends BaseController{
         String imageUrl = post.getImageUrl();
         if (imageUrl != null && !imageUrl.isBlank()) {
             String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-            Path path = Paths.get("uploads/images").resolve(filename);
+            Path path = Paths.get("/uploads/images").resolve(filename);
             if (Files.exists(path)) {
                 Files.delete(path);
             }

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import ModalContext from "../../../utils/helpers/modalContext";
-import { deleteAccount } from "@/utils/helpers/deleteAccount";
+import { deleteAccount } from "@/utils/helpers/accountHelpers";
 
 function DeleteAccountButton({ id, getPage, currentPage, pageSize }) {
   const { deleteModalID, setDeleteModalID } = useContext(ModalContext);
