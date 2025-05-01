@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { addPet, updatePet } from "../../utils/helpers/petService";
 import ThemeContext from "../../utils/helpers/themeContext";
 import { useContext } from "react";
+import { addPet, updatePet } from "@/utils/helpers/petHelpers";
 
 const PetForm = ({ pet, getPage, currentPage, pageSize }) => {
   const { setEditModalID, setAddModalID } = useContext(ThemeContext);

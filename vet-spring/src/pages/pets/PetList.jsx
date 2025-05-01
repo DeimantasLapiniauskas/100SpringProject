@@ -11,7 +11,6 @@ export const PetList = () => {
   const { iat } = account || "";
   const [welcome, setWelcome] = useState(true);
 
-  //!!!!!!!!!!
   const [deleteModalID, setDeleteModalID] = useState("");
   const [editModalID, setEditModalID] = useState("");
   const [addModalID, setAddModalID] = useState("");
@@ -26,7 +25,6 @@ export const PetList = () => {
     pageSize,
   } = useList();
 
-  //TODO fadeout effect
   const welcomeClosure = () => {
     setTimeout(() => {
       setWelcome(false);
@@ -37,15 +35,9 @@ export const PetList = () => {
     welcomeClosure();
   }, []);
 
-  // const roleCheck = () => {
-  //     return account.scope?.includes("ROLE_CLIENT") || account.scope?.icludes("ROLE_ADMIN")
-  // }
-
   return (
     <>
-        {/* Top Section - Future Image & Text */}
         <main className="flex flex-col sm:flex-row items-center justify-center gap-4 py-22 z-10">
-          {/* Text Section */}
           <h1 className=" text-black lg:text-4xl md:text-2xl sm:text-lg text-base text-center">
             Happy Hearts
             <br />

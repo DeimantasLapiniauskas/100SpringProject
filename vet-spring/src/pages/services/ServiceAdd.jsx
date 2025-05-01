@@ -1,13 +1,10 @@
 import { useForm } from "react-hook-form";
-import {
-  addService,
-  uploadServiceImage,
-} from "../../utils/helpers/serviceService.js";
 import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Error } from "../../components/feedback/Error.jsx";
 import { Dropzone } from "@/components/uiBase/dropZoneBase";
 import { Controller } from "react-hook-form";
+import { addService, uploadServiceImage } from "@/utils/helpers/serviceService.js";
 export const ServiceAdd = ({ service }) => {
   const navigate = useNavigate();
   const [error, setError] = useState();

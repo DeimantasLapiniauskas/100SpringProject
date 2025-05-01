@@ -3,8 +3,8 @@ import { useIsMounted } from "./useIsMounted";
 import { useState, useEffect } from "react";
 import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
-import { getEntityById } from "@/utils/helpers/entity";
 import { useEntityPath } from "./usePath";
+import { getEntityById } from "@/utils/helpers/entity";
 
 export const useEntityData = ({redirect = false }) => {
 

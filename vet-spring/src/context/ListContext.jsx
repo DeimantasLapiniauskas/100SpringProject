@@ -70,7 +70,7 @@ export const ListProvider = ({ children }) => {
           if (!isMounted.current) return;
 
           const { data, message, success } = response.data;
-          console.log(response.data);
+          //console.log(response.data);
 
           if (page >= data.totalPages && data.totalPages > 0) {
             setStatus(BadPageRequest);

@@ -1,14 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import {
-  updateService,
-  uploadServiceImage,
-} from "../../utils/helpers/serviceService.js";
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import { Error } from "../../components/feedback/Error.jsx";
 import { Dropzone } from "@/components/uiBase/dropZoneBase";
 import { Controller } from "react-hook-form";
+import { updateService, uploadServiceImage } from "@/utils/helpers/serviceService";
+
 export const ServiceUpdate = () => {
   const { id } = useParams();
 

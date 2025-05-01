@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { getAllPets } from "../../utils/helpers/getAllPets";
-import { getAllVets } from "../../utils/helpers/getAllVets";
 import { useEffect, useState } from "react";
-import { getServices } from "../../utils/helpers/serviceService";
-import { postAppointment } from "../../utils/helpers/appointments";
 import { Error } from "../../components/feedback/Error";
+import { getAllPets } from "@/utils/helpers/petHelpers";
+import { getAllVets } from "@/utils/helpers/vetHelpers";
+import { getServices } from "@/utils/helpers/serviceService";
+import { postAppointment } from "@/utils/helpers/appointments";
 
 export const RegisterAppointment = (props) => {
   const { serviceId, setVisible } = props;

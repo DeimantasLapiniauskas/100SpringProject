@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { getClientAppointments } from "../../utils/helpers/appointments";
-import { getVetAppointments } from "../../utils/helpers/appointments";
 import { RegisterAppointment } from "./RegisterAppointment";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { NavLink } from "react-router";
 import api from "@/utils/api";
+import { getClientAppointments, getVetAppointments } from "@/utils/helpers/appointments";
 
 
 export const Appointment = () => {

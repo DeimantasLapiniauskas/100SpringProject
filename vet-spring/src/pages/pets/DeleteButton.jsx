@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import ThemeContext from "../../utils/helpers/themeContext";
-import { deletePet } from "../../utils/helpers/deletePet";
+import { deletePet } from "@/utils/helpers/petHelpers";
+
 
 function DeleteButton({ pet, getPage, currentPage, pageSize }) {
   const { deleteModalID, setDeleteModalID } = useContext(ThemeContext);

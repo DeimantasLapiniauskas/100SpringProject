@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { deleteEntity } from "@/utils/helpers/entity";
+
 import toast from "react-hot-toast";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useList } from "@/context/ListContext";
-import { verifyPassword } from "@/utils/helpers/entity";
 import { useEntityPath } from "@/hooks/usePath";
+import { deleteEntity, verifyPassword } from "@/utils/helpers/entity";
 
 const DeleteModalContext = createContext();
 

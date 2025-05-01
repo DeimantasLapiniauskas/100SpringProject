@@ -22,7 +22,6 @@ import { Loading } from "@/components/feedback/Loading";
 import { Error } from "@/components/feedback/Error";
 import { Unusual } from "@/components/feedback/Unusual";
 import { Redirecting } from "@/components/feedback/Redirecting";
-import { postEntity, putEntity } from "@/utils/helpers/entity";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useEntityPath } from "@/hooks/usePath";
@@ -34,8 +33,8 @@ import { ChevronsRight } from "lucide-react";
 import reviewParrot from "../../assets/images/vet-parrot.png";
 import reviewHamster from "../../assets/images/vet-hamster.png";
 import { useEffect } from "react";
-import { getAllEntitys } from "@/utils/helpers/entity";
 import vetDoc from "../../assets/icons/vetDoc.png"
+import { getAllEntitys, postEntity, putEntity } from "@/utils/helpers/entity";
 
 export const AddReviewPage = ({ initialData, getReviewError }) => {
   const form = useForm({

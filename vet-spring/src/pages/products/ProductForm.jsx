@@ -1,10 +1,9 @@
-import { addProduct, updateProduct } from "@/utils/helpers/productHelpers";
 import ModalContext from "@/utils/helpers/modalContext";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SimpleDropzone } from "./SimpleDropzone";
-import { addProductImage } from "@/utils/helpers/addProductImage";
+import { addProduct, addProductImage, updateProduct } from "@/utils/helpers/productHelpers";
 
 const ProductForm = ({ product, getPage, currentPage, pageSize }) => {
   const { setAddModalID, setEditModalID } = useContext(ModalContext);

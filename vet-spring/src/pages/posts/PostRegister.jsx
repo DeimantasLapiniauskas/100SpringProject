@@ -22,7 +22,6 @@ import { Dropzone } from "@/components/uiBase/dropZoneBase";
 import { useState, useEffect } from "react";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
-import { postEntity, putEntity, uploadEntityImage } from "@/utils/helpers/entity";
 import { Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -37,6 +36,7 @@ import pencil from "../../assets/icons/pencil.png";
 import "../../index.css";
 import { Redirecting } from "@/components/feedback/Redirecting";
 import { useEntityPath } from "@/hooks/usePath";
+import { postEntity, putEntity, uploadEntityImage } from "@/utils/helpers/entity";
 
 export const PostRegister = ({ initialData, getPostError }) => {
   const form = useForm({
