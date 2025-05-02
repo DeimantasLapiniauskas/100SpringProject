@@ -71,21 +71,21 @@ export const Appointment = () => {
 
     
       <div className="bg-white m-6 p-6 rounded-box text-black">
-        <div className="grid grid-cols-8 border-b-2 border-[#97a0f1] font-bold text-xl">
-          <p className="mb-4">Appointment Date</p>
-          <p className="mb-4">Pet</p>
-          <p className="mb-4">Price</p>
-          <p className="mb-4">Veterinarian</p>
-          <p className="mb-4">Services</p>
-          <p className="mb-4">Notes</p>
-          <p className="mb-4">Status</p>
+        <div className="grid grid-cols-8 gap-1 border-b-2 border-[#97a0f1] font-bold text-sm lg:text-xl">
+          <p className="mb-4 break-all">Appointment Date</p>
+          <p className="mb-4 break-all">Pet</p>
+          <p className="mb-4 break-all">Price</p>
+          <p className="mb-4 break-all">Veterinarian</p>
+          <p className="mb-4 break-all">Services</p>
+          <p className="mb-4 break-all">Notes</p>
+          <p className="mb-4 break-all">Status</p>
         </div>
         {appointments.map((a) => (
           <div
             className="grid-cols-8 grid border-b-2 border-[#97a0f1] mt-3"
             key={a.id}
           >
-            <p>{a.appointmentDate.replace("T", " ")}</p>
+            <p className="break-all">{a.appointmentDate.replace("T", " ")}</p>
             <div>
               <p>{a.petDTO.name}</p>
               <p className="text-slate-500 pt-1 mb-3">{a.petDTO.species}</p>
@@ -99,13 +99,13 @@ export const Appointment = () => {
             </div>
             <div>
               {a.services.map((s) => (
-                <div key={s.id}>{s.name}</div>
+                <div key={s.id} className="break-all">{s.name}</div>
               ))}
             </div>
             <p>{a.notes}</p>
-            <p>{a.status}</p>
+            <p className="break-all">{a.status}</p>
 
-            <div className="flex flex-row">
+            <div className="flex flex-col gap-1 ">
               <NavLink
                 to={`/appointments/client/${a.id}`}
                 className="btn bg-yellow-300 w-20 shadow-sm shadow-amber-500 hover:bg-yellow-400 border-transparent mr-1.5"
