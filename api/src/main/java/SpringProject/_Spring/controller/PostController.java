@@ -12,6 +12,7 @@ import SpringProject._Spring.service.PostService;
 import SpringProject._Spring.service.authentication.VetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +21,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,6 +45,12 @@ public class PostController extends BaseController {
         this.postService = postService;
     }
 
+    @Value("${aws.s3.bucket}")
+    private String bucketName;
+
+    @Autowired
+    private S3Client s3Client;
+
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/posts/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
@@ -60,17 +70,16 @@ public class PostController extends BaseController {
         }
 
         String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename);
-        Path uploadPath = Paths.get("/uploads/images");
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .contentType(contentType)
+                .build();
+        s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(
+                file.getInputStream(), file.getSize()));
 
-        Path filePath = uploadPath.resolve(fileName);
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        String fileUrl = baseUrl + "/api/images/" + fileName;
+        String fileUrl = String.format("https://%s.s3.amazonaws.com/%s", bucketName, fileName);
 
         return ok(fileUrl, "Image uploaded successfully");
     }
@@ -178,19 +187,15 @@ public class PostController extends BaseController {
         if (postOpt.isEmpty()) {
             return notFound("Post does not exist");
         }
-
         Post post = postOpt.get();
-        String imageUrl = post.getImageUrl();
-        if (imageUrl != null && !imageUrl.isBlank()) {
-            String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-            Path path = Paths.get("/uploads/images").resolve(filename);
-            if (Files.exists(path)) {
-                Files.delete(path);
-            }
+        if (post.getImageUrl() != null && !post.getImageUrl().isBlank()) {
+            String fileName = post.getImageUrl().substring(post.getImageUrl().lastIndexOf("/") + 1);
+            s3Client.deleteObject(DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build());
         }
-
         postService.deletePostById(postId);
-        return ok(null, "Post deleted successfully");
-
+        return noContent();
     }
 }

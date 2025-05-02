@@ -10,6 +10,7 @@ import SpringProject._Spring.service.ServiceAtClinicService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,6 +39,12 @@ public class ServiceAtClinicController extends BaseController {
     public ServiceAtClinicController(ServiceAtClinicService service) {
         this.serviceAtClinicService = service;
     }
+
+    @Value("${aws.s3.bucket}")
+    private String bucketName;
+
+    @Autowired
+    private S3Client s3Client;
 
     @Operation(summary = "Add new service", description = "Adds a new service to the database")
     @PostMapping("/services")
@@ -62,29 +73,23 @@ public class ServiceAtClinicController extends BaseController {
         if (originalFilename == null || originalFilename.isBlank()) {
             return badRequest(null, "File must have a valid name");
         }
-
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
             return badRequest(null, "Only image files are allowed");
         }
-
         long maxFileSize = 5 * 1024 * 1024;
         if (file.getSize() > maxFileSize) {
             return badRequest(null, "File too large. Max allowed size is 5MB.");
         }
-
-        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename); // Unikalus vardas
-        Path uploadPath = Paths.get("uploads/images");
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        Path filePath = uploadPath.resolve(fileName);
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        String fileUrl = baseUrl + "/api/images/" + fileName;
+        String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(originalFilename);
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .contentType(contentType)
+                .build();
+        s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(
+                file.getInputStream(), file.getSize()));
+        String fileUrl = String.format("https://%s.s3.amazonaws.com/%s", bucketName, fileName);
         return ok(fileUrl, "Image uploaded successfully");
     }
 
@@ -150,19 +155,15 @@ public class ServiceAtClinicController extends BaseController {
         if (!serviceAtClinicService.existsServiceById(id)) {
             return notFound("Service not found");
         }
-
         ServiceAtClinic serviceAtClinic = serviceAtClinicService.findServiceAtClinicById(id).get();
-        String imageUrl = serviceAtClinic.getImageUrl();
-        if (imageUrl != null && !imageUrl.isBlank()) {
-            String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-            Path path = Paths.get("uploads/images").resolve(fileName);
-            if (Files.exists(path)) {
-                Files.delete(path);
-            }
+        if (serviceAtClinic.getImageUrl() != null && !serviceAtClinic.getImageUrl().isBlank()) {
+            String fileName = serviceAtClinic.getImageUrl().substring(serviceAtClinic.getImageUrl().lastIndexOf("/") + 1);
+            s3Client.deleteObject(DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build());
         }
-
         serviceAtClinicService.deleteServiceById(id);
-//        return noContent("service deleted successfully");
         return noContent();
     }
 
