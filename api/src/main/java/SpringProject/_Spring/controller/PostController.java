@@ -166,6 +166,8 @@ public class PostController extends BaseController{
         }
 
         Post updatedPost = postService.updatePost(foundPost, postRequestDTO);
+        System.out.println("cia");
+        System.out.println(updatedPost);
         return ok(PostMapper.toPostResponseDTO(updatedPost), "Post updated successfully");
     }
 

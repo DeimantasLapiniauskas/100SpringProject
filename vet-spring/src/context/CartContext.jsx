@@ -20,8 +20,6 @@ export const CartProvider = ({ children }) => {
     setCartitems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  console.log("Pirmas",isOpen)
-
   const toggleCart = () => {
     setIsOpen(!isOpen);
   };

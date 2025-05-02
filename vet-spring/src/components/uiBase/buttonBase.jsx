@@ -18,13 +18,14 @@ const buttonVariants = cva(
         outline: "border border-input text-foreground bg-transparent",
         primary: "bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600  text-info-content",
         permanent: "border-1 border-blue-200 rounded-[5px] cursor-pointer",
-        cancel: "text-white border hover:text-info hover:border-info bg-info hover:bg-white",
+        close: "text-info border hover:text-white bg-sky-800 hover:bg-info",
+        cancel: "bg-success text-orange-900 opacity-80 hover:opacity-100 ",
         danger: "w-full text-black text-red-600 border-1 bg-black",
         review: "bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 border border-amber-500 text-amber-800",
         transparent: "bg-transparent"
       },
       intent: {
-        default: " hover:scale-105 transition-transform duration-400",
+        default: " hover:scale-105 transition-transform duration-400 transition-colors duration-400",
         review: " opacity-75 hover:shadow-amber-600 hover:text-amber-900 hover:opacity-100 shadow-sm",
         faded: "opacity-75 hover:opacity-100 border border-info hover:shadow-sm hover:shadow-info"
       }

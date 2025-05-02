@@ -19,10 +19,14 @@ import {
   FormMessage,
 } from "@/components/uiBase/formBase";
 import { Dropzone } from "@/components/uiBase/dropZoneBase";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUI } from "@/context/UIContext";
 import { UIStatus } from "@/constants/UIStatus";
-import { postEntity, putEntity, uploadEntityImage } from "@/utils/helpers/entity";
+import {
+  postEntity,
+  putEntity,
+  uploadEntityImage,
+} from "@/utils/helpers/entity";
 import { Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -37,8 +41,9 @@ import pencil from "../../assets/icons/pencil.png";
 import "../../index.css";
 import { Redirecting } from "@/components/feedback/Redirecting";
 import { useEntityPath } from "@/hooks/usePath";
+import { warningToast } from "@/components/uiBase/toast/toastUtils";
 
-export const PostRegister = ({ initialData, getPostError }) => {
+export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
   const form = useForm({
     resolver: zodResolver(PostRegisterSchema),
     mode: "onChange",
@@ -64,19 +69,32 @@ export const PostRegister = ({ initialData, getPostError }) => {
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
-  const isMounted = useIsMounted();
+  const formSubmittingRef = useRef(false);
+  const isMounted = useIsMounted(formSubmittingRef);
+  const controllerRef = useRef(new AbortController());
   const navigate = useNavigate();
-  const entityPath = useEntityPath()
+  const entityPath = useEntityPath();
 
   const handleFormSubmit = async (data) => {
+   
     let imageUrl = initialData?.imageUrl ?? null;
+    formSubmittingRef.current = true;
+    if (feedbackRef) {
+    feedbackRef.current = true;
+    }
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
 
     try {
       setStatus(Fetching);
       if (data?.imageFile) {
         const formData = new FormData();
         formData.append("file", data.imageFile);
-        const imageRes = await uploadEntityImage(entityPath, formData);
+        const imageRes = await uploadEntityImage(entityPath, formData, signal);
+
+        formSubmittingRef.current = false;
+
+        if (signal.aborted) return;
         if (!isMounted.current) return;
 
         imageUrl = imageRes.data.data;
@@ -91,15 +109,21 @@ export const PostRegister = ({ initialData, getPostError }) => {
       };
       // console.log(initialData.id)
       let response;
+      formSubmittingRef.current = true;
 
       if (isEditMode) {
-        response = await putEntity(entityPath, initialData.id, payload);
+        response = await putEntity(entityPath, initialData.id, payload, signal);
       } else {
-        response = await postEntity(entityPath, payload);
+        response = await postEntity(entityPath, payload, signal);
       }
+
+      formSubmittingRef.current = false;
+
+      if (signal.aborted) return;
       if (!isMounted.current) return;
 
       const { data: data2, message, success } = response.data;
+      console.log("Parsed:", { data2, message, success });
 
       if (data2 && success) {
         setStatus(Success);
@@ -115,13 +139,23 @@ export const PostRegister = ({ initialData, getPostError }) => {
         } else {
           form.reset();
         }
+        if (feedbackRef) {
+          feedbackRef.current = false;
+          }
         setStatus(Navigating);
         navigate("/posts");
+        return;
       } else {
         setStatus(Unknown);
         setPreviewUrl(null);
       }
     } catch (error) {
+      console.error("Caught error:", error);
+      if (error.name === "AbortError") {
+        toast.error("Request was cancelled");
+        return;
+      }
+
       if (!isMounted.current) return;
 
       const errorMessage =
@@ -140,8 +174,10 @@ export const PostRegister = ({ initialData, getPostError }) => {
     }
   }, [initialData?.imageUrl]);
 
-  if (isLoading) {
-    return <Loading />;
+  if (isRedirecting) {
+    return <div className="h-[20rem] md:h-[35rem]">
+    <Redirecting />
+  </div>
   }
 
   if (isUnusual) {
@@ -151,17 +187,19 @@ export const PostRegister = ({ initialData, getPostError }) => {
     return <Error error={error} isHidden={!error} />;
   }
 
-  if (isRedirecting) {
-    return <Redirecting />;
-  }
-
   return (
-    <div className="flex flex-col-reverse xs:flex xs:flex-row justify-center gap-2">
-      <div className="flex flex-col gap-4 items-center mt-2 sm:mt-3 md:mt-4 lg:mt-5">
-        <h1 className="text-center text-info-content text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] bg-gradient-to-l from-red-500 via-white to-blue-500">
-          REGISTER NEW POST HERE
-        </h1>
-        <img src={pencil} alt="pencil" className="w-40 sm:w-full" />
+    <div className="flex flex-col-reverse xs:flex xs:flex-row justify-evenly gap-2 mt-1.5 xs:mt-0">
+      <div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="flex flex-col gap-4 justify-center items-center h-full">
+            <h1 className="text-center text-info-content text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-semibold shadow-lg shadow-info-content p-3 rounded-[10px] bg-gradient-to-l from-red-500 via-white to-blue-500">
+              REGISTER NEW POST HERE
+            </h1>
+            <img src={pencil} alt="pencil" className="w-40 sm:w-full" />
+          </div>
+        )}
       </div>
       <div className="xs:max-w-3/5 xs:min-w-3/5 lg:min-w-1/2 lg:max-w-1/2 p-2 sm:p-4 md:p-6 bg-gradient-to-br from-blue-200 via-blue-300 to-indigo-400 rounded-[10px] relative mt-2 sm:mt-3 md:mt-4 lg:mt-5 flex border border-info shadow-lg shadow-info">
         <FormProvider {...form}>
@@ -324,17 +362,29 @@ export const PostRegister = ({ initialData, getPostError }) => {
                 </Button>
                 <Button
                   type="button"
+                  disabled={form.formState.isSubmitting}
                   className="text-white/80"
                   onClick={() => {
                     form.reset();
                     setPreviewUrl(initialData?.imageUrl ?? null);
+                    formSubmittingRef.current = false;
                   }}
                 >
                   Reset
                 </Button>
               </div>
+              <Button
+                type="button"
+                variant="cancel"
+                onClick={() => {
+                  controllerRef?.current?.abort();
+                  warningToast("Request cancelled");
+                }}
+              >
+                Cancel
+              </Button>
               <p className="text-info-content text-right text-[10px] sm:text-xs md:text-sm">
-                <span className="text-xs sm:text-sm md:text-base">*</span>{" "}
+                <span className="text-xs sm:text-sm md:text-base">*</span>
                 required
               </p>
             </div>

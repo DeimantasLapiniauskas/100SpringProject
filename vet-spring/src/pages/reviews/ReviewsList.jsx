@@ -39,7 +39,7 @@ export const ReviewsList = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-1 md:gap-1 mt-1 bg-gradient-to-b  via-sky-950 to-black">
+    <div className="flex flex-col items-center gap-1 md:gap-1 mt-1 bg-gradient-to-b  via-sky-950 to-black min-h-screen">
       <div className="flex justify-end w-full gap-1.5 sm:gap-2.5 md:gap-3.5 px-6 sm:px-8 md:px-10 items-center">
         <FilterPanel filterFields={filterFields} />
         <SelectPageSizePanel pageSizes={pageSizes} />
@@ -58,10 +58,10 @@ export const ReviewsList = () => {
           <div className="absolute responsive-text-sm left-34 sm:left-40 md:left-46 lg:left-50 bottom-0 w-30 hover:underline text-orange-700 flex items-center font-semibold "><span><ChevronsRight className="w-2 sm:w-3 md:w-4 lg:w-5"/></span>Leave review</div>
         </NavLink>
       </div>
-      {isLoading ? <Loading /> : ""}
-      {isEmpty ? <p>{message}</p> : ""}
-      {isUnusual ? <Unusual error={error} /> : ""}
-      {isError ? <Error error={error} /> : ""}
+      {isLoading ? (<Loading />) : ("")}
+      {isEmpty ? (<p>{message}</p>) : ("")}
+      {isUnusual ? (<Unusual error={error} />) : ("")}
+      {isError ? (<Error error={error} />) : ("")}
       {isLoading || isEmpty || isUnusual || isError ? (
         ""
       ) : (

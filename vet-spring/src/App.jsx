@@ -1,7 +1,7 @@
 
 import "./App.css";
 import VetClinicRoutes from "./components/VetClinicRoutes";
-import { CustomToaster } from "@/components/uiBase/CustomToaster";
+import { CustomToaster } from "@/components/uiBase/toast/customToaster";
 import pawssBackgroundImage from "/src/assets/icons/pawss_for_background_spaced_out_rotated_1536px.png";
 
 const App = () => {

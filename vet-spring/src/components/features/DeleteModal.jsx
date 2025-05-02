@@ -107,8 +107,8 @@ export const DeleteModal = () => {
         </DialogFooter>
         <div className="absolute pt-1 sm:pt-1.5 md:pt-2 right-8">
           <DialogClose asChild>
-            <Button type="button" variant="cancel" size="sm">
-              Cancel !
+            <Button type="button" variant="close" size="sm">
+              Close !
             </Button>
           </DialogClose>
         </div>

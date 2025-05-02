@@ -1,5 +1,5 @@
 
-import { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
 
 export const CustomToaster = () => (
   <Toaster
@@ -33,6 +33,14 @@ export const CustomToaster = () => (
         duration: Infinity,
         icon: "⏳",
       },
+      warning: {
+        icon: "⚠️",
+        duration: 2000,
+        style: {
+          background: "#FACC15",
+          color: "#B91C1C"
+        }
+      }
     }}
     containerStyle={{
         top: "6rem",
@@ -40,6 +48,7 @@ export const CustomToaster = () => (
       }}
   />
 );
+
 // toast((t) => (     --->Custom Toastas
 //     <div className="flex items-center gap-2">
 //       <CheckIcon className="text-green-500" />
