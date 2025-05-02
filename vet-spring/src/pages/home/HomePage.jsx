@@ -18,9 +18,9 @@ export const HomePage = () => {
 
   return (
     <div className=" pt-1 md:pt-2 max-w-[1400px] mx-auto">
-      {/* Top Section - Dog Image & Text */}
+
       <main className="flex xs:flex-row-reverse flex-col items-end xs:items-start">
-        {/* Text Section */}
+
         <div className="flex flex-col pe-3 sm:pe-4 md:pe-5 lg:text-lg md:text-base sm:text-sm text-xs">
           <div className="grid grid-cols-3 w-full">
               <div className="flex items-center col-span-2 justify-center sm:justify-start">
@@ -52,7 +52,7 @@ export const HomePage = () => {
               </div>
           </div>
         </div>
-        {/* Image Section - Dog on Left */} 
+
             <figure >
               <img
                 className=" max-w-[7rem] xs:max-w-[9.5rem] sm:max-w-[13rem] md:max-w-[17rem] lg:max-w-[22rem] object-contain drop-shadow-lg me-10 xs:m-0"
@@ -60,6 +60,7 @@ export const HomePage = () => {
                 alt="Dog; light brown and white fur; bent ears"
               />
             </figure>
+            
       </main>
       {isLoading ? <Loading/> : ""}
       <ListProvider>

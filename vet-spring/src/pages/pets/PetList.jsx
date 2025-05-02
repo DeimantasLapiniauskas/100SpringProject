@@ -43,9 +43,8 @@ export const PetList = () => {
 
   return (
     <>
-        {/* Top Section - Future Image & Text */}
         <main className="flex flex-col sm:flex-row items-center justify-center gap-4 py-22 z-10">
-          {/* Text Section */}
+
           <h1 className=" text-black lg:text-4xl md:text-2xl sm:text-lg text-base text-center">
             Happy Hearts
             <br />
