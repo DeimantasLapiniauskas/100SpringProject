@@ -5,6 +5,8 @@ import { Unusual } from "@/components/feedback/Unusual";
 import "../../index.css"
 import { useEntityData } from "@/hooks/useEntityData";
 import { Redirecting } from "@/components/feedback/Redirecting";
+import { CircleX } from "lucide-react";
+import { NavLink } from "react-router";
 
 const ViewOrder = () => {
 
@@ -44,7 +46,10 @@ const {initialData: order, error} = useEntityData({redirect : true})
   } = order;
 
   return (
-    <div className=" bg-gradient-to-br from-gray-300 via-white to-gray-100 backdrop-blur-md border border-white/20 rounded-xl shadow-lg p-3 sm:p-4 md:p-5 lg:p-6 space-y-4 xs:space-y-5 sm:space-y-6 md:space-y-7 lg:space-y-8 my-6 sm:my-8 md:my-10 md:w-8/10 mx-auto">
+    <div className=" bg-gradient-to-br from-gray-300 via-white to-gray-100 backdrop-blur-md border border-white/20 rounded-xl shadow-lg p-3 sm:p-4 md:p-5 lg:p-6 space-y-4 xs:space-y-5 sm:space-y-6 md:space-y-7 lg:space-y-8 my-6 sm:my-8 md:my-10 md:w-8/10 mx-auto relative">
+      <NavLink to={"/orders"}>
+        <CircleX className="absolute w-2 sm:w-3 md:w-4 lg:w-5 right-3 top-1.5 text-red-950 hover:scale-110 duration-400 opacity-75 hover:opacity-100"/>
+      </NavLink>
       <div className="flex justify-between">
         <h1 className="responsive-text-lg font-bold text-info-content">Order view #{id}</h1>
         <div className="sm:flex gap-5">
@@ -75,7 +80,7 @@ const {initialData: order, error} = useEntityData({redirect : true})
       </div>
 
       <div>
-        <h2 className="responsive-text-lg font-semibold text-blue-950 mb-3 ">Products</h2>
+        <h2 className="responsive-text-lg font-semibold text-info-content mb-3 ">Products</h2>
         <div className="overflow-x-auto">
           <table className=" border border-gray-200 w-full">
             <thead className="bg-blue-100 responsive-text-md px-1 sm:px-2 md:px-3 lg:px-4 py-2 text-info-content">
