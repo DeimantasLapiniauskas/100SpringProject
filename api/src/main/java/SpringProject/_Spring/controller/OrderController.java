@@ -35,6 +35,9 @@ public class OrderController extends BaseController {
     @PostMapping("/orders")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ApiResponse<OrderResponseDTO>> createOrder(@Valid @RequestBody OrderRequestDTO orderRequestDTO, Authentication authentication) {
+
+        System.err.println("Bum");
+        System.err.println(orderRequestDTO);
         Optional<Client> clientOpt = clientRepository.findByAccount_Email(authentication.getName());
         if (clientOpt.isEmpty()) {
             return forbidden("You are not allowed to create an order");
@@ -47,7 +50,7 @@ public class OrderController extends BaseController {
         Order savedOrder = orderService.createOrder(order);
         OrderResponseDTO orderResponseDTO = OrderMapper.toOrderResponseDTO(savedOrder);
 
-        return ok(orderResponseDTO, "Order created successfully");
+        return ok(orderResponseDTO, "Order placed successfully");
     }
 
     @GetMapping("/orders/pagination")

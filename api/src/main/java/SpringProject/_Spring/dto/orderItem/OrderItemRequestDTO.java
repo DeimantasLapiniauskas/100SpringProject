@@ -5,9 +5,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
-public record OrderItemRequestDTO(@Positive(message = "Order ID must be positive")
-                                  long orderId,
-
+public record OrderItemRequestDTO(
                                   @Positive(message = "Product ID must be positive")
                                   long productId,
 

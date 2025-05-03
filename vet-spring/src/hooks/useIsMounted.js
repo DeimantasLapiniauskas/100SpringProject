@@ -1,13 +1,13 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, } from "react"
 
-export const useIsMounted = (formSubmittingRef) => {
+export const useIsMounted = (formIsSubmittingRef) => {
     const isMounted = useRef(false)
 
     useEffect(() => {
         isMounted.current = true
 
         return () => {
-            if (!formSubmittingRef?.current) {
+            if (!formIsSubmittingRef?.current) {
             isMounted.current = false
             }
         }

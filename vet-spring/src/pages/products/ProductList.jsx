@@ -32,7 +32,7 @@ const ProductList = () => {
   const [deleteModalID, setDeleteModalID] = useState("");
 
   const categories = [
-    { label: "All", value: "All" },
+    { label: "All products", value: "All" },
     { label: "Medicine", value: "Medicine" },
     { label: "Food", value: "Food" },
     { label: "Toys", value: "Toys" },
@@ -42,7 +42,7 @@ const ProductList = () => {
   const roles = useCheckAdminAndVetRoles();
 
   return (
-    <div className="p-4 justify-center">
+    <div className=" justify-center">
       <ModalContext.Provider
         value={{
           activeModalID,
@@ -55,7 +55,7 @@ const ProductList = () => {
           setDeleteModalID,
         }}
       >
-      <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative">
+      <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative mt-2">
           <SearchBarPanel />
           <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-0.5 xs:right-15 sm:right-3">
         <ClearAllButton />
@@ -66,7 +66,7 @@ const ProductList = () => {
         </div>
       </div>
         {roles && (
-          <div className="flex justify-center w-full items-center my-2 md:my-4">
+          <div className="flex justify-center w-full items-center my-1 md:my-2">
             <AddProductButton
               getPage={getPage}
               currentPage={currentPage}
@@ -78,7 +78,7 @@ const ProductList = () => {
         {isLoading ? <Loading /> : ""}
         {isError ? <Error error={error} isHidden={!error} /> : ""}
         {isBadRequest ? <BadPageRequest /> : ""}
-        <ul className="justify-items-center divide-gray-200 grid sm:grid-cols-1 gap-y-4 row-gap-10 md:grid-cols-2  lg:grid-cols-3  ">
+        <ul className="justify-items-center divide-gray-200 grid sm:grid-cols-1 gap-y-4 row-gap-10 md:grid-cols-2  lg:grid-cols-3 mt-6 md:mt-10">
           {products.map((product) => (
             <ProductCard
               key={product.id}

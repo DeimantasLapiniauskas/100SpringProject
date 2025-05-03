@@ -54,8 +54,8 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
   const [reviews, setRewies] = useState([]);
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
-  const formSubmittingRef = useRef(false);
-  const isMounted = useIsMounted(formSubmittingRef);
+  const formIsSubmittingRef = useRef(false);
+  const isMounted = useIsMounted(formIsSubmittingRef);
   const controllerRef = useRef(new AbortController());
   const navigate = useNavigate();
   const entityPath = useEntityPath();
@@ -70,7 +70,7 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const handleFormSubmit = async (data) => {
-    formSubmittingRef.current = true;
+    formIsSubmittingRef.current = true;
     if (feedbackRef) {
       feedbackRef.current = true;
     }
@@ -86,7 +86,7 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
       } else {
         response = await postEntity(entityPath, data, signal);
       }
-      formSubmittingRef.current = false;
+      formIsSubmittingRef.current = false;
 
       if (signal.aborted) return;
       if (!isMounted.current) return;
@@ -105,12 +105,20 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
         if (feedbackRef) {
           feedbackRef.current = false;
         }
-        setStatus(Navigating);
-        navigate("/home");
+        setTimeout(() => {
+          setStatus(Navigating);
+          navigate("/home");
+          return
+        }, 1000)
       } else {
         setStatus(Unknown);
       }
     } catch (error) {
+      if (error.name === "AbortError") {
+        toast.error("Request was cancelled");
+        return;
+      }
+
       if (!isMounted.current) return;
 
       const errorMessage =
@@ -135,6 +143,11 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
           setIsFetching(false);
         }
       } catch (error) {
+
+        if (error.name === "AbortError") {
+          toast.error("Request was cancelled");
+          return;
+        }
         if (!isMounted) return;
 
         const errorMessage =
@@ -159,7 +172,7 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
     return <Unusual error={error} />;
   }
   if (isError) {
-    return <Error error={error} isHidden={!error} />;
+    return <Error error={error} />;
   }
 
   return (

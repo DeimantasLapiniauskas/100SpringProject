@@ -69,8 +69,8 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
-  const formSubmittingRef = useRef(false);
-  const isMounted = useIsMounted(formSubmittingRef);
+  const formIsSubmittingRef = useRef(false);
+  const isMounted = useIsMounted(formIsSubmittingRef);
   const controllerRef = useRef(new AbortController());
   const navigate = useNavigate();
   const entityPath = useEntityPath();
@@ -78,7 +78,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
   const handleFormSubmit = async (data) => {
    
     let imageUrl = initialData?.imageUrl ?? null;
-    formSubmittingRef.current = true;
+    formIsSubmittingRef.current = true;
     if (feedbackRef) {
     feedbackRef.current = true;
     }
@@ -92,7 +92,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
         formData.append("file", data.imageFile);
         const imageRes = await uploadEntityImage(entityPath, formData, signal);
 
-        formSubmittingRef.current = false;
+        formIsSubmittingRef.current = false;
 
         if (signal.aborted) return;
         if (!isMounted.current) return;
@@ -109,7 +109,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
       };
       // console.log(initialData.id)
       let response;
-      formSubmittingRef.current = true;
+      formIsSubmittingRef.current = true;
 
       if (isEditMode) {
         response = await putEntity(entityPath, initialData.id, payload, signal);
@@ -117,13 +117,12 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
         response = await postEntity(entityPath, payload, signal);
       }
 
-      formSubmittingRef.current = false;
+      formIsSubmittingRef.current = false;
 
       if (signal.aborted) return;
       if (!isMounted.current) return;
 
       const { data: data2, message, success } = response.data;
-      console.log("Parsed:", { data2, message, success });
 
       if (data2 && success) {
         setStatus(Success);
@@ -142,15 +141,18 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
         if (feedbackRef) {
           feedbackRef.current = false;
           }
-        setStatus(Navigating);
-        navigate("/posts");
+          setTimeout(() => {
+            setStatus(Navigating);
+            navigate("/posts");  
         return;
+          }, 1000)
+        
       } else {
         setStatus(Unknown);
         setPreviewUrl(null);
       }
     } catch (error) {
-      console.error("Caught error:", error);
+      
       if (error.name === "AbortError") {
         toast.error("Request was cancelled");
         return;
@@ -184,7 +186,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
     return <Unusual error={error} />;
   }
   if (isError) {
-    return <Error error={error} isHidden={!error} />;
+    return <Error error={error} />;
   }
 
   return (
