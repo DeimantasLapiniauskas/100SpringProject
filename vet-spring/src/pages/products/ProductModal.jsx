@@ -1,12 +1,10 @@
-// import { useCart } from "@/context/CartContext";
+
 import { useShoppingCartStore } from "@/hooks/useShoppingCartStore";
 
 const ProductModal = ({ product, onClose }) => {
   const { name, description, price, stockQuantity, imageUrl } = product;
   const addToCart = useShoppingCartStore((state) => state.addToCart)
-  // const { addToCart } = useCart()
-  
-
+ 
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();

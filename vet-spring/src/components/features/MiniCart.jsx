@@ -1,41 +1,32 @@
-// import { useCart } from "@/context/CartContext";
 import { useShoppingCartStore } from "@/hooks/useShoppingCartStore";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router";
-import shoppingCartIcon from "../../assets/icons/shoppingCart.svg";
-import { useAuth } from "@/context/AuthContext";
-import { useMemo } from "react";
 import { Plus } from "lucide-react";
 import { Minus } from "lucide-react";
+import { ShoppingCartIcon } from "@/assets/icons/ShoppingCartIcon";
 
 export const MiniCart = () => {
-  // const { cartItems, removeFromCart, isOpen, toggleCart } = useCart();
-    const cartItems = useShoppingCartStore((state) => state.cartItems);
-    const removeFromCart = useShoppingCartStore((state) => state.removeFromCart);
-    const addToCart = useShoppingCartStore((state) => state.addToCart)
-    const clearCart = useShoppingCartStore((state) => state.clearCart);
-    const isOpen = useShoppingCartStore((state) => state.isOpen);
-    const toggleCart = useShoppingCartStore((state) => state.toggleCart);
-    const removeOneFromCart = useShoppingCartStore((state) => state.removeOneFromCart)
+  const cartItems = useShoppingCartStore((state) => state.cartItems);
+  const removeFromCart = useShoppingCartStore((state) => state.removeFromCart);
+  const addToCart = useShoppingCartStore((state) => state.addToCart);
+  const clearCart = useShoppingCartStore((state) => state.clearCart);
+  const isOpen = useShoppingCartStore((state) => state.isOpen);
+  const toggleCart = useShoppingCartStore((state) => state.toggleCart);
+  const removeOneFromCart = useShoppingCartStore(
+    (state) => state.removeOneFromCart
+  );
+  const totalSum = useShoppingCartStore((state) => state.getTotalSum());
+  const uniqueItems = useShoppingCartStore((state) => state.getUniqueItems());
+  const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
 
   const navigate = useNavigate();
-  const { account } = useAuth();
-
-  const quantity = useMemo(() => cartItems?.reduce((acc, item) => {
-    acc[item.id] = (acc[item.id] || 0) + 1;
-    return acc;
-  }, {}), [cartItems]
-  ) 
 
   return (
     <>
-      {account && (
         <div className="flex flex-col">
           <div className=" flex relative" onClick={toggleCart}>
-            <img
-              src={shoppingCartIcon}
-              alt="shoppingCartIcon"
-              className="w-6 xs:w-7 sm:w-8 md:w-9 lg:w-10"
+            <ShoppingCartIcon
+              className="w-6 xs:w-7 sm:w-8 md:w-9 lg:w-10 text-info-content hover:text-sky-700"
               style={{
                 animation: "shake 5s ease-in-out infinite",
               }}
@@ -47,7 +38,7 @@ export const MiniCart = () => {
             )}
           </div>
           {isOpen && (
-            <div className="w-80 bg-red-500 shadow-lg z-50 p-4 flex flex-col">
+            <div className="w-80 bg-emerald-100/10 backdrop-blur-md border border-emerald-200/30 rounded-xl shadow-lg z-50 p-4 flex flex-col">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold">Your Cart</h2>
                 <button onClick={toggleCart}>
@@ -56,20 +47,32 @@ export const MiniCart = () => {
               </div>
               <div className="flex-1 overflow-y-auto space-y-3">
                 {cartItems?.length === 0 && <p>Cart is empty</p>}
-                {cartItems?.filter((item, idx, self) => idx === self.findIndex((selfItem) => selfItem.id === item.id))
-                .map((item, idx) => (
+                {uniqueItems?.map((item, idx) => (
                   <div
                     key={idx}
                     className="flex justify-between items-center border-b pb-2"
                   >
                     <div>
-                    <img src={item.imageUrl} alt="itemImage" className="w-20" />
+                      <img
+                        src={item.imageUrl}
+                        alt="itemImage"
+                        className="w-20"
+                      />
                       <p className="font-semibold">{item.name}</p>
                       <p className="text-sm text-gray-500">${item.price}</p>
                       <div className="flex">
-                        <button type="button" onClick={() => addToCart(item)}><Plus className="w-3"/></button>
-                        <p className="text-sm text-yellow-800">{quantity[item.id]}</p>
-                        <button type="buttom" onClick={() => removeOneFromCart(item.id)} ><Minus className="w-3"/></button>
+                        <button type="button" onClick={() => addToCart(item)}>
+                          <Plus className="w-3" />
+                        </button>
+                        <p className="text-sm text-yellow-800">
+                          {itemQuantity[item.id]}
+                        </p>
+                        <button
+                          type="buttom"
+                          onClick={() => removeOneFromCart(item.id)}
+                        >
+                          <Minus className="w-3" />
+                        </button>
                       </div>
                     </div>
                     <button
@@ -93,7 +96,6 @@ export const MiniCart = () => {
             </div>
           )}
         </div>
-      )}
     </>
   );
 };

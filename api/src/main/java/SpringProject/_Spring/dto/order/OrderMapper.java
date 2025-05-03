@@ -1,8 +1,8 @@
 package SpringProject._Spring.dto.order;
 
 import SpringProject._Spring.dto.authentication.client.ClientMapping;
+import SpringProject._Spring.dto.orderItem.OrderItemMapper;
 import SpringProject._Spring.dto.vetClinic.VetClinicMapper;
-import SpringProject._Spring.model.OrderItem;
 import SpringProject._Spring.model.order.Order;
 import SpringProject._Spring.model.authentication.Client;
 import org.springframework.data.domain.Page;
@@ -20,6 +20,7 @@ public class OrderMapper {
                 order.getId(),
                 ClientMapping.toClientResponseDTO(order.getClient()),
                 VetClinicMapper.toVetClinicResponseDTO(order.getVetClinic()),
+                OrderItemMapper.toOrderItemListResponseDTO(order.getOrderItems()),
                 order.getCreatedAt(),
                 order.getTotalAmount(),
                 order.getStatus()

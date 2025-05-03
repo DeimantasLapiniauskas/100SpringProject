@@ -36,8 +36,6 @@ public class OrderController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ApiResponse<OrderResponseDTO>> createOrder(@Valid @RequestBody OrderRequestDTO orderRequestDTO, Authentication authentication) {
 
-        System.err.println("Bum");
-        System.err.println(orderRequestDTO);
         Optional<Client> clientOpt = clientRepository.findByAccount_Email(authentication.getName());
         if (clientOpt.isEmpty()) {
             return forbidden("You are not allowed to create an order");
@@ -80,7 +78,6 @@ public class OrderController extends BaseController {
     }
 
     @GetMapping("/orders/{orderId}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrder(@PathVariable long orderId) {
         Optional<Order> orderOpt = orderService.findOrderById(orderId);
         if (orderOpt.isEmpty()) {
@@ -106,7 +103,6 @@ public class OrderController extends BaseController {
     }
 
     @PatchMapping("/orders/{orderId}")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
     public ResponseEntity<ApiResponse<OrderStatusResponseDTO>> changeOrderStatus(@Valid @RequestBody OrderStatusRequestDTO orderStatusRequestDTO) {
         OrderStatus orderStatus = OrderStatus.valueOf(orderStatusRequestDTO.status());
         OrderStatusResponseDTO orderStatusResponseDTO = OrderMapper.toOrderStatusResponseDTO(orderStatus.toString());

@@ -1,10 +1,9 @@
 import { useShoppingCartStore } from "@/hooks/useShoppingCartStore";
 import { useNavigate } from "react-router";
-import { useMemo, useState } from "react";
 import { UIStatus } from "@/constants/UIStatus";
 import { useUI } from "@/context/UIContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export const ShoppingCartPage = () => {
@@ -14,6 +13,9 @@ export const ShoppingCartPage = () => {
   const removeOneFromCart = useShoppingCartStore(
     (state) => state.removeOneFromCart
   );
+  const totalSum = useShoppingCartStore((state) => state.getTotalSum());
+const uniqueItems = useShoppingCartStore((state) => state.getUniqueItems());
+const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
   const placeOrder = useShoppingCartStore((state) => state.placeOrder);
 
   const [error, setError] = useState(null);
@@ -24,18 +26,6 @@ export const ShoppingCartPage = () => {
   const isMounted = useIsMounted(formIsSubmittingRef);
   const controller = useRef(new AbortController());
   const navigate = useNavigate();
-  const totalSum = useMemo(
-    () => cartItems?.reduce((sum, item) => sum + item.price, 0).toFixed(2),
-    [cartItems]
-  );
-  const quantity = useMemo(
-    () =>
-      cartItems?.reduce((acc, item) => {
-        acc[item.id] = (acc[item.id] || 0) + 1;
-        return acc;
-      }, {}),
-    [cartItems]
-  );
 
   const handlePlaceOrder = async () => {
     formIsSubmittingRef.current = true;
@@ -82,12 +72,7 @@ export const ShoppingCartPage = () => {
       )}
 
       <div className="space-y-4">
-        {cartItems
-          ?.filter(
-            (item, idx, self) =>
-              idx === self.findIndex((selfItem) => selfItem.id === item.id)
-          )
-          .map((item, idx) => (
+        {uniqueItems?.map((item, idx) => (
             <div
               key={idx}
               className="flex justify-between items-center border-b pb-2"
@@ -97,7 +82,7 @@ export const ShoppingCartPage = () => {
                 <p className="font-semibold">{item.name}</p>
                 <div className="flex">
                   <button>+</button>
-                  <p>{quantity[item.id]}</p>
+                  <p>{itemQuantity[item.id]}</p>
                   <button>-</button>
                 </div>
                 <p className="text-sm text-gray-500">${item.price}</p>
@@ -113,7 +98,7 @@ export const ShoppingCartPage = () => {
           ))}
 
         <div className="text-right mt-6">
-          <p className="text-lg font-semibold">Total: ${totalSum}</p>
+          <p className="text-lg font-semibold">Total: ${totalSum.toFixed(2)}</p>
           <div className="mt-4 flex gap-4 justify-between">
             <div>
               <button type="button" onClick={clearCart}>

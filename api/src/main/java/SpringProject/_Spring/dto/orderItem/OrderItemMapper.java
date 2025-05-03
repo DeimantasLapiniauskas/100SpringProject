@@ -14,15 +14,18 @@ public class OrderItemMapper {
     }
 
     public static OrderItemResponseDTO toOrderItemResponseDTO(OrderItem orderItem) {
-        return new OrderItemResponseDTO(orderItem.getId(), OrderMapper.toOrderResponseDTO(orderItem.getOrder()),
-                ProductMapping.toProductResponseDTO(orderItem.getProduct()),
+        return new OrderItemResponseDTO(orderItem.getId(), ProductMapping.toProductResponseDTO(orderItem.getProduct()),
                 orderItem.getQuantity(), orderItem.getItemPrice());
     }
 
-
-    public static OrderItemListResponseDTO toOrderItemListResponseDTO(List<OrderItem> orderItems) {
-        return new OrderItemListResponseDTO(orderItems.stream()
-                .map(OrderItemMapper::toOrderItemResponseDTO)
-                .toList());
+    public static List<OrderItemResponseDTO> toOrderItemListResponseDTO(List<OrderItem> items) {
+        return items.stream()
+                .map(item -> new OrderItemResponseDTO(
+                        item.getId(),
+                        ProductMapping.toProductResponseDTO(item.getProduct()),
+                        item.getQuantity(),
+                        item.getItemPrice()
+                ))
+                .toList();
     }
 }

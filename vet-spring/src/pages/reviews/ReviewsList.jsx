@@ -13,6 +13,7 @@ import { SelectPageSizePanel } from "@/components/features/SelectPageSizePanel";
 import { ClearAllButton } from "@/components/features/ClearAllButton";
 import { NavLink } from "react-router";
 import { ChevronsRight } from "lucide-react";
+import { BadPageRequest } from "@/components/feedback/BadPageRequest";
 
 export const ReviewsList = () => {
   const { content: reviews, isEmpty, error, message } = useList();
@@ -22,7 +23,7 @@ export const ReviewsList = () => {
       : 0;
 
   const ratingSize = useRatingResize("105px", "120px", "135px", "150px");
-  const { isLoading, isUnusual, isError, isRedirecting } = useUI();
+  const { isLoading, isUnusual, isError, isRedirecting, isBadPageRequest } = useUI();
 
   const pageSizes = [12, 24, 36];
   const filterFields = [
@@ -61,8 +62,9 @@ export const ReviewsList = () => {
       {isLoading ? (<Loading />) : ("")}
       {isEmpty ? (<p>{message}</p>) : ("")}
       {isUnusual ? (<Unusual error={error} />) : ("")}
+      {isBadPageRequest ? (<BadPageRequest />) : ("")}
       {isError ? (<Error error={error} />) : ("")}
-      {isLoading || isEmpty || isUnusual || isError ? (
+      {isLoading || isEmpty || isUnusual || isBadPageRequest || isError  ? (
         ""
       ) : (
         <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-7 lg:gap-8 p-2 sm:p-3 md:p-4">

@@ -56,14 +56,14 @@ public class OrderService {
     }
 
     public boolean isNotValidSortField(String sort) {
-        List<String> sortFields = List.of("All products", "Pending", "Confirmed", "Completed", "Cancelled");
+        List<String> sortFields = List.of("All orders", "Pending", "Confirmed", "Completed", "Cancelled");
 
         return !sortFields.contains(sort);
     }
 
     public Page<Order> findAllOrdersPage(int page, int size, String filter) {
         String defaultSort = "createdAt";
-        if ( filter == null || filter.equalsIgnoreCase("All products")) {
+        if ( filter == null || filter.equalsIgnoreCase("All orders")) {
             Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
 
             return orderRepository.findAll(pageable);

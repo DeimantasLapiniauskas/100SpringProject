@@ -36,7 +36,7 @@ public class Order {
     private OrderStatus status = OrderStatus.Pending;;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public Order() {}
 

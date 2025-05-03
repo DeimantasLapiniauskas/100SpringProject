@@ -1,7 +1,5 @@
 package SpringProject._Spring.dto.order;
 
-import SpringProject._Spring.model.order.OrderStatus;
-
 import java.util.List;
 
 public record OrderPageResponseDTO(
