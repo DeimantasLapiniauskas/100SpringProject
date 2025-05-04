@@ -12,18 +12,14 @@ import { ServiceUpdate } from "../pages/services/ServiceUpdate.jsx";
 import { HomePage } from "../pages/home/HomePage.jsx";
 import { ListProvider } from "../context/ListContext.jsx";
 import PetForm from "../pages/pets/PetForm.jsx";
-import { BandytiDesign } from "../pages/designtest/BandytiDesign.jsx";
 import { Appointment } from "../pages/appointments/Appointment.jsx";
 import { PostList } from "../pages/posts/PostList.jsx";
 import { UIProvider } from "../context/UIContext.jsx";
-import { BandytiDesignHomePage } from "../pages/designtest/BandytiDesignHomePage.jsx";
-import { BandytiDesignH1 } from "../pages/designtest/BandytiDesignH1.jsx";
 import { PostRegister } from "@/pages/posts/PostRegister.jsx";
 import { PostEditPage } from "@/pages/posts/PostEditPage.jsx";
 import { PostView } from "@/pages/posts/PostView.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import { Profile } from "@/pages/profile/Profile.jsx";
-import { BandytiDesignH2 } from "../pages/designtest/BandytiDesignH2.jsx";
 import ProductList from "@/pages/products/ProductList.jsx";
 import { UpdateData } from "@/pages/appointments/UpdateData.jsx";
 import { ServiceForVet } from "@/pages/services/ServiceForVet.jsx";
@@ -61,8 +57,22 @@ const VetClinicRoutes = () => {
                         </AuthGuard>
                       }
                     />
-                 <Route path="/orders" element={<AuthGuard><OrdersList/></AuthGuard>}/>
-                 <Route path="/orders/view/:entityId" element={<AuthGuard><ViewOrder/></AuthGuard>}/>
+                    <Route
+                      path="/orders"
+                      element={
+                        <AuthGuard>
+                          <OrdersList />
+                        </AuthGuard>
+                      }
+                    />
+                    <Route
+                      path="/orders/view/:entityId"
+                      element={
+                        <AuthGuard>
+                          <ViewOrder />
+                        </AuthGuard>
+                      }
+                    />
                     <Route
                       path="/pets"
                       element={
@@ -136,14 +146,7 @@ const VetClinicRoutes = () => {
                         element={<AdminPage initialList="clients" />}
                       />
                     </Route>
-                    <Route
-                      path="/products"
-                      element={
-                
-                          <ProductList />
-                        
-                      }
-                    ></Route>
+                    <Route path="/products" element={<ProductList />}></Route>
                     <Route path="/services" element={<ServiceList />} />
                     <Route
                       path="services/add"
@@ -161,7 +164,6 @@ const VetClinicRoutes = () => {
                         </ServiceForVet>
                       }
                     />
-
                     <Route
                       path="/profile"
                       element={
@@ -170,13 +172,6 @@ const VetClinicRoutes = () => {
                         </AuthGuard>
                       }
                     />
-                    <Route path="/design" element={<BandytiDesign />} />
-                    <Route
-                      path="/designh"
-                      element={<BandytiDesignHomePage />}
-                    />
-                    <Route path="/designh1" element={<BandytiDesignH1 />} />
-                    <Route path="/designh2" element={<BandytiDesignH2 />} />
                     <Route path="/appointments" element={<Appointment />} />
                     <Route
                       path="/appointments/client/:id"

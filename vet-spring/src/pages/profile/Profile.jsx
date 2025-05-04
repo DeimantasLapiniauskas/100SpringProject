@@ -151,7 +151,7 @@ export const Profile = () => {
         {checkAdmin() && (
             <button
             onClick={() => navigate("/adminpage")}
-              className="p-1 rounded-lg bg-red-500 hover:bg-red-800 mx-30"
+              className="p-1 rounded-lg bg-red-500 hover:bg-red-800 mx-30 cursor-pointer"
             >
               Admin Page
             </button>

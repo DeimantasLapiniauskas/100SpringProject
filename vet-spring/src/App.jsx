@@ -8,15 +8,15 @@ const App = () => {
   return (
     
     <div className="relative min-h-screen">
-      {/* Above code has to have relative and min-h-screen ; it ensures pawss images cover whole page */}
+      {/* Above className has to have "relative" and "min-h-screen" as it ensures paw print images cover whole page. Not half or less. */}
 
-      {/* Paws background globally */}
+      {/* Ensures paw print image background is applied globally */}
       <div
         className="absolute inset-0 bg-repeat bg-[length:3rem_3rem] sm:bg-[length:3rem_3rem] md:bg-[length:6rem_6rem] lg:bg-[length:9rem_9rem] bg-[center_top_0.1rem] opacity-5 pointer-events-none z-0"
         style={{ backgroundImage: `url(${pawssBackgroundImage})` }}
       ></div>
 
-      {/* Content sits above paw background; relative is essential here for that. */}
+      {/* To ensure content sits above paw print image background, "relative" is essential for that. */}
       <div className="relative px-2 pb-2">
         <CustomToaster reverseOrder={false} />
         <VetClinicRoutes />

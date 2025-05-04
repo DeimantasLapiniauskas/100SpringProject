@@ -44,7 +44,7 @@ const ProductModal = ({ product, onClose }) => {
         </div>
         <div className="mt-4 max-w-full">
           <h3 className="text-sm sm:text-base font-semibold text-left">Description:</h3>
-          <p className="text-sm sm:text-base text-left break-words overflow-auto max-h-[10rem]">{description}</p>
+          <p className="text-sm sm:text-base text-left break-words overflow-auto max-h-[10rem] whitespace-pre-wrap">{description}</p>
         </div>
       </div>
     </div>
