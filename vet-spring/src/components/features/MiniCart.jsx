@@ -38,61 +38,72 @@ export const MiniCart = () => {
             )}
           </div>
           {isOpen && (
-            <div className="w-80 bg-emerald-100/10 backdrop-blur-md border border-emerald-200/30 rounded-xl shadow-lg z-50 p-4 flex flex-col">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-bold">Your Cart</h2>
+            <div className="w-60 sm:w-80  md:w-100  bg-emerald-100/10 backdrop-blur-md border border-emerald-200/100 rounded-xl shadow-lg z-50 p-2 sm:p-3 md:p-4 flex flex-col">
+              <div className="flex justify-between items-center mb-2 sm:mb-2.5 md:mb-3">
+                <h2 className="responsive-text-md text-emerald-900 font-bold">Your Cart</h2>
+                <p className="responsive-text-sm text-orange-800"><span>Total: </span>${totalSum?.toFixed(2)}</p>
                 <button onClick={toggleCart}>
-                  <X />
+                  <X className="text-emerald-800 w-2 sm:w-3 md:w-4 lg:w-5"/>
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto space-y-3">
-                {cartItems?.length === 0 && <p>Cart is empty</p>}
+              <div className="flex-1 max-h-50 sm:max-h-55 md:max-h-60 overflow-y-auto space-y-2 sm:space-y-2.5 md:space-y-3">
+                {cartItems?.length === 0 && <p className="responsive-text-sm text-info-content">Cart is empty</p>}
                 {uniqueItems?.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex justify-between items-center border-b pb-2"
+                    className="flex justify-between items-center border-b border-emerald-800 pb-1 sm:pb-2 md:pb-3 "
                   >
-                    <div>
+                    <div className="responsive-text-sm flex flex-col gap-1 sm:gap-1.5 md:gap-2 w-full px-1">
                       <img
                         src={item.imageUrl}
                         alt="itemImage"
-                        className="w-20"
+                        className="w-10 sm:w-12.5 md:w-15 rounded-sm"
                       />
-                      <p className="font-semibold">{item.name}</p>
-                      <p className="text-sm text-gray-500">${item.price}</p>
-                      <div className="flex">
-                        <button type="button" onClick={() => addToCart(item)}>
-                          <Plus className="w-3" />
-                        </button>
-                        <p className="text-sm text-yellow-800">
-                          {itemQuantity[item.id]}
-                        </p>
-                        <button
-                          type="buttom"
-                          onClick={() => removeOneFromCart(item.id)}
-                        >
-                          <Minus className="w-3" />
-                        </button>
+                      <p className="font-semibold text-emerald-800">{item.name}</p>
+                      <p className=" text-info-content">${item.price}</p>
+                      <div className="flex justify-between">
+                        <div className="flex items-center bg-emerald-100 rounded-md  px-1 sm:px-1.5 md:px-2 gap-1 sm:gap-1.5 md:gap-2">
+                          <button type="button" onClick={() => addToCart(item)}>
+                            <Plus className="w-2 sm:w-2.5 md:w-3 hover:scale-130 duration-200 text-orange-800 cursor-pointer" />
+                          </button>
+                          <p className=" text-yellow-800">
+                            {itemQuantity[item.id]}
+                          </p>
+                          <button
+                            type="buttom"
+                            onClick={() => removeOneFromCart(item.id)}
+                          >
+                            <Minus className="w-2 sm:w-2.5 md:w-3 hover:scale-130 duration-200 text-orange-800 cursor-pointer" />
+                          </button>
                       </div>
-                    </div>
-                    <button
+                      <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-blue-500 text-sm"
+                      className="text-red-800 hover:font-semibold responsive-text-sm px-1 sm:px-1.5 md:px-2 cursor-pointer"
                     >
                       Remove
                     </button>
+                      </div>
+                    
+                    </div>
+                    
                   </div>
                 ))}
               </div>
-              <button
-                onClick={() => {
-                  toggleCart();
-                  navigate("/cart");
-                }}
-                className="mt-4 bg-black text-white py-2 rounded-md hover:bg-gray-800"
-              >
-                Go to Cart
-              </button>
+              <div className="flex items-center justify-between ">
+                <button type="button" className="responsive-text-sm mt-2 sm:mt-3 md:mt-4 text-red-800 cursor-pointer rounded-md px-1 sm:px-1.5 md:px-2 py-0.25 md:py-0.5 hover:font-semibold hover:scale-105 duration-100"
+                onClick={clearCart}>
+                Clear Cart
+                </button>
+                <button
+                  onClick={() => {
+                    toggleCart();
+                    navigate("/cart");
+                  }}
+                  className="responsive-text-sm mt-2 sm:mt-3 md:mt-4 bg-gradient-to-br from-sky-700 via-sky-800 to-info-content text-white py-1 sm:py-1.5 md:py-2 w-6/10 mx-2 rounded-md hover:bg-gradient-to-br hover:from-sky-500 hover:via-sky-600 hover:to-sky-700 cursor-pointer"
+                >
+                  Proceed to Cart Page
+                </button>
+              </div>
             </div>
           )}
         </div>

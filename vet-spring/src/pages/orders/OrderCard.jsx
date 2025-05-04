@@ -10,7 +10,7 @@ import { useState, useRef } from "react";
 import { useList } from "@/context/ListContext";
 
 const OrderCard = ({ order }) => {
-  const [newOrderStatus, setNewOrderStatus] = useState("");
+  
   const [error, setError] = useState(null);
 
   const clientRole = useCheckClientRole();
@@ -45,14 +45,13 @@ const OrderCard = ({ order }) => {
       const response = await patchEntity(entityPath, id, { status: status });
       preventUnmountRef.current = false;
 
-      const { data, message, success } = response.data;
+      const { message, success } = response.data;
 
       if (message && success) {
         if (!isMounted.current) return;
 
         setStatus(Success);
         toast.success(message);
-        setNewOrderStatus(data?.status);
         setUpdate((prieValue) => prieValue + 1);
       } else setStatus(Unusual);
     } catch (error) {
@@ -67,7 +66,7 @@ const OrderCard = ({ order }) => {
 
   return (
     <div className="bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl pb-5 pt-8 px-6 mb-4 w-full max-w-xl relative">
-       <div className="flex gap-2 absolute top-1.5 left-1/2 transform -translate-x-1/2 ">
+       <div className="flex gap-2 absolute top-1.5 left-1/2 transform -translate-x-1/2 responsive responsive-text-md font-semibold text-info-content">
           <p>
             <span>Client: </span>
             {clientResponseDTO?.firstName}
@@ -75,9 +74,9 @@ const OrderCard = ({ order }) => {
           <p> {clientResponseDTO?.lastName}</p>
         </div>
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-xl font-semibold text-gray-800">Order #{id}</h2>
+        <h2 className="responsive-text-lg font-semibold text-info-content">Order #{id}</h2>
         <span
-          className={`text-sm font-medium px-3 py-1 rounded-full ${
+          className={`responsive-text-sm px-3 py-1 rounded-full ${
             orderStatus === "Completed"
               ? "bg-green-100 text-green-700"
               : orderStatus === "Confirmed"
@@ -90,8 +89,7 @@ const OrderCard = ({ order }) => {
           {orderStatus}
         </span>
       </div>
-
-      <div className="text-sm text-gray-600 mb-4">
+      <div className=" text-info-content responsive-text-md mb-1 xs:mb-2 sm:mb-3 md:mb-4">
         <p>
           <span className="font-medium">Date:</span>{" "}
           {new Date(orderDate)?.toLocaleString()}
@@ -99,18 +97,19 @@ const OrderCard = ({ order }) => {
         <p>
           <span className="font-medium">Total:</span> €{totalAmount?.toFixed(2)}
         </p>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center p-1">
           <NavLink to={`/orders/view/${order.id}`}>
-            <button type="button">View Order</button>
+            <p type="button" className="cursor-pointer font-semibold text-sky-800 hover:underline">View Order</p>
           </NavLink>
           {completedORCanceled ? (
             ""
           ) : (
-            <div>
-              {canPay && <button>Pay</button>}
+            <div className="responsive-text-sm">
+              {canPay && <button type="button" className="cursor-pointer responsive-button-sm bg-purple-300 text-red-950 opacity-60 hover:opacity-100 rounded-md" onClick={alert("Neparduodam!")}>Pay Now</button>}
               {canCancel && (
                 <button
                   type="button"
+                  className="cursor-pointer responsive-button-sm bg-purple-300 text-red-950 opacity-60 hover:opacity-100 rounded-md"
                   onClick={() => handleStatusChange("Cancelled")}
                 >
                   Cancel
@@ -120,6 +119,7 @@ const OrderCard = ({ order }) => {
               {cancelConfirmed && (
                 <button
                   type="button"
+                  className="cursor-pointer responsive-button-sm bg-purple-300 text-red-950 opacity-60 hover:opacity-100 rounded-md"
                   onClick={() => handleStatusChange("Cancelled")}
                 >
                   Cancel
@@ -129,12 +129,14 @@ const OrderCard = ({ order }) => {
                 (<div className="flex gap-2">
                   <button
                     type="button"
+                    className="cursor-pointer responsive-button-sm bg-teal-200 rounded-md opacity-60 hover:opacity-100"
                     onClick={() => handleStatusChange("Confirmed")}
                   >
                     Confirm
                   </button>
                   <button
                     type="button"
+                    className="cursor-pointer responsive-button-sm bg-amber-200 text-amber-950 opacity-60 hover:opacity-100 rounded-md"
                     onClick={() => handleStatusChange("Cancelled")}
                   >
                     Decline
@@ -146,13 +148,13 @@ const OrderCard = ({ order }) => {
         </div>
       </div>
 
-      <div className="border-t pt-3  text-sm text-gray-700">
+      <div className="border-t pt-1.5 md:pt-3  text-sm text-info-content">
   
-        <div className="flex justify-between">
+        <div className="flex justify-between responsive-text-sm">
           <p> {vetClinicResponseDTO?.name}</p>
           <p> {vetClinicResponseDTO?.address}</p>
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between responsive-text-sm">
           <p> {vetClinicResponseDTO?.phone}</p>
           <p> {vetClinicResponseDTO?.email}</p>
         </div>

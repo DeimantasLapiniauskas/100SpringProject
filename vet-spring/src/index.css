@@ -153,7 +153,6 @@ body {
     @apply text-base sm:text-lg md:text-xl lg:text-2xl;
   }
 
-
   .responsive-text-lg {
     @apply text-sm sm:text-base md:text-lg lg:text-xl;
   }
@@ -168,6 +167,10 @@ body {
 
   .responsive-text-xs {
     @apply text-[8px] sm:text-[10px] md:text-xs;
+  }
+
+  .responsive-button-sm {
+    @apply h-3.5 sm:h-4.5 md:h-5.5 px-1 sm:px-2 md:px-3 
   }
 }
 
