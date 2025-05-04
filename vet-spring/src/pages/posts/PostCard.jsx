@@ -57,13 +57,9 @@ export const PostCard = (props) => {
           <div className="w-full flex justify-center">
             {post.imageUrl && (
               <img
-                src={
-                  post.imageUrl.startsWith("http")
-                    ? imageUrl
-                    : import.meta.env.VITE_API_URL + imageUrl
-                }
+                src={ imageUrl}
                 alt={title}
-                className="object-cover h-[100px] sm:h-[150px] md:h-[200px] w-9/10 rounded-[10px] border-1 border-blue-400 "
+                className="object-cover h-[100px] sm:h-[150px] md:h-[200px] w-7/10 rounded-[10px] border-1 border-blue-400 "
               />
             )}
           </div>

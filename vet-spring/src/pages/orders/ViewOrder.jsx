@@ -104,7 +104,7 @@ const ViewOrder = () => {
           </span>
         </p>
         <p>
-          <span className="font-semibold">Sum: </span> €
+          <span className="font-semibold">Total: </span> €
           {totalAmount?.toFixed(2)}
         </p>
       </div>
@@ -172,7 +172,7 @@ const ViewOrder = () => {
             <Button
               size="sm"
               className="text-white responsive-button-sm"
-              onClick={alert("Neparduodam!")}
+              onClick={() => alert("Neparduodam!")}
             >
               Pay Now
             </Button>
