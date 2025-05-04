@@ -26,6 +26,7 @@ export const PostList = () => {
     { label: "News", value: "News" },
     { label: "Sale", value: "Sale" },
     { label: "Blog", value: "Blog" },
+    { label: "PetCare", value: "PetCare" },
   ];
   const pageSizes = [6, 9, 12];
 
@@ -66,11 +67,11 @@ export const PostList = () => {
           </NavLink>
         </div>
       )}
-      {isEmpty ? (<p>{message}</p>) : ("")}
-      {isLoading ? (<Loading />) : ("")}
-      {isError ? (<Error error={error} />) : ("")}
-      {isBadPageRequest ? (<BadPageRequest />) : ("")}
-      {isUnusual ? (<Unusual error={error} />) : ("")}
+      {isEmpty ? <p>{message}</p> : ""}
+      {isLoading ? <Loading /> : ""}
+      {isError ? <Error error={error} /> : ""}
+      {isBadPageRequest ? <BadPageRequest /> : ""}
+      {isUnusual ? <Unusual error={error} /> : ""}
       {isEmpty || isLoading || isError || isBadPageRequest || isUnusual ? (
         ""
       ) : (
@@ -79,7 +80,7 @@ export const PostList = () => {
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-           )}
+      )}
       <div className="p-3 flex justify-center">
         <PaginationPanel />
       </div>

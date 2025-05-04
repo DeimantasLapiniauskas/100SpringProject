@@ -66,11 +66,11 @@ const OrderCard = ({ order }) => {
   return (
     <div className="bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl pb-5 pt-8 px-6 mb-4 w-full max-w-xl relative">
       <div className="flex gap-2 absolute top-1.5 left-1/2 transform -translate-x-1/2 responsive responsive-text-md font-semibold text-info-content">
-        <p>
+        <p className="text-emerald-950">
           <span>Client: </span>
           {clientResponseDTO?.firstName}
         </p>
-        <p> {clientResponseDTO?.lastName}</p>
+        <p className="text-emerald-950"> {clientResponseDTO?.lastName}</p>
       </div>
       <div className="flex justify-between items-center mb-2">
         <h2 className="responsive-text-lg font-semibold text-info-content">

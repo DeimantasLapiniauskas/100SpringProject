@@ -38,6 +38,8 @@ export const PostCard = (props) => {
                 ? `text-red-700`
                 : postType === "Blog"
                 ? `text-[#006666]`
+                 : postType === "PetCare"
+                ? `text-purple-900`
                 : `text-[#004C99]`
             }`}
           >
@@ -49,6 +51,8 @@ export const PostCard = (props) => {
                 ? `text-red-700 animate-pulse`
                 : postType === "Blog"
                 ? `text-[#006666]`
+                : postType === "PetCare"
+                ? `text-purple-900`
                 : `text-[#004C99]`
             }`}
           >
@@ -69,6 +73,8 @@ export const PostCard = (props) => {
                 ? `text-red-700`
                 : postType === "Blog"
                 ? `text-[#006666]`
+                 : postType === "PetCare"
+                ? `text-purple-900`
                 : `text-[#004C99]`
             }`}
           >

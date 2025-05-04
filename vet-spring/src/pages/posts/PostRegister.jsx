@@ -271,6 +271,8 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
                             ? "text-[#004C99] font-semibold"
                             : field.value === "Blog"
                             ? "text-[#006666] font-semibold"
+                             : field.value === "PetCare"
+                            ? "text-purple-900 font-semibold"
                             : "text-info-content"
                         }`}
                       >
@@ -297,6 +299,13 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
                           className="text-red-700"
                         >
                           Sale
+                        </SelectItem>
+                        <SelectItem
+                          size="postRegForm"
+                          value="PetCare"
+                          className="text-purple-900"
+                        >
+                          PetCare
                         </SelectItem>
                       </SelectContent>
                     </Select>
