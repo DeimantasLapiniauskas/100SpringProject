@@ -68,7 +68,7 @@ export const ReviewsList = () => {
         ""
       ) : (
         <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-7 lg:gap-8 p-2 sm:p-3 md:p-4">
-          {reviews.map((review) => (
+          {reviews?.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>

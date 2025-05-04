@@ -7,6 +7,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { useList } from "@/context/ListContext";
 import { verifyPassword } from "@/utils/helpers/entity";
 import { useEntityPath } from "@/hooks/usePath";
+import { useNavigate } from "react-router";
 
 const DeleteModalContext = createContext();
 
@@ -17,6 +18,7 @@ export const DeleteModalProvider = ({ children }) => {
   const [message, setMessage] = useState(null);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const isMounted = useIsMounted();
   const { setStatus } = useUI();
@@ -55,6 +57,9 @@ export const DeleteModalProvider = ({ children }) => {
 
             setPagination((prev) => ({ ...prev }));
             setStatus(Success);
+            if (entityPath === "orders") {
+              navigate("/orders")
+            }
           } else {
             setStatus(Unusual);
           }

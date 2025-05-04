@@ -9,4 +9,11 @@ const { account } = useAuth();
     );
   };
 
+export const useCheckClientRole = () => {
 
+  const { account } = useAuth();
+
+  return (
+    account?.scope?.includes("ROLE_CLIENT")
+  )
+}

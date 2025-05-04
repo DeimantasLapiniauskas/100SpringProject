@@ -46,7 +46,7 @@ export const PostList = () => {
         </div>
       </div>
       <section className="px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-6 text-center ">
-        <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-4 text-center">
+        <h2 className="lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold text-info-content mb-2 md:mb-4 text-center">
           Stay Updated with News, Blogs & Sales
         </h2>
         <article className="text-sm md:text-base lg:text-lg text-gray-700 max-w-3xl mx-auto text-center">
@@ -66,20 +66,20 @@ export const PostList = () => {
           </NavLink>
         </div>
       )}
-      {isEmpty ? <p>{message}</p> : ""}
-      {isLoading ? <Loading /> : ""}
-      {isError ? <Error error={error} /> : ""}
-      {isBadPageRequest ? <BadPageRequest /> : ""}
-      {isUnusual ? <Unusual error={error} /> : ""}
+      {isEmpty ? (<p>{message}</p>) : ("")}
+      {isLoading ? (<Loading />) : ("")}
+      {isError ? (<Error error={error} />) : ("")}
+      {isBadPageRequest ? (<BadPageRequest />) : ("")}
+      {isUnusual ? (<Unusual error={error} />) : ("")}
       {isEmpty || isLoading || isError || isBadPageRequest || isUnusual ? (
         ""
       ) : (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full">
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-      )}
+           )}
       <div className="p-3 flex justify-center">
         <PaginationPanel />
       </div>

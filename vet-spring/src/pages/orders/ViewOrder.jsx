@@ -7,13 +7,17 @@ import { useEntityData } from "@/hooks/useEntityData";
 import { Redirecting } from "@/components/feedback/Redirecting";
 import { CircleX } from "lucide-react";
 import { NavLink } from "react-router";
+import { Button } from "@/components/uiBase/buttonBase";
+import { Trash2 } from "lucide-react";
+import { useDeleteModal } from "@/context/DeleteModalContext";
 
 const ViewOrder = () => {
 
 const {initialData: order, error} = useEntityData({redirect : true})
 
   const { isLoading, isError, isUnusual, isRedirecting } = useUI();
-
+  const { openDeleteModal } = useDeleteModal();
+  
   if (isLoading) {
     return <div className="h-[20rem] md:h-[35rem]">
     <Loading />
@@ -30,7 +34,7 @@ const {initialData: order, error} = useEntityData({redirect : true})
     return <Unusual error={error} />;
   }
   if (isError) {
-    return <Error error={error} isHidden={!error} />;
+    return <Error error={error} />;
   }
 
   if (!order) return
@@ -46,7 +50,7 @@ const {initialData: order, error} = useEntityData({redirect : true})
   } = order;
 
   return (
-    <div className=" bg-gradient-to-br from-gray-300 via-white to-gray-100 backdrop-blur-md border border-white/20 rounded-xl shadow-lg p-3 sm:p-4 md:p-5 lg:p-6 space-y-4 xs:space-y-5 sm:space-y-6 md:space-y-7 lg:space-y-8 my-6 sm:my-8 md:my-10 md:w-8/10 mx-auto relative">
+    <div className=" bg-gradient-to-br from-gray-300 via-white to-gray-100 backdrop-blur-md border border-white/20 rounded-xl shadow-lg p-3 pb-0.25 sm:p-4 sm:pb-0.5 md:p-5 md:pb-0.75 lg:p-6 lg:pb-1 space-y-4 xs:space-y-5 sm:space-y-6 md:space-y-7 lg:space-y-8 my-6 sm:my-8 md:my-10 md:w-8/10 mx-auto relative">
       <NavLink to={"/orders"}>
         <CircleX className="absolute w-2 sm:w-3 md:w-4 lg:w-5 right-3 top-1.5 text-red-950 hover:scale-110 duration-400 opacity-75 hover:opacity-100"/>
       </NavLink>
@@ -70,7 +74,7 @@ const {initialData: order, error} = useEntityData({redirect : true})
         <p ><span className="font-semibold">Status: </span> <span   className={` px-2 py-0.5 rounded-full responsive-text-sm ${
             orderStatus === "Completed"
               ? "bg-green-100 text-green-700"
-              : orderStatus === "Cinfirmed" 
+              : orderStatus === "Confirmed" 
               ? "bg-blue-100 text-blue-700"
               : orderStatus === "Cancelled"
               ? "bg-red-100 text-red-700"
@@ -105,6 +109,12 @@ const {initialData: order, error} = useEntityData({redirect : true})
             </tbody>
           </table>
         </div>
+        <div className="flex justify-end p-1">
+            {orderStatus === "Cancelled" && <button className="text-red-800 inline-flex items-center  bg-gray-400 rounded-md  gap-1 md:gap-2  hover:bg-black h-3.5 sm:h-4.5 md:h-5.5 px-1 sm:px-2 md:px-3 responsive-text-xs hover:scale-105 duration-500"  onClick={() => {
+                openDeleteModal(order);
+              }}>Delete <span><Trash2 className="w-2.5 sm:w-3 md:w-3.5 "/></span></button>}
+            {orderStatus === "Confirmed" && <Button size="xs" className="text-white">Pay</Button>}
+          </div>
       </div>
     </div>
   );

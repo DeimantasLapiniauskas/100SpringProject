@@ -54,8 +54,8 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
   const [reviews, setRewies] = useState([]);
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
-  const formIsSubmittingRef = useRef(false);
-  const isMounted = useIsMounted(formIsSubmittingRef);
+  const preventUnmountRef = useRef(false);
+  const isMounted = useIsMounted(preventUnmountRef);
   const controllerRef = useRef(new AbortController());
   const navigate = useNavigate();
   const entityPath = useEntityPath();
@@ -70,7 +70,7 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const handleFormSubmit = async (data) => {
-    formIsSubmittingRef.current = true;
+    preventUnmountRef.current = true;
     if (feedbackRef) {
       feedbackRef.current = true;
     }
@@ -86,7 +86,7 @@ export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
       } else {
         response = await postEntity(entityPath, data, signal);
       }
-      formIsSubmittingRef.current = false;
+      preventUnmountRef.current = false;
 
       if (signal.aborted) return;
       if (!isMounted.current) return;

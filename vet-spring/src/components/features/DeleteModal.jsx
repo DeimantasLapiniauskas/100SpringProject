@@ -47,7 +47,7 @@ export const DeleteModal = () => {
           </DialogTitle>
           <DialogDescription>
             Are you sure you want to delete:
-            <strong>{entity.title || entity.rating}</strong> ?
+            <strong> {(entity?.title) || (entity?.rating && " this review" )|| (entity?.orderStatus && "order# " + entity?.id )}</strong> ?
           </DialogDescription>
         </DialogHeader>
         <div>

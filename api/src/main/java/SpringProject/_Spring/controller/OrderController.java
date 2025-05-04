@@ -103,9 +103,14 @@ public class OrderController extends BaseController {
     }
 
     @PatchMapping("/orders/{orderId}")
-    public ResponseEntity<ApiResponse<OrderStatusResponseDTO>> changeOrderStatus(@Valid @RequestBody OrderStatusRequestDTO orderStatusRequestDTO) {
+    public ResponseEntity<ApiResponse<OrderStatusResponseDTO>> changeOrderStatus(@Valid @RequestBody OrderStatusRequestDTO orderStatusRequestDTO, @PathVariable long orderId) {
         OrderStatus orderStatus = OrderStatus.valueOf(orderStatusRequestDTO.status());
-        OrderStatusResponseDTO orderStatusResponseDTO = OrderMapper.toOrderStatusResponseDTO(orderStatus.toString());
+        Optional<Order> orderOpt = orderService.findOrderById(orderId);
+        if (orderOpt.isEmpty()) {
+            return notFound("Order not found");
+        }
+       Order order =  orderService.changeOrderStatus(orderOpt.get(), orderStatus);
+        OrderStatusResponseDTO orderStatusResponseDTO = OrderMapper.toOrderStatusResponseDTO(order.getStatus().toString());
 
         return ok(orderStatusResponseDTO, "Status changed successfully");
     }

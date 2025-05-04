@@ -51,6 +51,12 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public Order changeOrderStatus(Order order, OrderStatus orderStatus) {
+        order.setStatus(orderStatus);
+
+        return orderRepository.save(order);
+    }
+
     public void deleteOrderById(Long id) {
         orderRepository.deleteById(id);
     }

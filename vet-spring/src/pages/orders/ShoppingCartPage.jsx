@@ -5,6 +5,10 @@ import { useUI } from "@/context/UIContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { Redirecting } from "@/components/feedback/Redirecting";
+import { Loading } from "@/components/feedback/Loading";
+import { Error } from "@/components/feedback/Error";
+import { Unusual } from "@/components/feedback/Unusual";
 
 export const ShoppingCartPage = () => {
   const cartItems = useShoppingCartStore((state) => state.cartItems);
@@ -14,14 +18,19 @@ export const ShoppingCartPage = () => {
     (state) => state.removeOneFromCart
   );
   const totalSum = useShoppingCartStore((state) => state.getTotalSum());
-const uniqueItems = useShoppingCartStore((state) => state.getUniqueItems());
-const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
+  const uniqueItems = useShoppingCartStore((state) => state.getUniqueItems());
+  const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
   const placeOrder = useShoppingCartStore((state) => state.placeOrder);
 
   const [error, setError] = useState(null);
 
-  const { Loading, Success,  Error, Redirecting } = UIStatus;
-  const { setStatus } = useUI();
+  const {
+    Loading: Fetching,
+    Success,
+    Error: Err,
+    Redirecting: Navigating,
+  } = UIStatus;
+  const { isLoading, isUnusual, isError, isRedirecting, setStatus } = useUI();
   const formIsSubmittingRef = useRef(false);
   const isMounted = useIsMounted(formIsSubmittingRef);
   const controller = useRef(new AbortController());
@@ -33,7 +42,7 @@ const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
     const signal = controller.current.signal;
 
     try {
-      setStatus(Loading);
+      setStatus(Fetching);
       const result = await placeOrder(signal);
 
       formIsSubmittingRef.current = false;
@@ -46,12 +55,12 @@ const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
         setStatus(Success);
         toast.success(message);
         setTimeout(() => {
-          setStatus(Redirecting)
-          navigate("/products")
-        }, 1000)
+          setStatus(Navigating);
+          navigate("/products");
+        }, 1000);
       } else {
         setError(error);
-        setStatus(Error);
+        setStatus(Err);
       }
     } catch (error) {
       if (error.name === "AbortError") {
@@ -59,7 +68,7 @@ const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
         return;
       }
       if (!isMounted.current) return;
-      setStatus(Error);
+      setStatus(Err);
     }
   };
 
@@ -67,64 +76,76 @@ const itemQuantity = useShoppingCartStore((state) => state.getItemQuantity());
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
 
-      {cartItems?.length === 0 && (
-        <p className="text-gray-600">Cart is empty</p>
-      )}
+      {isLoading ? <Loading /> : ""}
+      {isError ? <Error error={error} /> : ""}
+      {isRedirecting ? <Redirecting /> : ""}
+      {isUnusual ? <Unusual error={error} /> : ""}
+      {isRedirecting || isLoading || isError || isUnusual ? (
+        ""
+      ) : (
+        <>
+          {cartItems?.length === 0 && (
+            <p className="text-gray-600">Cart is empty</p>
+          )}
 
-      <div className="space-y-4">
-        {uniqueItems?.map((item, idx) => (
-            <div
-              key={idx}
-              className="flex justify-between items-center border-b pb-2"
-            >
-              <div>
-                <img src={item.imageUrl} alt="itemImage" className="w-20" />
-                <p className="font-semibold">{item.name}</p>
-                <div className="flex">
-                  <button>+</button>
-                  <p>{itemQuantity[item.id]}</p>
-                  <button>-</button>
+          <div className="space-y-4">
+            {uniqueItems?.map((item, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between items-center border-b pb-2"
+              >
+                <div>
+                  <img src={item.imageUrl} alt="itemImage" className="w-20" />
+                  <p className="font-semibold">{item.name}</p>
+                  <div className="flex">
+                    <button>+</button>
+                    <p>{itemQuantity[item.id]}</p>
+                    <button>-</button>
+                  </div>
+                  <p className="text-sm text-gray-500">${item.price}</p>
+                  <p>{item.stockQuantity}</p>
                 </div>
-                <p className="text-sm text-gray-500">${item.price}</p>
-                <p>{item.stockQuantity}</p>
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className="text-red-500 text-sm"
+                >
+                  Remove
+                </button>
               </div>
-              <button
-                onClick={() => removeFromCart(item.id)}
-                className="text-red-500 text-sm"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
+            ))}
 
-        <div className="text-right mt-6">
-          <p className="text-lg font-semibold">Total: ${totalSum.toFixed(2)}</p>
-          <div className="mt-4 flex gap-4 justify-between">
-            <div>
-              <button type="button" onClick={clearCart}>
-                Clear Cart
-              </button>
-            </div>
-            <div>
-              <button
-                type="button"
-                onClick={() => navigate("/products")}
-                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
-              >
-                Continue shoping
-              </button>
-              <button
-                type="button"
-                onClick={handlePlaceOrder}
-                disabled={cartItems?.length === 0}
-                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 cursor-pointer"
-              >
-                Place order
-              </button>
+            <div className="text-right mt-6">
+              <p className="text-lg font-semibold">
+                Total: ${totalSum.toFixed(2)}
+              </p>
+              <div className="mt-4 flex gap-4 justify-between">
+                <div>
+                  <button type="button" onClick={clearCart}>
+                    Clear Cart
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/products")}
+                    className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+                  >
+                    Continue shoping
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handlePlaceOrder}
+                    disabled={cartItems?.length === 0}
+                    className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 cursor-pointer"
+                  >
+                    Place order
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

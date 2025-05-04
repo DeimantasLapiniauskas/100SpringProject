@@ -69,8 +69,8 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
-  const formIsSubmittingRef = useRef(false);
-  const isMounted = useIsMounted(formIsSubmittingRef);
+  const preventUnmountRef = useRef(false);
+  const isMounted = useIsMounted(preventUnmountRef);
   const controllerRef = useRef(new AbortController());
   const navigate = useNavigate();
   const entityPath = useEntityPath();
@@ -78,7 +78,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
   const handleFormSubmit = async (data) => {
    
     let imageUrl = initialData?.imageUrl ?? null;
-    formIsSubmittingRef.current = true;
+    preventUnmountRef.current = true;
     if (feedbackRef) {
     feedbackRef.current = true;
     }
@@ -92,7 +92,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
         formData.append("file", data.imageFile);
         const imageRes = await uploadEntityImage(entityPath, formData, signal);
 
-        formIsSubmittingRef.current = false;
+        preventUnmountRef.current = false;
 
         if (signal.aborted) return;
         if (!isMounted.current) return;
@@ -109,7 +109,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
       };
       // console.log(initialData.id)
       let response;
-      formIsSubmittingRef.current = true;
+      preventUnmountRef.current = true;
 
       if (isEditMode) {
         response = await putEntity(entityPath, initialData.id, payload, signal);
@@ -117,7 +117,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
         response = await postEntity(entityPath, payload, signal);
       }
 
-      formIsSubmittingRef.current = false;
+      preventUnmountRef.current = false;
 
       if (signal.aborted) return;
       if (!isMounted.current) return;
@@ -369,7 +369,7 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
                   onClick={() => {
                     form.reset();
                     setPreviewUrl(initialData?.imageUrl ?? null);
-                    formSubmittingRef.current = false;
+                    preventUnmountRef.current = false;
                   }}
                 >
                   Reset
