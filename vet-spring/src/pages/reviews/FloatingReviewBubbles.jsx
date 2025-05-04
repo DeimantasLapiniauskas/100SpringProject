@@ -69,7 +69,7 @@ export const FloatingReviewBubbles = ({
               “{review?.comment}”
             </p>
             <div className="mt-0.5 md:mt-1 responsive-text-xs text-info-content flex justify-between">
-              <span>– {review?.clientResponseDTO?.firstName}</span>
+              <span className="overflow-x-auto">– {review?.clientResponseDTO?.firstName}</span>
               <div className="relative">
                 <Rating value={review.rating} readOnly style={{maxWidth: ratingSize}}/>
                 <span className="absolute top-[9px] sm:top-[11px] md:top-[13px] lg:top-[15px] right-[5px] sm:right-[6px] md:right-[8px] lg:right-[12px] text-[7px] sm:text-[8px] md:text-[9px]">{dayjs(review.createdAt).format("YYYY-MM-DD")}</span>
@@ -97,7 +97,7 @@ export const FloatingReviewBubbles = ({
               “{review?.comment}”
             </p>
             <div className=" mt-0.5 md:mt-1 responsive-text-xs text-info-content flex justify-between">
-              <span>– {review?.clientResponseDTO?.firstName}</span>
+              <span className="overflow-x-auto">– {review?.clientResponseDTO?.firstName}</span>
               <div className="relative">
                 <Rating value={review.rating} readOnly style={{maxWidth: ratingSize}}/>
                 <span className="absolute top-[9px] sm:top-[11px] md:top-[13px] lg:top-[15px] right-[5px] sm:right-[6px] md:right-[8px] lg:right-[12px] text-[7px] sm:text-[8px] md:text-[9px]">{dayjs(review.createdAt).format("YYYY-MM-DD")}</span>

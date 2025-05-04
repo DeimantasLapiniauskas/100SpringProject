@@ -11,15 +11,16 @@ import { Trash2Icon } from "lucide-react";
 import { useDeleteModal } from "@/context/DeleteModalContext";
 
 export const PostCard = (props) => {
+  
   const { post } = props;
   const roles = useCheckAdminAndVetRoles();
-  const { id, postType, content, title, imageUrl } = post;
   const { Redirecting } = UIStatus;
   const { setStatus } = useUI();
   const navigate = useNavigate();
   const { openDeleteModal } = useDeleteModal();
 
-  if (!post || !post.content) return null;
+  if (!post || !post.content) return;
+  const { id, postType, content, title, imageUrl } = post;
 
   return (
     <div>

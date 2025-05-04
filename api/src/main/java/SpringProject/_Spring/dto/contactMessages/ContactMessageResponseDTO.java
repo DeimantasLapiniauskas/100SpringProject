@@ -1,4 +1,4 @@
-package SpringProject._Spring.dto.contact_messages;
+package SpringProject._Spring.dto.contactMessages;
 
 import java.sql.Timestamp;
 

@@ -12,9 +12,8 @@ import { UIStatus } from "@/constants/UIStatus";
 import { motion } from "framer-motion";
 
 export const ReviewCard = (props) => {
-  const { review } = props;
-  const { comment, rating, clientResponseDTO, createdAt } = review;
 
+  const { review } = props;
   const { Redirecting } = UIStatus;
   const { setStatus } = useUI();
   const { account } = useAuth();
@@ -24,6 +23,7 @@ export const ReviewCard = (props) => {
   const ratingSize = useRatingResize("80px", "90px", "100px", "110px");
 
   if (!review?.clientResponseDTO) return;
+  const { comment, rating, clientResponseDTO, createdAt } = review;
 
   const yourReview =
     account?.scope?.includes("ROLE_CLIENT") &&

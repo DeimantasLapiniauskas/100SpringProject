@@ -12,9 +12,11 @@ import {
 // } from "@/components/uiBase/selectBase";
 import { useList } from "@/context/ListContext";
 import { FilterIcon } from "@/assets/icons/FilterIcon";
+import { useRealPath } from "@/hooks/usePath";
 
 export const FilterPanel = ({ filterFields }) => {
   const { sorted, onSortBy } = useList();
+  const realPath = useRealPath();
 
   return (
     <div className="flex items-center gap-1 md:gap-2">
@@ -23,7 +25,8 @@ export const FilterPanel = ({ filterFields }) => {
         onValueChange={(value) => onSortBy({ target: { value } })}
       >
         <p className="text-[10px] md:text-xs text-info-content">
-          Filter by:
+          {realPath === "services" ? "Sort by:" : "Filter by:"
+          }
         </p>
         <SelectTrigger className="focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-blue-500 rounded-full shadow-sm shadow-white flex items-center">
           <FilterIcon />

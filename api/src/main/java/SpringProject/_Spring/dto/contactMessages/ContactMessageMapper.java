@@ -1,6 +1,6 @@
-package SpringProject._Spring.dto.contact_messages;
+package SpringProject._Spring.dto.contactMessages;
 
-import SpringProject._Spring.dto.contact_messages.subject_types.SubjectTypeResponseDTO;
+import SpringProject._Spring.dto.contactMessages.subject_types.SubjectTypeResponseDTO;
 import SpringProject._Spring.model.contactMessage.ContactMessage;
 import SpringProject._Spring.model.contactMessage.SubjectTypes;
 

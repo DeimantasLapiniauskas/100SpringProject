@@ -47,7 +47,7 @@ export const DeleteModal = () => {
           </DialogTitle>
           <DialogDescription>
             Are you sure you want to delete:
-            <strong>{entity.title || entity.rating}</strong> ?
+            <strong> {(entity?.title) || (entity?.rating && " this review" )|| (entity?.orderStatus && "order# " + entity?.id )}</strong> ?
           </DialogDescription>
         </DialogHeader>
         <div>
@@ -107,8 +107,8 @@ export const DeleteModal = () => {
         </DialogFooter>
         <div className="absolute pt-1 sm:pt-1.5 md:pt-2 right-8">
           <DialogClose asChild>
-            <Button type="button" variant="cancel" size="sm">
-              Cancel !
+            <Button type="button" variant="close" size="sm">
+              Close !
             </Button>
           </DialogClose>
         </div>

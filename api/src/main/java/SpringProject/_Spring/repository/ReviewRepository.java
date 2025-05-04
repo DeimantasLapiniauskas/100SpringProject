@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    Page<Review> findAllByRating( int rating, Pageable pageable);
+    Page<Review> findByRating( int rating, Pageable pageable);
 
 }
