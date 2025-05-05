@@ -74,8 +74,7 @@ docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
 #### Starting the Project using a remote server (Amazon Web Service) for database
 
 ##### NOTE: AWS Credentials Security Notice:
-##### We do not include the aws-credentials file in this repository for security reasons. If you are an interested employer, collaborator, or reviewer who would like to run or test the AWS-related features,
-##### please contact the project owners directly to request access credentials or guidance on how to set up your own environment.
+##### We do not include the aws-credentials file in this repository for security reasons. If you are an interested employer, collaborator, or reviewer who would like to run or test the AWS-related features, please contact the project owners directly to request access credentials or guidance on how to set up your own environment.
 
 * Start the Docker Desktop software.
 * Run the following inside the terminal:
