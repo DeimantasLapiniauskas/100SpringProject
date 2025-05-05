@@ -35,7 +35,6 @@ export const ServiceUpdate = () => {
         const data = response.data.data;
 
         const { name, description, price, imageUrl } = data;
-        console.log(data);
 
         setValue("name", name);
         setValue("description", description);
@@ -61,7 +60,6 @@ export const ServiceUpdate = () => {
         const imageRes = await uploadServiceImage(formData);
 
         imageUrl = imageRes.data.data;
-        console.log(imageUrl);
         setPreviewUrl(imageUrl);
       }
       const payload = {
@@ -72,8 +70,6 @@ export const ServiceUpdate = () => {
       };
 
       await updateService(id, payload);
-      console.log(payload);
-      console.log("Resetting form...");
       reset({
         name: "",
         description: "",
@@ -82,7 +78,6 @@ export const ServiceUpdate = () => {
         imageUrl: null,
       });
       setPreviewUrl(null);
-      console.log("Form reset complete");
       navigate("/services");
     } catch (error) {
       setError(error.response?.data?.message || error.message);

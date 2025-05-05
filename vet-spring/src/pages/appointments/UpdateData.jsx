@@ -37,12 +37,10 @@ export const UpdateData = () => {
     try {
       const { data } = await api.put(`/appointments/${id}`, payload);
 
-      console.log("Resetting form...");
       reset({
         appointmentDate: "",
       });
 
-      console.log("Form reset complete");
       navigate("/appointments");
     } catch (error) {
       setError(error.response?.data?.message || error.message);

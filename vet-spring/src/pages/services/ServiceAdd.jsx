@@ -57,11 +57,7 @@ export const ServiceAdd = ({ service }) => {
       };
 
       await addService(payload);
-      console.log(payload);
 
-      // const { data: data2, message, success } = response.data;
-
-      // console.log("Resetting form...");
       reset({
         name: "",
         description: "",
@@ -69,7 +65,6 @@ export const ServiceAdd = ({ service }) => {
         imageUrl: "",
       });
 
-      console.log("Form reset complete");
       navigate("/services");
     } catch (error) {
       setError(error.response?.data?.message || error.message);

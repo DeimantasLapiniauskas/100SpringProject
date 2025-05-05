@@ -107,7 +107,6 @@ export const PostRegister = ({ initialData, getPostError, feedbackRef }) => {
         content: data.content,
         imageUrl: imageUrl ?? initialData?.imageUrl ?? null,
       };
-      // console.log(initialData.id)
       let response;
       preventUnmountRef.current = true;
 
