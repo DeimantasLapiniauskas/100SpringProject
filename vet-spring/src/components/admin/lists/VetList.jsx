@@ -21,8 +21,6 @@ const VetList = () => {
 
   const { isLoading, isError, isBadRequest } = useUI();
 
-  //console.log("VetList vets:", vets?.map(vet => vet.id));
-
   return (
     <div className="flex flex-col items-center gap-8 py-8">
       <AddVetButton

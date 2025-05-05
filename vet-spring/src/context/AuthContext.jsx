@@ -84,10 +84,7 @@ export const AuthProvider = ({ children }) => {
     clearAuth();
     localStorage.removeItem("jwt");
     navigate("/home");
-  };
-
-  console.log("Mano", account);
-  
+  };  
 
   return (
     <AuthContext.Provider value={{ account, login, logout, register }}>
