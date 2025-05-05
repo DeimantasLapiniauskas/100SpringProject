@@ -63,7 +63,7 @@ docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
 
 ```
 * Database should be available on http://localhost:8081 .
-  ```
+```
  username: root
 
  password: my-secret-pw
