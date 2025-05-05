@@ -61,7 +61,7 @@ export const Register = () => {
     <main className="h-screen flex md:flex-col-reverse lg:flex-row justify-center items-center gap-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[600px] bg-[#97a0f1] border border-[#97a0f1] p-3 rounded-box min-h-[500px] mx-6"
+        className="w-[600px] bg-gradient-to-br from-purple-400 to-indigo-600 p-3 rounded-box min-h-[500px] mx-6"
       >
         <div className="figma-headline-3 text-center mb-4 px-24">
           Join Happy Hearts Community! Register below

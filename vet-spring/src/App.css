@@ -1,47 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
 
-
-/*UNIQUE COLORS USED//////////////////////////////////////////////////////// */
-/*WILL BE UPDATED AS PROJECT MOVES FORWARD////////////////////////////////// */
-
-/* Light Violet - COLOR used as lighter background for cards or boxes.
- Example: Log In Page and Register Page card*/
 .bg-light-violet {
   background-color: #97a0f1;
 }
-/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#97a0f1] h-64 w-full">Content</div> */
 
-/* Default Violet - COLOR used as default background for cards or boxes.
- Example: Cards in Service List Page */
 .bg-default-violet {
   background-color: #6A7AFF;
 }
-/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#6A7AFF] h-64 w-full">Content</div> */
 
-/* Light Orange - COLOR used as lighter orange background for cards or boxes.
- Example: Not implemented yet */
  .bg-light-orange {
   background-color: #FFBD89;
 }
-/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
 
-/* Default Purple - COLOR used in Navigation bar, for "Login" button and "Logout" button.
- Example: Cards in Log In Page and Register Page */
  .bg-default-purple {
   background-color: #ac64b4;
 }
-/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
 
-/* Light Gray - COLOR used as EXTRA FOR FUTURE USE.
- Example: Not implemented yet. Have to check other KOM-?? branches if it is in use */
  .bg-light-gray {
   background-color: #CBC5C5;
 }
-/* COLOR can be used in Tailwind code like this: <div className="flex bg-[#FFBD89] h-64 w-full">Content</div> */
 
-/*FOR ALL PAGES//////////////////////////////////////////////////////// */
-
-/* Black button located in Login Page and Register Page */
 .custom-black-btn {
   background-color: #000000;
   color: white;
@@ -59,7 +37,38 @@
   background-color: #333;
 }
 
-/* Purple button to be used in Navigation bar, for "Login" button and "Logout" button */
+.custom-dropdown {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1.75rem;
+  border: solid 1px;
+  border-radius: 10px;
+}
+
+.custom-dropdown > a,
+.custom-dropdown > button:not(:first-child) {
+  color: #FFF;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+  padding: 0.625rem 1rem;
+  width: 8.75rem;
+  height: auto;
+  border-radius: 0.625rem;
+  transition: background-color 0.3s ease; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  cursor: pointer;
+}
+
+.custom-dropdown > a:hover {
+  background-color: rgb(255,255,255,0.2)
+}
+
+
 .custom-purple-btn {
   background-color: #ac64b4;
   color: #000000;
@@ -78,6 +87,7 @@
   background-color: #C7A4D6;
 }
 
+
 .custom-red-btn {
   background-color: #fb2c36;
   color: #000000;
@@ -94,7 +104,8 @@
 .custom-red-btn:hover {
   background-color: #ffabb0;
 }
-/* White button to be used inside boxes in the future */
+
+
 .custom-white-btn {
   background-color: #FFFFFF;
   color: #000000;
@@ -113,331 +124,9 @@
   background-color: #C7A4D6;
 }
 
-/* Put on Home PAGE; */
-.pawss-for-background-medium {
-  /* position: absolute; */
-  width: clamp(20px, 5%, 50px);
-  height: clamp(30px, 5%, 50px);
-  background-image: url("/src/assets/images/pawss_for_background.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 1;
-  transform: rotate(53.04deg);
-}
 
-@media (min-width: 1970px) {
-  .pawss-paw1-3xl-custom-breakpoint-override {
-    left: 60.1%; /* Was written[74rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 20px; /* Was written[1rem]; */
-  }
-}
-
-@media (min-width: 1970px) {
-  .pawss-paw2-3xl-custom-breakpoint-override {
-    left: 63.35%; /* Was written[78rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 1970px) {
-  .pawss-paw3-3xl-custom-breakpoint-override {
-    left: 58.48%; /* Was written[72rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 82px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 1970px) { 
-  .pawss-paw4-3xl-custom-breakpoint-override {
-    left: 61.73%; /* Was written[76rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss-paw1-4xl-custom-breakpoint-override {
-    left: 60.6%; /* Was written[82rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 20px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss-paw2-4xl-custom-breakpoint-override {
-    left: 63.56%; /* Was written[86rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss-paw3-4xl-custom-breakpoint-override {
-    left: 59.12%; /* Was written[80rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 82px; /* Was written[6rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss-paw4-4xl-custom-breakpoint-override {
-    left: 62.08%; /* Was written[84rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss-paw1-5xl-custom-breakpoint-override {
-    left: 68.29%; /* Was written[98rem]; Increase previous Paw 1 (left: value) by 16rem */
-    top: 20px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss-paw2-5xl-custom-breakpoint-override {
-    left: 71.08%; /* Was written[102rem]; Increase previous Paw 2 (left: value) by 16rem */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss-paw3-5xl-custom-breakpoint-override {
-    left: 66.9%; /* Was written[96rem]; Increase previous Paw 3 (left: value) by 16rem */
-    top: 82px; /* Was written[6rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss-paw4-5xl-custom-breakpoint-override {
-    left: 69.72%; /* Was written[100rem]; Increase previous Paw 4 (left: value) by 16rem */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss-paw1-6xl-custom-breakpoint-override {
-    left: 66.46%; /* Was written[106rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 20px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss-paw2-6xl-custom-breakpoint-override {
-    left: 68.97%; /* Was written[110rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss-paw3-6xl-custom-breakpoint-override {
-    left: 65.2%; /* Was written[104rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 82px; /* Was written[6rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss-paw4-6xl-custom-breakpoint-override {
-    left: 67.71%; /* Was written[108rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-/* .pawss-for-background-small { */
-  /* FIGMA paw smaller image to be used inside background of ards/boxes */
-  /* paws 4 in FIGMA description in FIGMA Services Page */
-  /* position: absolute;
-  width: 30px;
-  height: 27.6px;
-  left: 140.05px;
-  top: 236px;
-  background-image: url("/src/assets/pawss_for_background.png");
-  transform: rotate(53.04deg); */
-/* } */
-
-.pawss1-for-background-medium {
-  /* Put on Your Pets PAGE; */
-  width: clamp(20px, 5%, 50px);
-  height: clamp(30px, 5%, 50px);
-  background-image: url("/src/assets/images/pawss_for_background.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 1;
-  transform: rotate(53.04deg);
-}
-
-@media (min-width: 1970px) {
-  .pawss1-paw1-3xl-custom-breakpoint-override {
-    left: 70.1%; /* Was written[74rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 20px; /* Was written[1rem]; */
-  }
-}
-
-@media (min-width: 1970px) {
-  .pawss1-paw2-3xl-custom-breakpoint-override {
-    left: 73.35%; /* Was written[78rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 1970px) {
-  .pawss1-paw3-3xl-custom-breakpoint-override {
-    left: 68.48%; /* Was written[72rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 82px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 1970px) { 
-  .pawss1-paw4-3xl-custom-breakpoint-override {
-    left: 71.73%; /* Was written[76rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss1-paw1-4xl-custom-breakpoint-override {
-    left: 70.6%; /* Was written[82rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 20px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss1-paw2-4xl-custom-breakpoint-override {
-    left: 73.56%; /* Was written[86rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss1-paw3-4xl-custom-breakpoint-override {
-    left: 69.12%; /* Was written[80rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 82px; /* Was written[6rem];  */
-  }
-}
-
-@media (min-width: 2165px) {
-  .pawss1-paw4-4xl-custom-breakpoint-override {
-    left: 72.08%; /* Was written[84rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss1-paw1-5xl-custom-breakpoint-override {
-    left: 68.29%; /* Was written[98rem]; Increase previous Paw 1 (left: value) by 16rem */
-    top: 20px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss1-paw2-5xl-custom-breakpoint-override {
-    left: 71.08%; /* Was written[102rem]; Increase previous Paw 2 (left: value) by 16rem */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss1-paw3-5xl-custom-breakpoint-override {
-    left: 66.9%; /* Was written[96rem]; Increase previous Paw 3 (left: value) by 16rem */
-    top: 82px; /* Was written[6rem];  */
-  }
-}
-
-@media (min-width: 2296px) {
-  .pawss1-paw4-5xl-custom-breakpoint-override {
-    left: 69.72%; /* Was written[100rem]; Increase previous Paw 4 (left: value) by 16rem */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss1-paw1-6xl-custom-breakpoint-override {
-    left: 66.46%; /* Was written[106rem]; Increase previous Paw 1 (left: value) by 8rem each new breakpoint */
-    top: 20px; /* Was written[1rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss1-paw2-6xl-custom-breakpoint-override {
-    left: 68.97%; /* Was written[110rem]; Increase previous Paw 2 (left: value) by 8rem each new breakpoint */
-    top: 77px; /* Was written[5rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss1-paw3-6xl-custom-breakpoint-override {
-    left: 65.2%; /* Was written[104rem]; Increase previous Paw 3 (left: value) by 8rem each new breakpoint */
-    top: 82px; /* Was written[6rem];  */
-  }
-}
-
-@media (min-width: 2552px) {
-  .pawss1-paw4-6xl-custom-breakpoint-override {
-    left: 67.71%; /* Was written[108rem]; Increase previous Paw 4 (left: value) by 8rem each new breakpoint */
-    top: 92px; /* Was written[7rem];  */
-  }
-}
-
-/*////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-
-/*FOR NAVIGATION BAR TO USE IN FUTURE JUST IN CASE //////////////////////////////////////////////////////// */
-
-.paws-1 {
-  /* FIGMA paw logo on Navigation Bar */
-  /* paws 1 in FIGMA description */
-
-  position: absolute;
-  width: 117px;
-  height: 52px;
-  left: 63px;
-  top: 16px;
-  background-image: url("/src/assets/paws.png");
-}
-
-.middle-color-light-orange-login-button {
-  /* FIGMA Middle Color light Orange Log In button on Navigation Bar  */
-  /* Rectangle 76 in FIGMA description */
-  /* NOT YET IN USE */
-  position: absolute;
-  width: 132px;
-  height: 47px;
-  left: 885px;
-  top: 22px;
-
-  /* Middle Color light Orange */
-  background: #FFBD89;
-  border-radius: 50px;
-}
-
-.main-color-orange-book-now-button {
-  /* FIGMA Main Color Orange Book Now button on Navigation Bar  */
-  /* Rectangle 77 in FIGMA description */
-  /* NOT YET IN USE */
-  position: absolute;
-  width: 132px;
-  height: 47px;
-  right: 94px;
-  top: 22px;
-
-  /* Main Color Orange */
-  background: #F19A56;
-  border-radius: 50px;
-}
-
-/* //////////////////////////////////////////////////////////////////////// */
-
-/*FOR HOME PAGE //////////////////////////////////////////////////////// */
-
-.text-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start; /* Align text to the left */
-  width: 60%; /* Occupy 60% of the available space */
-  padding-left: 20px; /* Add some padding on the left for spacing */
-}
-
-/* Base Paw Button */
 .custom-paw-left-btn,
 .custom-paw-right-btn {
-  /* width: 50px;  
-  height: 50px; */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -447,7 +136,6 @@
   transition: transform 0.2s ease-in-out;
 }
 
-/* Hover and Click Effects */
 .custom-paw-left-btn:hover,
 .custom-paw-right-btn:hover {
   transform: scale(1.1);
@@ -458,38 +146,10 @@
   transform: scale(0.9);
 }
 
-/* Left Paw Button */
 .custom-paw-left-btn {
   background-image: url("/src/assets/icons/pawss_3_left.png");
 }
 
-/* Right Paw Button */
 .custom-paw-right-btn {
   background-image: url("/src/assets/icons/pawss_4_right.png");
-}
-
-
-
-/* /////////////////////////////////////////////////////////////////////// */
-
-/*FOR ADMIN PAGE //////////////////////////////////////////////////////// */
-
-.custom-admin-panel-btn {
-  background-color: #ac64b4;
-  color: #000000;
-  padding: 1rem;
-  width: 8.25rem; /* Adjusted width */
-  height: 2.9375rem; /* Adjusted height */
-  border-radius: 1.5rem;
-  transition: background-color 0.3s ease; 
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-}
-
-.custom-admin-panel-btn:hover {
-  background-color: #C7A4D6;
 }

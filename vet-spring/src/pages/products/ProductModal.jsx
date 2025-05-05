@@ -1,6 +1,10 @@
+
+import { useShoppingCartStore } from "@/hooks/useShoppingCartStore";
+
 const ProductModal = ({ product, onClose }) => {
   const { name, description, price, stockQuantity, imageUrl } = product;
-
+  const addToCart = useShoppingCartStore((state) => state.addToCart)
+ 
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -32,14 +36,15 @@ const ProductModal = ({ product, onClose }) => {
               <p className="text-sm sm:text-base">Price: {price} EUR</p>
               <p className="text-xs text-gray-700">Stock: {stockQuantity}</p>
             </div>
-            <button className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-2 w-1/2 mx-auto">
+            <button className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-2 w-1/2 mx-auto"
+            onClick={() => addToCart(product)}>
               Add to Cart
             </button>
           </div>
         </div>
         <div className="mt-4 max-w-full">
           <h3 className="text-sm sm:text-base font-semibold text-left">Description:</h3>
-          <p className="text-sm sm:text-base text-left break-words overflow-auto max-h-[10rem]">{description}</p>
+          <p className="text-sm sm:text-base text-left break-words overflow-auto max-h-[10rem] whitespace-pre-wrap">{description}</p>
         </div>
       </div>
     </div>

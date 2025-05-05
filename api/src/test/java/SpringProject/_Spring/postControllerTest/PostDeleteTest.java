@@ -76,7 +76,7 @@ public class PostDeleteTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/posts/{postId}", postId))
 
                 //Then
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
 
         Mockito.verify(postService, times(1)).deletePostById(postId);
     }

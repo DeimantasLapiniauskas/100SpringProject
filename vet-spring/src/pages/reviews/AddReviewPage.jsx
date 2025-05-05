@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { NavLink } from "react-router";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
@@ -35,9 +35,10 @@ import reviewParrot from "../../assets/images/vet-parrot.png";
 import reviewHamster from "../../assets/images/vet-hamster.png";
 import { useEffect } from "react";
 import { getAllEntitys } from "@/utils/helpers/entity";
-import vetDoc from "../../assets/icons/vetDoc.png"
+import vetDoc from "../../assets/icons/vetDoc.png";
+import { warningToast } from "@/components/uiBase/toast/toastUtils";
 
-export const AddReviewPage = ({ initialData, getReviewError }) => {
+export const AddReviewPage = ({ initialData, getReviewError, feedbackRef }) => {
   const form = useForm({
     resolver: zodResolver(AddReviewSchema),
     mode: "onChange",
@@ -53,7 +54,9 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
   const [reviews, setRewies] = useState([]);
 
   const isEditMode = useMemo(() => !!initialData?.id, [initialData]);
-  const isMounted = useIsMounted();
+  const preventUnmountRef = useRef(false);
+  const isMounted = useIsMounted(preventUnmountRef);
+  const controllerRef = useRef(new AbortController());
   const navigate = useNavigate();
   const entityPath = useEntityPath();
 
@@ -67,15 +70,25 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
   const { isLoading, isError, isUnusual, isRedirecting, setStatus } = useUI();
 
   const handleFormSubmit = async (data) => {
+    preventUnmountRef.current = true;
+    if (feedbackRef) {
+      feedbackRef.current = true;
+    }
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+
     try {
       let response;
       setStatus(Fetching);
 
       if (isEditMode) {
-        response = await putEntity(entityPath, data);
+        response = await putEntity(entityPath, initialData.id, data, signal);
       } else {
-        response = await postEntity(entityPath, data);
+        response = await postEntity(entityPath, data, signal);
       }
+      preventUnmountRef.current = false;
+
+      if (signal.aborted) return;
       if (!isMounted.current) return;
 
       const { data: data2, message, success } = response.data;
@@ -89,12 +102,23 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
         } else {
           form.reset();
         }
-        setStatus(Navigating);
-        navigate("/home");
+        if (feedbackRef) {
+          feedbackRef.current = false;
+        }
+        setTimeout(() => {
+          setStatus(Navigating);
+          navigate("/home");
+          return
+        }, 1000)
       } else {
         setStatus(Unknown);
       }
     } catch (error) {
+      if (error.name === "AbortError") {
+        toast.error("Request was cancelled");
+        return;
+      }
+
       if (!isMounted.current) return;
 
       const errorMessage =
@@ -119,6 +143,11 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
           setIsFetching(false);
         }
       } catch (error) {
+
+        if (error.name === "AbortError") {
+          toast.error("Request was cancelled");
+          return;
+        }
         if (!isMounted) return;
 
         const errorMessage =
@@ -131,26 +160,31 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
     getAllReviews();
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
+  if (isRedirecting) {
+    return (
+      <div className="h-[20rem] md:h-[35rem]">
+        <Redirecting />
+      </div>
+    );
   }
 
   if (isUnusual) {
     return <Unusual error={error} />;
   }
   if (isError) {
-    return <Error error={error} isHidden={!error} />;
-  }
-
-  if (isRedirecting) {
-    return <Redirecting />;
+    return <Error error={error} />;
   }
 
   return (
     <div
       className="flex flex-col items-end  px-1 py-1 sm:py-2 sm:px-2 md:px-3 md:py-3 lg:px-4 lg:py-4 
-    h-screen relative bg-gradient-to-b via-transparent xs:via-sky-400 to-sky-400 xs:to-transparent"
-    ><img src={vetDoc} alt="vetDoc" className=" absolute w-15 xs:w-20 sm:w-25 md:w-30 lg:w-35 bottom-57 xs:top-3 left-[50%] xs:left-[10%] md:left-[20%] " />
+    h-screen relative bg-gradient-to-b via-sky-transparent xs:via-sky-900 to-sky-900 xs:to-transparent"
+    >
+      <img
+        src={vetDoc}
+        alt="vetDoc"
+        className=" absolute w-15 xs:w-20 sm:w-25 md:w-30 lg:w-35 bottom-[14rem] xs:top-3 left-[50%] xs:left-[10%] md:left-[20%] rounded-2xl"
+      />
       <FloatingReviewBubbles reviews={reviews} />
       <div className="flex items-center flex-col w-full xs:w-2/3 md:w-1/2 relative">
         <img
@@ -158,26 +192,26 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
           alt="reviewParrot"
           className=" w-15 sm:w-20 md:w-25 lg:w-30 absolute right-20 xs:right-12  top-[-0.5rem] sm:top-[-0.75rem] md:top-[-1rem] lg:top-[-1.25rem]"
         />
-        <img
+        {isLoading ? <Loading /> : <img
           src={reviewDogy}
           alt="reviewDogy"
           className="w-30 sm:w-40 md:w-50 lg:w-60 z-10"
-        />
+        />}
         <div className="relative w-full">
           <img
             src={reviewHamster}
             alt="reviewHamster"
             className="absolute w-8 sm:w-10 md:w-12 lg:w-14 top-[-2.2rem] sm:top-[-2.75rem] md:top-[-3.35rem] lg:top-[-4rem] left-9 "
           />
-          <div className="animate-gradient bg-[linear-gradient(270deg,_#fcda2e,_#ffffff,_#38bdf8)] text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
-            <h1 className="responsive-text-lg font-semibold text-amber-700 pb-3 sm:pb-4 md:pb-5">
+          <div className="bg-gradient-to-b from-amber-300 via-white to-amber-300 text-center p-5 relative rounded-[10px]  border-2 border-amber-300 shadow-sm shadow-amber-300 top-[-11px] sm:top-[-14px] md:top-[-18px] lg:top-[-22px]">
+            <h1 className="responsive-text-lg font-semibold text-amber-800 pb-3 sm:pb-4 md:pb-5">
               We’d Love to Hear Your Feedback
             </h1>
             <FormProvider {...form}>
               <Form onSubmit={form.handleSubmit(handleFormSubmit)}>
                 <NavLink to={"/home"}>
                   <div className="flex justify-end absolute top-1.5 right-3">
-                    <span className=" transition-transform duration-400 origin-center hover:scale-115 inline-block  w-10 sm:w-11 md:w-12 ">
+                    <span className=" transition-transform duration-300 origin-center hover:scale-115 inline-block  w-10 sm:w-11 md:w-12 ">
                       <img src={closeButton} alt="closeButton" />
                     </span>
                   </div>
@@ -252,10 +286,22 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
                       onClick={() => {
                         form.reset();
                       }}
+                      disabled={form.formState.isSubmitting}
                     >
                       Reset
                     </Button>
                   </div>
+                  <Button
+                    type="button"
+                    variant="cancel"
+                    size="sm"
+                    onClick={() => {
+                      controllerRef?.current?.abort();
+                      warningToast("Request cancelled");
+                    }}
+                  >
+                    Cancel
+                  </Button>
                   <p className="text-amber-800 text-right responsive-text-sm">
                     <span className="responsive-text-md">*</span>
                     required
@@ -266,7 +312,10 @@ export const AddReviewPage = ({ initialData, getReviewError }) => {
           </div>
         </div>
       </div>
-      <NavLink to="/reviews" className="responsive-text-sm text-yellow-700 font-semibold text-xl-start w-full px-2 md:px-4  relative top-[-1.5%]">
+      <NavLink
+        to="/reviews"
+        className="responsive-text-sm text-amber-800 font-semibold text-xl-start w-full px-2 md:px-4  relative top-[-1.5%]"
+      >
         <p className="inline-flex hover:underline items-center ">
           <span>
             <ChevronsRight className="w-4 sm:w-5 md:w-6" />

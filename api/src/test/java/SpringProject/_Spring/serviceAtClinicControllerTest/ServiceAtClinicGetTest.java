@@ -85,7 +85,7 @@ public class ServiceAtClinicGetTest {
         List<ServiceAtClinic> services = List.of(s1, s2);
         Page<ServiceAtClinic> pagedServices = new PageImpl<>(services);
 
-        BDDMockito.given(serviceAtClinicService.findAllServiceAtClinicPages(0, 2, null)).willReturn(pagedServices);
+        BDDMockito.given(serviceAtClinicService.findAllServiceAtClinicPages(0, 2, null, null)).willReturn(pagedServices);
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
@@ -99,7 +99,7 @@ public class ServiceAtClinicGetTest {
                 .andExpect(jsonPath("$.data.content[1].name").value("Vaccination"))
                 .andExpect(jsonPath("$.data.totalElements").value(2));
 
-        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinicPages(0, 2, null);
+        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinicPages(0, 2, null, null);
     }
 
     //Unhappy path
@@ -108,7 +108,7 @@ public class ServiceAtClinicGetTest {
         //Given
         Page<ServiceAtClinic> emptyPage = Page.empty();
 
-        BDDMockito.given(serviceAtClinicService.findAllServiceAtClinicPages(0, 10, null)).willReturn(emptyPage);
+        BDDMockito.given(serviceAtClinicService.findAllServiceAtClinicPages(0, 10, null, null)).willReturn(emptyPage);
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.get("/api/services/pagination")
@@ -119,7 +119,7 @@ public class ServiceAtClinicGetTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Service list is empty"));
 
-        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinicPages(0, 10, null);
+        Mockito.verify(serviceAtClinicService, times(1)).findAllServiceAtClinicPages(0, 10, null, null);
     }
 
     //Unhappy path
@@ -140,7 +140,7 @@ public class ServiceAtClinicGetTest {
                 //Then
                 .andExpect(status().isBadRequest());
 
-        Mockito.verify(serviceAtClinicService, times(0)).findAllServiceAtClinicPages(anyInt(), anyInt(), any());
+        Mockito.verify(serviceAtClinicService, times(0)).findAllServiceAtClinicPages(anyInt(), anyInt(), any(), any());
     }
 
     //Unhappy path
@@ -158,7 +158,7 @@ public class ServiceAtClinicGetTest {
                 //Then
                 .andExpect(status().isBadRequest());
 
-        Mockito.verify(serviceAtClinicService, times(0)).findAllServiceAtClinicPages(anyInt(), anyInt(), any());
+        Mockito.verify(serviceAtClinicService, times(0)).findAllServiceAtClinicPages(anyInt(), anyInt(), any(), any());
     }
 
     //Unhappy path

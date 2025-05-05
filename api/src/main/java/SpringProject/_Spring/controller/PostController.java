@@ -43,6 +43,7 @@ public class PostController extends BaseController{
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/posts/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        // todo: this is just copypasted from ServiceAtClinicController, we should be able to merge these for more reusability
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isBlank()) {
             return badRequest(null, "File must have a valid name");
@@ -114,7 +115,7 @@ public class PostController extends BaseController{
             }
 
             if (search.matches("^[%_]+$")) {
-                throw new IllegalArgumentException("Search query cannot contain only wildcards");
+                throw new IllegalArgumentException("Search query cannot contain only % or _");
             }
         }
 
@@ -125,7 +126,7 @@ public class PostController extends BaseController{
         return ok(postResponseDTO, message);
     }
 
-    @GetMapping("/posts/view/{postId}")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<ApiResponse<PostResponseDTO>> getPost(@PathVariable long postId) {
 
         Optional<Post> post = postService.findPostById(postId);
@@ -166,6 +167,8 @@ public class PostController extends BaseController{
         }
 
         Post updatedPost = postService.updatePost(foundPost, postRequestDTO);
+        System.out.println("cia");
+        System.out.println(updatedPost);
         return ok(PostMapper.toPostResponseDTO(updatedPost), "Post updated successfully");
     }
 
@@ -189,7 +192,7 @@ public class PostController extends BaseController{
         }
 
         postService.deletePostById(postId);
-//        return noContent("Post deleted successfully");
-        return noContent();
+        return noContent("Post deleted successfully");
+
     }
 }

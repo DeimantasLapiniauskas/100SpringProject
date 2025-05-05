@@ -2,14 +2,12 @@ import ModalContext from "@/utils/helpers/modalContext";
 import { useContext } from "react";
 import ProductModal from "./ProductModal";
 import EditProductButton from "./buttons/EditProductButton";
-import { useCheckRoles } from "@/hooks/useCheckRoles";
 import DeleteProductButton from "./buttons/DeleteProductButton";
 
 const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
   const { name, price, stockQuantity, id, imageUrl } = product;
   const { activeModalID, setModalID } = useContext(ModalContext);
 
-  const roles = useCheckRoles();
   return (
     <>
       <div>
@@ -32,7 +30,6 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
             </div>
           </div>
         </li>
-        {roles && (
           <div className="mt-[-2.8rem] ml-5 flex">
             <EditProductButton
               product={product}
@@ -47,7 +44,7 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
               pageSize={pageSize}
             />
           </div>
-        )}
+       
       </div>
 
       {activeModalID === id.toString() && (
