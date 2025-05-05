@@ -58,6 +58,7 @@ public class ServiceAtClinicController extends BaseController {
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
     @PostMapping("/services/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        // todo: this is just copypasted from PostController, we should be able to merge these for more reusability
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isBlank()) {
             return badRequest(null, "File must have a valid name");

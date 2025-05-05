@@ -64,9 +64,9 @@ public class ReviewService {
             return reviewRepository.findAll(pageable);
         }
 
-        int sortByRating = Integer.parseInt(filter);
+        int filterByRating = Integer.parseInt(filter);
         Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).descending());
 
-        return reviewRepository.findAllByRating(sortByRating, pageable);
+        return reviewRepository.findByRating(filterByRating, pageable);
     }
 }

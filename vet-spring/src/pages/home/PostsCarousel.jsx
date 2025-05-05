@@ -62,6 +62,8 @@ const PostCarousel = () => {
                     ? `text-red-700`
                     : post.postType === "Blog"
                     ? `text-[#006666]`
+                    : post.postType === "PetCare"
+                    ? `text-purple-900`
                     : `text-[#004C99]`
                 }`}
               >
@@ -75,6 +77,8 @@ const PostCarousel = () => {
                     ? `text-red-700 animate-pulse`
                     : post.postType === "Blog"
                     ? `text-[#006666]`
+                    : post.postType === "PetCare"
+                    ? `text-purple-900`
                     : `text-[#004C99]`
                 }`}
               >

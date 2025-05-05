@@ -1,8 +1,8 @@
 package SpringProject._Spring.controller;
 
-import SpringProject._Spring.dto.contact_messages.ContactMessageMapper;
-import SpringProject._Spring.dto.contact_messages.ContactMessageRequestDTO;
-import SpringProject._Spring.dto.contact_messages.ContactMessageResponseDTO;
+import SpringProject._Spring.dto.contactMessages.ContactMessageMapper;
+import SpringProject._Spring.dto.contactMessages.ContactMessageRequestDTO;
+import SpringProject._Spring.dto.contactMessages.ContactMessageResponseDTO;
 import SpringProject._Spring.service.ContactMessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

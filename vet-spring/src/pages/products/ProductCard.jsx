@@ -2,14 +2,14 @@ import ModalContext from "@/utils/helpers/modalContext";
 import { useContext } from "react";
 import ProductModal from "./ProductModal";
 import EditProductButton from "./buttons/EditProductButton";
-import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 import DeleteProductButton from "./buttons/DeleteProductButton";
+import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 
 const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
   const { name, price, stockQuantity, id, imageUrl } = product;
   const { activeModalID, setModalID } = useContext(ModalContext);
+  const adminOrVet = useCheckAdminAndVetRoles();
 
-  const roles = useCheckAdminAndVetRoles();
   return (
     <>
       <div>
@@ -32,8 +32,7 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
             </div>
           </div>
         </li>
-        {roles && (
-          <div className="mt-[-2.8rem] ml-5 flex">
+         { adminOrVet && <div className="mt-[-2.8rem] ml-5 flex">
             <EditProductButton
               product={product}
               getPage={getPage}
@@ -47,7 +46,8 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
               pageSize={pageSize}
             />
           </div>
-        )}
+          }
+       
       </div>
 
       {activeModalID === id.toString() && (

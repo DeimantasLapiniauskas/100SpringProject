@@ -61,6 +61,14 @@ export const DropdownMenu = () => {
           Your Pets
         </NavLink>
       )}
+         {account && (
+        <NavLink
+          to="/orders"
+          className="figma-headline-4 !font-bold ml-[-5px] sm:!w-32"
+        >
+        Orders
+        </NavLink>
+      )}
 
       {account ? (
         <button

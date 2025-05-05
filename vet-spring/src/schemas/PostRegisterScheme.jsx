@@ -8,7 +8,7 @@ export const PostRegisterSchema  = z.object({
     .refine((val) => val.trim() !== "", {
       message: "Title cannot be blank",
     }),
-  postType: z.enum(["News", "Blog", "Sale"], {
+  postType: z.enum(["News", "Blog", "Sale", "PetCare"], {
     message: "Post type is required",
   }),
   content: z

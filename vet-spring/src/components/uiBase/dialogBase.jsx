@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 
 const dialogVariants = cva(
-  "fixed z-50 w-full max-w-sm sm:max-w-md md:max-w-lg rounded-xl border bg-white  shadow-lg",
+  "fixed z-100 w-full max-w-sm sm:max-w-md md:max-w-lg rounded-xl border bg-white  shadow-lg",
   {
     variants: {
       size: {
@@ -90,7 +90,7 @@ export const DialogClose = Dialog.Close;
 
 export const DialogOverlay = ({ className, ...props }) => (
   <Dialog.Overlay
-    className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm", className)}
+    className={cn("fixed inset-0 z-100 bg-black/50 backdrop-blur-sm", className)}
     {...props}
   />
 );

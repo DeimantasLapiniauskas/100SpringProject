@@ -12,6 +12,7 @@ import { SearchBarPanel } from "@/components/features/SearchBarPanel";
 import { FilterPanel } from "@/components/features/FilterPanel";
 import { SelectPageSizePanel } from "@/components/features/SelectPageSizePanel";
 import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
+import { ClearAllButton } from "@/components/features/ClearAllButton";
 
 const ProductList = () => {
   const {
@@ -31,7 +32,7 @@ const ProductList = () => {
   const [deleteModalID, setDeleteModalID] = useState("");
 
   const categories = [
-    { label: "All", value: "All" },
+    { label: "All products", value: "All" },
     { label: "Medicine", value: "Medicine" },
     { label: "Food", value: "Food" },
     { label: "Toys", value: "Toys" },
@@ -41,7 +42,7 @@ const ProductList = () => {
   const roles = useCheckAdminAndVetRoles();
 
   return (
-    <div className="p-4 justify-center">
+    <div className=" justify-center">
       <ModalContext.Provider
         value={{
           activeModalID,
@@ -54,21 +55,18 @@ const ProductList = () => {
           setDeleteModalID,
         }}
       >
-        <div className="flex w-full justify-center gap-1.5 sm:gap-2.5 md:gap-3.5 relative mb-[4rem]">
-          {/* <button
-                        type="button"
-                        className="cursor-pointer bg-gray-400 hover:bg-gray-300 text-[8px] sm:text-[10px] md:text-xs px-1.5 sm:px-2.5 md:px-3.5 py-0.25 sm:py-0.5 md:py-0.75 rounded-[10px]
-                         text-gray-800 hover:text-warning-content absolute bottom-[-65%] sm:bottom-[-75%] md:bottom-[-82%] lg:bottom-[-75%] border border-gray-500 hover:border-gray-400"
-                        onClick={clearAll}
-                    >
-                        Clear
-                    </button> */}
+      <div className="flex flex-col items-center sm:flex-row w-full sm:justify-end gap-2.5 md:gap-3.5 relative mt-2">
           <SearchBarPanel />
-          <SelectPageSizePanel pageSizes={pageSizes} />
+          <div className="absolute sm:bottom-[-1rem] md:bottom-[-1.25rem] right-0.5 xs:right-15 sm:right-3">
+        <ClearAllButton />
+      </div>
+        <div className="flex gap-2 md:gap-4 items-center px-2 md:px-3">
           <FilterPanel filterFields={categories} />
+          <SelectPageSizePanel pageSizes={pageSizes} />
         </div>
+      </div>
         {roles && (
-          <div className="flex justify-center w-full items-center">
+          <div className="flex justify-center w-full items-center my-1 md:my-2">
             <AddProductButton
               getPage={getPage}
               currentPage={currentPage}
@@ -80,7 +78,7 @@ const ProductList = () => {
         {isLoading ? <Loading /> : ""}
         {isError ? <Error error={error} isHidden={!error} /> : ""}
         {isBadRequest ? <BadPageRequest /> : ""}
-        <ul className="justify-items-center divide-gray-200 grid sm:grid-cols-1 gap-y-4 row-gap-10 md:grid-cols-2  lg:grid-cols-3  ">
+        <ul className="justify-items-center divide-gray-200 grid sm:grid-cols-1 gap-y-4 row-gap-10 md:grid-cols-2  lg:grid-cols-3 mt-6 md:mt-10">
           {products.map((product) => (
             <ProductCard
               key={product.id}

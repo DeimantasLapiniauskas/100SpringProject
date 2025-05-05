@@ -53,6 +53,7 @@ export const ListProvider = ({ children }) => {
     message: null,
   };
   const [pagination, setPagination] = useState(initialPagination);
+  const [update, setUpdate] = useState(0)
   const { status, setStatus } = useUI();
   const { Loading, Success, Error, BadPageRequest, Unusual } = UIStatus;
   const isEmpty = status === Success && pagination.content.length === 0;
@@ -229,6 +230,7 @@ export const ListProvider = ({ children }) => {
     pagination.searchValue,
     getPage,
     searchParams,
+    update
   ]);
 
   return (
@@ -245,7 +247,8 @@ export const ListProvider = ({ children }) => {
         isEmpty,
         clearSearchBar,
         localStoragePath,
-        searchParams
+        searchParams,
+        setUpdate
       }}
     >
       {children}
