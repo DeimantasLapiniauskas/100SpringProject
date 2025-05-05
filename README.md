@@ -98,11 +98,13 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ## Usage
 
-1. Creating a Client Account: Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
-2. Browsing services: View all of our provided services in the Services page! Click it on the navbar!
-3. Browsing posts made my vets: View all of our veterinarian-made posts! This includes news, sales and more!
-4. Browsing products: View all of our available products in the Products page!
-5. Purchasing products (sorta): Start your own shopping cart and throw any of our products in there to enjoy (sorta)!
-6. Scheduling appointments: After registering a pet, you can sign up to any of our services at any time! The vet will confirm your visit when they can, please be patient.
-7. Rescheduling and cancelling appointments: After making an appointment, you can reschedule or cancel at any time! Reschedulings will need to be confirmed.
-8. Reviews and comments: (In progress)
+1. ###Creating a Client Account: Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
+2. ###Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
+3. ###Pet registration: Navigate towards the logo on the far right edge of the NavBar and press
+4. ###Browsing services: View all of our provided services in the Services page! Click it on the navbar!
+5. ###Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more!
+6. ###Browsing products: View all of our available products in the Products page!
+7. ###Purchasing products (sorta): Start your own shopping cart and throw any of our products in there to enjoy (sorta)!
+8. ###Scheduling appointments: After registering a pet, you can sign up to any of our services at any time! The vet will confirm your visit when they can, please be patient.
+9. ###Rescheduling and cancelling appointments: After making an appointment, you can reschedule or cancel at any time! Reschedulings will need to be confirmed.
+10. ###Reviews and comments: (In progress)
