@@ -85,7 +85,7 @@ export const ServiceList = () => {
         {isEmpty ? <p>{message}</p> : ""}
         {isLoading ? <Loading /> : ""}
         {isError ? <Error error={error} isHidden={!error} /> : ""}
-        <div className="flex justify-center md:justify-end w-full gap-15">
+        <div className="flex flex-col-reverse justify-center items-center lg:items-start lg:justify-end w-full gap-15 lg:flex-row ">
           <div className="flex flex-col items-center gap-5">
             <h2 className="text-purple-950 responsive-text-lg text-center font-semibold mx-5">Explore Our Pet Care Posts to Help Your Companion Thrive</h2>
             <div >
@@ -99,7 +99,7 @@ export const ServiceList = () => {
               <CatSilhouetteGradient className="w-20 xs:w-22.5 sm:w-25 md:w-27.5 lg:w-30 absolute z-10 top-[-61px] xs:top-[-68px] sm:top-[-74px] md:top-[-83px] lg:top-[-90px] right-[-180px] ] " />
             )}
           </div>
-          <ul className="flex flex-col w-[330px] xs:w-[415px] sm:w-[480px] md:w-[578px] lg:w-[680px] gap-4">
+          <ul className="flex flex-col w-[330px] xs:w-[415px] sm:w-[480px] md:w-[578px] lg:w-[680px] gap-4 ">
             {services?.map((service) => (
               <ServiceCard
                 key={service.id}

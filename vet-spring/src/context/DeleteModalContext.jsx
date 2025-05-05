@@ -73,9 +73,9 @@ export const DeleteModalProvider = ({ children }) => {
         setStatus(Error);
         toast.error(errorMessage);
       }
-      finally {
+      
         setUpdate((priev) => priev + 1);
-      }
+      
     },
     [setStatus, getPage, isMounted]
   );
