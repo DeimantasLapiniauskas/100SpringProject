@@ -98,15 +98,52 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ## Usage
 
-###Creating a Client Account: Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
+### Creating a Client Account: Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
+* One
+* Two
+* Three
 
-###Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
+### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
+* One
+* Two
+* Three
 
-###Pet registration: Navigate towards the logo on the far right edge of the NavBar and press
-###Browsing services: View all of our provided services in the Services page! Click it on the navbar!
-###Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more!
-###Browsing products: View all of our available products in the Products page!
-###Purchasing products (sorta): Start your own shopping cart and throw any of our products in there to enjoy (sorta)!
-###Scheduling appointments: After registering a pet, you can sign up to any of our services at any time! The vet will confirm your visit when they can, please be patient.
-###Rescheduling and cancelling appointments: After making an appointment, you can reschedule or cancel at any time! Reschedulings will need to be confirmed.
-###Reviews and comments: (In progress)
+### Pet registration: Navigate towards the logo on the far right edge of the NavBar and press
+* One
+* Two
+* Three
+
+### Browsing services: View all of our provided services in the Services page! Click it on the navbar!
+* One
+* Two
+* Three
+
+### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more!
+* One
+* Two
+* Three
+
+### Browsing products: View all of our available products in the Products page!
+* One
+* Two
+* Three
+
+### Purchasing products (sorta): Start your own shopping cart and throw any of our products in there to enjoy (sorta)!
+* One
+* Two
+* Three
+
+### Scheduling appointments: After registering a pet, you can sign up to any of our services at any time! The vet will confirm your visit when they can, please be patient.
+* One
+* Two
+* Three
+
+### Rescheduling and cancelling appointments: After making an appointment, you can reschedule or cancel at any time! Reschedulings will need to be confirmed.
+* One
+* Two
+* Three
+
+### Reviews and comments: (In progress)
+* One
+* Two
+* Three
