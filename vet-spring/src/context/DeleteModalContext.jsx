@@ -22,7 +22,7 @@ export const DeleteModalProvider = ({ children }) => {
 
   const isMounted = useIsMounted();
   const { setStatus } = useUI();
-  const { getPage, pageSize, currentPage, sorted, searchValue, setPagination } =
+  const { getPage, pageSize, currentPage, sorted, searchValue, setPagination, setUpdate } =
     useList();
   const { Loading, Success, Error, Unusual } = UIStatus;
   const entityPath = useEntityPath();
@@ -50,12 +50,11 @@ export const DeleteModalProvider = ({ children }) => {
           const { message } = response.data;
 
           if (message) {
-            toast.success(message);
-            await getPage(pageSize, currentPage, sorted, searchValue);
+            // await getPage(pageSize, currentPage, sorted, searchValue);
 
-            if (!isMounted.current) return;
-
-            setPagination((prev) => ({ ...prev }));
+            // if (!isMounted.current) return;
+            
+            // setPagination((prev) => ({ ...prev }));
             setStatus(Success);
             if (entityPath === "orders") {
               navigate("/orders")
@@ -73,6 +72,9 @@ export const DeleteModalProvider = ({ children }) => {
           error.response?.data?.message ?? error.message ?? "Unknown error";
         setStatus(Error);
         toast.error(errorMessage);
+      }
+      finally {
+        setUpdate((priev) => priev + 1);
       }
     },
     [setStatus, getPage, isMounted]
