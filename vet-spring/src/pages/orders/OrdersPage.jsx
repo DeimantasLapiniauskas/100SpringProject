@@ -1,6 +1,5 @@
 import { Error } from "../../components/feedback/Error";
 import { useList } from "../../context/ListContext";
-import { NavLink } from "react-router";
 import { Loading } from "../../components/feedback/Loading";
 import { useUI } from "../../context/UIContext";
 import { PaginationPanel } from "../../components/features/PaginationPanel";
@@ -51,7 +50,7 @@ export const OrdersList = () => {
         Manage Your Orders with Ease
         </h2>
         <article className="text-sm md:text-base lg:text-lg text-gray-700 max-w-3xl mx-auto text-center">
-        Track your recent purchases, view order details, and stay informed about your pet’s care essentials. Whether it's a new toy or vital medication, your pet’s happiness starts here.
+        Track your recent purchases, view order details, and stay informed about your pet’s care essentials. Whether it’s a new toy or vital medication, your pet’s happiness starts here.
         </article>
       </section>
 
