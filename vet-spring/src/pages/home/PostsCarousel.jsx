@@ -39,7 +39,7 @@ const PostCarousel = () => {
         spaceBetween={10}
         slidesPerView={3}
         slidesPerGroup={1}
-        loop={posts.length > 7}
+        loop={posts?.length > 7}
         navigation={{
           nextEl: ".custom-next",
           prevEl: ".custom-prev",
@@ -53,53 +53,53 @@ const PostCarousel = () => {
           1024: { slidesPerView: 3 },
         }}
       >
-        {posts.map((post) => (
-          <SwiperSlide key={post.id}>
+        {posts?.map((post) => (
+          <SwiperSlide key={post?.id}>
             <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
               <h2
                 className={`text-base md:px-2 block leading-[22px] font-semibold min-h-[48px] max-h-[48px] overflow-hidden break-words ${
-                  post.postType === "Sale"
+                  post?.postType === "Sale"
                     ? `text-red-700`
-                    : post.postType === "Blog"
+                    : post?.postType === "Blog"
                     ? `text-[#006666]`
-                    : post.postType === "PetCare"
+                    : post?.postType === "PetCare"
                     ? `text-purple-900`
                     : `text-[#004C99]`
                 }`}
               >
-                {post.title.length > 55
-                  ? post.title.slice(0, 52) + "..."
-                  : post.title}
+                {post?.title?.length > 55
+                  ? post?.title?.slice(0, 52) + "..."
+                  : post?.title}
               </h2>
               <h3
                 className={`font-semibold text-left text-sm ${
-                  post.postType === "Sale"
+                  post?.postType === "Sale"
                     ? `text-red-700 animate-pulse`
-                    : post.postType === "Blog"
+                    : post?.postType === "Blog"
                     ? `text-[#006666]`
-                    : post.postType === "PetCare"
+                    : post?.postType === "PetCare"
                     ? `text-purple-900`
                     : `text-[#004C99]`
                 }`}
               >
-                {post.postType === "Sale"
-                  ? post.postType + " !"
-                  : post.postType}
+                {post?.postType === "Sale"
+                  ? post?.postType + " !"
+                  : post?.postType}
               </h3>
-              <div className={post.imageUrl ? "grid grid-cols-3" : ""}>
+              <div className={post?.imageUrl ? "grid grid-cols-3" : ""}>
                 <p className=" leading-[18px] text-left overflow-hidden h-[115px] text-sm col-span-2 break-words p-1">
-                  {post.imageUrl
-                    ? post.content.length > 150
-                      ? post.content.slice(0, 147) + "..."
-                      : post.content
-                    : post.content.length > 240
-                    ? post.content.slice(0, 237) + "..."
-                    : post.content}
+                  {post?.imageUrl
+                    ? post?.content?.length > 150
+                      ? post?.content?.slice(0, 147) + "..."
+                      : post?.content
+                    : post?.content?.length > 240
+                    ? post?.content?.slice(0, 237) + "..."
+                    : post?.content}
                 </p>
-                {post.imageUrl && (
+                {post?.imageUrl && (
                   <img
-                    src={post.imageUrl}
-                    alt={post.title}
+                    src={post?.imageUrl}
+                    alt={post?.title}
                     className="object-cover h-[115px] rounded-[10px] border-1 border-blue-400 w-full"
                   />
                 )}

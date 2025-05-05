@@ -1,10 +1,10 @@
 package SpringProject._Spring.controller;
 
 import SpringProject._Spring.dto.ApiResponse;
-import SpringProject._Spring.dto.post.PostPageResponseDTO;
-import SpringProject._Spring.dto.post.PostMapper;
-import SpringProject._Spring.dto.post.PostRequestDTO;
-import SpringProject._Spring.dto.post.PostResponseDTO;
+import SpringProject._Spring.dto.post.*;
+import SpringProject._Spring.dto.review.ReviewMapper;
+import SpringProject._Spring.dto.review.ReviewResponseListDTO;
+import SpringProject._Spring.model.Review;
 import SpringProject._Spring.model.post.Post;
 import SpringProject._Spring.model.post.PostType;
 import SpringProject._Spring.model.authentication.Vet;
@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -43,7 +44,7 @@ public class PostController extends BaseController{
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/posts/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-        // todo: this is just copypasted from ServiceAtClinicController, we should be able to merge these for more reusability
+
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isBlank()) {
             return badRequest(null, "File must have a valid name");
@@ -124,6 +125,15 @@ public class PostController extends BaseController{
         PostPageResponseDTO postResponseDTO = PostMapper.toPostPageResponseDTO(pagedPosts, sort);
 
         return ok(postResponseDTO, message);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<ApiResponse<PostListResponseDTO>> getAllPosts() {
+
+        List<Post> posts = postService.findAllPosts();
+        PostListResponseDTO postListResponseDTO = PostMapper.toPostListResponseDTO(posts);
+
+        return ok(postListResponseDTO, posts.isEmpty() ? "Reviews List is empty" : null);
     }
 
     @GetMapping("/posts/{postId}")
