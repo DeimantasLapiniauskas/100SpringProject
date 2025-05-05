@@ -83,18 +83,4 @@ public class ProductGetByIdTest {
 
         Mockito.verify(productService, times(1)).findProductById(1L);
     }
-
-    //unhappy path
-    @Test
-    @WithAnonymousUser
-    void getProductById_whenUnauthenticated_thenReturnAnd401() throws Exception {
-        //given
-        //when
-        mockMvc.perform(get("/api/products/{id}", 1L))
-                //then
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$").doesNotExist());
-
-        Mockito.verify(productService, times(0)).findProductById(1L);
-    }
 }

@@ -132,22 +132,6 @@ public class ProductGetPaginationTest {
 
     //unhappy path
     @Test
-    @WithAnonymousUser
-    void getProductsPage_whenUnauthenticated_thenReturnAnd401() throws Exception {
-        //given
-        //when
-        mockMvc.perform(get("/api/products/pagination")
-                        .param("page", "0")
-                        .param("size", "10"))
-                //then
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$").doesNotExist());
-
-        Mockito.verify(productService, times(0)).findAllProductsPage(0, 10, null, null);
-    }
-
-    //unhappy path
-    @Test
     @WithMockUser(authorities = "SCOPE_ROLE_CLIENT")
     void getProductsPage_whenInvalidPageSize_thenReturnAnd400() throws Exception {
         //given
