@@ -15,8 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentConfirmationController extends BaseController {
@@ -57,13 +55,6 @@ public class AppointmentConfirmationController extends BaseController {
         return ok("Appointment confirmed successfully!");
     }
 
-    @Operation(summary = "Get all unconfirmed appointments or reschedulings as a vet", description = "Gets all appointment or appointment reschedulings pending approval by vet by authenticated vet email")
-    @GetMapping("/vet/confirm")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_VET')")
-    public ResponseEntity<ApiResponse<List<Appointment>>> GetUnconfirmedAppointmentsVet(Authentication authentication) {
-        return ok(appointmentService.getAllUnconfirmedByVetAppointmentsByEmail(authentication.getName()));
-    }
-
     @Operation(summary = "Confirm a rescheduling as a client", description = "Confirms a rescheduling pending approval by client by its unique ID")
     @PutMapping("/client/confirm/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
@@ -79,7 +70,6 @@ public class AppointmentConfirmationController extends BaseController {
         if (!petService.existsById(appointmentFromDB.getPetId())) {
             return notFound("This pet no longer exists in our database!");
         }
-
         if (!appointmentFromDB.getStatus().equals(
                 Status.ScheduledUnconfirmedByClient) ||
                 petService.findById(appointmentFromDB.getPetId()).get().getOwnerId() !=
@@ -87,16 +77,8 @@ public class AppointmentConfirmationController extends BaseController {
         ) {
             return forbidden("This appointment isn't waiting for your approval!");
         }
-
         appointmentFromDB.setStatus(Status.Scheduled);
         appointmentService.saveAppointment(appointmentFromDB);
         return ok("Appointment confirmed successfully!");
-    }
-
-    @Operation(summary = "Get all unconfirmed reschedulings as a client", description = "Gets all appointment reschedulings pending approval by client by authenticated client email")
-    @GetMapping("/client/confirm")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_CLIENT')")
-    public ResponseEntity<ApiResponse<List<Appointment>>> GetUnconfirmedAppointmentsClient(Authentication authentication) {
-        return ok(appointmentService.getAllUnconfirmedByClientAppointmentsByEmail(authentication.getName()));
     }
 }
