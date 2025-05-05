@@ -3,21 +3,20 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { useList } from "../../context/ListContext";
-import "../../index.css";
 import { useNavigate } from "react-router";
 import { UIStatus } from "@/constants/UIStatus";
+import { useList } from "../../context/ListContext";
 import { useUI } from "@/context/UIContext";
 import { ChevronsRight } from "lucide-react";
 
-const PostCarousel = () => {
+export const PetCarePostsCorousel = () => {
   const { content: posts } = useList();
   const { Redirecting } = UIStatus;
   const { setStatus } = useUI();
   const navigate = useNavigate();
 
   return (
-    <div className="px-[1rem] bg-gradient-to-br from-blue-300 via-info-content to-blue-300 relative rounded-[10px] shadow-md shadow-info-content">
+    <div>
       <div className="flex items-center justify-between py-1 sm:py-1.5 md:py-2 px-1 xs:px-[1.5rem] sm:px-[4rem] md:px-[5rem] lg:px-[6rem]">
         <h2 className="text-info-content font-semibold text-sm sm:text-base md:text-lg">
           FOLLOW OUR LATEST NEWS
@@ -35,6 +34,7 @@ const PostCarousel = () => {
         </div>
       </div>
       <Swiper
+        direction="vertical"
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={10}
         slidesPerView={3}
@@ -52,8 +52,7 @@ const PostCarousel = () => {
           768: { slidesPerView: 2 },
           1024: { slidesPerView: 3 },
         }}
-      >
-        {posts.map((post) => (
+      >{posts.map((post) => (
           <SwiperSlide key={post.id}>
             <div className="text-center bg-gradient-to-br from-blue-200 to-indigo-400 text-info-content rounded-[10px] h-[14rem] py-2 ps-3 pe-2 border-2 border-white ">
               <h2
@@ -62,8 +61,6 @@ const PostCarousel = () => {
                     ? `text-red-700`
                     : post.postType === "Blog"
                     ? `text-[#006666]`
-                    : post.postType === "PetCare"
-                    ? `text-purple-900`
                     : `text-[#004C99]`
                 }`}
               >
@@ -77,8 +74,6 @@ const PostCarousel = () => {
                     ? `text-red-700 animate-pulse`
                     : post.postType === "Blog"
                     ? `text-[#006666]`
-                    : post.postType === "PetCare"
-                    ? `text-purple-900`
                     : `text-[#004C99]`
                 }`}
               >
@@ -125,5 +120,3 @@ const PostCarousel = () => {
     </div>
   );
 };
-
-export default PostCarousel;

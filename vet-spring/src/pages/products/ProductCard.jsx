@@ -3,10 +3,12 @@ import { useContext } from "react";
 import ProductModal from "./ProductModal";
 import EditProductButton from "./buttons/EditProductButton";
 import DeleteProductButton from "./buttons/DeleteProductButton";
+import { useCheckAdminAndVetRoles } from "@/hooks/useCheckRoles";
 
 const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
   const { name, price, stockQuantity, id, imageUrl } = product;
   const { activeModalID, setModalID } = useContext(ModalContext);
+  const adminOrVet = useCheckAdminAndVetRoles();
 
   return (
     <>
@@ -30,7 +32,7 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
             </div>
           </div>
         </li>
-          <div className="mt-[-2.8rem] ml-5 flex">
+         { adminOrVet && <div className="mt-[-2.8rem] ml-5 flex">
             <EditProductButton
               product={product}
               getPage={getPage}
@@ -44,6 +46,7 @@ const ProductCard = ({ product, getPage, currentPage, pageSize }) => {
               pageSize={pageSize}
             />
           </div>
+          }
        
       </div>
 

@@ -76,7 +76,7 @@ public class PostService {
     }
 
     public boolean isNotValidSortField(String sort) {
-        List<String> sortFields = List.of("News", "Sale", "Blog", "createdAt");
+        List<String> sortFields = List.of("News", "Sale", "Blog", "PetCare", "createdAt");
 
         return !sortFields.contains(sort);
     }

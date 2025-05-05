@@ -10,7 +10,6 @@ import { useState, useRef } from "react";
 import { useList } from "@/context/ListContext";
 
 const OrderCard = ({ order }) => {
-  
   const [error, setError] = useState(null);
 
   const clientRole = useCheckClientRole();
@@ -66,15 +65,17 @@ const OrderCard = ({ order }) => {
 
   return (
     <div className="bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl pb-5 pt-8 px-6 mb-4 w-full max-w-xl relative">
-       <div className="flex gap-2 absolute top-1.5 left-1/2 transform -translate-x-1/2 responsive responsive-text-md font-semibold text-info-content">
-          <p>
-            <span>Client: </span>
-            {clientResponseDTO?.firstName}
-          </p>
-          <p> {clientResponseDTO?.lastName}</p>
-        </div>
+      <div className="flex gap-2 absolute top-1.5 left-1/2 transform -translate-x-1/2 responsive responsive-text-md font-semibold text-info-content">
+        <p className="text-emerald-950">
+          <span>Client: </span>
+          {clientResponseDTO?.firstName}
+        </p>
+        <p className="text-emerald-950"> {clientResponseDTO?.lastName}</p>
+      </div>
       <div className="flex justify-between items-center mb-2">
-        <h2 className="responsive-text-lg font-semibold text-info-content">Order #{id}</h2>
+        <h2 className="responsive-text-lg font-semibold text-info-content">
+          Order #{id}
+        </h2>
         <span
           className={`responsive-text-sm px-3 py-1 rounded-full ${
             orderStatus === "Completed"
@@ -99,13 +100,26 @@ const OrderCard = ({ order }) => {
         </p>
         <div className="flex justify-between items-center p-1">
           <NavLink to={`/orders/view/${order.id}`}>
-            <p type="button" className="cursor-pointer font-semibold text-sky-800 hover:underline">View Order</p>
+            <p
+              type="button"
+              className="cursor-pointer font-semibold text-sky-800 hover:underline"
+            >
+              View Order
+            </p>
           </NavLink>
           {completedORCanceled ? (
             ""
           ) : (
             <div className="responsive-text-sm">
-              {canPay && <button type="button" className="cursor-pointer responsive-button-sm bg-purple-300 text-red-950 opacity-60 hover:opacity-100 rounded-md" onClick={alert("Neparduodam!")}>Pay Now</button>}
+              {canPay && (
+                <button
+                  type="button"
+                  className="cursor-pointer responsive-button-sm bg-purple-300 text-red-950 opacity-60 hover:opacity-100 rounded-md"
+                  onClick={() => alert("Neparduodam!")}
+                >
+                  Pay Now
+                </button>
+              )}
               {canCancel && (
                 <button
                   type="button"
@@ -125,8 +139,8 @@ const OrderCard = ({ order }) => {
                   Cancel
                 </button>
               )}
-              {!clientRole && !cancelConfirmed &&
-                (<div className="flex gap-2">
+              {!clientRole && !cancelConfirmed && (
+                <div className="flex gap-2">
                   <button
                     type="button"
                     className="cursor-pointer responsive-button-sm bg-teal-200 rounded-md opacity-60 hover:opacity-100"
@@ -149,7 +163,6 @@ const OrderCard = ({ order }) => {
       </div>
 
       <div className="border-t pt-1.5 md:pt-3  text-sm text-info-content">
-  
         <div className="flex justify-between responsive-text-sm">
           <p> {vetClinicResponseDTO?.name}</p>
           <p> {vetClinicResponseDTO?.address}</p>

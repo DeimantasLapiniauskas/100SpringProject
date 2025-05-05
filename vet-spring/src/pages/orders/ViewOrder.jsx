@@ -79,7 +79,7 @@ const ViewOrder = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-1 sm:gap-1 md:gap-1.5 lg:gap-2 responsive-text-sm text-info-content">
-        <p>
+        <p className="text-emerald-950">
           <span className="font-semibold">Client: </span>
           {clientResponseDTO?.firstName} {clientResponseDTO?.lastName}
         </p>
@@ -104,7 +104,7 @@ const ViewOrder = () => {
           </span>
         </p>
         <p>
-          <span className="font-semibold">Sum: </span> €
+          <span className="font-semibold">Total: </span> €
           {totalAmount?.toFixed(2)}
         </p>
       </div>
@@ -172,7 +172,7 @@ const ViewOrder = () => {
             <Button
               size="sm"
               className="text-white responsive-button-sm"
-              onClick={alert("Neparduodam!")}
+              onClick={() => alert("Neparduodam!")}
             >
               Pay Now
             </Button>
