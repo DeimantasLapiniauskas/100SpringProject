@@ -85,7 +85,7 @@ export const ServiceList = () => {
         {isEmpty ? <p>{message}</p> : ""}
         {isLoading ? <Loading /> : ""}
         {isError ? <Error error={error} isHidden={!error} /> : ""}
-        <div className="flex justify-center md:justify-end w-full gap-20">
+        <div className="flex justify-center md:justify-end w-full gap-15">
           <div className="flex flex-col items-center gap-5">
             <h2 className="text-purple-950 responsive-text-lg text-center font-semibold mx-5">Explore Our Pet Care Posts to Help Your Companion Thrive</h2>
             <div >

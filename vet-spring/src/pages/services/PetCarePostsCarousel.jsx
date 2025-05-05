@@ -48,7 +48,7 @@ export const PetCarePostsCorousel = () => {
               ◀
             </button>
         </div>
-        <div className="custom-pagination p-2 flex justify-center z-0 h-5 g" />
+        <div className="custom-pagination p-2 flex justify-center z-0 h-5 gap-1.5" />
       </div>
       <Swiper
         direction="vertical"
@@ -64,7 +64,6 @@ export const PetCarePostsCorousel = () => {
         }}
         pagination={{ clickable: true, el: ".custom-pagination" }}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
-        
         breakpoints={{
           0: { slidesPerView: 1 },
           640: { slidesPerView: 2 },
