@@ -50,7 +50,49 @@ npm run dev
 ```
 ### Backend Setup
 
-In Progress (Requires a file that's not safe to be put in the git repository)
+## Starting the Project using a local database
+
+* Start the Docker Desktop software.
+* Run the following commands inside the terminal:
+```
+# Step 1.
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 3306:3306 mysql:8.0
+
+# Step 2.
+docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
+
+```
+* Database should be available on http://localhost:8081 .
+  ```
+ username: root
+
+ password: my-secret-pw
+
+```
+* Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
+
+## Starting the Project using a remote server (Amazon Web Service) for database
+
+* Start the Docker Desktop software.
+* Run the following inside the terminal:
+```
+# Step 1. If a a project was run locally before run the command below. Otherwise go to Step 2:
+docker rm phpmyadmin
+
+# Step 2.
+docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-north-1.rds.amazonaws.com -e PMA_PORT=3306 -e PMA_USER-admin -e PMA_PASSWORD=MySecretPass123! -p 8081:80 phpmyadmin
+
+```
+* Database should be available on http://localhost:8081
+```
+ username: admin
+
+ password: MySecretPass123!
+
+```
+* Aquire the aws-credentials file from the main owners of the project.
+* Insert the aws-credentials file iside the \100SpringProject\api folder.
+* Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
 ## Usage
 
