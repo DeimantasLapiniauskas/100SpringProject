@@ -50,7 +50,7 @@ npm run dev
 ```
 ### Backend Setup
 
-## Starting the Project using a local database
+#### Starting the Project using a local database
 
 * Start the Docker Desktop software.
 * Run the following commands inside the terminal:
@@ -71,7 +71,7 @@ docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
 ```
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
-## Starting the Project using a remote server (Amazon Web Service) for database
+#### Starting the Project using a remote server (Amazon Web Service) for database
 
 * Start the Docker Desktop software.
 * Run the following inside the terminal:
