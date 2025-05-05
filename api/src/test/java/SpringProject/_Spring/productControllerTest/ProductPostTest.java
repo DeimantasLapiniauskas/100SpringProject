@@ -112,10 +112,10 @@ public class ProductPostTest {
                 .andExpectAll(
                         jsonPath("message").exists(),
                         jsonPath("success").value(false),
-                        jsonPath("data.name").value("Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"),
+                        jsonPath("data.name").value("Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*()-’:;+®/)"),
                         jsonPath("data.description").value(
                                 either(equalTo("Description can't be empty!"))
-                                        .or(equalTo("Description can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"))
+                                        .or(equalTo("Description can only contain letters, numbers, punctuation, quotes, and symbols (:;!@#$%^&*()-’:;+®/)"))
                         ),
                         jsonPath("data.price").value("Price must be zero or positive!"),
                         jsonPath("data.stockQuantity").value("Stock quantity must be zero or greater!")

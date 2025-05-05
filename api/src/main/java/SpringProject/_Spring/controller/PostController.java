@@ -43,6 +43,7 @@ public class PostController extends BaseController{
     @PreAuthorize("hasAuthority('SCOPE_ROLE_VET') or hasAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/posts/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        // todo: this is just copypasted from ServiceAtClinicController, we should be able to merge these for more reusability
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isBlank()) {
             return badRequest(null, "File must have a valid name");
@@ -191,7 +192,7 @@ public class PostController extends BaseController{
         }
 
         postService.deletePostById(postId);
-        return ok(null, "Post deleted successfully");
+        return noContent("Post deleted successfully");
 
     }
 }

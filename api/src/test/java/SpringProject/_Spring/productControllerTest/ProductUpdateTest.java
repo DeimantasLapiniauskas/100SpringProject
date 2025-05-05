@@ -87,8 +87,8 @@ public class ProductUpdateTest {
                 //then
                 .andExpect(status().isBadRequest())
                 .andExpectAll(
-                        jsonPath("data.name").value("Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"),
-                        jsonPath("data.description").value("Description can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*())"),
+                        jsonPath("data.name").value("Name can only contain letters, numbers, punctuation, quotes, and symbols (!@#$%^&*()-’:;+®/)"),
+                        jsonPath("data.description").value("Description can only contain letters, numbers, punctuation, quotes, and symbols (:;!@#$%^&*()-’:;+®/)"),
                         jsonPath("data.price").value("Price must be zero or positive!"),
                         jsonPath("data.stockQuantity").value("Stock quantity must be zero or greater!"),
                         jsonPath("message").value("Validation failed"),
