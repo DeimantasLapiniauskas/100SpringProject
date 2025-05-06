@@ -138,18 +138,16 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ### Reviews and comments:
 * If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
-* Two
-* Three
-
-### Browsing services: View all of our provided services in the Services page! Click it on the navbar!
-* One
-* Two
-* Three
+* 5 star rating system and commnets textbox are used to generate a review.
+* Reviews from other clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
 
 ### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more!
-* One
-* Two
-* Three
+* Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
+* Posts are made by vets and are separated into categories News, Sale!, Blog and PetCare. As such, clients can filter posts, depending what they would like to see.
+* News - Clinic latest news.
+* Sales! - Product sales.
+* Blog - Stories of our past visitors successful recoveries.
+* PetCare - useful trivia about pet health.
 
 ### Browsing products: View all of our available products in the Products page!
 * One
