@@ -4,6 +4,27 @@
 
 Happy Hearts is a veterinary clinic website that allows users to register their pets for appointments, reschedule or cancel said appointments, and buy animal products such as medicine, food toys, and more!
 
+## 
+* CLIENT. 
+* VET. 
+
+## User types
+
+### CLIENT
+* Clients are pet owners.
+* Use our app as general customers.
+* Certain content editing powers are restricted.
+
+### VET
+* Vets are the clinic staff.
+* Posses certain content editing powers the either shared with ADMINs or exclusive to VETs.
+
+### ADMIN
+* Clinic administrators.
+* Given powers not only to edit content but other users as well.
+* Certain content editing powers the either shared with VETSs or exclusive to ADMINs.
+
+
 ## Features
 
 * Pet Registration: Include your pet information for ease of access for both you and the veterinarians you register an appointment to.
@@ -143,16 +164,21 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more!
 * Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
-* Posts are made by vets and are separated into categories News, Sale!, Blog and PetCare. As such, clients can filter posts, depending what they would like to see.
+* Posts are made by vets and are separated into categories News, Sale!, Blog and PetCare. As such, clients can filter posts, depending what they would like to see, or use a search bar.
 * News - Clinic latest news.
 * Sales! - Product sales.
 * Blog - Stories of our past visitors successful recoveries.
 * PetCare - useful trivia about pet health.
 
+### Our clinic services: List of the medical proedures and consulttions we offer:
+* List of the services available as well as their price can be found on the Service List Page.
+* An additonal route to register for an appointment by pressing "Register" on the relevant service card.
+* Results can be searched or filtered alphabetically or by price.
+
 ### Browsing products: View all of our available products in the Products page!
-* One
+* Products are separated into categories Food, Toys and Medicine. As a result, clients can filter products or use a search bar to find the item they are searching for.
 * Two
-* Three
+* Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 
 ### Purchasing products (sorta): Start your own shopping cart and throw any of our products in there to enjoy (sorta)!
 * One
