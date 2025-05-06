@@ -98,19 +98,14 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ## Usage
 
-### Creating a Client Account: Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
-* One
-* Two
-* Three
+### Creating a Client Account:
+* Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
 
 ### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
-* One
-* Two
-* Three
 
-### Pet registration: Navigate towards the logo on the far right edge of the NavBar and press
-* One
-* Two
+### Pet registration:
+* Navigate towards the logo on the far right edge of the NavBar and click.
+* An expanded menu - Dropdown Menu - appears.
 * Three
 
 ### Browsing services: View all of our provided services in the Services page! Click it on the navbar!
