@@ -8,9 +8,13 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 
 * Pet Registration: Include your pet information for ease of access for both you and the veterinarians you register an appointment to.
 
-* Appointment Scheduling: Register your pet to an appointment to one of our many provided services, to whichever vet you want! After you select the service, vet, and time (and optionally add in notes you think the vet should know!), said vet receives an email notifying them of the registration. They can log in to confirm it whenever, or reschedule it for a different time, in which case YOU get an email, politely asking you to visit our website to confirm your availability for then! Of course, both sides can reschedule or even cancel at any time.
+* Appointment Scheduling: Register your pet to an appointment to one of our many provided services, to whichever vet you want! After you select the service, vet, and time (and optionally add in notes you think the vet should know!), said vet receives an email notifying them of the registration. They can log in to confirm it, or reschedule it for a different time, in which case YOU get an email, politely asking you to visit our website to confirm your availability for then! Of course, both sides can reschedule or even cancel at any time.
 
-* Online Shop: Peruse our vast list of helpful items for your pets! Filter and search to your hearts content, and make a shopping cart to brighten up your beloved pets life. (Actual monetary transactions not included (This isn't an actual clinic, we don't have the products we're advertizing so we can't legally sell you anything))
+* Online Shop: View our vast list of helpful items for your pets! Filter and search to your hearts content, and make a shopping cart to brighten up your beloved pets life. (Actual monetary transactions not included (This isn't an actual clinic, we don't have the products we're advertizing so we can't legally sell you anything)).
+
+* Reviews: Liked our service? Please feel free to rate your time spent with the practice and leave a heartwarming review!
+
+* Posts: Browse our News Page to scroll through various posts about our clinic news, latest product sales, blogs and pet care trivia. Indulge in the sea of wonderful content to brighten your day and get to know our pactice better! 
 
 ## Technologies Used
 
@@ -104,9 +108,13 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
 
 ### Pet registration:
-* Navigate towards the logo on the far right edge of the NavBar and click.
+* Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
 * An expanded menu - Dropdown Menu - appears.
-* Three
+* Enter "Your Pets" 
+* Click "Add Pet"
+* Register your pet with name, species (e.g., cat; dog), breed (e.g., husky), birthdate and gender.
+* A card with newly registered pet will appear on the screen. Pet has been registered as a patient of the clinic.
+* You can edit the pet information as well if need arises.
 
 ### Browsing services: View all of our provided services in the Services page! Click it on the navbar!
 * One
