@@ -32,4 +32,10 @@ public class PostMapper {
                 sortBy
         );
     }
+
+    public static PostListResponseDTO toPostListResponseDTO(List<Post> posts) {
+        return new PostListResponseDTO(posts.stream()
+                .map(PostMapper::toPostResponseDTO).toList());
+
+    }
 }

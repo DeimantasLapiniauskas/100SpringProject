@@ -74,7 +74,6 @@ export const Appointment = () => {
         <div className="grid grid-cols-8 border-b-2 border-[#97a0f1] font-bold text-xl">
           <p className="mb-4">Appointment Date</p>
           <p className="mb-4">Pet</p>
-          <p className="mb-4">Price</p>
           <p className="mb-4">Veterinarian</p>
           <p className="mb-4">Services</p>
           <p className="mb-4">Notes</p>
@@ -90,7 +89,6 @@ export const Appointment = () => {
               <p>{a.petDTO.name}</p>
               <p className="text-slate-500 pt-1 mb-3">{a.petDTO.species}</p>
             </div>
-            <p>{a.price}</p>
             <div>
               <p>
                 {a.vetDTO.firstName} {a.vetDTO.lastName}
@@ -103,7 +101,7 @@ export const Appointment = () => {
               ))}
             </div>
             <p>{a.notes}</p>
-            <p>{a.status}</p>
+            <p>{a.status == "ScheduledUnconfirmedByVet" ? "Scheduled" : a.status == "ScheduledUnconfirmedByClient" ? "Waiting" : a.status}</p>
 
             <div className="flex flex-row">
               <NavLink
