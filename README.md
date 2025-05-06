@@ -105,16 +105,41 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Creating a Client Account:
 * Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
 
+### Home Page:
+* On succesful registration or log in, you will be redirected to the Home Page.
+* There you can familiarise with our clinic general information.
+
 ### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
 
-### Pet registration:
+### View your profile:
 * Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
 * An expanded menu - Dropdown Menu - appears.
-* Enter "Your Pets" 
+* Enter Profile Page.
+* There you can find your user details as a client you used to register your account.
+
+### Pet registration:
+* On the same Drop Down Menu, enter Your Pets Page.
 * Click "Add Pet"
 * Register your pet with name, species (e.g., cat; dog), breed (e.g., husky), birthdate and gender.
 * A card with newly registered pet will appear on the screen. Pet has been registered as a patient of the clinic.
 * You can edit the pet information as well if need arises.
+
+### Scheduling appointments:
+* After registering a pet, you can sign up to any of our services with the app at any time!
+* It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
+* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the vet should know.
+* At this point, the appointment Status has become Scheduled but will require verification from the vet listed in the appointment.
+* Afterward the vet will confirm your visit when they can, please be patient.
+* Notifiation emails are sent automatically. One is sent to the vet as the appointment is made. Also, the client and vet are notified by email if the appointment has to be rescheduled or cancelled.
+* Both client and vet can reschedule and cancel appointments.
+* A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
+* A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
+* Cancelled appointment changes the Status to Cancelled.
+
+### Reviews and comments:
+* If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
+* Two
+* Three
 
 ### Browsing services: View all of our provided services in the Services page! Click it on the navbar!
 * One
@@ -142,11 +167,6 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Three
 
 ### Rescheduling and cancelling appointments: After making an appointment, you can reschedule or cancel at any time! Reschedulings will need to be confirmed.
-* One
-* Two
-* Three
-
-### Reviews and comments: (In progress)
 * One
 * Two
 * Three
