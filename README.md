@@ -171,10 +171,10 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * An additonal route to register for an appointment by pressing "Register" on the relevant service card.
 * Results can be searched or filtered alphabetically or by price.
 
-### Browsing products: View all of our available products in the Products page! [Products Page]
+### Browsing products: View all of our available products in the Products page! [Pages mentioned: Products Page]
 * Products are separated into categories Food, Toys and Medicine. As a result, clients can filter products or use a search bar to find the item they are searching for.
 
-### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page
+### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages mentioned: Products Page; Orders Page]
 * Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
 * Editing you shopping cart can be done either on the Shopping Cart card or on the separate Your Cart Page (entered by pressing "Proceed to Cart Page").
 * "Place order" button is included to place an order.
