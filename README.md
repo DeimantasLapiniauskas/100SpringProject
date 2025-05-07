@@ -166,20 +166,20 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Blog - Stories of our past visitors successful recoveries.
 * PetCare - useful trivia about pet health.
 
-### Our clinic services: List of the medical proedures and consulttions we offer:
+### Our clinic services: List of the medical proedures and consultations we offer:
 * List of the services available as well as their price can be found on the Service List Page.
 * An additonal route to register for an appointment by pressing "Register" on the relevant service card.
 * Results can be searched or filtered alphabetically or by price.
 
-### Browsing products: View all of our available products in the Products page!
+### Browsing products: View all of our available products in the Products page! [Products Page]
 * Products are separated into categories Food, Toys and Medicine. As a result, clients can filter products or use a search bar to find the item they are searching for.
-* Two
-* Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 
-### Purchasing products (sorta): Start your own shopping cart and throw any of our products in there to enjoy (sorta)!
-* One
-* Two
-* Three
+### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page
+* Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
+* Editing you shopping cart can be done either on the Shopping Cart card or on the separate Your Cart Page (entered by pressing "Proceed to Cart Page").
+* "Place order" button is included to place an order.
+* 
+* Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 
 ### Scheduling appointments: After registering a pet, you can sign up to any of our services at any time! The vet will confirm your visit when they can, please be patient.
 * One
