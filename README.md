@@ -117,7 +117,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Insert the aws-credentials file iside the \100SpringProject\api folder.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
-## Usage [As a Client user]
+## Usage [As a CLIENT user]
 
 ### Creating a Client Account [Pages in question - Log In Page and Register Page]:
 * Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
@@ -184,3 +184,21 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Clients, vets and admins all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
+
+## Usage [As a ADMIN user]
+
+### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
+* Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
+
+### Home Page [Pages in question - Home Page]:
+* On succesful registration or log in, you will be redirected to the Home Page.
+* There you can familiarise with our clinic general information.
+
+### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
+
+### View your profile [Pages in question - Profile Page]:
+* Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
+* An expanded menu - Dropdown Menu - appears.
+* Enter Profile Page.
+* There you can find your user details as a client you used to register your account.
+
