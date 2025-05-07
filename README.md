@@ -125,12 +125,15 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * On succesful registration or log in, you will be redirected to the Home Page.
 * There you can familiarise with our clinic general information.
 
-### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
-
-### View your profile [Pages in question - Profile Page]:
+### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer [NavBar; Drop Down Menu]:
+* Look through the pages on the NavBar as an initial familiarity with the website.
 * Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
 * An expanded menu - Dropdown Menu - appears.
-* Enter Profile Page.
+* Pages listed are: Profile; Appointments History; Your Pets; Orders; Log Out .
+* Appointments History Page is Client and Vet exclusive. Your Pets Page is Client exclusive.
+
+### View your profile [Pages in question - Profile Page]:
+* Enter Profile Page on the expanded Drop Down Menu.
 * There you can find your user details as a Client you used to register your account.
 
 ### Pet registration [Pages in question - Your Pets Page]:
@@ -184,7 +187,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
 
-## Usage [As an ADMIN user]
+## Usage [As an ADMIN user]. Recommended to view the [As a CLIENT user] section for better understanding as some features are shared between all user types.
 
 ### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
 * Admin account can not be created the same way as the Client account, using the website, but directly through our Data Base. This is done for security reasons.
@@ -198,14 +201,14 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Accesing the website as an Admin through Log In page stays the same. Just use the email and password used in account registration.
 
 ### Home Page [Pages in question - Home Page]:
-* On succesful registration or log in, you will be redirected to the Home Page.
-* There you can familiarise with our clinic general information.
+* No Admin exclusive features available.
 
-### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
+### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer [NavBar; Drop Down Menu]:
+* Dropdown Menu includes: Profile; Admin Page; Orders; Log Out .
+* Admin can not create/edit/delete appointments or register their pets.
+* Admin Page is Client exclusive.
 
 ### View your profile [Pages in question - Profile Page]:
-* Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
-* An expanded menu - Dropdown Menu - appears.
-* Enter Profile Page.
+* Entering the Profile Page shows the Admin infromation and a red "Admin Page" button
 * There you can find your user details as a client you used to register your account.
 
