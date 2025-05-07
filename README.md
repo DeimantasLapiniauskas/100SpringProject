@@ -4,6 +4,7 @@
 
 Happy Hearts is a veterinary clinic website that allows users to register their pets for appointments, reschedule or cancel said appointments, and buy animal products such as medicine, food toys, and more! 
 
+
 ## User types
 
 ### Client
@@ -20,6 +21,7 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 * Given powers not only to edit content but other users as well.
 * Certain content editing powers the either shared with Vets or exclusive to Admins.
 
+
 ## Features
 
 * Pet Registration: Include your pet information for ease of access for both you and the veterinarians you register an appointment to.
@@ -31,6 +33,7 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 * Reviews: Liked our service? Please feel free to rate your time spent with the practice and leave a heartwarming review!
 
 * Posts: Browse our News Page to scroll through various posts about our clinic news, latest product sales, blogs and pet care trivia. Indulge in the sea of wonderful content to brighten your day and get to know our pactice better! 
+
 
 ## Technologies Used
 
@@ -54,6 +57,7 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 * Mysql
 * Amazon Webserver
 * Phpmyadmin
+
 
 ## Installation
 
@@ -115,6 +119,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Aquire the aws-credentials file from the main owners of the project.
 * Insert the aws-credentials file iside the \100SpringProject\api folder.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
+
 
 ## Usage [As a CLIENT user]
 
@@ -186,6 +191,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Clients, Vets and Admins all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
+
 
 ## Usage [As an ADMIN user]. Recommended to view the [As a CLIENT user] section for better understanding as some features are shared between all user types.
 
