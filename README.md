@@ -213,20 +213,42 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ### Editing and Deleting existing users. Registering new veterinarians. [Pages in question - Admin Page]:
 * Admin Page can be entered using the link on the Drop Down Menu or by pressing the red "Admin Page" button on the Profile Page.
+* Admin Page contains an Admin Panel, that is used for editing user details used on registration as well as deleting users.
+* Page allows to register a new veterinarian - similar process as with the Register Page register form.
+* There is no "Register an administrator" button as per our Project Policy, Admins can not create other Admins through a website or specifically through Frontend.
+* Restriction on not being able to register a new Admin through the website is made for security reasons.
+* Route to create a new Admin is limited to using the Data Base.
 
 ### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
-* After registering a pet, you can sign up to any of our services with the app at any time!
-* It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
-* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the Vet should know.
-* At this point, the appointment Status has become Scheduled but will require verification from the Vet listed in the appointment.
-* Afterward the Vet will confirm your visit when they can, please be patient.
-* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has to be rescheduled or cancelled.
-* Both Client and Vet can reschedule and cancel appointments.
-* A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
-* A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
-* Cancelled appointment changes the Status to Cancelled.
+* Appointments History Page not visible.
+* Admins do not posses clearance to schedule, reschedule and cancel appointmens.
 
 ### Reviews and comments [Pages in question - Reviews Page]:
-* If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
-* 5 star rating system and comments textbox are used to generate a review.
-* Reviews from other Clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
+* No Admin exclusive features available
+
+### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more! [Pages in question - News Page]:
+* Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
+* Posts are made by Vets and are separated into categories News, Sale!, Blog and PetCare. As such, Clients can filter posts, depending what they would like to see, or use a search bar.
+* News - Clinic latest news.
+* Sales! - Product sales.
+* Blog - Stories of our past visitors successful recoveries.
+* PetCare - useful trivia about pet health.
+
+### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
+* List of the services available as well as their price can be found on the Service List Page.
+* An additonal route to register for an appointment by pressing "Register" on the relevant service card.
+* Results can be searched or filtered alphabetically or by price.
+
+### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
+* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products or use a search bar to find the item they are searching for.
+
+### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages in question - Products Page; Orders Page]:
+* Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
+* Editing you shopping cart can be done either on the Shopping Cart card or on the separate Your Cart Page (entered by pressing "Proceed to Cart Page").
+* "Place order" button is included to place an order.
+* Transfer to Orders Page on the Drop Down Menu to view your order progress.
+* After placing an order the order Status is Pending by default.
+* For the order Status be changed to Confirmed and and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
+* Clients, Vets and Admins all have the power to Cancel the order. 
+* Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
+* Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
