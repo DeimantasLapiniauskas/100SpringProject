@@ -192,7 +192,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
 
-
+##
 ## Usage [As an ADMIN user]. Recommended to view the [As a CLIENT user] section for better understanding as some features are shared between all user types.
 
 ### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
