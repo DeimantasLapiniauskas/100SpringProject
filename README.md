@@ -209,6 +209,24 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Admin Page is Client exclusive.
 
 ### View your profile [Pages in question - Profile Page]:
-* Entering the Profile Page shows the Admin infromation and a red "Admin Page" button
-* There you can find your user details as a client you used to register your account.
+* Entering the Profile Page shows the Admin infromation and a red "Admin Page" button that is used to enter the Admin Page.
 
+### Editing and Deleting existing users. Registering new veterinarians. [Pages in question - Admin Page]:
+* Admin Page can be entered using the link on the Drop Down Menu or by pressing the red "Admin Page" button on the Profile Page.
+
+### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
+* After registering a pet, you can sign up to any of our services with the app at any time!
+* It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
+* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the Vet should know.
+* At this point, the appointment Status has become Scheduled but will require verification from the Vet listed in the appointment.
+* Afterward the Vet will confirm your visit when they can, please be patient.
+* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has to be rescheduled or cancelled.
+* Both Client and Vet can reschedule and cancel appointments.
+* A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
+* A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
+* Cancelled appointment changes the Status to Cancelled.
+
+### Reviews and comments [Pages in question - Reviews Page]:
+* If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
+* 5 star rating system and comments textbox are used to generate a review.
+* Reviews from other Clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
