@@ -6,20 +6,19 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 
 ## User types
 
-### CLIENT
+### Client
 * Clients are pet owners.
 * Use our app as general customers.
 * Certain content editing powers are restricted.
 
-### VET
-* Vets are the clinic staff.
-* Posses certain content editing powers the either shared with ADMINs or exclusive to VETs.
+### Vet
+* Vets are the Clinic staff.
+* Possess certain content editing powers the either shared with Admins or exclusive to Vets.
 
-### ADMIN
+### Admin
 * Clinic administrators.
 * Given powers not only to edit content but other users as well.
-* Certain content editing powers the either shared with VETSs or exclusive to ADMINs.
-
+* Certain content editing powers the either shared with Vets or exclusive to Admins.
 
 ## Features
 
@@ -120,7 +119,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ## Usage [As a CLIENT user]
 
 ### Creating a Client Account [Pages in question - Log In Page and Register Page]:
-* Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
+* Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!).
 
 ### Home Page [Pages in question - Home Page]:
 * On succesful registration or log in, you will be redirected to the Home Page.
@@ -132,7 +131,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
 * An expanded menu - Dropdown Menu - appears.
 * Enter Profile Page.
-* There you can find your user details as a client you used to register your account.
+* There you can find your user details as a Client you used to register your account.
 
 ### Pet registration [Pages in question - Your Pets Page]:
 * On the same Drop Down Menu, enter Your Pets Page.
@@ -144,23 +143,23 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
 * After registering a pet, you can sign up to any of our services with the app at any time!
 * It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
-* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the vet should know.
-* At this point, the appointment Status has become Scheduled but will require verification from the vet listed in the appointment.
-* Afterward the vet will confirm your visit when they can, please be patient.
-* Notifiation emails are sent automatically. One is sent to the vet as the appointment is made. Also, the client and vet are notified by email if the appointment has to be rescheduled or cancelled.
-* Both client and vet can reschedule and cancel appointments.
+* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the Vet should know.
+* At this point, the appointment Status has become Scheduled but will require verification from the Vet listed in the appointment.
+* Afterward the Vet will confirm your visit when they can, please be patient.
+* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has to be rescheduled or cancelled.
+* Both Client and Vet can reschedule and cancel appointments.
 * A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
 * A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
 * Cancelled appointment changes the Status to Cancelled.
 
 ### Reviews and comments [Pages in question - Reviews Page]:
 * If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
-* 5 star rating system and commnets textbox are used to generate a review.
-* Reviews from other clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
+* 5 star rating system and comments textbox are used to generate a review.
+* Reviews from other Clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
 
 ### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more! [Pages in question - News Page]:
 * Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
-* Posts are made by vets and are separated into categories News, Sale!, Blog and PetCare. As such, clients can filter posts, depending what they would like to see, or use a search bar.
+* Posts are made by Vets and are separated into categories News, Sale!, Blog and PetCare. As such, Clients can filter posts, depending what they would like to see, or use a search bar.
 * News - Clinic latest news.
 * Sales! - Product sales.
 * Blog - Stories of our past visitors successful recoveries.
@@ -172,7 +171,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Results can be searched or filtered alphabetically or by price.
 
 ### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
-* Products are separated into categories Food, Toys and Medicine. As a result, clients can filter products or use a search bar to find the item they are searching for.
+* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products or use a search bar to find the item they are searching for.
 
 ### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages in question - Products Page; Orders Page]:
 * Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
@@ -181,14 +180,22 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Transfer to Orders Page on the Drop Down Menu to view your order progress.
 * After placing an order the order Status is Pending by default.
 * For the order Status be changed to Confirmed and and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
-* Clients, vets and admins all have the power to Cancel the order. 
+* Clients, Vets and Admins all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
 
-## Usage [As a ADMIN user]
+## Usage [As an ADMIN user]
 
 ### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
-* Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
+* Admin account can not be created the same way as the Client account, using the website, but directly through our Data Base. This is done for security reasons.
+* Register as a Client using the Register Page and steps mentioned previously.
+* Enter the Data Base through http://localhost:8081 with username and password mentioned in Backend Setup. Data Base name should appear as vet_clinic .
+* Pressing the vet_clinic Data Base should show the list of our Data Base tables.
+* Check the accounts table to find the email you used to register your new Client account and take a note of the account id number.
+* Next access the account-roles table and using the known id number (hovering on it should show the email as well), you can find the role your account has been atributed to.
+* Account roles range from 1 to 3. 1 - ROLE_ADMIN ; 2 - ROLE_VET; 3 - ROLE_CLIENT . Your newly created Client account will have a number 3 role attributed to it.
+* Using the Edit button on Data Base website, you can change the role from number 3 to number 1, resulting the previously created Client account turning into an Admin one.
+* Accesing the website as an Admin through Log In page stays the same. Just use the email and password used in account registration.
 
 ### Home Page [Pages in question - Home Page]:
 * On succesful registration or log in, you will be redirected to the Home Page.
