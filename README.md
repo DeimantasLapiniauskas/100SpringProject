@@ -136,6 +136,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * An expanded menu - Dropdown Menu - appears.
 * Pages listed are: Profile; Appointments History; Your Pets; Orders; Log Out .
 * Appointments History Page is Client and Vet exclusive. Your Pets Page is Client exclusive.
+* If a Client would like to log out of their account, it can be done through Log Out.
 
 ### View your profile [Pages in question - Profile Page]:
 * Enter Profile Page on the expanded Drop Down Menu.
@@ -192,6 +193,9 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
 
+### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
+* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products or use a search bar to find the item they are searching for.
+
 ##
 ## Usage [As an ADMIN user]. Recommended to view the [As a CLIENT user] section for better understanding as some features are shared between all user types.
 
@@ -213,6 +217,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Dropdown Menu includes: Profile; Admin Page; Orders; Log Out .
 * Admin can not create/edit/delete appointments or register their pets.
 * Admin Page is Client exclusive.
+* If an Admin would like to log out of their account, it can be done through Log Out.
 
 ### View your profile [Pages in question - Profile Page]:
 * Entering the Profile Page shows the Admin infromation and a red "Admin Page" button that is used to enter the Admin Page.
@@ -249,7 +254,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 
 ##
-## Usage [As an VET user]. Recommended to view the [As a CLIENT user] and [As a ADMIN user]  section for better understanding as some features are shared between all user types.
+## Usage [As an VET user]. Recommended to view the [As a CLIENT user] and [As a ADMIN user] section for better understanding as some features are shared between all user types.
 
 ### Creating a Vet Account [Pages in question - Log In Page and Register Page]:
 * Vet account can not be created the same way as the Client account, but by an Admin using their Admin Page "Register a veterinarian" button. This is done for security reasons.
@@ -261,24 +266,24 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * No Vet exclusive features available.
 
 ### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer [NavBar; Drop Down Menu]:
-* Dropdown Menu includes: Profile; Admin Page; Orders; Log Out .
-* Admin can not create/edit/delete appointments or register their pets.
-* Admin Page is Client exclusive.
+* Dropdown Menu includes: Profile; Appointments History; Orders; Log Out .
+* Appointments History Page is Vet and Client exclusive.
+* If a Vet would like to log out of their account, it can be done through Log Out.
 
 ### View your profile [Pages in question - Profile Page]:
-* Entering the Profile Page shows the Admin infromation and a red "Admin Page" button that is used to enter the Admin Page.
-
-### Editing and Deleting existing users. Registering new veterinarians. [Pages in question - Admin Page]:
-* Admin Page can be entered using the link on the Drop Down Menu or by pressing the red "Admin Page" button on the Profile Page.
-* Admin Page contains an Admin Panel, that is used for editing user details used on registration as well as deleting users.
-* Page allows to register a new veterinarian - similar process as with the Register Page register form.
-* There is no "Register an administrator" button as per our Project Policy, Admins can not create other Admins through a website or specifically through Frontend.
-* Restriction on not being able to register a new Admin through the website is made for security reasons.
-* Route to create a new Admin is limited to using the Data Base.
+* Entering the Profile Page shows the user details used to register your Vet account.
 
 ### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
-* Appointments History Page not visible.
-* Admins do not posses clearance to schedule, reschedule and cancel appointmens.
+* After registering a pet, you can sign up to any of our services with the app at any time!
+* It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
+* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the Vet should know.
+* At this point, the appointment Status has become Scheduled but will require verification from the Vet listed in the appointment.
+* Afterward the Vet will confirm your visit when they can, please be patient.
+* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has to be rescheduled or cancelled.
+* Both Client and Vet can reschedule and cancel appointments.
+* A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
+* A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
+* Cancelled appointment changes the Status to Cancelled.
 
 ### Reviews and comments [Pages in question - Reviews Page]:
 * No Admin exclusive features available
