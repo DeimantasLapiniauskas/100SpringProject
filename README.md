@@ -119,29 +119,29 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ## Usage
 
-### Creating a Client Account:
+### Creating a Client Account [Pages in question - Log In Page and Register Page]:
 * Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
 
-### Home Page:
+### Home Page [Pages in question - Home Page]:
 * On succesful registration or log in, you will be redirected to the Home Page.
 * There you can familiarise with our clinic general information.
 
 ### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer.
 
-### View your profile:
+### View your profile [Pages in question - Profile Page]:
 * Navigate towards the paw print logo on the far right edge of the NavBar and click on the logo.
 * An expanded menu - Dropdown Menu - appears.
 * Enter Profile Page.
 * There you can find your user details as a client you used to register your account.
 
-### Pet registration:
+### Pet registration [Pages in question - Your Pets Page]:
 * On the same Drop Down Menu, enter Your Pets Page.
 * Click "Add Pet"
 * Register your pet with name, species (e.g., cat; dog), breed (e.g., husky), birthdate and gender.
 * A card with newly registered pet will appear on the screen. Pet has been registered as a patient of the clinic.
 * You can edit the pet information as well if need arises.
 
-### Scheduling appointments:
+### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
 * After registering a pet, you can sign up to any of our services with the app at any time!
 * It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
 * Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the vet should know.
@@ -153,12 +153,12 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
 * Cancelled appointment changes the Status to Cancelled.
 
-### Reviews and comments:
+### Reviews and comments [Pages in question - Reviews Page]:
 * If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
 * 5 star rating system and commnets textbox are used to generate a review.
 * Reviews from other clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
 
-### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more!
+### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more! [Pages in question - News Page]:
 * Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
 * Posts are made by vets and are separated into categories News, Sale!, Blog and PetCare. As such, clients can filter posts, depending what they would like to see, or use a search bar.
 * News - Clinic latest news.
@@ -166,27 +166,21 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Blog - Stories of our past visitors successful recoveries.
 * PetCare - useful trivia about pet health.
 
-### Our clinic services: List of the medical proedures and consultations we offer:
+### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
 * List of the services available as well as their price can be found on the Service List Page.
 * An additonal route to register for an appointment by pressing "Register" on the relevant service card.
 * Results can be searched or filtered alphabetically or by price.
 
-### Browsing products: View all of our available products in the Products page! [Pages mentioned: Products Page]
+### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
 * Products are separated into categories Food, Toys and Medicine. As a result, clients can filter products or use a search bar to find the item they are searching for.
 
-### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages mentioned: Products Page; Orders Page]
+### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages in question - Products Page; Orders Page]:
 * Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
 * Editing you shopping cart can be done either on the Shopping Cart card or on the separate Your Cart Page (entered by pressing "Proceed to Cart Page").
 * "Place order" button is included to place an order.
-* 
+* Transfer to Orders Page on the Drop Down Menu to view your order progress.
+* After placing an order the order Status is Pending by default.
+* For the order Status be changed to Confirmed and and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
+* Clients, vets and admins all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
-
-### Scheduling appointments: After registering a pet, you can sign up to any of our services at any time! The vet will confirm your visit when they can, please be patient.
-* One
-* Two
-* Three
-
-### Rescheduling and cancelling appointments: After making an appointment, you can reschedule or cancel at any time! Reschedulings will need to be confirmed.
-* One
-* Two
-* Three
+* Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
