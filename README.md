@@ -251,19 +251,14 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ##
 ## Usage [As an VET user]. Recommended to view the [As a CLIENT user] and [As a ADMIN user]  section for better understanding as some features are shared between all user types.
 
-### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
-* Admin account can not be created the same way as the Client account, using the website, but directly through our Data Base. This is done for security reasons.
-* Register as a Client using the Register Page and steps mentioned previously.
-* Enter the Data Base through http://localhost:8081 with username and password mentioned in Backend Setup. Data Base name should appear as vet_clinic .
-* Pressing the vet_clinic Data Base should show the list of our Data Base tables.
-* Check the accounts table to find the email you used to register your new Client account and take a note of the account id number.
-* Next access the account-roles table and using the known id number (hovering on it should show the email as well), you can find the role your account has been atributed to.
-* Account roles range from 1 to 3. 1 - ROLE_ADMIN ; 2 - ROLE_VET; 3 - ROLE_CLIENT . Your newly created Client account will have a number 3 role attributed to it.
-* Using the Edit button on Data Base website, you can change the role from number 3 to number 1, resulting the previously created Client account turning into an Admin one.
-* Accesing the website as an Admin through Log In page stays the same. Just use the email and password used in account registration.
+### Creating a Vet Account [Pages in question - Log In Page and Register Page]:
+* Vet account can not be created the same way as the Client account, but by an Admin using their Admin Page "Register a veterinarian" button. This is done for security reasons.
+* New veterinarian registration involves a similar process as with the Register Page register form but through the Admin Page by an Admin.
+* Email used for creating a new Vet should be chosen carefully, as it will be used to receive notifications.
+* Accesing the website as a Vet through Log In page stays the same. Just use the email and password used in account registration.
 
 ### Home Page [Pages in question - Home Page]:
-* No Admin exclusive features available.
+* No Vet exclusive features available.
 
 ### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer [NavBar; Drop Down Menu]:
 * Dropdown Menu includes: Profile; Admin Page; Orders; Log Out .
