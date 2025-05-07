@@ -155,10 +155,11 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the Vet should know.
 * At this point, the appointment Status has become Scheduled but will require verification from the Vet listed in the appointment.
 * Afterward the Vet will confirm your visit when they can, please be patient.
-* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has to be rescheduled or cancelled.
+* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has been rescheduled or cancelled.
 * Both Client and Vet can reschedule and cancel appointments.
-* A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
 * A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
+* A rescheduled appointment has to be confirmed by Client on the Appointment History Page if Vet is the one that rescheduled it.
+* A rescheduled appointment has to be confirmed by Vet on the Appointment History Page if Client is the one that rescheduled it.
 * Cancelled appointment changes the Status to Cancelled.
 
 ### Reviews and comments [Pages in question - Reviews Page]:
@@ -274,23 +275,32 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Entering the Profile Page shows the user details used to register your Vet account.
 
 ### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
-* After registering a pet, you can sign up to any of our services with the app at any time!
-* It can be done using the Service List Page by finding your specific service or the Appintments History Page on the Drop Down Menu.
-* Both versions will provide a form to fill with date, your pet, veterinarian requested, service, and optional notes you think the Vet should know.
-* At this point, the appointment Status has become Scheduled but will require verification from the Vet listed in the appointment.
-* Afterward the Vet will confirm your visit when they can, please be patient.
-* Notifiation emails are sent automatically. One is sent to the Vet as the appointment is made. Also, the Client and Vet are notified by email if the appointment has to be rescheduled or cancelled.
-* Both Client and Vet can reschedule and cancel appointments.
-* A rescheduled appointment has to be confirmed by client as well on the Appointment History Page.
+* Accessible by entering the Appointments History Page on the Drop Down Menu.
+* Appointments History Page design mimics the design present on the Client side.
+* A table of appointments, specific to the Vet in question, is displayed with their Status shown as well. Scheduled, Waiting or Cancelled.
+* After a Client has made their appointment, a Vet listed in the appointment, will receive a automatic notification to their email.
+* Next stage would be the verification. The appointment Status, even if it displays Scheduled, will require verification from the Vet listed in the appointment.
+* After the Vet has confirmed the visit, an appointment the is considered truly scheduled.
+* Both Vet and Client can reschedule and cancel appointments.
+* Both Vet and Client are notified by email if the appointment has been rescheduled or cancelled.
 * A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
+* A rescheduled appointment has to be confirmed by Client on the Appointment History Page if Vet is the one that rescheduled it.
+* A rescheduled appointment has to be confirmed by Vet on the Appointment History Page if Client is the one that rescheduled it.
 * Cancelled appointment changes the Status to Cancelled.
 
 ### Reviews and comments [Pages in question - Reviews Page]:
-* No Admin exclusive features available
+* No Vet exclusive features available
 
-### Browsing Posts made by vets. [Pages in question - News Page]:
-* Admins can not create Posts but can edit and delete them. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
-* Although, such powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
+### Creating, editing and deleting Posts. [Pages in question - News Page]:
+* Vets can create, edit and delete Posts. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Posts made by Vets and are separated into categories News, Sale!, Blog and PetCare.
+* News - Clinic latest news.
+* Sales! - Product sales.
+* Blog - Stories of our past visitors successful recoveries.
+* PetCare - useful trivia about pet health.
+* Upon creating a new post, the "Register new Post" card will require to name the post type.
+* Page allows to filter posts, depending what the Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a post they would like to edit or delete.
+* Although, similar powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
 * Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
