@@ -1,6 +1,5 @@
 # Happy Hearts
 
-##
 ## About
 
 Happy Hearts is a veterinary clinic website that allows users to register their pets for appointments, reschedule or cancel said appointments, and buy animal products such as medicine, food toys, and more! 
