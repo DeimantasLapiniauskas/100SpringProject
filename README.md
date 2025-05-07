@@ -187,7 +187,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * "Place order" button is included to place an order.
 * Transfer to Orders Page on the Drop Down Menu to view your order progress.
 * After placing an order the order Status is Pending by default.
-* For the order Status be changed to Confirmed and and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
+* For the order Status be changed to Confirmed and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
 * Clients, Vets and Admins all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
@@ -241,9 +241,65 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing products and orders on our online store (simulation). [Pages in question - Products Page; Orders Page]:
-* Transfer to Orders Page on the Drop Down Menu to view orders made by clients.
-* After placing an order the order Status is Pending by default.
-* For the order Status be changed to Confirmed and and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
-* Clients, Vets and Admins all have the power to Cancel the order. 
+* Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
+* List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
+* Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
+* Admins, Vets and Clients all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
-* Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
+
+##
+## Usage [As an VET user]. Recommended to view the [As a CLIENT user] and [As a ADMIN user]  section for better understanding as some features are shared between all user types.
+
+### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
+* Admin account can not be created the same way as the Client account, using the website, but directly through our Data Base. This is done for security reasons.
+* Register as a Client using the Register Page and steps mentioned previously.
+* Enter the Data Base through http://localhost:8081 with username and password mentioned in Backend Setup. Data Base name should appear as vet_clinic .
+* Pressing the vet_clinic Data Base should show the list of our Data Base tables.
+* Check the accounts table to find the email you used to register your new Client account and take a note of the account id number.
+* Next access the account-roles table and using the known id number (hovering on it should show the email as well), you can find the role your account has been atributed to.
+* Account roles range from 1 to 3. 1 - ROLE_ADMIN ; 2 - ROLE_VET; 3 - ROLE_CLIENT . Your newly created Client account will have a number 3 role attributed to it.
+* Using the Edit button on Data Base website, you can change the role from number 3 to number 1, resulting the previously created Client account turning into an Admin one.
+* Accesing the website as an Admin through Log In page stays the same. Just use the email and password used in account registration.
+
+### Home Page [Pages in question - Home Page]:
+* No Admin exclusive features available.
+
+### Navigation: Explore the Navigation Bar (NavBar) - the gateway to wonderful features our website has to offer [NavBar; Drop Down Menu]:
+* Dropdown Menu includes: Profile; Admin Page; Orders; Log Out .
+* Admin can not create/edit/delete appointments or register their pets.
+* Admin Page is Client exclusive.
+
+### View your profile [Pages in question - Profile Page]:
+* Entering the Profile Page shows the Admin infromation and a red "Admin Page" button that is used to enter the Admin Page.
+
+### Editing and Deleting existing users. Registering new veterinarians. [Pages in question - Admin Page]:
+* Admin Page can be entered using the link on the Drop Down Menu or by pressing the red "Admin Page" button on the Profile Page.
+* Admin Page contains an Admin Panel, that is used for editing user details used on registration as well as deleting users.
+* Page allows to register a new veterinarian - similar process as with the Register Page register form.
+* There is no "Register an administrator" button as per our Project Policy, Admins can not create other Admins through a website or specifically through Frontend.
+* Restriction on not being able to register a new Admin through the website is made for security reasons.
+* Route to create a new Admin is limited to using the Data Base.
+
+### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
+* Appointments History Page not visible.
+* Admins do not posses clearance to schedule, reschedule and cancel appointmens.
+
+### Reviews and comments [Pages in question - Reviews Page]:
+* No Admin exclusive features available
+
+### Browsing Posts made by vets. [Pages in question - News Page]:
+* Admins can not create Posts but can edit and delete them. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Although, such powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
+
+### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
+* Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+
+### Managing products and orders on our online store (simulation). [Pages in question - Products Page; Orders Page]:
+* Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
+* List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
+* Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
+* Admins, Vets and Clients all have the power to Cancel the order. 
+* Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
