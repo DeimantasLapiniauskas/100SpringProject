@@ -117,7 +117,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Insert the aws-credentials file iside the \100SpringProject\api folder.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
-## Usage
+## Usage [As a Client user]
 
 ### Creating a Client Account [Pages in question - Log In Page and Register Page]:
 * Register with your email, password, firstname, lastname and phone number (keep in mind your email can and receive mail!)
