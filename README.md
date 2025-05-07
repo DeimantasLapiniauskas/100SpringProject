@@ -226,27 +226,16 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Reviews and comments [Pages in question - Reviews Page]:
 * No Admin exclusive features available
 
-### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more! [Pages in question - News Page]:
-* Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
-* Posts are made by Vets and are separated into categories News, Sale!, Blog and PetCare. As such, Clients can filter posts, depending what they would like to see, or use a search bar.
-* News - Clinic latest news.
-* Sales! - Product sales.
-* Blog - Stories of our past visitors successful recoveries.
-* PetCare - useful trivia about pet health.
+### Browsing Posts made by vets. [Pages in question - News Page]:
+* Admins can not create Posts but can edit and delete them. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Although, such powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
-* List of the services available as well as their price can be found on the Service List Page.
-* An additonal route to register for an appointment by pressing "Register" on the relevant service card.
-* Results can be searched or filtered alphabetically or by price.
+* Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
-### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
-* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products or use a search bar to find the item they are searching for.
-
-### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages in question - Products Page; Orders Page]:
-* Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
-* Editing you shopping cart can be done either on the Shopping Cart card or on the separate Your Cart Page (entered by pressing "Proceed to Cart Page").
-* "Place order" button is included to place an order.
-* Transfer to Orders Page on the Drop Down Menu to view your order progress.
+### Managing products and orders on our online store (simulation). [Pages in question - Products Page; Orders Page]:
+* Transfer to Orders Page on the Drop Down Menu to view orders made by clients.
 * After placing an order the order Status is Pending by default.
 * For the order Status be changed to Confirmed and and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
 * Clients, Vets and Admins all have the power to Cancel the order. 
