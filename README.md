@@ -1,10 +1,11 @@
 # Happy Hearts
 
+##
 ## About
 
 Happy Hearts is a veterinary clinic website that allows users to register their pets for appointments, reschedule or cancel said appointments, and buy animal products such as medicine, food toys, and more! 
 
-
+##
 ## User types
 
 ### Client
@@ -21,7 +22,7 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 * Given powers not only to edit content but other users as well.
 * Certain content editing powers the either shared with Vets or exclusive to Admins.
 
-
+##
 ## Features
 
 * Pet Registration: Include your pet information for ease of access for both you and the veterinarians you register an appointment to.
@@ -34,7 +35,7 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 
 * Posts: Browse our News Page to scroll through various posts about our clinic news, latest product sales, blogs and pet care trivia. Indulge in the sea of wonderful content to brighten your day and get to know our pactice better! 
 
-
+##
 ## Technologies Used
 
 ### Frontend - Javascript
@@ -58,7 +59,7 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 * Amazon Webserver
 * Phpmyadmin
 
-
+##
 ## Installation
 
 ### Frontend Setup
@@ -120,7 +121,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Insert the aws-credentials file iside the \100SpringProject\api folder.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
-
+##
 ## Usage [As a CLIENT user]
 
 ### Creating a Client Account [Pages in question - Log In Page and Register Page]:
