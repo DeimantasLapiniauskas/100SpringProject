@@ -303,8 +303,9 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Although, similar powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
-* Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
-* Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+* Vets can create/edit/delete Services as well as Admins. Relevant buttons appear visible if user is logged in as a Vet or an Admin.
+* Page allows to filter services, depending what the Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
+* Although, such powers are available to Admin as well, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing products and orders on our online store (simulation). [Pages in question - Products Page; Orders Page]:
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
