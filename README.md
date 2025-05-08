@@ -238,6 +238,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Route to create a new Admin is limited to using the Data Base.
 
 ### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
+* Primarily a Vet responsibility.
 * Appointments History Page not visible.
 * Admins do not posses clearance to schedule, reschedule and cancel appointmens.
 
@@ -245,18 +246,22 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * No Admin exclusive features available
 
 ### Browsing Posts made by vets. [Pages in question - News Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Admins can not create Posts but can edit and delete them. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
 * Although, such powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
 * Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing products on our online store (simulation). [Pages in question - Products Page]:
-* Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
-* List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
+* Admins can create/edit/delete Products as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
 * In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
