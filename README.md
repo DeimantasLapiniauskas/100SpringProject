@@ -100,7 +100,7 @@ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 3306:3306
 docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
 
 ```
-* Make sure both new Docker Desktop containers are running.
+* Make sure both new Docker Desktop containers (some-mysql and phpmyadmin) are running.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
 #### Starting the Project using a remote server (Amazon Web Service) for database
@@ -119,7 +119,7 @@ docker rm phpmyadmin
 docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-north-1.rds.amazonaws.com -e PMA_PORT=3306 -e PMA_USER-admin -e PMA_PASSWORD=MySecretPass123! -p 8081:80 phpmyadmin
 
 ```
-* Make sure the new Docker Desktop containers are running.
+* Only one running Docker Desktop container (phpmyadmin) is needed at this stage. Docker Desktop container (some-mysql) can be left not running.
 * Acquire the aws-credentials file from the main owners of the project.
 * Insert the aws-credentials file inside the \100SpringProject\api folder.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
