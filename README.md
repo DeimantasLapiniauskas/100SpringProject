@@ -92,9 +92,11 @@ npm run dev
 * Run the following commands inside the terminal:
 ```
 # Step 1.
+
 docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 3306:3306 mysql:8.0
 
 # Step 2.
+
 docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
 
 ```
