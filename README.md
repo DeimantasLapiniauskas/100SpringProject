@@ -212,7 +212,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Creating an Admin Account [Pages in question - Log In Page and Register Page]:
 * Admin account can not be created the same way as the Client account, using the website, but directly through our Data Base. This is done for security reasons.
 * Register as a Client using the Register Page and steps mentioned previously.
-* Enter the Data Base through http://localhost:8081 with username and password mentioned in Backend Setup. Data Base name should appear as vet_clinic .
+* Enter the Data Base through http://localhost:8081 with username ("admin") and password ("MySecretPass123!"). Data Base name should appear as vet_clinic .
 * Pressing the vet_clinic Data Base should show the list of our Data Base tables.
 * Check the accounts table to find the email you used to register your new Client account and take a note of the account id number.
 * Next access the account-roles table and using the known id number (hovering on it should show the email as well), you can find the role your account has been attributed to.
