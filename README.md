@@ -154,6 +154,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Register your pet with name, species (e.g., cat; dog), breed (e.g., husky), birthdate and gender.
 * A card with newly registered pet will appear on the screen. Pet has been registered as a patient of the clinic.
 * You can edit the pet information as well if need arises.
+* Pagination function for how much content is displayed per page is available as well.
 
 ### Scheduling, rescheduling and canceling appointments [Pages in question - Appointments History Page]:
 * After registering a pet, you can sign up to any of our services with the app at any time!
@@ -170,38 +171,43 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 
 ### Reviews and comments [Pages in question - Reviews Page]:
 * If you wish to leave a review you can find it on our Reviews Page. Accessible through the Reviews card on the Home Page.
-* 5 star rating system and comments textbox are used to generate a review.
+* 5 Star Rating System and comments textbox are used to generate a review.
 * Reviews from other Clients can be seen hovering to the side, as well as an option to read more reviews with a link just below.
+* Page with all reviews allows to filter them (by 5 Star Rating System), depending what a Client would like to see. Makes it easier for a Client to find a reviews they are looking for.
+* Pagination function for how much content is displayed per page is available as well.
+
 
 ### Browsing posts made by vets: View all of our veterinarian-made posts! This includes news, sales and more! [Pages in question - News Page]:
 * Posts can be browsed primarily on the News Page, but they appear on the Home Page and Service List Page as well.
-* Posts are made by Vets and are separated into categories News, Sale!, Blog and PetCare. As such, Clients can filter posts, depending what they would like to see, or use a search bar.
+* Posts are made by Vets and are separated into Post types: News, Sale!, Blog and PetCare. As such, Clients can filter posts (by Post type), or use a search bar to find the post they are looking for.
 * News - Clinic latest news.
 * Sales! - Product sales.
 * Blog - Stories of our past visitors successful recoveries.
 * PetCare - useful trivia about pet health.
+* Pagination function for how much content is displayed per page is available as well.
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
 * List of the services available as well as their price can be found on the Service List Page.
 * An additonal route to register for an appointment by pressing "Register" on the relevant service card.
-* Results can be searched or filtered alphabetically or by price.
+* Page allows to filter services (alphabetically or by price), depending what a Client would like to see, or a search bar can be used. Makes it easier for a Client to find a service they are looking for.
+* Pagination function for how much content is displayed per page is available as well.
 
 ### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
-* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products or use a search bar to find the item they are searching for.
+* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products (by Category) or use a search bar to find the product they are looking for.
+* Pagination function for how much content is displayed per page is available as well.
 
 ### Purchasing products (simulation). Start your own shopping cart and throw any of our products in there to enjoy! Manage your orders on your personal Orders Page. [Pages in question - Products Page; Orders Page]:
 * Selected products will be transfered to a Shopping Cart - icon can be found on the top left corner of the page.
 * Editing you shopping cart can be done either on the Shopping Cart card or on the separate Your Cart Page (entered by pressing "Proceed to Cart Page").
 * "Place order" button is included to place an order.
 * Transfer to Orders Page on the Drop Down Menu to view your order progress.
+* Page allows to filter orders (by order Status), depending what a Client would like to see, or a search bar can be used. Makes it easier for a Client to find a order they are looking for.
+* Pagination function for how much content is displayed per page is available as well.
 * After placing an order the order Status is Pending by default.
 * For the order Status be changed to Confirmed and Pay Now button to appear, a vet or admin must first confirm the placed order from their side.
 * Clients, Vets and Admins all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 * Pressing the Pay Now button does not lead to actual payment functionality. Only a pop up card appears saying "Neparduodam!" In Lithuanian, meaning "Not selling!".
-
-### Browsing products: View all of our available products in the Products page! [Pages in question - Products Page]:
-* Products are separated into categories Food, Toys and Medicine. As a result, Clients can filter products or use a search bar to find the item they are searching for.
 
 ##
 ## Usage [As an ADMIN user]. Recommended to view the [As a CLIENT user] section for better understanding as some features are shared between all user types.
@@ -248,22 +254,30 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Browsing Posts made by vets. [Pages in question - News Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Admins can not create Posts but can edit and delete them. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Page allows to filter posts (by Post type), depending what an Admin would like to see, or a search bar can be used. Makes it easier for an Admin to find a post they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * Although, such powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Page allows to filter services (alphabetically or by price), depending what an Admin would like to see, or a search bar can be used. Makes it easier for an Admin to find a service they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing products on our online store (simulation). [Pages in question - Products Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Admins can create/edit/delete Products as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
+* Page allows to filter orders (by order Status), depending what an Admin would like to see, or a search bar can be used. Makes it easier for an Admin to find a service they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* Page allows to filter orders (by order Status), depending what an Admin would like to see, or a search bar can be used. Makes it easier for an Admin to find a service they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
 * Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
 * Admins, Vets and Clients all have the power to Cancel the order.
@@ -310,31 +324,38 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Creating, editing and deleting Posts. [Pages in question - News Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create, edit and delete Posts. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
-* Posts made by Vets and are separated into categories News, Sale!, Blog and PetCare.
+* Posts made by Vets and are separated into Post types: News, Sale!, Blog and PetCare.
 * News - Clinic latest news.
 * Sales! - Product sales.
 * Blog - Stories of our past visitors successful recoveries.
 * PetCare - useful trivia about pet health.
 * Upon creating a new post, the "Register new Post" card will require to name the post type.
-* Page allows to filter posts, depending what the Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a post they would like to edit or delete.
+* Page allows to filter posts (by Post type), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a post they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * Although, similar powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create/edit/delete Services as well as Admins. Relevant buttons appear visible if user is logged in as a Vet or an Admin.
-* Page allows to filter services, depending what the Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
+* Page allows to filter services (alphabetically or by price), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * Although, such powers are available to Admin as well, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing products on our online store (simulation). [Pages in question - Products Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create/edit/delete Products as well as Vets. Relevant buttons appear visible if user is logged in as an Vet or a Admin.
+* Page allows to filter products (by Category), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a product they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * Although, such powers are available to a Vet, Products managment is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* Page allows to filter orders (by order Status), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
+* Pagination function for how much content is displayed per page is available as well.
 * In order for the Client order to proceed, Vet or an Admin need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
 * Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
-* Vets, Admins and Clients all have the power to Cancel the order. 
+* Vets, Admins and Clients all have the power to Cancel the order.
+* Although, such powers are available to a Vet, Products managment is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
