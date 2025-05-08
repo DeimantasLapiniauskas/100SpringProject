@@ -100,7 +100,7 @@ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 3306:3306
 docker run --name phpmyadmin -d --link some-mysql:db -p 8081:80 phpmyadmin
 
 ```
-* Make sure the new Docker Desktop containers are running.
+* Make sure both new Docker Desktop containers are running.
 * Start your Integrated Development Environment software of choice (i.e., IntelliJ IDEA).
 
 #### Starting the Project using a remote server (Amazon Web Service) for database
