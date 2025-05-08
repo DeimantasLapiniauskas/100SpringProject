@@ -337,30 +337,30 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Upon creating a new post, the "Register new Post" card will require to name the post type.
 * Page allows to filter posts (by Post type), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a post they would like to edit or delete.
 * Pagination function for how much content is displayed per page is available as well.
-* Although, similar powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
+* Although similar powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilities they should stick to (i.e. two employees from different departments but using the same software system).
 
-### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
+### Our clinic services: List of the medical procedures and consultations we offer. [Pages in question - Service List Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create/edit/delete Services as well as Admins. Relevant buttons appear visible if user is logged in as a Vet or an Admin.
 * Page allows to filter services (alphabetically or by price), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
 * Pagination function for how much content is displayed per page is available as well.
-* Although, such powers are available to Admin as well, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+* Although such powers are available to Admin as well, Service List management is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilities they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing products on our online store (simulation). [Pages in question - Products Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create/edit/delete Products as well as Vets. Relevant buttons appear visible if user is logged in as an Vet or a Admin.
 * Page allows to filter products (by Category), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a product they would like to edit or delete.
 * Pagination function for how much content is displayed per page is available as well.
-* Although, such powers are available to a Vet, Products managment is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+* Although such powers are available to a Vet, Products management is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilities they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
-* List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* List of orders is displayed in the form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
 * Page allows to filter orders (by order Status), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
 * Pagination function for how much content is displayed per page is available as well.
-* In order for the Client order to proceed, Vet or an Admin need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
+* In order for the Client order to proceed, Vet or an Admin need to confirm the newly placed order. Identifiable by order Date and its Status - Pending.
 * Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
 * Vets, Admins and Clients all have the power to Cancel the order.
-* Although, such powers are available to a Vet, Products managment is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+* Although such powers are available to a Vet, Products management is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilities they should stick to. (i.e. two employees from different departments but using the same software system).
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
