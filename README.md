@@ -280,23 +280,23 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
-* List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+* List of orders is displayed in the form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
 * Page allows to filter orders (by order Status), depending what an Admin would like to see, or a search bar can be used. Makes it easier for an Admin to find a service they would like to edit or delete.
 * Pagination function for how much content is displayed per page is available as well.
-* In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
+* In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and its Status - Pending.
 * Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
 * Admins, Vets and Clients all have the power to Cancel the order.
-* Although, such powers are available to Admin, Orders managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+* Although such powers are available to Admin, Orders management is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilities they should stick to. (i.e. two employees from different departments but using the same software system).
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 
 ##
-## Usage [As an VET user]. Recommended to view the [As a CLIENT user] and [As a ADMIN user] section for better understanding as some features are shared between all user types.
+## Usage [As a VET user]. Recommended to view the [As a CLIENT user] and [As a ADMIN user] section for better understanding as some features are shared between all user types.
 
 ### Creating a Vet Account [Pages in question - Log In Page and Register Page]:
 * Vet account can not be created the same way as the Client account, but by an Admin using their Admin Page "Register a veterinarian" button. This is done for security reasons.
 * New veterinarian registration involves a similar process as with the Register Page register form but through the Admin Page by an Admin.
 * Email used for creating a new Vet should be chosen carefully, as it will be used to receive notifications.
-* Accesing the website as a Vet through Log In page stays the same. Just use the email and password used in account registration.
+* Accessing the website as a Vet through Log In page stays the same. Just use the email and password used in account registration.
 
 ### Home Page [Pages in question - Home Page]:
 * No Vet exclusive features available.
@@ -313,9 +313,9 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Accessible by entering the Appointments History Page on the Drop Down Menu.
 * Appointments History Page design mimics the design present on the Client side.
 * A table of appointments, specific to the Vet in question, is displayed with their Status shown as well. Scheduled, Waiting or Cancelled.
-* After a Client has made their appointment, a Vet listed in the appointment, will receive a automatic notification to their email.
+* After a Client has made their appointment, a Vet listed in the appointment will receive an automatic notification to their email.
 * Next stage would be the verification. The appointment Status, even if it displays Scheduled, will require verification from the Vet listed in the appointment.
-* After the Vet has confirmed the visit, an appointment the is considered truly scheduled.
+* After the Vet has confirmed the visit, an appointment is considered truly scheduled.
 * Both Vet and Client can reschedule and cancel appointments.
 * Both Vet and Client are notified by email if the appointment has been rescheduled or cancelled.
 * A rescheduled appointment changes the Status to Waiting (indicating the confirmation is needed for Status to become Scheduled again).
@@ -329,10 +329,10 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 ### Creating, editing and deleting Posts. [Pages in question - News Page]:
 * Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create, edit and delete Posts. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
-* Posts made by Vets and are separated into Post types: News, Sale!, Blog and PetCare.
+* Posts are made by Vets and are separated into Post types: News, Sale!, Blog and PetCare.
 * News - Clinic latest news.
 * Sales! - Product sales.
-* Blog - Stories of our past visitors successful recoveries.
+* Blog - Stories of our past visitor's successful recoveries.
 * PetCare - useful trivia about pet health.
 * Upon creating a new post, the "Register new Post" card will require to name the post type.
 * Page allows to filter posts (by Post type), depending what a Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a post they would like to edit or delete.
