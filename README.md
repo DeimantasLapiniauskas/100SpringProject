@@ -45,9 +45,10 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 
 ### Frontend - Javascript
 * React + Vite
-* TailwindCss
-* React Hook Forms
-* React Routes
+* Tailwind CSS
+* DaisyUI
+* React Hook Form
+* React Router
 * Axios
 
 ### Backend - Java
@@ -57,12 +58,17 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 * Spring Boot email core
 * Spring Boot oauth2 server
 * Spring Boot starter security
+* Auth standart - JWT Token
 * Swagger
 
 ### Databases
 * Mysql
 * Amazon Webserver
-* Phpmyadmin
+* phpMyAdmin
+
+### Software
+* Visual Studio Code
+* IntelliJ
 
 ##
 ## Installation
