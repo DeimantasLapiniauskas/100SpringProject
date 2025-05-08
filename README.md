@@ -14,12 +14,18 @@ Happy Hearts is a veterinary clinic website that allows users to register their 
 
 ### Vet
 * Vets are the Clinic staff.
-* Possess certain content editing powers the either shared with Admins or exclusive to Vets.
+* Given powers to edit content of the website.
+* Main responsibilities: creating/editing/deleting Posts, Services, Products; managing Appointments; managing Orders.
+* Given powers to edit content of the website.
+* Certain content editing powers that are either shared with Admins or exclusive to Vets.
+* Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ### Admin
 * Clinic administrators.
 * Given powers not only to edit content but other users as well.
-* Certain content editing powers the either shared with Vets or exclusive to Admins.
+* Main responsibilities: editing user details; changing passwords; deleting users; registering new Vets.
+* Certain content editing powers that are either shared with Vets or exclusive to Admins.
+* Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
 ##
 ## Features
@@ -246,7 +252,11 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Admins can create/edit/delete Services as well as Vets. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
 * Although, such powers are available to Admin, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
-### Managing products and orders on our online store (simulation). [Pages in question - Products Page; Orders Page]:
+### Managing products on our online store (simulation). [Pages in question - Products Page]:
+* Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
+* List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
+
+### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
 * In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
@@ -307,7 +317,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Page allows to filter services, depending what the Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
 * Although, such powers are available to Admin as well, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
-### Managing products and orders on our online store (simulation). [Pages in question - Products Page; Orders Page]:
+### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
 * In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
