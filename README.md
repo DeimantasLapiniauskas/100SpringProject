@@ -266,7 +266,8 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
 * In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
 * Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
-* Admins, Vets and Clients all have the power to Cancel the order. 
+* Admins, Vets and Clients all have the power to Cancel the order.
+* Although, such powers are available to Admin, Orders managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
 
 ##
@@ -307,6 +308,7 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * No Vet exclusive features available
 
 ### Creating, editing and deleting Posts. [Pages in question - News Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create, edit and delete Posts. Relevant buttons appear visible if user is logged in as an Admin or a Vet.
 * Posts made by Vets and are separated into categories News, Sale!, Blog and PetCare.
 * News - Clinic latest news.
@@ -318,14 +320,21 @@ docker run --name phpmyadmin -d -e PMA_HOST=happy-hearths-db.cjcswiuquqvn.eu-nor
 * Although, similar powers are available to Admin, Posts managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to (i.e. two employees from different departments but using the same software system).
 
 ### Our clinic services: List of the medical proedures and consultations we offer. [Pages in question - Service List Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Vets can create/edit/delete Services as well as Admins. Relevant buttons appear visible if user is logged in as a Vet or an Admin.
 * Page allows to filter services, depending what the Vet would like to see, or a search bar can be used. Makes it easier for a Vet to find a service they would like to edit or delete.
 * Although, such powers are available to Admin as well, Service List managment is mainly a Vet responsibility. Some powers can overlap between Admin and Vet, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
 
+### Managing products on our online store (simulation). [Pages in question - Products Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
+* Vets can create/edit/delete Products as well as Vets. Relevant buttons appear visible if user is logged in as an Vet or a Admin.
+* Although, such powers are available to a Vet, Products managment is mainly a Vet responsibility. Some powers can overlap between Vet and an Admin, but per our Project Policy, even with similar powers, roles should have different responsibilites they should stick to. (i.e. two employees from different departments but using the same software system).
+
 ### Managing orders on our online store (simulation). [Pages in question - Orders Page]:
+* Primarily a Vet responsibility, unless an Admin can take over in case of unexpected circumstances (i.e. staff calling in sick).
 * Transfer to Orders Page on the Drop Down Menu to view orders made by Clients.
 * List of orders are displayed in form of cards with their Status shown as well. Pending, Confirmed or Cancelled.
-* In order for the Client order to proceed, Admin or Vet need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
+* In order for the Client order to proceed, Vet or an Admin need to confirm the newly placed order. Identifiable by order Date and it's Status - Pending.
 * Once confirmed, order Status is changed to Confirmed and Pay Now button should appear on the Client side.
-* Admins, Vets and Clients all have the power to Cancel the order. 
+* Vets, Admins and Clients all have the power to Cancel the order. 
 * Real life monetary transactions are not included. As this is not an actual clinic, we don't own the products we're advertising. As such, we can't sell these items to you legally.
